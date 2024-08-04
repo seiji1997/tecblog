@@ -69,7 +69,7 @@ main {
       margin-right: 0;
     }
 
-    & > a {
+    &>a {
       color: $cBlack;
       text-decoration: none;
       text-transform: uppercase;
@@ -80,7 +80,7 @@ main {
     justify-content: center;
 
     @include mq(md) {
-      // 2023/10 モバイル時font-size: 35px になるように修正
+      // モバイル時font-size: 35px
       font-size: 35px;
       justify-content: flex-start;
     }
@@ -111,6 +111,7 @@ main {
       padding: 50px 150px;
     }
   }
+
   &__img {
     @extend .mb-sm;
     height: 300px;
@@ -128,7 +129,7 @@ main {
       height: 400px;
     }
 
-    & > img {
+    &>img {
       position: relative;
       z-index: -1;
       opacity: 1;
@@ -186,6 +187,7 @@ main {
   0% {
     transform: scaleX(0);
   }
+
   100% {
     transform: scaleX(1);
   }
@@ -208,6 +210,7 @@ main {
     @include mq(md) {
       flex-basis: 50%;
     }
+
     @include mq(lg) {
       margin-bottom: 60px;
     }
@@ -223,6 +226,7 @@ main {
   &__header {
     @extend .content-width;
   }
+
   &__inner {
     position: relative;
 
@@ -249,9 +253,11 @@ main {
     @include mq(md) {
       flex-basis: 47%;
     }
+
     @include mq(lg) {
       flex-basis: 25%;
     }
+
     @include mq(xl) {
       flex-basis: 23%;
     }
@@ -270,7 +276,7 @@ main {
       height: 335px;
     }
 
-    & > img {
+    &>img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -309,13 +315,13 @@ main {
       margin-right: 30px;
     }
 
-    & > a {
+    &>a {
       color: $cSubTitle;
       text-decoration: none;
     }
   }
 
-  & > .logo {
+  &>.logo {
     font-size: 38px;
     justify-content: center;
 
@@ -403,6 +409,7 @@ main {
   &.twitter::before {
     background-image: url(../images/twitter.svg);
   }
+
   &.fb::before {
     background-image: url(../images/facebook.svg);
   }

@@ -1,13 +1,13 @@
 $breakpoints: (
-  // 480px以上(スマホの横向き)のモニタで適用
+  // 480px以上(スマホの横向き)
   'sm': 'screen and (min-width: 480px)',
-  // 600px以上のタブレットやモニタで適用
+  // 600px以上のタブレット
   'md': 'screen and (min-width: 600px)',
-  // 960px以上のモニタで適用
+  // 960px以上
   'lg': 'screen and (min-width: 960px)',
-  // 1280px以上のモニタで適用
+  // 1280px以上
   'xl': 'screen and (min-width: 1280px)',
-) !default;
+  ) !default;
 
 @mixin mq($breakpoint: md) {
   @media #{map-get($breakpoints, $breakpoint)} {

@@ -7,7 +7,6 @@ class HeroSlider {
     _initSwiper() {
         return new Swiper(this.el, {
             // Optional parameters
-            // direction: 'vertical',
             loop: true,
             grabCursor: true,
             effect: 'coverflow',
@@ -27,7 +26,7 @@ class HeroSlider {
             delay: 4000,
             disableOnInteraction: false
         }, options);
-        
+
         this.swiper.params.autoplay = options;
         this.swiper.autoplay.start();
     }

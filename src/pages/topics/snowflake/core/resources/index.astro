@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CoreNav from '../../../../../components/snowpro/CoreNav.astro';
+import { resources, exam, domains } from '../../../../../data/snowproCore';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const categories = [...new Set(resources.map((r) => r.category))];
+---
+
+<BaseLayout title="SnowPro Core Resources | Seiji Tech Atlas">
+  <main class="page">
+    <a class="back" href={route('topics/snowflake/core/')}>← Back to SnowPro Core</a>
+    <CoreNav />
+
+    <section class="hero">
+      <div class="eyebrow">OFFICIAL / COF-C03</div>
+      <h1>Resources</h1>
+      <p>試験範囲の確認と詳細仕様の参照は、Snowflake公式のCertification / Study Guide / Documentationを軸にします。</p>
+    </section>
+
+    <section class="primary">
+      <a href={exam.certificationUrl} target="_blank" rel="noreferrer">
+        <small>CERTIFICATION</small><h2>SnowPro Core</h2><span>公式 ↗</span>
+      </a>
+      <a href={exam.studyGuideUrl} target="_blank" rel="noreferrer">
+        <small>EXAM BLUEPRINT</small><h2>COF-C03 Study Guide</h2><span>Study Guide ↗</span>
+      </a>
+    </section>
+
+    {categories.map((category) => (
+      <section class="group">
+        <div class="group-head"><small>{category.toUpperCase()}</small><h2>{category}</h2></div>
+        <div class="links">
+          {resources.filter((r) => r.category === category).map((resource) => (
+            <a href={resource.href} target="_blank" rel="noreferrer"><span>{resource.label}</span><i>↗</i></a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="group">
+      <div class="group-head"><small>DOMAIN LINKS</small><h2>Study by domain</h2></div>
+      <div class="domains">
+        {domains.map((domain) => (
+          <a href={route(`topics/snowflake/core/domains/${domain.slug}/`)} style={`--accent:${domain.color}`}>
+            <span>{domain.id}</span><strong>{domain.shortTitle}</strong><i>{domain.weight}%</i>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 76% 8%,rgba(104,212,248,.1),transparent 30%),#08111a}.page{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:34px 0 100px}.back{color:#8095a2;font-size:.78rem}.hero{padding:60px 0 46px;border-bottom:1px solid rgba(190,220,240,.14)}.eyebrow,.group-head small{color:#68d4f8;font:800 .63rem/1 ui-monospace,monospace;letter-spacing:.15em}.hero h1{margin:14px 0 12px;color:#f1f8fb;font-size:clamp(3rem,7vw,5.6rem);letter-spacing:-.06em}.hero p{max-width:720px;color:#97abb6;line-height:1.72}.primary{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:42px 0}.primary a{padding:24px;border:1px solid rgba(104,212,248,.2);border-top:2px solid #68d4f8;border-radius:15px;background:linear-gradient(145deg,#12212d,#0c1721)}.primary small{color:#68d4f8;font:800 .6rem/1 ui-monospace,monospace}.primary h2{margin:16px 0 22px;color:#eef6f9}.primary span{color:#68d4f8;font-size:.75rem}.group{padding:48px 0;border-top:1px solid rgba(190,220,240,.12)}.group-head{margin-bottom:17px}.group-head h2{margin:8px 0 0;color:#eaf4f7}.links{display:grid;gap:7px}.links a{display:flex;justify-content:space-between;gap:15px;padding:12px 13px;border:1px solid rgba(190,220,240,.13);border-radius:9px;background:#0e1a24;color:#9fb3bd;font-size:.73rem}.links i{color:#68d4f8;font-style:normal}.domains{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.domains a{display:grid;grid-template-columns:35px 1fr auto;align-items:center;gap:9px;padding:13px;border:1px solid rgba(190,220,240,.13);border-left:2px solid var(--accent);border-radius:9px;background:#0e1a24}.domains span{color:var(--accent);font:800 .58rem/1 ui-monospace,monospace}.domains strong{color:#cddae0;font-size:.72rem}.domains i{color:var(--accent);font-style:normal;font-size:.7rem}@media(max-width:700px){.primary,.domains{grid-template-columns:1fr}}
+</style>

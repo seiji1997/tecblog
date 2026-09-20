@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CoreNav from '../../../../../components/snowpro/CoreNav.astro';
+import { domains } from '../../../../../data/snowproCore';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+---
+
+<BaseLayout title="SnowPro Core Practical Notes | Seiji Tech Atlas">
+  <main class="page">
+    <a class="back" href={route('topics/snowflake/core/')}>← Back to SnowPro Core</a>
+    <CoreNav />
+
+    <section class="hero">
+      <div class="eyebrow">PRACTICE / REVIEW</div>
+      <h1>Practical Notes</h1>
+      <p>公式仕様とは分けて、演習・模擬問題・実務で得た自分の気づきを残す場所。</p>
+    </section>
+
+    <section class="note-guide">
+      <article><small>01</small><h2>Mistakes</h2><p>間違えた問題、勘違いした用語、混同した機能。</p></article>
+      <article><small>02</small><h2>Hands-on</h2><p>実際にSQLやUIで確認した挙動と再現手順。</p></article>
+      <article><small>03</small><h2>Rules</h2><p>覚えるべき制約・保持期間・権限・仕様差。</p></article>
+      <article><small>04</small><h2>Review</h2><p>受験前に見返す圧縮メモ。</p></article>
+    </section>
+
+    <section class="domains">
+      {domains.map((domain) => (
+        <article style={`--accent:${domain.color}`}>
+          <div class="head"><span>{domain.id}</span><strong>{domain.shortTitle}</strong></div>
+          <div class="slots">
+            <div><small>MISTAKES</small><p>TBD</p></div>
+            <div><small>HANDS-ON</small><p>TBD</p></div>
+            <div><small>REVIEW</small><p>TBD</p></div>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 76% 7%,rgba(104,212,248,.09),transparent 30%),#08111a}.page{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:34px 0 100px}.back{color:#8095a2;font-size:.78rem}.hero{padding:60px 0 46px;border-bottom:1px solid rgba(190,220,240,.14)}.eyebrow{color:#68d4f8;font:800 .63rem/1 ui-monospace,monospace;letter-spacing:.15em}.hero h1{margin:14px 0 12px;color:#f1f8fb;font-size:clamp(3rem,7vw,5.6rem);letter-spacing:-.06em}.hero p{color:#97abb6}.note-guide{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:42px 0}.note-guide article{padding:18px;border:1px solid rgba(190,220,240,.14);border-radius:12px;background:#0e1a24}.note-guide small{color:#68d4f8;font:800 .58rem/1 ui-monospace,monospace}.note-guide h2{margin:16px 0 8px;color:#e9f3f7;font-size:1rem}.note-guide p{margin:0;color:#849aa7;font-size:.68rem;line-height:1.55}.domains{display:grid;gap:12px}.domains>article{padding:20px;border:1px solid rgba(190,220,240,.14);border-left:3px solid var(--accent);border-radius:13px;background:linear-gradient(145deg,#10202c,#0b1721)}.head{display:flex;gap:12px;align-items:center}.head span{color:var(--accent);font:800 .6rem/1 ui-monospace,monospace}.head strong{color:#dce7eb}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.slots div{padding:12px;border:1px solid rgba(190,220,240,.1);border-radius:9px;background:#0b1720}.slots small{color:#627c8a;font:800 .54rem/1 ui-monospace,monospace}.slots p{margin:9px 0 0;color:#526b7a;font-size:.68rem}@media(max-width:760px){.note-guide,.slots{grid-template-columns:1fr}}
+</style>

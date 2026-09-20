@@ -95,14 +95,14 @@ const domain = domains[slug as keyof typeof domains];
 
         <div class="status-pill">
           <span></span>
-          UI READY · CONTENT TBD
+          {isSnowflake ? 'CONTENT GROWING' : 'UI READY · CONTENT TBD'}
         </div>
       </div>
 
       <div class="hero-symbol">
         <small>{isSnowflake ? 'PRIMARY FOCUS' : 'KNOWLEDGE DOMAIN'}</small>
         <strong>{isSnowflake ? 'SF' : domain?.code}</strong>
-        <span>Frame ready. Details coming next.</span>
+        <span>{isSnowflake ? 'Study · Structure · Reuse' : 'Frame ready. Details coming next.'}</span>
       </div>
     </section>
 
@@ -122,7 +122,7 @@ const domain = domains[slug as keyof typeof domains];
                   <h3>{cert.title}</h3>
                   <code>{cert.code}</code>
                   <div class="cert-actions">
-                    <a href={cert.href}>Open notes →</a>
+                    <a href={cert.href}>{cert.title === 'SnowPro Core' ? 'Open Atlas →' : 'Open notes →'}</a>
                     <a href={cert.official} target="_blank" rel="noreferrer">公式 ↗</a>
                   </div>
                 </article>

@@ -1,0 +1,55 @@
+---
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const items = [
+  ['Overview', 'topics/snowflake/core/'],
+  ['Exam Map', 'topics/snowflake/core/#exam-map'],
+  ['Diagrams', 'topics/snowflake/core/diagrams/'],
+  ['Glossary', 'topics/snowflake/core/glossary/'],
+  ['Resources', 'topics/snowflake/core/resources/'],
+  ['Notes', 'topics/snowflake/core/notes/'],
+];
+---
+
+<nav class="core-nav" aria-label="SnowPro Core navigation">
+  {items.map(([label, path]) => (
+    <a href={route(path)}>{label}</a>
+  ))}
+</nav>
+
+<style>
+  .core-nav {
+    position: sticky;
+    top: 10px;
+    z-index: 10;
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    margin: 18px 0 34px;
+    padding: 8px;
+    border: 1px solid rgba(190,220,240,.16);
+    border-radius: 13px;
+    background: rgba(9,18,27,.88);
+    backdrop-filter: blur(16px);
+    scrollbar-width: none;
+  }
+
+  .core-nav::-webkit-scrollbar { display: none; }
+
+  .core-nav a {
+    flex: 0 0 auto;
+    padding: 8px 11px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #8fa5b2;
+    font-size: .7rem;
+    transition: .16s ease;
+  }
+
+  .core-nav a:hover {
+    color: #eef9fd;
+    border-color: rgba(104,212,248,.28);
+    background: rgba(18,38,50,.72);
+  }
+</style>

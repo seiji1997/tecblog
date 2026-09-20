@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CoreNav from '../../../../../components/snowpro/CoreNav.astro';
+import { domains, diagramsForDomain, domainBySlug, glossary } from '../../../../../data/snowproCore';
+
+export function getStaticPaths() {
+  return domains.map((domain) => ({ params: { domain: domain.slug } }));
+}
+
+const { domain: slug } = Astro.params;
+const domain = domainBySlug(slug!);
+if (!domain) throw new Error(`Domain not found: ${slug}`);
+const diagrams = diagramsForDomain(domain.id);
+const terms = glossary.filter((item) => item[2] === domain.id);
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const importanceLabel = (priority: 'P0' | 'P1' | 'P2') => priority === 'P0' ? 'CORE' : priority === 'P1' ? 'IMPORTANT' : 'EXTENDED';
+---
+
+<BaseLayout title={`${domain.shortTitle} | SnowPro Core | Seiji Tech Atlas`}>
+  <main class="page" style={`--accent:${domain.color}`}>
+    <a class="back" href={route('topics/snowflake/core/')}>← Back to SnowPro Core</a>
+    <CoreNav />
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">{domain.id} · EXAM DOMAIN</div>
+        <h1>{domain.shortTitle}</h1>
+        <p>{domain.summary}</p>
+      </div>
+      <div class="weight"><small>WEIGHT</small><strong>{domain.weight}%</strong></div>
+    </section>
+
+    <section class="section">
+      <div class="title"><span>01</span><h2>What to know</h2></div>
+      <div class="focus-grid">
+        {domain.focus.map((item) => <article><i></i><strong>{item}</strong></article>)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="title"><span>02</span><h2>Learning outcomes</h2></div>
+      <div class="outcomes">
+        {domain.outcomes.map((item) => <div><i></i><p>{item}</p></div>)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="title"><span>03</span><h2>Diagrams</h2></div>
+      <div class="diagram-grid">
+        {diagrams.map((diagram) => (
+          <a href={route(`topics/snowflake/core/diagrams/${diagram.slug}/`)} class={`priority-${diagram.priority.toLowerCase()}`}>
+            <div><small>{diagram.id}</small><span>{importanceLabel(diagram.priority)}</span></div>
+            <h3>{diagram.title}</h3>
+            <p>{diagram.purpose}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="title"><span>04</span><h2>Key terms</h2></div>
+      <div class="terms">
+        {terms.map(([term, description]) => <article><strong>{term}</strong><p>{description}</p></article>)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="title"><span>05</span><h2>Official docs</h2></div>
+      <div class="docs">
+        {domain.docs.map((doc) => <a href={doc.href} target="_blank" rel="noreferrer"><span>{doc.label}</span><i>↗</i></a>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 75% 8%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 30%),#08111a}.page{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:34px 0 100px}.back{color:#8095a2;font-size:.78rem}.hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;padding:64px 0 50px;border-bottom:1px solid rgba(190,220,240,.15)}.eyebrow,.title span{color:var(--accent);font:800 .62rem/1 ui-monospace,monospace;letter-spacing:.16em}.hero h1{margin:15px 0 15px;color:#f1f8fb;font-size:clamp(3rem,7vw,5.8rem);line-height:.94;letter-spacing:-.06em}.hero p{max-width:760px;color:#a0b2bc;line-height:1.75}.weight{min-width:140px;padding:18px;border:1px solid rgba(190,220,240,.15);border-top:2px solid var(--accent);border-radius:14px;background:#0e1b25}.weight small{color:#5f7785;font:800 .56rem/1 ui-monospace,monospace}.weight strong{display:block;margin-top:9px;color:var(--accent);font-size:2.2rem}.section{padding:58px 0;border-bottom:1px solid rgba(190,220,240,.13)}.title{display:flex;align-items:center;gap:14px;margin-bottom:22px}.title h2{margin:0;color:#edf5f8;font-size:1.8rem}.focus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.focus-grid article{display:flex;gap:10px;align-items:center;padding:15px;border:1px solid rgba(190,220,240,.14);border-radius:10px;background:#0e1a24}.focus-grid article>i{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 45%,transparent)}.focus-grid strong{color:#cbd8de;font-size:.78rem}.outcomes{display:grid;gap:8px}.outcomes div{display:flex;gap:10px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(190,220,240,.1)}.outcomes i{flex:0 0 auto;width:6px;height:6px;margin-top:.5em;border-radius:50%;background:var(--accent)}.outcomes p{margin:0;color:#9eb0ba;font-size:.8rem;line-height:1.6}.diagram-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.diagram-grid a{padding:20px;border:1px solid rgba(190,220,240,.15);border-radius:13px;background:linear-gradient(145deg,#10202c,#0b1721)}.priority-p0{border-top:2px solid #68d4f8!important}.priority-p1{border-top:2px solid #a991ff!important}.priority-p2{border-top:2px solid #f8c45c!important}.diagram-grid a>div{display:flex;justify-content:space-between}.diagram-grid small{color:var(--accent);font:800 .58rem/1 ui-monospace,monospace}.diagram-grid span{color:#607a88;font:700 .56rem/1 ui-monospace,monospace}.diagram-grid h3{margin:15px 0 8px;color:#e6f0f4;font-size:1rem}.diagram-grid p{margin:0;color:#879ca8;font-size:.7rem;line-height:1.58}.terms{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.terms article{padding:15px;border:1px solid rgba(190,220,240,.13);border-radius:10px;background:#0d1923}.terms strong{color:#d9e5ea;font-size:.75rem}.terms p{margin:6px 0 0;color:#849aa7;font-size:.68rem;line-height:1.55}.docs{display:grid;gap:7px}.docs a{display:flex;justify-content:space-between;padding:11px 13px;border:1px solid rgba(190,220,240,.14);border-radius:9px;background:#0d1a24;color:#9fb2bc;font-size:.73rem}.docs i{color:var(--accent);font-style:normal}@media(max-width:720px){.hero,.focus-grid,.diagram-grid,.terms{grid-template-columns:1fr}.weight{width:fit-content}}
+</style>

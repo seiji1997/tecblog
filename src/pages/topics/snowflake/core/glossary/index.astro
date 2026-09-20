@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CoreNav from '../../../../../components/snowpro/CoreNav.astro';
+import { glossary, domains } from '../../../../../data/snowproCore';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const grouped = domains.map((domain) => ({ domain, items: glossary.filter((item) => item[2] === domain.id) }));
+---
+
+<BaseLayout title="SnowPro Core Glossary | Seiji Tech Atlas">
+  <main class="page">
+    <a class="back" href={route('topics/snowflake/core/')}>← Back to SnowPro Core</a>
+    <CoreNav />
+
+    <section class="hero">
+      <div class="eyebrow">TERMS / COF-C03</div>
+      <h1>Glossary</h1>
+      <p>試験で出会う重要用語を、単語単体ではなく所属ドメインと役割が分かる形で整理します。</p>
+    </section>
+
+    {grouped.map(({ domain, items }) => (
+      <section class="group" style={`--accent:${domain.color}`}>
+        <div class="group-head">
+          <div><small>{domain.id}</small><h2>{domain.shortTitle}</h2></div>
+          <strong>{items.length}</strong>
+        </div>
+
+        <div class="terms">
+          {items.map(([term, description]) => (
+            <article>
+              <strong>{term}</strong>
+              <p>{description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 76% 7%,rgba(104,212,248,.1),transparent 30%),#08111a}.page{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:34px 0 100px}.back{color:#8196a3;font-size:.78rem}.hero{padding:62px 0 46px;border-bottom:1px solid rgba(190,220,240,.14)}.eyebrow{color:#68d4f8;font:800 .64rem/1 ui-monospace,monospace;letter-spacing:.16em}.hero h1{margin:14px 0 12px;color:#f1f8fb;font-size:clamp(3rem,7vw,5.6rem);letter-spacing:-.06em}.hero p{color:#96aab5}.group{padding:55px 0;border-bottom:1px solid rgba(190,220,240,.12)}.group-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.group-head small{color:var(--accent);font:800 .6rem/1 ui-monospace,monospace}.group-head h2{margin:7px 0 0;color:#eaf4f7}.group-head strong{color:#506b7a;font-size:1.8rem}.terms{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.terms article{padding:16px;border:1px solid rgba(190,220,240,.14);border-left:2px solid var(--accent);border-radius:10px;background:#0e1a24}.terms strong{color:#dce7eb;font-size:.78rem}.terms p{margin:7px 0 0;color:#849aa7;font-size:.69rem;line-height:1.58}@media(max-width:700px){.terms{grid-template-columns:1fr}}
+</style>

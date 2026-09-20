@@ -1,0 +1,17 @@
+---
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const target = `${BASE}/topics/snowflake/core/#exam-map`;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>SnowPro Core Exam Map</title>
+  </head>
+  <body>
+    <p><a href={target}>SnowPro Core Exam Mapへ移動</a></p>
+    <script is:inline define:vars={{ target }}>window.location.replace(target);</script>
+  </body>
+</html>

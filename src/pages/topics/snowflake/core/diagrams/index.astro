@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CoreNav from '../../../../../components/snowpro/CoreNav.astro';
+import { diagrams, domains } from '../../../../../data/snowproCore';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const groups = [
+  { id: 'MASTER', title: 'Master Map', diagrams: diagrams.filter((d) => d.domain === 'MASTER') },
+  ...domains.map((domain) => ({ id: domain.id, title: domain.shortTitle, domain, diagrams: diagrams.filter((d) => d.domain === domain.id) })),
+];
+const importanceLabel = (priority: 'P0' | 'P1' | 'P2') =>
+  priority === 'P0' ? 'CORE' : priority === 'P1' ? 'IMPORTANT' : 'EXTENDED';
+---
+
+<BaseLayout title="SnowPro Core Diagram Library | Seiji Tech Atlas">
+  <main class="page">
+    <a class="back" href={route('topics/snowflake/core/')}>← Back to SnowPro Core</a>
+    <CoreNav />
+
+    <section class="hero">
+      <div class="eyebrow">VISUAL INDEX</div>
+      <h1>Diagram Library</h1>
+      <p>SnowPro Coreの概念を、全体像から個別機能まで{diagrams.length}枚の図で整理します。</p>
+    </section>
+
+    <section class="legend">
+      <span><i class="core"></i>Core</span>
+      <span><i class="important"></i>Important</span>
+      <span><i class="extended"></i>Extended</span>
+    </section>
+
+    {groups.map((group) => (
+      <section class="group">
+        <div class="group-head">
+          <div>
+            <small>{group.id}</small>
+            <h2>{group.title}</h2>
+          </div>
+          <strong>{group.diagrams.length}</strong>
+        </div>
+
+        <div class="registry">
+          {group.diagrams.map((diagram) => (
+            <a href={route(`topics/snowflake/core/diagrams/${diagram.slug}/`)} class={`diagram priority-${diagram.priority.toLowerCase()}`}>
+              <div class="top">
+                <span>{diagram.id}</span>
+                <em>{importanceLabel(diagram.priority)}</em>
+              </div>
+              <h3>{diagram.title}</h3>
+              <p>{diagram.purpose}</p>
+              <div class="keywords">
+                {diagram.keywords.slice(0, 4).map((keyword) => <span>{keyword}</span>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 78% 8%,rgba(104,212,248,.1),transparent 31%),#08111a}
+  .page{width:min(1160px,calc(100% - 40px));margin:0 auto;padding:34px 0 100px}
+  .back{color:#8197a4;font-size:.78rem}
+  .hero{padding:62px 0 45px;border-bottom:1px solid rgba(190,220,240,.15)}
+  .eyebrow{color:#68d4f8;font:800 .64rem/1 ui-monospace,monospace;letter-spacing:.16em}
+  .hero h1{margin:14px 0 11px;color:#f1f8fb;font-size:clamp(3rem,7vw,5.7rem);letter-spacing:-.06em}
+  .hero p{color:#92a7b2}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;padding:18px 0 0;color:#8096a3;font-size:.65rem}
+  .legend span{display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid rgba(190,220,240,.12);border-radius:8px}
+  .legend i{width:7px;height:7px;border-radius:50%}
+  .core{background:#68d4f8}.important{background:#a991ff}.extended{background:#f8c45c}
+  .group{padding:62px 0;border-bottom:1px solid rgba(190,220,240,.13)}
+  .group-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:20px}
+  .group-head small{color:#627c8a;font:800 .62rem/1 ui-monospace,monospace}
+  .group-head h2{margin:7px 0 0;color:#eaf4f7;font-size:1.8rem}
+  .group-head strong{color:#425d6d;font-size:2rem}
+  .registry{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .diagram{display:block;padding:20px;border:1px solid rgba(190,220,240,.16);border-radius:14px;background:linear-gradient(145deg,#11202c,#0c1721);transition:.18s ease}
+  .diagram:hover{transform:translateY(-2px);border-color:rgba(104,212,248,.35)}
+  .priority-p0{border-top:2px solid #68d4f8}.priority-p1{border-top:2px solid #a991ff}.priority-p2{border-top:2px solid #f8c45c}
+  .top{display:flex;justify-content:space-between;gap:12px}.top>span{color:#68d4f8;font:800 .62rem/1 ui-monospace,monospace}
+  .top em{padding:4px 6px;border-radius:6px;background:#132532;color:#7893a1;font:700 .54rem/1 ui-monospace,monospace;font-style:normal}
+  .diagram h3{margin:16px 0 8px;color:#e8f2f6;font-size:1.03rem}.diagram p{margin:0;color:#8fa3ae;font-size:.73rem;line-height:1.62}
+  .keywords{display:flex;flex-wrap:wrap;gap:5px;margin-top:15px}.keywords span{padding:5px 7px;border:1px solid rgba(190,220,240,.11);border-radius:999px;color:#718996;font-size:.55rem}
+  @media(max-width:720px){.registry{grid-template-columns:1fr}}
+</style>

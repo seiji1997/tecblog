@@ -51,9 +51,18 @@ const domains = {
 };
 
 const snowflakeCerts = [
-  ['SnowPro Core', 'COF-C03', route('topics/snowflake/core/')],
-  ['Advanced Data Engineer', 'DEA-C02', route('topics/snowflake/data-engineer/')],
-  ['Advanced Architect', 'ARA-C01', route('topics/snowflake/architect/')],
+  {
+    title: 'SnowPro Core', code: 'COF-C03', status: 'STUDYING', href: route('topics/snowflake/core/'),
+    official: 'https://learn.snowflake.com/en/certifications/snowpro-core-jpn-C03/'
+  },
+  {
+    title: 'Advanced Data Engineer', code: 'DEA-C02', status: 'PLANNED', href: route('topics/snowflake/data-engineer/'),
+    official: 'https://learn.snowflake.com/en/certifications/snowpro-adv-dea-jpn-C02/'
+  },
+  {
+    title: 'Advanced Architect', code: 'ARA-C01', status: 'PLANNED', href: route('topics/snowflake/architect/'),
+    official: 'https://learn.snowflake.com/en/certifications/snowpro-adv-ara-jpn/'
+  },
 ];
 
 const snowflakeCapabilities = [
@@ -107,13 +116,16 @@ const domain = domains[slug as keyof typeof domains];
             </div>
 
             <div class="cert-grid">
-              {snowflakeCerts.map(([title, code, href]) => (
-                <a class="cert-card" href={href}>
-                  <small>TBD</small>
-                  <h3>{title}</h3>
-                  <code>{code}</code>
-                  <span>Open frame ↗</span>
-                </a>
+              {snowflakeCerts.map((cert) => (
+                <article class="cert-card">
+                  <small>{cert.status}</small>
+                  <h3>{cert.title}</h3>
+                  <code>{cert.code}</code>
+                  <div class="cert-actions">
+                    <a href={cert.href}>Open notes →</a>
+                    <a href={cert.official} target="_blank" rel="noreferrer">日本語公式 ↗</a>
+                  </div>
+                </article>
               ))}
             </div>
           </section>
@@ -377,10 +389,19 @@ const domain = domains[slug as keyof typeof domains];
     font-size: .72rem;
   }
 
-  .cert-card > span {
-    display: block;
+  .cert-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-top: 28px;
+  }
+
+  .cert-actions a {
+    padding: 8px 10px;
+    border: 1px solid rgba(104, 212, 248, .22);
+    border-radius: 8px;
     color: var(--domain-accent);
+    background: rgba(14, 27, 38, .68);
     font-size: .7rem;
   }
 

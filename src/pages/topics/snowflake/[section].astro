@@ -8,51 +8,54 @@ export function getStaticPaths() {
       props: {
         eyebrow: 'CERTIFICATION',
         title: 'SnowPro Core',
-        heroNote: 'Official scope updated for COF-C03.',
+        examCode: 'COF-C03',
+        heroNote: 'STUDYING · OFFICIAL JAPANESE SCOPE',
+        officialJa: 'https://learn.snowflake.com/en/certifications/snowpro-core-jpn-C03/',
+        officialEn: 'https://learn.snowflake.com/en/certifications/snowpro-core-c03/',
         sections: [
           {
             no: '01',
             title: 'Overview',
-            body: 'SnowPro Core (COF-C03) is the foundational Snowflake certification. The official certification page positions it as validation of practical ability on the Snowflake AI Data Cloud, and recommends it for candidates with roughly 6+ months of Snowflake experience.',
+            body: 'SnowPro Core（COF-C03）は、Snowflake AIデータクラウドを実践的に扱うための基礎力を確認する認定資格です。公式ページでは、Snowflakeを6か月以上使用した実務経験を持つ受験者が想定されています。',
             bullets: [
-              'Exam code: COF-C03',
-              'Foundational certification for Snowflake practitioners',
-              'Recommended experience: 6+ months using Snowflake',
-              'Official page also links to the study guide and learning journey',
+              '試験コード: COF-C03',
+              'Snowflake AIデータクラウドの実践的・ハンズオン経験を検証',
+              '想定受験者: Snowflakeを6か月以上使用した実務経験',
+              'このページでは公式範囲を軸に、学習メモと実務知識を蓄積',
             ],
           },
           {
             no: '02',
             title: 'Key concepts',
-            body: 'Based on the official SnowPro Core certification page, the exam expects you to understand the following capability areas:',
+            body: 'Snowflake公式の日本語認定ページで示されている評価対象を、学習時に見返しやすい単位に整理しています。',
             bullets: [
-              'Use Snowflake AI Data Cloud architecture',
-              'Manage Snowflake accounts and virtual warehouses',
-              'Perform data loading, unloading, and transformation',
-              'Work with structured, semi-structured, and unstructured data',
-              'Monitor and optimize performance',
-              'Enable data collaboration and protection features',
-              'Set up Snowflake connections',
+              'Snowflake AIデータクラウドアーキテクチャの理解と利用',
+              'Snowflakeアカウントと仮想ウェアハウスの管理',
+              'データのロード、アンロード、変換',
+              '構造化・半構造化・非構造化データの取り扱い',
+              'パフォーマンスの監視と最適化',
+              'データコラボレーションとデータ保護',
+              'Snowflakeへの接続とConnectivity',
             ],
           },
           {
             no: '03',
             title: 'Practical notes',
-            body: 'Use this area for your own takeaways from practice, exercises, project work, and exam prep. Add mistakes, shortcuts, memorization points, and examples you want to reuse later.',
+            body: 'ここは実際に学習・検証した内容を追加していく領域です。試験で間違えたポイント、実務で使ったSQL、挙動の確認結果などを残します。',
             bullets: [
-              'TBD · personal hands-on notes',
-              'TBD · architecture / warehouse reminders',
-              'TBD · SQL / loading / semi-structured examples',
+              'TBD · Architecture / Warehouseの実践メモ',
+              'TBD · Loading / Transformation / Semi-structured data',
+              'TBD · Performance / Security / Sharingの注意点',
             ],
           },
           {
             no: '04',
             title: 'Review',
-            body: 'This section can be used as a final recap area before the exam: checklist, weak points, review questions, and links back to detailed notes.',
+            body: '受験直前の確認用に、弱点・再確認事項・頻出ポイントを圧縮して残すためのセクションです。',
             bullets: [
-              'TBD · checklist',
-              'TBD · weak points to revisit',
-              'TBD · last-day review notes',
+              'TBD · 最終チェックリスト',
+              'TBD · 間違えやすいポイント',
+              'TBD · 直前に見返す公式ドキュメント',
             ],
           },
         ],
@@ -60,78 +63,125 @@ export function getStaticPaths() {
     },
     {
       params: { section: 'data-engineer' },
-      props: { eyebrow: 'CERTIFICATION', title: 'Advanced Data Engineer' },
+      props: {
+        eyebrow: 'CERTIFICATION',
+        title: 'Advanced Data Engineer',
+        examCode: 'DEA-C02',
+        heroNote: 'PLANNED · OFFICIAL JAPANESE SCOPE',
+        officialJa: 'https://learn.snowflake.com/en/certifications/snowpro-adv-dea-jpn-C02/',
+        officialEn: 'https://learn.snowflake.com/en/certifications/snowpro-advanced-dataengineer-C02/',
+        sections: [
+          {
+            no: '01',
+            title: 'Overview',
+            body: 'SnowPro Advanced: Data Engineer（DEA-C02）は、Snowflakeを利用して包括的なデータエンジニアリングの原則を適用するための高度な知識とスキルを確認する認定です。公式ページでは、データエンジニアリング経験が2年以上あり、Snowflakeを実務で利用した経験を持つ受験者が想定されています。',
+            bullets: [
+              '試験コード: DEA-C02',
+              '対象: 高度なSnowflake Data Engineering',
+              '想定: Data Engineering経験2年以上 + Snowflake実務経験',
+            ],
+          },
+          {
+            no: '02',
+            title: 'Key concepts',
+            body: '公式ページで示される評価対象をベースに、今後の学習ノートをこの単位へ紐づけます。',
+            bullets: [
+              'Data Lake / API / On-premisesからのデータソーシング',
+              'クラウド間でのデータ変換・複製・共有',
+              'ほぼリアルタイムのEnd-to-End Stream設計',
+              'Data Engineer workload向けのスケーラブルなCompute設計',
+              'Performance metricsの評価',
+            ],
+          },
+          {
+            no: '03',
+            title: 'Practical notes',
+            body: 'TBD · 実装・演習・模擬試験から得た内容を追加します。',
+            bullets: ['TBD · Pipelines', 'TBD · Streams / Tasks / Snowpipe', 'TBD · Performance / Operations'],
+          },
+          {
+            no: '04',
+            title: 'Review',
+            body: 'TBD · 受験前の総復習用セクションです。',
+            bullets: ['TBD · checklist', 'TBD · weak points', 'TBD · final review'],
+          },
+        ],
+      },
     },
     {
       params: { section: 'architect' },
-      props: { eyebrow: 'CERTIFICATION', title: 'Advanced Architect' },
+      props: {
+        eyebrow: 'CERTIFICATION',
+        title: 'Advanced Architect',
+        examCode: 'ARA-C01',
+        heroNote: 'PLANNED · OFFICIAL JAPANESE SCOPE',
+        officialJa: 'https://learn.snowflake.com/en/certifications/snowpro-adv-ara-jpn/',
+        officialEn: 'https://learn.snowflake.com/en/certifications/snowpro-advanced-architect/',
+        sections: [
+          {
+            no: '01',
+            title: 'Overview',
+            body: 'SnowPro Advanced: Architect（ARA-C01）は、Snowflakeを利用して包括的なアーキテクトソリューションを設計・適用するための高度な知識とスキルを確認する認定です。公式ページでは、本番環境でArchitectとして2年以上Snowflakeを扱った経験が想定されています。',
+            bullets: [
+              '試験コード: ARA-C01',
+              '対象: End-to-EndのSnowflake Architecture',
+              '想定: 本番環境でArchitectとしてSnowflake実務経験2年以上',
+            ],
+          },
+          {
+            no: '02',
+            title: 'Key concepts',
+            body: '公式ページで示される評価対象を、今後のArchitectureノートの骨格として整理しています。',
+            bullets: [
+              'SourceからConsumptionまでのEnd-to-End Data Flow設計',
+              'Business / Security / Compliance要件を満たすData Architecture',
+              'Performance最適化のためのSnowflake / Third-party tool選定',
+              'Snowflake Marketplace / Data Exchangeを用いたShared Dataset設計',
+              'SQL以外のCodingやDevOps / DataOps設計経験も有用',
+            ],
+          },
+          {
+            no: '03',
+            title: 'Practical notes',
+            body: 'TBD · 設計判断、トレードオフ、実務Architectureの学びを追加します。',
+            bullets: ['TBD · architecture patterns', 'TBD · security / compliance', 'TBD · performance / sharing'],
+          },
+          {
+            no: '04',
+            title: 'Review',
+            body: 'TBD · 受験前の総復習用セクションです。',
+            bullets: ['TBD · checklist', 'TBD · weak points', 'TBD · final review'],
+          },
+        ],
+      },
     },
-    {
-      params: { section: 'architecture' },
-      props: { eyebrow: 'PLATFORM', title: 'Architecture' },
-    },
-    {
-      params: { section: 'data-engineering' },
-      props: { eyebrow: 'PIPELINES', title: 'Data Engineering' },
-    },
-    {
-      params: { section: 'storage-data' },
-      props: { eyebrow: 'DATA LAYER', title: 'Storage & Data' },
-    },
-    {
-      params: { section: 'performance-cost' },
-      props: { eyebrow: 'EFFICIENCY', title: 'Performance & Cost' },
-    },
-    {
-      params: { section: 'security-governance' },
-      props: { eyebrow: 'CONTROL', title: 'Security & Governance' },
-    },
-    {
-      params: { section: 'sharing-integration' },
-      props: { eyebrow: 'CONNECT', title: 'Sharing & Integration' },
-    },
-    {
-      params: { section: 'apps-development' },
-      props: { eyebrow: 'BUILD', title: 'Apps & Development' },
-    },
+    { params: { section: 'architecture' }, props: { eyebrow: 'PLATFORM', title: 'Architecture' } },
+    { params: { section: 'data-engineering' }, props: { eyebrow: 'PIPELINES', title: 'Data Engineering' } },
+    { params: { section: 'storage-data' }, props: { eyebrow: 'DATA LAYER', title: 'Storage & Data' } },
+    { params: { section: 'performance-cost' }, props: { eyebrow: 'EFFICIENCY', title: 'Performance & Cost' } },
+    { params: { section: 'security-governance' }, props: { eyebrow: 'CONTROL', title: 'Security & Governance' } },
+    { params: { section: 'sharing-integration' }, props: { eyebrow: 'CONNECT', title: 'Sharing & Integration' } },
+    { params: { section: 'apps-development' }, props: { eyebrow: 'BUILD', title: 'Apps & Development' } },
   ];
 }
 
 const {
   eyebrow,
   title,
+  examCode,
   heroNote = 'UI READY · CONTENT TBD',
+  officialJa,
+  officialEn,
   sections = [
-    {
-      no: '01',
-      title: 'Overview',
-      body: 'TBD · high-level overview and purpose of this page.',
-      bullets: ['TBD'],
-    },
-    {
-      no: '02',
-      title: 'Key concepts',
-      body: 'TBD · important concepts to organize here.',
-      bullets: ['TBD'],
-    },
-    {
-      no: '03',
-      title: 'Practical notes',
-      body: 'TBD · hands-on notes and examples.',
-      bullets: ['TBD'],
-    },
-    {
-      no: '04',
-      title: 'Review',
-      body: 'TBD · review checklist and summary.',
-      bullets: ['TBD'],
-    },
+    { no: '01', title: 'Overview', body: 'TBD · high-level overview and purpose of this page.', bullets: ['TBD'] },
+    { no: '02', title: 'Key concepts', body: 'TBD · important concepts to organize here.', bullets: ['TBD'] },
+    { no: '03', title: 'Practical notes', body: 'TBD · hands-on notes and examples.', bullets: ['TBD'] },
+    { no: '04', title: 'Review', body: 'TBD · review checklist and summary.', bullets: ['TBD'] },
   ],
 } = Astro.props;
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
-const isCore = title === 'SnowPro Core';
 ---
 
 <BaseLayout title={`${title} | Snowflake | Seiji Tech Atlas`}>
@@ -142,20 +192,23 @@ const isCore = title === 'SnowPro Core';
       <div class="label">SNOWFLAKE / {eyebrow}</div>
       <h1>{title}</h1>
 
-      <div class="status">
-        <span></span>
-        {heroNote}
+      <div class="hero-meta">
+        {examCode && <code>{examCode}</code>}
+        <div class="status"><span></span>{heroNote}</div>
       </div>
     </section>
 
-    {isCore && (
+    {officialJa && (
       <section class="resource-callout">
         <div>
-          <small>OFFICIAL SOURCE</small>
-          <strong>Snowflake Certification Page</strong>
-          <p>Overview and key concepts are aligned to the latest official SnowPro Core certification page (COF-C03).</p>
+          <small>OFFICIAL CERTIFICATION SOURCE</small>
+          <strong>Snowflake公式の日本語ページを優先</strong>
+          <p>Overview / Key concepts はSnowflake公式の日本語認定ページを基準に整理しています。日本語ページがある場合は日本語を優先し、英語版は補助参照として置いています。</p>
         </div>
-        <a href="https://learn.snowflake.com/en/certifications/snowpro-core-kor-C03/" target="_blank" rel="noreferrer">Open official page ↗</a>
+        <div class="source-actions">
+          <a class="primary" href={officialJa} target="_blank" rel="noreferrer">日本語公式 ↗</a>
+          {officialEn && <a href={officialEn} target="_blank" rel="noreferrer">English ↗</a>}
+        </div>
       </section>
     )}
 
@@ -165,9 +218,7 @@ const isCore = title === 'SnowPro Core';
           <span>{section.no}</span>
           <h2>{section.title}</h2>
           <p class="body-copy">{section.body}</p>
-          <ul>
-            {section.bullets.map((bullet) => <li>{bullet}</li>)}
-          </ul>
+          <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
         </article>
       ))}
     </section>
@@ -175,160 +226,29 @@ const isCore = title === 'SnowPro Core';
 </BaseLayout>
 
 <style>
-  :global(body) {
-    background:
-      radial-gradient(circle at 72% 10%, rgba(104, 212, 248, .12), transparent 30%),
-      #0a1119;
-  }
-
-  .page {
-    width: min(1080px, calc(100% - 40px));
-    margin: 0 auto;
-    padding: 42px 0 100px;
-  }
-
-  .back {
-    color: #8fa4b0;
-    font-size: .82rem;
-  }
-
-  .hero {
-    padding: 86px 0 64px;
-    border-bottom: 1px solid rgba(190, 220, 240, .18);
-  }
-
-  .label {
-    color: #68d4f8;
-    font: 800 .68rem/1 ui-monospace, monospace;
-    letter-spacing: .17em;
-  }
-
-  h1 {
-    margin: 14px 0 24px;
-    color: #f2f7fa;
-    font-size: clamp(3.2rem, 8vw, 6.5rem);
-    line-height: .9;
-    letter-spacing: -.065em;
-  }
-
-  .status {
-    display: flex;
-    width: fit-content;
-    align-items: center;
-    gap: 9px;
-    padding: 8px 12px;
-    border: 1px solid rgba(104, 212, 248, .35);
-    border-radius: 999px;
-    color: #b9ced8;
-    font: 700 .64rem/1 ui-monospace, monospace;
-    letter-spacing: .08em;
-  }
-
-  .status span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #68d4f8;
-    box-shadow: 0 0 12px rgba(104, 212, 248, .7);
-  }
-
-  .resource-callout {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 30px;
-    padding: 20px 22px;
-    border: 1px solid rgba(104, 212, 248, .18);
-    border-radius: 16px;
-    background: linear-gradient(145deg, rgba(18, 31, 44, .95), rgba(11, 21, 31, .95));
-  }
-
-  .resource-callout small {
-    display: block;
-    color: #68d4f8;
-    font: 800 .62rem/1 ui-monospace, monospace;
-    letter-spacing: .16em;
-  }
-
-  .resource-callout strong {
-    display: block;
-    margin-top: 8px;
-    color: #eef6f9;
-    font-size: 1rem;
-  }
-
-  .resource-callout p {
-    margin: 8px 0 0;
-    color: #9db0bb;
-    font-size: .8rem;
-    line-height: 1.7;
-  }
-
-  .resource-callout a {
-    flex: 0 0 auto;
-    color: #68d4f8;
-    font-size: .82rem;
-  }
-
-  .frame-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 13px;
-    margin-top: 36px;
-  }
-
-  .frame-grid article {
-    min-height: 260px;
-    padding: 24px;
-    border: 1px solid rgba(190, 220, 240, .19);
-    border-radius: 16px;
-    background:
-      linear-gradient(145deg, rgba(18, 31, 44, .95), rgba(11, 21, 31, .95));
-  }
-
-  .frame-grid article > span {
-    color: #526b7b;
-    font: 700 .68rem/1 ui-monospace, monospace;
-  }
-
-  .frame-grid h2 {
-    margin: 28px 0 8px;
-    color: #eef6f9;
-  }
-
-  .body-copy {
-    margin: 0;
-    color: #aebfc8;
-    font-size: .82rem;
-    line-height: 1.72;
-  }
-
-  .frame-grid ul {
-    margin: 14px 0 0;
-    padding-left: 18px;
-    color: #68d4f8;
-  }
-
-  .frame-grid li {
-    margin: 0 0 7px;
-    color: #8eddf7;
-    font-size: .76rem;
-    line-height: 1.55;
-  }
-
-  @media (max-width: 700px) {
-    .resource-callout {
-      display: block;
-    }
-
-    .resource-callout a {
-      display: inline-block;
-      margin-top: 12px;
-    }
-
-    .frame-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+  :global(body) { background: radial-gradient(circle at 72% 10%, rgba(104,212,248,.12), transparent 30%), #0a1119; }
+  .page { width:min(1080px,calc(100% - 40px)); margin:0 auto; padding:42px 0 100px; }
+  .back { color:#8fa4b0; font-size:.82rem; }
+  .hero { padding:86px 0 64px; border-bottom:1px solid rgba(190,220,240,.18); }
+  .label { color:#68d4f8; font:800 .68rem/1 ui-monospace,monospace; letter-spacing:.17em; }
+  h1 { margin:14px 0 24px; color:#f2f7fa; font-size:clamp(3.2rem,8vw,6.5rem); line-height:.9; letter-spacing:-.065em; }
+  .hero-meta { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+  .hero-meta code { padding:8px 11px; border:1px solid rgba(190,220,240,.16); border-radius:999px; color:#b9cbd5; background:rgba(17,29,41,.72); font-size:.7rem; }
+  .status { display:flex; width:fit-content; align-items:center; gap:9px; padding:8px 12px; border:1px solid rgba(104,212,248,.35); border-radius:999px; color:#b9ced8; font:700 .64rem/1 ui-monospace,monospace; letter-spacing:.08em; }
+  .status span { width:7px; height:7px; border-radius:50%; background:#68d4f8; box-shadow:0 0 12px rgba(104,212,248,.7); }
+  .resource-callout { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:30px; padding:22px; border:1px solid rgba(104,212,248,.20); border-radius:16px; background:linear-gradient(145deg,rgba(18,31,44,.95),rgba(11,21,31,.95)); }
+  .resource-callout small { display:block; color:#68d4f8; font:800 .62rem/1 ui-monospace,monospace; letter-spacing:.16em; }
+  .resource-callout strong { display:block; margin-top:8px; color:#eef6f9; font-size:1rem; }
+  .resource-callout p { max-width:650px; margin:8px 0 0; color:#9db0bb; font-size:.8rem; line-height:1.7; }
+  .source-actions { display:flex; gap:8px; flex:0 0 auto; }
+  .source-actions a { padding:9px 11px; border:1px solid rgba(190,220,240,.18); border-radius:9px; color:#a9bbc6; background:rgba(14,25,36,.76); font-size:.76rem; }
+  .source-actions a.primary { border-color:rgba(104,212,248,.38); color:#68d4f8; }
+  .frame-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:13px; margin-top:36px; }
+  .frame-grid article { min-height:280px; padding:24px; border:1px solid rgba(190,220,240,.19); border-radius:16px; background:linear-gradient(145deg,rgba(18,31,44,.95),rgba(11,21,31,.95)); }
+  .frame-grid article > span { color:#526b7b; font:700 .68rem/1 ui-monospace,monospace; }
+  .frame-grid h2 { margin:28px 0 8px; color:#eef6f9; }
+  .body-copy { margin:0; color:#aebfc8; font-size:.82rem; line-height:1.72; }
+  .frame-grid ul { margin:14px 0 0; padding-left:18px; }
+  .frame-grid li { margin:0 0 7px; color:#8eddf7; font-size:.76rem; line-height:1.55; }
+  @media (max-width:700px) { .resource-callout { display:block; } .source-actions { margin-top:14px; flex-wrap:wrap; } .frame-grid { grid-template-columns:1fr; } }
 </style>

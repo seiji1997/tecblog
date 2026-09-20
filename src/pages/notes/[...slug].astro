@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<BaseLayout title={`${post.data.title} | Seiji Tech Atlas`} description={post.data.description}>
+  <article class="prose container">
+    <div class="kicker">{post.data.category}</div>
+    <h1>{post.data.title}</h1>
+    <p style="color:var(--muted);margin-top:-6px;">{post.data.publishedAt.toLocaleDateString('ja-JP')} · {post.data.tags.join(' / ')}</p>
+    <Content />
+  </article>
+</BaseLayout>

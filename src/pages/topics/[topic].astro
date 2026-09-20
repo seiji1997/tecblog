@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeftRail from '../../components/LeftRail.astro';
+import RightRail from '../../components/RightRail.astro';
+import { topics } from '../../data';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return topics.map((topic) => ({ params: { topic: topic.slug }, props: { topic } }));
+}
+const { topic } = Astro.props;
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.topic === topic.slug)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const grouped = topic.subtopics.map((subtopic) => ({ subtopic, posts: posts.filter(p => p.data.subtopic === subtopic) }));
+---
+<BaseLayout title={`${topic.title} | Seiji Tech Atlas`} description={topic.description}>
+  <div class="site-shell shell-width">
+    <LeftRail active={topic.slug} />
+    <div class="main-column">
+      <section class={`topic-hero accent-${topic.accent}`}>
+        <div class="topic-hero-code">{topic.code}</div>
+        <div><span class="micro-label">KNOWLEDGE FIELD</span><h1>{topic.title}</h1><p>{topic.description}</p></div>
+      </section>
+
+      <section class="section-block">
+        <div class="block-heading"><div><span class="micro-label">STRUCTURE</span><h2>Inside this field</h2></div><p>分野をさらに小さな領域に分け、目的の知識へ最短で辿れる構造にしています。</p></div>
+        <div class="subtopic-grid">
+          {grouped.map((group, i) => (
+            <section class="subtopic-card">
+              <div class="subtopic-head"><span>0{i+1}</span><strong>{group.subtopic}</strong><small>{group.posts.length} notes</small></div>
+              {group.posts.length > 0 ? (
+                <div class="subtopic-notes">{group.posts.slice(0,4).map(post => <a href={`/notes/${post.id}/`}>{post.data.title}<span>→</span></a>)}</div>
+              ) : (
+                <div class="empty-note">Notes will appear here.</div>
+              )}
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="block-heading"><div><span class="micro-label">ALL NOTES</span><h2>{topic.title} notebook</h2></div></div>
+        <div class="article-table">
+          {posts.length > 0 ? posts.map(post => (
+            <a class="article-table-row" href={`/notes/${post.id}/`}>
+              <span class="article-kind">{post.data.subtopic ?? post.data.category}</span>
+              <div><strong>{post.data.title}</strong><small>{post.data.description}</small></div>
+              <time>{post.data.publishedAt.toLocaleDateString('ja-JP')}</time>
+              <span>↗</span>
+            </a>
+          )) : <div class="empty-note large">最初のノートを追加すると、ここに一覧表示されます。</div>}
+        </div>
+      </section>
+    </div>
+    <RightRail />
+  </div>
+</BaseLayout>

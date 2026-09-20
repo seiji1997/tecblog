@@ -1,0 +1,49 @@
+---
+import { certifications, principles } from '../data';
+---
+<aside class="right-rail">
+  <section class="profile-card">
+    <div class="profile-top">
+      <div class="avatar">ST</div>
+      <div>
+        <div class="profile-name">Seiji Tanimoto</div>
+        <div class="profile-role">AI & Data Consultant</div>
+      </div>
+    </div>
+    <p>Data Engineering × Machine Learning × Project Delivery。技術とビジネスの間を行き来しながら、学びを公開資産に変えています。</p>
+    <div class="profile-links">
+      <a href="https://github.com/seiji1997" target="_blank">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/seijitanimoto1997/" target="_blank">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <section class="side-card now-card">
+    <div class="side-card-head"><div class="rail-label">Now</div><span class="live-dot">LIVE</span></div>
+    <div class="now-list">
+      <div><small>LEARNING</small><strong>Snowflake</strong></div>
+      <div><small>BUILDING</small><strong>Tech Atlas</strong></div>
+      <div><small>THINKING</small><strong>AI × Engineering</strong></div>
+      <div><small>WORKING</small><strong>AI & Data</strong></div>
+    </div>
+  </section>
+
+  <section class="side-card">
+    <div class="rail-label">Snowflake 2026</div>
+    <div class="timeline-mini">
+      {certifications.map((cert) => (
+        <div class="timeline-mini-row">
+          <span class="timeline-dot"></span>
+          <div><strong>{cert.name}</strong><small>{cert.code}</small></div>
+          <time>{cert.date.slice(5)}</time>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="side-card principles-card">
+    <div class="rail-label">Principles</div>
+    <div class="principle-list">
+      {principles.map((p, i) => <div><span>0{i+1}</span><strong>{p}</strong></div>)}
+    </div>
+  </section>
+</aside>

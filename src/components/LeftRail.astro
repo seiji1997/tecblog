@@ -1,0 +1,37 @@
+---
+import { topics } from '../data';
+const { active = '' } = Astro.props;
+---
+<aside class="left-rail">
+  <div class="rail-block rail-intro">
+    <div class="rail-label">Knowledge Atlas</div>
+    <p>学んだこと、作ったもの、考えたことを、あとから辿れる地図にする。</p>
+  </div>
+
+  <nav class="topic-nav" aria-label="Knowledge topics">
+    <a class:list={["topic-nav-item", !active && "active"]} href="/">
+      <span class="topic-code">00</span><span>Overview</span>
+    </a>
+    {topics.map((topic, i) => (
+      <a class:list={["topic-nav-item", active === topic.slug && "active"]} href={`/topics/${topic.slug}/`}>
+        <span class="topic-code">0{i + 1}</span><span>{topic.title}</span>
+      </a>
+    ))}
+  </nav>
+
+  <div class="rail-block mini-index">
+    <div class="rail-label">Explore</div>
+    <a href="/#certifications">Certifications <span>↗</span></a>
+    <a href="/#projects">Projects <span>↗</span></a>
+    <a href="/#thoughts">Thoughts <span>↗</span></a>
+    <a href="/#journey">Journey <span>↗</span></a>
+    <a href="/#latest">Notes <span>↗</span></a>
+  </div>
+
+  <div class="rail-block mini-index rail-legend">
+    <div class="rail-label">Modes</div>
+    <span><i class="legend-dot learn"></i> Learn</span>
+    <span><i class="legend-dot build"></i> Build</span>
+    <span><i class="legend-dot think"></i> Think</span>
+  </div>
+</aside>

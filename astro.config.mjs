@@ -2,6 +2,6 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://seiji1997.github.io',
-  base: '/tecblog/',
+  base: '/tecblog',
   output: 'static',
 });

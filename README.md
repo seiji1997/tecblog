@@ -88,3 +88,11 @@ For a user site repository named `seiji1997.github.io`, the public URL can be `h
 - Add search / command palette once the content library grows.
 - Add note relationships / backlinks for the Digital Garden layer.
 - Add GitHub project cards or contribution data later if desired.
+
+
+V6 UPDATE
+=========
+- Added your uploaded photo to public/profile-photo.jpg so the left-side avatar now resolves automatically.
+- Added visual icon badges to the top quick-link boxes for AI / ML, Data Engineering, Google Cloud, Snowflake, Engineering Tools, GitHub, LinkedIn, Qiita, and About.
+- Filled SnowPro Core page with Overview and Key Concepts using the latest official Snowflake certification page scope (COF-C03).
+- Practical notes and Review remain ready for your own additions.

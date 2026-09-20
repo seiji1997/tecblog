@@ -1,49 +1,208 @@
 ---
-import { certifications, principles } from '../data';
+const resourceGroups = [
+  {
+    label: 'AI / ASSISTANTS',
+    items: [
+      ['ChatGPT', 'OpenAI', 'https://chatgpt.com/'],
+      ['Claude Code', 'Coding agent', 'https://claude.com/product/claude-code'],
+      ['Gemini', 'Google AI', 'https://gemini.google.com/'],
+      ['Grok', 'xAI', 'https://grok.com/'],
+      ['DeepL', 'Translate / Write', 'https://www.deepl.com/'],
+      ['NotebookLM', 'Research / sources', 'https://notebooklm.google.com/'],
+    ],
+  },
+  {
+    label: 'CODE / ENGINEERING',
+    items: [
+      ['Python', 'Language', 'https://www.python.org/'],
+      ['SQL', 'Query language', 'https://www.postgresql.org/docs/current/sql.html'],
+      ['JavaScript', 'Web language', 'https://developer.mozilla.org/docs/Web/JavaScript'],
+      ['HTML', 'Web markup', 'https://developer.mozilla.org/docs/Web/HTML'],
+      ['CSS', 'Web styling', 'https://developer.mozilla.org/docs/Web/CSS'],
+      ['Node.js', 'JavaScript runtime', 'https://nodejs.org/'],
+      ['Next.js', 'React framework', 'https://nextjs.org/'],
+      ['React', 'UI library', 'https://react.dev/'],
+      ['Go', 'Language', 'https://go.dev/'],
+      ['C++', 'Language', 'https://isocpp.org/'],
+      ['Linux', 'OS / CLI', 'https://www.linux.org/'],
+      ['Docker', 'Containers', 'https://www.docker.com/'],
+      ['Apache Spark', 'Data processing', 'https://spark.apache.org/'],
+      ['PySpark', 'Spark Python API', 'https://spark.apache.org/docs/latest/api/python/'],
+      ['VBA', 'Office automation', 'https://learn.microsoft.com/office/vba/api/overview/'],
+    ],
+  },
+  {
+    label: 'CREATIVE / PRODUCT',
+    items: [
+      ['Runway', 'Video', 'https://runwayml.com/'],
+      ['Google Flow', 'AI filmmaking', 'https://labs.google/fx/tools/flow/'],
+      ['Higgsfield', 'Video / image', 'https://higgsfield.ai/'],
+      ['Midjourney', 'Image / video', 'https://www.midjourney.com/'],
+      ['Leonardo AI', 'Image / creative', 'https://leonardo.ai/'],
+      ['Canva', 'Design', 'https://www.canva.com/'],
+      ['Adobe', 'Creative tools', 'https://www.adobe.com/'],
+      ['ElevenLabs', 'Voice / audio', 'https://elevenlabs.io/'],
+      ['Suno', 'Music', 'https://suno.com/'],
+      ['Apple', 'Products', 'https://www.apple.com/jp/'],
+    ],
+  },
+  {
+    label: 'CLOUD / DATA',
+    items: [
+      ['Google Cloud', 'Cloud', 'https://cloud.google.com/'],
+      ['AWS', 'Cloud', 'https://aws.amazon.com/'],
+      ['Snowflake', 'Data cloud', 'https://www.snowflake.com/'],
+      ['Databricks', 'Data + AI', 'https://www.databricks.com/'],
+    ],
+  },
+  {
+    label: 'LEARNING / CODING',
+    items: [
+      ['Udemy', 'Courses', 'https://www.udemy.com/'],
+      ['Coursera', 'Courses', 'https://www.coursera.org/'],
+      ['JetBrains', 'IDE / tools', 'https://www.jetbrains.com/'],
+      ['LeetCode', 'Algorithms', 'https://leetcode.com/'],
+      ['AtCoder', 'Competitive programming', 'https://atcoder.jp/'],
+      ['Kaggle', 'ML / competitions', 'https://www.kaggle.com/'],
+      ['ExamTopics', 'Exam practice', 'https://www.examtopics.com/'],
+      ['Progate', 'Programming learning', 'https://prog-8.com/'],
+      ['Juno', 'Python / Jupyter', 'https://juno.sh/'],
+    ],
+  },
+  {
+    label: 'ENGLISH',
+    items: [
+      ['Cambly', 'Speaking', 'https://www.cambly.com/'],
+      ['TOEIC', 'Official Japan', 'https://www.iibc-global.org/toeic.html'],
+      ['IELTS', 'Official', 'https://ielts.org/'],
+      ['ABC Learn English', 'English learning', 'https://www.abc.net.au/education/learn-english/14107098'],
+      ['TED Talks', 'Listening / ideas', 'https://www.ted.com/talks'],
+      ['Grammarly', 'Writing', 'https://www.grammarly.com/'],
+      ['Duolingo', 'Language learning', 'https://www.duolingo.com/'],
+      ['ELSA Speak', 'Pronunciation / speaking', 'https://elsaspeak.com/'],
+    ],
+  },
+];
 ---
+
 <aside class="right-rail">
-  <section class="profile-card">
-    <div class="profile-top">
-      <div class="avatar">ST</div>
+  <section class="resource-panel">
+    <div class="resource-head">
+      <span class="resource-dot"></span>
       <div>
-        <div class="profile-name">Seiji Tanimoto</div>
-        <div class="profile-role">AI & Data Consultant</div>
+        <small>RESOURCE HUB</small>
+        <h2>Tools & learning links</h2>
       </div>
     </div>
-    <p>Data Engineering × Machine Learning × Project Delivery。技術とビジネスの間を行き来しながら、学びを公開資産に変えています。</p>
-    <div class="profile-links">
-      <a href="https://github.com/seiji1997" target="_blank">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/seijitanimoto1997/" target="_blank">LinkedIn ↗</a>
-    </div>
-  </section>
 
-  <section class="side-card now-card">
-    <div class="side-card-head"><div class="rail-label">Now</div><span class="live-dot">LIVE</span></div>
-    <div class="now-list">
-      <div><small>LEARNING</small><strong>Snowflake</strong></div>
-      <div><small>BUILDING</small><strong>Tech Atlas</strong></div>
-      <div><small>THINKING</small><strong>AI × Engineering</strong></div>
-      <div><small>WORKING</small><strong>AI & Data</strong></div>
-    </div>
-  </section>
+    <div class="resource-groups">
+      {resourceGroups.map((group) => (
+        <section class="resource-group">
+          <div class="resource-label">{group.label}</div>
 
-  <section class="side-card">
-    <div class="rail-label">Snowflake 2026</div>
-    <div class="timeline-mini">
-      {certifications.map((cert) => (
-        <div class="timeline-mini-row">
-          <span class="timeline-dot"></span>
-          <div><strong>{cert.name}</strong><small>{cert.code}</small></div>
-          <time>{cert.date.slice(5)}</time>
-        </div>
+          <div class="resource-list">
+            {group.items.map(([name, meta, href]) => (
+              <a href={href} target="_blank" rel="noreferrer" class="resource-link">
+                <div>
+                  <strong>{name}</strong>
+                  <span>{meta}</span>
+                </div>
+                <i>↗</i>
+              </a>
+            ))}
+          </div>
+        </section>
       ))}
     </div>
   </section>
-
-  <section class="side-card principles-card">
-    <div class="rail-label">Principles</div>
-    <div class="principle-list">
-      {principles.map((p, i) => <div><span>0{i+1}</span><strong>{p}</strong></div>)}
-    </div>
-  </section>
 </aside>
+
+<style>
+  .resource-panel {
+    padding: 14px;
+    border: 1px solid rgba(190, 220, 240, .18);
+    border-radius: 17px;
+    background: linear-gradient(180deg, rgba(18, 31, 44, .92), rgba(10, 20, 30, .88));
+  }
+
+  .resource-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid rgba(190, 220, 240, .15);
+  }
+
+  .resource-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #68d4f8;
+    box-shadow: 0 0 12px rgba(104, 212, 248, .68);
+  }
+
+  .resource-head small,
+  .resource-label {
+    color: #708797;
+    font: 800 7px/1 ui-monospace, monospace;
+    letter-spacing: .13em;
+  }
+
+  .resource-head h2 {
+    margin: 3px 0 0;
+    color: #edf5f9;
+    font-size: 12px;
+  }
+
+  .resource-groups {
+    display: grid;
+    gap: 18px;
+    margin-top: 16px;
+  }
+
+  .resource-label {
+    margin-bottom: 7px;
+  }
+
+  .resource-list {
+    display: grid;
+    gap: 5px;
+  }
+
+  .resource-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 9px;
+    border: 1px solid rgba(190, 220, 240, .13);
+    border-radius: 8px;
+    background: rgba(14, 25, 36, .78);
+    transition: .18s ease;
+  }
+
+  .resource-link:hover {
+    border-color: rgba(104, 212, 248, .42);
+    background: rgba(22, 43, 57, .9);
+    transform: translateX(2px);
+  }
+
+  .resource-link strong {
+    display: block;
+    color: #cbd7de;
+    font-size: 9px;
+  }
+
+  .resource-link span {
+    display: block;
+    margin-top: 2px;
+    color: #6e8594;
+    font-size: 7px;
+  }
+
+  .resource-link i {
+    color: #67d2f8;
+    font-style: normal;
+    font-size: 9px;
+  }
+</style>

@@ -1,0 +1,27 @@
+{
+  "topics": [
+    "ai-ml",
+    "data-engineering",
+    "cloud",
+    "snowflake",
+    "engineering"
+  ],
+  "thoughts": [
+    "technology-engineering",
+    "work-career",
+    "learning-growth",
+    "life-interests"
+  ],
+  "snowflake_sections": [
+    "core",
+    "data-engineer",
+    "architect",
+    "architecture",
+    "data-engineering",
+    "storage-data",
+    "performance-cost",
+    "security-governance",
+    "sharing-integration",
+    "apps-development"
+  ]
+}

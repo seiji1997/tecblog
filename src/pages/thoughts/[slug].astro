@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { thoughts } from '../../data';
+
+export function getStaticPaths() {
+  return thoughts.map((thought) => ({
+    params: { slug: thought.slug },
+    props: { thought },
+  }));
+}
+
+const { thought } = Astro.props;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+---
+
+<BaseLayout title={`${thought.title} | Seiji Tech Atlas`}>
+  <main class="thought-page">
+    <a href={`${route('')}#thoughts`} class="back">← Back to Thoughts</a>
+
+    <section class="hero">
+      <div class="kicker">THINK / {thought.theme.toUpperCase()}</div>
+      <h1>{thought.title}</h1>
+      <p>{thought.excerpt}</p>
+
+      <div class="status">
+        <span></span>
+        UI READY · CONTENT TBD
+      </div>
+    </section>
+
+    <section class="frame-grid">
+      <article>
+        <span>01</span>
+        <h2>Notes</h2>
+        <p>TBD · short thoughts and observations.</p>
+      </article>
+
+      <article>
+        <span>02</span>
+        <h2>Essays</h2>
+        <p>TBD · longer-form writing and reflections.</p>
+      </article>
+
+      <article>
+        <span>03</span>
+        <h2>References</h2>
+        <p>TBD · books, articles, videos, and sources.</p>
+      </article>
+
+      <article>
+        <span>04</span>
+        <h2>Archive</h2>
+        <p>TBD · a growing record over time.</p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body) {
+    background:
+      radial-gradient(circle at 75% 10%, rgba(167, 139, 250, .12), transparent 30%),
+      #0a1119;
+  }
+
+  .thought-page {
+    width: min(1080px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 100px;
+  }
+
+  .back {
+    color: #8fa4b0;
+    font-size: .82rem;
+  }
+
+  .hero {
+    padding: 86px 0 64px;
+    border-bottom: 1px solid rgba(190, 220, 240, .18);
+  }
+
+  .kicker {
+    color: #a78bfa;
+    font: 800 .68rem/1 ui-monospace, monospace;
+    letter-spacing: .17em;
+  }
+
+  h1 {
+    margin: 14px 0 20px;
+    color: #f2f7fa;
+    font-size: clamp(3.2rem, 8vw, 6.4rem);
+    line-height: .9;
+    letter-spacing: -.065em;
+  }
+
+  .hero p {
+    max-width: 680px;
+    color: #a7b7c1;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .status {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 9px;
+    margin-top: 26px;
+    padding: 8px 12px;
+    border: 1px solid rgba(167, 139, 250, .35);
+    border-radius: 999px;
+    color: #c5bbeb;
+    font: 700 .64rem/1 ui-monospace, monospace;
+    letter-spacing: .08em;
+  }
+
+  .status span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a78bfa;
+    box-shadow: 0 0 12px rgba(167, 139, 250, .7);
+  }
+
+  .frame-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+    margin-top: 60px;
+  }
+
+  .frame-grid article {
+    min-height: 190px;
+    padding: 24px;
+    border: 1px solid rgba(190, 220, 240, .19);
+    border-radius: 16px;
+    background:
+      linear-gradient(145deg, rgba(18, 31, 44, .95), rgba(11, 21, 31, .95));
+  }
+
+  .frame-grid article > span {
+    color: #526b7b;
+    font: 700 .68rem/1 ui-monospace, monospace;
+  }
+
+  .frame-grid h2 {
+    margin: 28px 0 8px;
+    color: #eef6f9;
+  }
+
+  .frame-grid p {
+    color: #a78bfa;
+    font: 700 .66rem/1.5 ui-monospace, monospace;
+  }
+
+  @media (max-width: 700px) {
+    .frame-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,34 +1,248 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
-interface Props { title?: string; description?: string; }
-const { title = 'Seiji Tech Atlas', description = 'Knowledge, projects and thoughts around AI, Data Engineering, Snowflake and Cloud by Seiji Tanimoto.' } = Astro.props;
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Seiji Tech Atlas',
+  description = 'Personal knowledge atlas around AI, Data Engineering, Snowflake, Google Cloud, engineering and learning.',
+} = Astro.props;
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const quickLinks = [
+  { label: 'AI / ML', sub: 'AI', href: route('topics/ai-ml/'), external: false, icon: 'ai' },
+  { label: 'Data Engineering', sub: 'DE', href: route('topics/data-engineering/'), external: false, icon: 'de' },
+  { label: 'Google Cloud', sub: 'GC', href: route('topics/cloud/'), external: false, icon: 'gc' },
+  { label: 'Snowflake', sub: 'SF', href: route('topics/snowflake/'), external: false, icon: 'sf' },
+  { label: 'Engineering Tools', sub: 'ET', href: route('topics/engineering/'), external: false, icon: 'et' },
+  { label: 'GitHub', sub: 'GH', href: 'https://github.com/seiji1997', external: true, icon: 'gh' },
+  { label: 'LinkedIn', sub: 'in', href: 'https://www.linkedin.com/in/seijitanimoto1997/', external: true, icon: 'li' },
+  { label: 'Qiita', sub: 'Q', href: 'https://qiita.com/seiji1997', external: true, icon: 'qiita' },
+  { label: 'About', sub: 'ME', href: `${route('')}#about`, external: false, icon: 'about' },
+];
 ---
+
 <!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#080d14" />
+    <meta name="theme-color" content="#0a1119" />
     <title>{title}</title>
     <ClientRouter />
   </head>
+
   <body>
     <header class="topbar-wrap">
       <div class="topbar">
-        <a class="brand" href="/"><span class="brand-mark">ST</span><span><b>Seiji</b> Tech Atlas</span></a>
-        <div class="topbar-center">KNOWLEDGE · PROJECTS · THOUGHTS</div>
-        <div class="topbar-actions"><a href="/#thoughts">Thoughts</a><a href="/#projects">Projects</a><a href="https://github.com/seiji1997" target="_blank">GitHub ↗</a></div>
+        <a class="brand" href={route('')}>
+          <span class="brand-mark">ST</span>
+          <span><b>Seiji</b> Tech Atlas</span>
+        </a>
+
+        <nav class="quick-grid" aria-label="Quick links">
+          {quickLinks.map((item) => (
+            <a
+              class="quick-link"
+              href={item.href}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noreferrer' : undefined}
+            >
+              <span class={`quick-icon ${item.icon}`} aria-hidden="true">{item.sub}</span>
+              <span class="quick-label">{item.label}</span>
+              <i>{item.external ? '↗' : '→'}</i>
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
-    <main><slot /></main>
+
+    <main>
+      <slot />
+    </main>
+
     <footer class="footer">
       <div class="footer-inner shell-width">
         <span>© {new Date().getFullYear()} Seiji Tanimoto</span>
         <span>Knowledge should compound.</span>
-        <span>Astro · GitHub Pages · ¥0 / month</span>
+        <span>Personal knowledge atlas</span>
       </div>
     </footer>
   </body>
 </html>
+
+<style>
+  .topbar-wrap {
+    padding-top: 10px;
+  }
+
+  .topbar {
+    min-height: 68px;
+    grid-template-columns: 205px minmax(0, 1fr);
+    gap: 12px;
+    padding: 9px 11px;
+    border-color: rgba(190, 220, 240, .24);
+    background: rgba(10, 17, 25, .91);
+  }
+
+  .brand {
+    min-height: 48px;
+    padding: 0 7px;
+  }
+
+  .brand-mark {
+    border-color: rgba(106, 217, 232, .28);
+    background: linear-gradient(135deg, rgba(106, 217, 232, .19), rgba(167, 139, 250, .22));
+  }
+
+  .quick-grid {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(92px, 1fr));
+    gap: 6px;
+  }
+
+  .quick-link {
+    min-height: 46px;
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    border: 1px solid rgba(190, 220, 240, .16);
+    border-radius: 10px;
+    background: rgba(17, 29, 41, .76);
+    color: #aebdca;
+    font-size: 8.5px;
+    white-space: nowrap;
+    transition: .18s ease;
+  }
+
+  .quick-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    border: 1px solid rgba(190, 220, 240, .14);
+    font: 800 8px/1 ui-monospace, monospace;
+    letter-spacing: .02em;
+    color: #f3f8fb;
+    background: rgba(24, 39, 52, .95);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .quick-icon.ai {
+    background: linear-gradient(135deg, rgba(167, 139, 250, .92), rgba(105, 211, 248, .55));
+    color: #fff;
+  }
+
+  .quick-icon.de {
+    background: linear-gradient(135deg, rgba(52, 211, 153, .92), rgba(14, 116, 144, .65));
+    color: #062a24;
+  }
+
+  .quick-icon.gc {
+    background: linear-gradient(135deg, rgba(66, 133, 244, .9), rgba(251, 188, 5, .85));
+    color: #fff;
+  }
+
+  .quick-icon.sf {
+    background: linear-gradient(135deg, rgba(41, 208, 237, .95), rgba(80, 140, 255, .72));
+    color: #05202a;
+  }
+
+  .quick-icon.et {
+    background: linear-gradient(135deg, rgba(96, 165, 250, .9), rgba(15, 23, 42, .95));
+    color: #fff;
+  }
+
+  .quick-icon.gh {
+    background: linear-gradient(135deg, rgba(56, 65, 74, .98), rgba(15, 23, 42, .95));
+    color: #fff;
+  }
+
+  .quick-icon.li {
+    background: linear-gradient(135deg, rgba(10, 102, 194, .96), rgba(70, 146, 220, .82));
+    color: #fff;
+  }
+
+  .quick-icon.qiita {
+    background: linear-gradient(135deg, rgba(85, 197, 0, .96), rgba(44, 150, 0, .92));
+    color: #fff;
+  }
+
+  .quick-icon.about {
+    background: linear-gradient(135deg, rgba(111, 124, 136, .92), rgba(48, 66, 81, .95));
+    color: #fff;
+  }
+
+  .quick-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .quick-link i {
+    color: #67d2f8;
+    font-style: normal;
+    opacity: .68;
+  }
+
+  .quick-link:hover {
+    color: #f1f8fb;
+    border-color: rgba(105, 211, 248, .5);
+    background: rgba(25, 48, 64, .88);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1280px) {
+    .topbar {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .brand {
+      flex: 0 0 auto;
+    }
+
+    .quick-grid {
+      flex: 1 1 auto;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .quick-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .quick-link {
+      flex: 0 0 auto;
+      min-width: 120px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar {
+      gap: 6px;
+      padding: 7px;
+    }
+
+    .brand > span:last-child {
+      display: none;
+    }
+
+    .brand {
+      padding: 0;
+    }
+  }
+</style>

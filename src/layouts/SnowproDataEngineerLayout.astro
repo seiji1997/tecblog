@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import DeaNav from '../components/snowpro/dea/Nav.astro';
+import { exam, route } from '../data/snowproDataEngineer';
+import '../styles/snowproDataEngineer.css';
+interface Props { title: string; description?: string; active?: string; color?: string }
+const { title, description = 'DEA-C02の5ドメイン・22 Objectivesを、Coreの基礎から設計・診断へつなげる学習アトラス。', active = 'overview', color = '#68d4f8' } = Astro.props;
+---
+<BaseLayout title={`${title} | SnowPro Advanced DE | Seiji Tech Atlas`} description={description}>
+  <div class="dea" style={`--dea-accent:${color}`}>
+    <a class="dea-skip" href="#dea-content">本文へ移動</a>
+    <div class="dea-breadcrumb"><a href={route('topics/snowflake/')}>Snowflake</a><span>/</span><a href={route('topics/snowflake/core/')}>Core</a><span>→</span><span>Advanced Data Engineer</span></div>
+    <DeaNav active={active} />
+    <div id="dea-content" tabindex="-1"><slot /></div>
+    <footer class="dea-footnote">
+      <p>DEA-C02 · Study Guide更新 {exam.guideUpdatedAt} · 教材確認 {exam.reviewedAt}</p>
+      <p>公式Study Guideに基づく個人学習用の要約です。各機能のEdition・Region・制限はリンク先の公式Docsで確認できます。</p>
+      <a href={exam.studyGuideUrl} target="_blank" rel="noopener noreferrer">公式Study Guide ↗</a>
+    </footer>
+    <noscript><p class="dea-notice">本文とリンクはそのまま読めます。検索と自己チェックの保存にはJavaScriptを有効にしてください。</p></noscript>
+  </div>
+</BaseLayout>
+<script>import '../scripts/snowproDataEngineer';</script>

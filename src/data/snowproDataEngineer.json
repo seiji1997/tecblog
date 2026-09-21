@@ -1,0 +1,3329 @@
+{
+  "exam": {
+    "code": "DEA-C02",
+    "title": "SnowPro Advanced: Data Engineer",
+    "reviewedAt": "2026-09-21",
+    "guideUpdatedAt": "2026-03-06",
+    "studyGuideUrl": "https://publish-p93462-e887935.adobeaemcloud.com/content/dam/snowpro-sg/SnowProDataEngineerStudyGuide.pdf",
+    "certificationUrl": "https://learn.snowflake.com/en/certifications/snowpro-adv-dea-jpn-C02/"
+  },
+  "domains": [
+    {
+      "id": "D1",
+      "slug": "data-movement",
+      "title": "Data Movement",
+      "label": "データ移動",
+      "weight": 28,
+      "color": "#68d4f8",
+      "summary": "取込から公開まで、データを届ける方式と障害時の再開点を選ぶ。",
+      "delta": "入力・出力の基本機能から、鮮度・再送・外部連携を含む方式選択へ。",
+      "objectiveIds": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4",
+        "1.5",
+        "1.6",
+        "1.7"
+      ]
+    },
+    {
+      "id": "D2",
+      "slug": "performance-optimization",
+      "title": "Performance Optimization",
+      "label": "パフォーマンス最適化",
+      "weight": 19,
+      "color": "#7ee6b6",
+      "summary": "Profileと監視情報を読み、性能・鮮度・費用を同時に改善する。",
+      "delta": "高速化機能の定義から、原因診断・測定・費用対効果の判断へ。",
+      "objectiveIds": [
+        "2.1",
+        "2.2",
+        "2.3"
+      ]
+    },
+    {
+      "id": "D3",
+      "slug": "storage-data-protection",
+      "title": "Storage and Data Protection",
+      "label": "ストレージとデータ保護",
+      "weight": 14,
+      "color": "#f6cf73",
+      "summary": "データ配置、保持、Clone、複製を使って復旧可能な環境を設計する。",
+      "delta": "Time TravelやCloneの基本から、RPO/RTO・権限・変更管理へ。",
+      "objectiveIds": [
+        "3.1",
+        "3.2",
+        "3.3"
+      ]
+    },
+    {
+      "id": "D4",
+      "slug": "data-governance",
+      "title": "Data Governance",
+      "label": "データガバナンス",
+      "weight": 14,
+      "color": "#bc9af5",
+      "summary": "分類・品質・ポリシー・共同分析で、安全なデータ利用を支える。",
+      "delta": "RoleやPolicyの定義から、適用・検証・監視を含む統制へ。",
+      "objectiveIds": [
+        "4.1",
+        "4.2"
+      ]
+    },
+    {
+      "id": "D5",
+      "slug": "data-transformation",
+      "title": "Data Transformation",
+      "label": "データ変換",
+      "weight": 25,
+      "color": "#f498b9",
+      "summary": "SQL・Snowpark・手続き・AIを選び、再現性のある変換処理を作る。",
+      "delta": "SQLと開発機能の紹介から、実行境界・権限・テスト・運用へ。",
+      "objectiveIds": [
+        "5.1",
+        "5.2",
+        "5.3",
+        "5.4",
+        "5.5",
+        "5.6",
+        "5.7"
+      ]
+    }
+  ],
+  "objectives": [
+    {
+      "id": "1.1",
+      "domain": "D1",
+      "summary": "与えられたデータセットをSnowflakeへロードする際の方式・影響を判断する。",
+      "topics": [
+        "Bulk COPY",
+        "Snowpipe",
+        "Streaming",
+        "データ量・鮮度",
+        "ロードの影響"
+      ],
+      "lessonIds": [
+        "DEA-DM-01"
+      ]
+    },
+    {
+      "id": "1.2",
+      "domain": "D1",
+      "summary": "各種フォーマット、スキーマ検出、Stage、Integration、暗号化、圧縮、メタデータを扱う。",
+      "topics": [
+        "File Format",
+        "INFER_SCHEMA",
+        "Stage",
+        "Storage Integration",
+        "暗号化・圧縮",
+        "METADATA$列"
+      ],
+      "lessonIds": [
+        "DEA-DM-02"
+      ]
+    },
+    {
+      "id": "1.3",
+      "domain": "D1",
+      "summary": "取込エラーの原因を特定し、適切な復旧方法を選ぶ。",
+      "topics": [
+        "COPY_HISTORY",
+        "VALIDATE",
+        "VALIDATE_PIPE_LOAD",
+        "エラー原因",
+        "対象限定の再処理"
+      ],
+      "lessonIds": [
+        "DEA-DM-03"
+      ]
+    },
+    {
+      "id": "1.4",
+      "domain": "D1",
+      "summary": "継続パイプラインを設計・構築・診断する。Tasks、Streams、Dynamic Tables、Materialized Views、Snowpipe、Streaming、SQL API、Openflow、Notebooks、Scriptingを含む。",
+      "topics": [
+        "Tasks",
+        "Streams",
+        "Dynamic Tables",
+        "Materialized Views",
+        "Snowpipe REST / Auto-ingest",
+        "Streaming / Kafka",
+        "SQL API",
+        "Openflow",
+        "Notebooks",
+        "UDF / Scripting"
+      ],
+      "lessonIds": [
+        "DEA-DM-04",
+        "DEA-DM-05",
+        "DEA-DM-06"
+      ]
+    },
+    {
+      "id": "1.5",
+      "domain": "D1",
+      "summary": "Kafka、Spark、Python、Native Connectorを導入・設定・利用する。",
+      "topics": [
+        "Kafka Connector",
+        "Spark Connector",
+        "Python Connector",
+        "Native Connectors",
+        "認証・互換性"
+      ],
+      "lessonIds": [
+        "DEA-DM-07"
+      ]
+    },
+    {
+      "id": "1.6",
+      "domain": "D1",
+      "summary": "共有・Listing・View・行フィルタ・Streamlitを組み合わせた共有／消費ソリューションを設計する。",
+      "topics": [
+        "Share / Clone",
+        "GRANT",
+        "Listing",
+        "Auto-fulfillment",
+        "Secure View",
+        "行フィルタ",
+        "Streamlit"
+      ],
+      "lessonIds": [
+        "DEA-DM-08"
+      ]
+    },
+    {
+      "id": "1.7",
+      "domain": "D1",
+      "summary": "External／Iceberg／Hybrid Table、Horizon Catalog、Schema Evolution、Unloadを管理する。",
+      "topics": [
+        "External / Iceberg / Hybrid",
+        "Horizon",
+        "Schema Evolution",
+        "Unload"
+      ],
+      "lessonIds": [
+        "DEA-DM-09"
+      ]
+    },
+    {
+      "id": "2.1",
+      "domain": "D2",
+      "summary": "遅いクエリを見つけ、テレメトリから原因を特定して改善する。",
+      "topics": [
+        "Query History",
+        "Query Profile",
+        "Scan / Join / Spill",
+        "Queue",
+        "改善の検証"
+      ],
+      "lessonIds": [
+        "DEA-PO-01"
+      ]
+    },
+    {
+      "id": "2.2",
+      "domain": "D2",
+      "summary": "Warehouse、クラスタリング、MV、SOS、QAS、キャッシュ、利用状況、費用を比較して最適化する。",
+      "topics": [
+        "Scale up / out",
+        "Snowpark-optimized",
+        "Clustering",
+        "MV / SOS / QAS",
+        "Cache",
+        "ACCOUNT_USAGE",
+        "Resource Monitor",
+        "Storage費用"
+      ],
+      "lessonIds": [
+        "DEA-PO-02",
+        "DEA-PO-03"
+      ]
+    },
+    {
+      "id": "2.3",
+      "domain": "D2",
+      "summary": "Tasks、Streams、Streaming、Alerts、Dynamic Tables、通知、DMFで継続パイプラインを監視する。",
+      "topics": [
+        "Task graph監視",
+        "Stream staleness",
+        "Streaming監視",
+        "Dynamic Table refresh",
+        "Alert・通知",
+        "DMF"
+      ],
+      "lessonIds": [
+        "DEA-PO-04"
+      ]
+    },
+    {
+      "id": "3.1",
+      "domain": "D3",
+      "summary": "Time Travel、Streamsへの影響、Fail-safe、クロスリージョン／クラウド複製を扱う。",
+      "topics": [
+        "Time Travel",
+        "Retention",
+        "Streamへの影響",
+        "Fail-safe",
+        "Cross-region / cloud replication",
+        "RPO / RTO"
+      ],
+      "lessonIds": [
+        "DEA-SP-01"
+      ]
+    },
+    {
+      "id": "3.2",
+      "domain": "D3",
+      "summary": "システム関数でクラスタリング深度・キー・Automatic Clusteringを評価する。",
+      "topics": [
+        "Micro-partition",
+        "SYSTEM$CLUSTERING_DEPTH",
+        "SYSTEM$CLUSTERING_INFORMATION",
+        "Cluster key",
+        "Automatic Clustering"
+      ],
+      "lessonIds": [
+        "DEA-SP-02"
+      ]
+    },
+    {
+      "id": "3.3",
+      "domain": "D3",
+      "summary": "Time TravelとCloneで開発環境、変更検証、ロールバックを設計する。",
+      "topics": [
+        "Zero-copy Clone",
+        "COPY GRANTS",
+        "開発環境",
+        "変更検証",
+        "Rollback / UNDROP"
+      ],
+      "lessonIds": [
+        "DEA-SP-03"
+      ]
+    },
+    {
+      "id": "4.1",
+      "domain": "D4",
+      "summary": "タグ、分類、リネージ、依存関係、品質を使ってデータを監視する。",
+      "topics": [
+        "Classification",
+        "Tag",
+        "Lineage",
+        "Object dependencies",
+        "Access History",
+        "DMF"
+      ],
+      "lessonIds": [
+        "DEA-GV-01"
+      ]
+    },
+    {
+      "id": "4.2",
+      "domain": "D4",
+      "summary": "Horizon、列／行保護、Masking、Tokenization、Projection／Aggregation Policy、Clean Roomsを扱う。",
+      "topics": [
+        "Horizon federation",
+        "Masking",
+        "External Tokenization",
+        "Projection",
+        "Row Access",
+        "Aggregation",
+        "Tag-based Masking",
+        "DDL / RBAC",
+        "Clean Rooms UI / API"
+      ],
+      "lessonIds": [
+        "DEA-GV-02",
+        "DEA-GV-03"
+      ]
+    },
+    {
+      "id": "5.1",
+      "domain": "D5",
+      "summary": "Snowpark／Secure／SQL／JavaScript UDF、UDTF、UDAFを選択・利用する。",
+      "topics": [
+        "SQL / JavaScript / Snowpark UDF",
+        "Secure UDF",
+        "UDTF",
+        "UDAF",
+        "Runtime・Package"
+      ],
+      "lessonIds": [
+        "DEA-DT-01"
+      ]
+    },
+    {
+      "id": "5.2",
+      "domain": "D5",
+      "summary": "External Functionを安全に設計・作成する。",
+      "topics": [
+        "External Function",
+        "API Integration",
+        "Proxy",
+        "Batch / Retry",
+        "Secure function"
+      ],
+      "lessonIds": [
+        "DEA-DT-02"
+      ]
+    },
+    {
+      "id": "5.3",
+      "domain": "D5",
+      "summary": "Snowpark／SQL Scripting／JavaScriptのStored Procedureとトランザクションを設計する。",
+      "topics": [
+        "Snowpark / SQL / JavaScript Procedure",
+        "Owner / Caller rights",
+        "Scripting",
+        "Transaction",
+        "DDL・例外"
+      ],
+      "lessonIds": [
+        "DEA-DT-03"
+      ]
+    },
+    {
+      "id": "5.4",
+      "domain": "D5",
+      "summary": "半構造化データと構造化データを相互変換する。",
+      "topics": [
+        "VARIANT",
+        "Path",
+        "FLATTEN",
+        "CAST / TRY",
+        "SQL NULL / JSON null",
+        "OBJECT_CONSTRUCT",
+        "ARRAY_AGG"
+      ],
+      "lessonIds": [
+        "DEA-DT-04"
+      ]
+    },
+    {
+      "id": "5.5",
+      "domain": "D5",
+      "summary": "非構造化データ、URL、Directory Table、REST API、Semantic View、Cortex AIを処理へ組み込む。",
+      "topics": [
+        "Directory Table",
+        "URL types",
+        "REST",
+        "Semantic View",
+        "Cortex AI",
+        "文書・マルチモーダル",
+        "費用・品質"
+      ],
+      "lessonIds": [
+        "DEA-DT-05"
+      ]
+    },
+    {
+      "id": "5.6",
+      "domain": "D5",
+      "summary": "Workspaces、Notebooks、Git、dbt Projects、デプロイ、テスト、環境管理を運用する。",
+      "topics": [
+        "Workspaces",
+        "Notebooks",
+        "Git",
+        "dbt Projects",
+        "Test",
+        "Deployment",
+        "環境管理"
+      ],
+      "lessonIds": [
+        "DEA-DT-06"
+      ]
+    },
+    {
+      "id": "5.7",
+      "domain": "D5",
+      "summary": "SnowparkアーキテクチャとDataFrame APIを使って変換する。",
+      "topics": [
+        "Snowpark architecture",
+        "DataFrame",
+        "Lazy evaluation",
+        "filter / join / aggregate",
+        "Action",
+        "collect"
+      ],
+      "lessonIds": [
+        "DEA-DT-07"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "DEA-M-01",
+      "slug": "dea-m-01-advanced-data-engineer-study-map",
+      "domain": "MAP",
+      "title": "Advanced Data Engineer Study Map",
+      "objectiveIds": [],
+      "goal": "Coreから引き継ぐ基礎と、DEA-C02の5ドメイン・22 Objectives・学習順を一枚で把握する。",
+      "coreIds": [
+        "M-01",
+        "LC-05",
+        "PT-08",
+        "PT-05"
+      ],
+      "sections": [
+        {
+          "title": "5ドメインと配点 28 / 19 / 14 / 14 / 25%",
+          "body": "学習の基準はDEA-C02のStudy Guide。D1は取込と提供、D2は診断と効率、D3は復旧と物理配置、D4は利用統制、D5は変換と開発を担当する。配点だけでなく、各Objectiveの判断を自分の言葉で説明できるか確認する。"
+        },
+        {
+          "title": "Source → Move → Transform → Protect → Serve の流れ",
+          "body": "一つのデータセットについて、入力元、必要な鮮度、変換、保管、公開先、障害時の再開地点を順に書く。たとえば日次ファイルとKafkaイベントでは、取込の単位も復旧方法も異なるが、下流の品質・権限・監視はどちらにも必要になる。"
+        },
+        {
+          "title": "Core再利用リンクとAdvanced差分",
+          "body": "Coreで学んだ用語と基本構造はリンク先で復習する。Advancedでは、要件を根拠に方式を選び、他の候補を採用しなかった理由、失敗時の影響、検証方法まで説明する。単に機能名を知っている状態から設計を評価できる状態へ進む。"
+        },
+        {
+          "title": "理解 → 図解 → Lab → 復習の学習フロー",
+          "body": "まずD1とD5でパイプラインを組み、D2で遅延と費用を測り、D3・D4で復旧と保護を確認する。各教材の確認問題、Practice Notes、Objective自己チェックを使って弱点へ戻る。画像が未掲載でも本文・比較表・演習で学習を進められる。"
+        }
+      ],
+      "scenario": "日次ファイルと随時イベントを同じ分析用途へ届ける構成を、5ドメインへ対応付ける。",
+      "pitfall": "公式概要の5つの能力は、Study Guideの5ドメイン名と一対一には対応しない。",
+      "takeaway": "5ドメインを、一つのパイプラインの設計・検証に結び付ける。",
+      "comparison": [
+        [
+          "D1 + D5",
+          "データを届けて変換する",
+          "入力条件・鮮度・再実行・実行場所"
+        ],
+        [
+          "D2",
+          "性能と費用を評価する",
+          "測定条件・ボトルネック・改善後の数値"
+        ],
+        [
+          "D3 + D4",
+          "復旧と利用統制を設計する",
+          "RPO/RTO・保持・権限・公開境界"
+        ]
+      ],
+      "review": {
+        "question": "準リアルタイムに届くデータを別アカウントへ公開するとき、どの分野を組み合わせる？",
+        "answer": "D1でStreamingと共有を選び、D5で変換、D2で鮮度・失敗・費用を監視する。D3で再実行や復旧のための保持を決め、D4で公開する行・列と監査を設計する。ドメインは独立した機能一覧ではなく、同じ設計を異なる観点から評価するもの。"
+      },
+      "docKeys": [],
+      "imageFolder": "master",
+      "imageBasename": "dea-m-01-advanced-data-engineer-study-map",
+      "imageAlt": "DEA-M-01 Advanced Data Engineer Study Map。Coreから引き継ぐ基礎と、DEA-C02の5ドメイン・22 Objectives・学習順を一枚で把握する。"
+    },
+    {
+      "id": "DEA-DM-01",
+      "slug": "dea-dm-01-loading-pattern-impact",
+      "domain": "D1",
+      "title": "Loading Pattern & Impact",
+      "objectiveIds": [
+        "1.1"
+      ],
+      "goal": "データ量・鮮度・入力形態・再実行要件からロード方式を選ぶ。",
+      "coreIds": [
+        "LC-03",
+        "LC-05",
+        "LC-07"
+      ],
+      "sections": [
+        {
+          "title": "入力条件：量・頻度・形式・遅延目標",
+          "body": "最初にデータの形、1回の量、到着頻度、許容遅延、再送できる期間を整理する。レイクのファイル、APIの応答、オンプレミスの変更ログでは、Snowflakeへ渡す前の取得処理も異なる。ネットワークと認証の経路を含めて入力条件を定義する。"
+        },
+        {
+          "title": "選択肢：Bulk COPY / Snowpipe / Streaming",
+          "body": "まとまったファイルはWarehouseでCOPY INTOを実行するバルクロードが候補になる。ファイル到着に応じて継続取込するならSnowpipe、アプリやイベントから行を直接送るならSnowpipe Streamingを検討する。StreamingはファイルをStageへ置くことを前提にしない。"
+        },
+        {
+          "title": "影響：Compute・費用・運用責任",
+          "body": "バルクではWarehouseのサイズ・並列性・稼働時間を利用者が調整する。SnowpipeやStreamingは利用方式に対応したサービス費用とクライアント運用を確認する。取込の低遅延化だけでなく、下流の変換と提供まで含めた鮮度を測る。"
+        },
+        {
+          "title": "検証：履歴・重複・再実行",
+          "body": "ロード履歴による同一ファイルの扱いと、業務キーが重複しないことは別の問題。成功件数、ソースとの照合、再実行対象、障害時に再送できる位置を決める。要件を満たす方式の中から費用と運用負荷を比較する。"
+        }
+      ],
+      "scenario": "夜間の大規模ファイルと秒単位イベントで方式を選び分ける。",
+      "pitfall": "最速・最安の方式は条件次第。取込だけでなく下流の鮮度と再処理まで評価する。",
+      "takeaway": "量・鮮度・入力単位・復旧条件を先に決めて方式を選ぶ。",
+      "comparison": [
+        [
+          "Bulk COPY",
+          "日次・大規模ファイル、制御したバッチ",
+          "Warehouse・ファイル分割・再ロード対象"
+        ],
+        [
+          "Snowpipe",
+          "ファイル到着に応じた継続ロード",
+          "通知・Pipe・ファイル履歴"
+        ],
+        [
+          "Snowpipe Streaming",
+          "行単位イベントの継続送信",
+          "Channel・コミット・再開位置"
+        ]
+      ],
+      "review": {
+        "question": "イベントを毎回ファイルにまとめてからSnowpipeに渡しているが、鮮度が不足する。何を調べる？",
+        "answer": "ファイル生成待ち、通知、ロード、変換の各遅延を測る。生成待ちが支配的ならStreamingを検討するが、送信側のリトライ・オフセット管理と下流処理の鮮度も設計する。サービス名を変えるだけでEnd-to-Endの目標を達成できるとは限らない。"
+      },
+      "docKeys": [
+        "load",
+        "copy",
+        "streaming"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-01-loading-pattern-impact",
+      "imageAlt": "DEA-DM-01 Loading Pattern & Impact。データ量・鮮度・入力形態・再実行要件からロード方式を選ぶ。"
+    },
+    {
+      "id": "DEA-DM-02",
+      "slug": "dea-dm-02-formats-stages-schema-detection",
+      "domain": "D1",
+      "title": "Formats, Stages & Schema Detection",
+      "objectiveIds": [
+        "1.2"
+      ],
+      "goal": "形式、Stage、Integration、暗号化、圧縮、スキーマ検出、ファイルメタデータを一つの経路として説明する。",
+      "coreIds": [
+        "LC-01",
+        "LC-02",
+        "LC-06",
+        "AG-03"
+      ],
+      "sections": [
+        {
+          "title": "Cloud storage → Integration → Stage → File Format",
+          "body": "Stageはファイルの場所とアクセス設定、File Formatは解析ルール、Storage Integrationは外部クラウドストレージへアクセスする信頼関係を担う。外部Stageではクラウド側IAMとSnowflake側の権限を両方確認する。認証情報をSQLに直接埋め込む設計を避ける。"
+        },
+        {
+          "title": "INFER_SCHEMAと初期テーブル設計",
+          "body": "INFER_SCHEMAで対応形式の列と型を調べ、CREATE TABLE USING TEMPLATEなどの初期設計に利用できる。検出結果はサンプリングやファイル群に依存するため、欠損・型の揺れ・列名・大文字小文字を確認する。自動検出と継続的なSchema Evolutionは別の工程。 ロードの代表形式はCSV、JSON、Avro、ORC、Parquet、XML。形式ごとにスキーマ検出・圧縮・半構造化型の対応が異なる。"
+        },
+        {
+          "title": "暗号化・圧縮・解析設定の境界",
+          "body": "CSVの区切り・引用符・NULL表現、JSONの外側配列、Parquetの型、文字コード、圧縮と暗号化を別々に切り分ける。クラウド保存時の暗号化とクライアント側暗号化では鍵の管理位置が違う。URLも認証・有効期間の異なる種類を区別する。"
+        },
+        {
+          "title": "METADATA$列とファイル追跡",
+          "body": "METADATA$FILENAME、METADATA$FILE_ROW_NUMBER、METADATA$FILE_LAST_MODIFIEDなどを取込時に保持すると、問題の行をソースファイルへ戻せる。業務データだけでなく、処理時刻・バッチ識別子も残すと件数照合と再実行範囲の判定がしやすい。"
+        }
+      ],
+      "scenario": "新規Parquetデータを検出し、安全な外部Stage経由でロードする。",
+      "pitfall": "クラウド側IAM、Snowflake権限、暗号化、解析設定は別々の確認箇所。設定手順はクラウドごとに異なる。",
+      "takeaway": "場所・信頼関係・解析・追跡の4つを分けて設計する。",
+      "comparison": [
+        [
+          "Stage",
+          "どの場所から読むか",
+          "URL・Integration・USAGE権限"
+        ],
+        [
+          "File Format",
+          "バイト列をどう解釈するか",
+          "区切り・圧縮・NULL・型"
+        ],
+        [
+          "INFER_SCHEMA",
+          "初期スキーマを調べる",
+          "対応形式・検出対象・型の検証"
+        ],
+        [
+          "METADATA$列",
+          "元ファイルへ追跡する",
+          "ロード先へ明示的に保持"
+        ]
+      ],
+      "review": {
+        "question": "ParquetのStage一覧は見えるがCOPYで権限エラーになる。形式の変更から始めるべき？",
+        "answer": "エラー箇所を特定し、Stage・Integrationの権限、クラウド側の読取り権限、暗号鍵へのアクセスを確認する。一覧取得とオブジェクト読取りが同じ権限条件とは限らない。形式エラーが示されてから型や解析設定を調べる。"
+      },
+      "docKeys": [
+        "infer",
+        "stage",
+        "integration",
+        "metadata"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-02-formats-stages-schema-detection",
+      "imageAlt": "DEA-DM-02 Formats, Stages & Schema Detection。形式、Stage、Integration、暗号化、圧縮、スキーマ検出、ファイルメタデータを一つの経路として説明する。"
+    },
+    {
+      "id": "DEA-DM-03",
+      "slug": "dea-dm-03-ingestion-troubleshooting-replay",
+      "domain": "D1",
+      "title": "Ingestion Troubleshooting & Replay",
+      "objectiveIds": [
+        "1.3"
+      ],
+      "goal": "取込失敗の場所を特定し、成功済みデータを壊さずに再処理する。",
+      "coreIds": [
+        "LC-02",
+        "LC-03",
+        "PT-05"
+      ],
+      "sections": [
+        {
+          "title": "症状：未ロード・一部失敗・不正行",
+          "body": "ファイルが到着していない、Snowflakeから見えない、通知が届かない、COPYが失敗する、取込後の値が不正という各段階を切り分ける。時刻・Stageパス・ファイル名・Pipe名・Query IDを揃え、影響のある対象を限定する。"
+        },
+        {
+          "title": "観測：COPY_HISTORY / VALIDATE / PIPE status",
+          "body": "COPY_HISTORYでファイルごとの状態と件数を調べ、VALIDATEで対応するCOPYのエラーを確認する。SnowpipeのロードエラーにはVALIDATE_PIPE_LOADを利用する。SYSTEM$PIPE_STATUSなどでPipe側の状態も調べる。各履歴の保持期間・反映遅延・対象操作を確認する。"
+        },
+        {
+          "title": "原因：形式・権限・パス・通知",
+          "body": "File Format不一致、型変換、列数、権限、クラウド通知、パス指定の順に、実際のエラー情報から仮説を絞る。ON_ERRORの動作が「ファイル全体を止める」のか「不正行を扱う」のかを確認し、成功件数だけで完全性を判断しない。"
+        },
+        {
+          "title": "復旧：対象限定・再投入・結果検証",
+          "body": "修正後は失敗したファイルや行を限定して再処理し、ロード件数と業務キーを照合する。FORCE = TRUEはロード済みファイルの再処理にもつながるため、全対象へ安易に適用しない。別領域で検証し、重複除去の条件を明示してから反映する。"
+        }
+      ],
+      "scenario": "100ファイル中3ファイルだけ失敗したロードを安全に復旧する。",
+      "pitfall": "FORCE再ロードは重複を生む場合がある。ロード履歴と業務キーの重複を分けて確認する。",
+      "takeaway": "観測で失敗範囲を絞り、最小単位で再処理して照合する。",
+      "comparison": [
+        [
+          "未到着・未検出",
+          "ソース・Stage・通知の観測",
+          "パスと到着時刻を照合"
+        ],
+        [
+          "解析・型エラー",
+          "COPY_HISTORY / VALIDATE",
+          "File Formatと問題の行を確認"
+        ],
+        [
+          "Snowpipeの失敗",
+          "VALIDATE_PIPE_LOAD / Pipe状態",
+          "通知とロード実行を切り分け"
+        ],
+        [
+          "再ロード",
+          "失敗対象を限定",
+          "履歴と業務重複を両方検証"
+        ]
+      ],
+      "review": {
+        "question": "100ファイルのうち3ファイルだけ失敗。全ファイルをFORCEで再ロードしてよい？",
+        "answer": "まず3ファイルの失敗理由を修正し、その対象だけを再処理する。成功済み97ファイルを強制ロードすると業務データが重複し得る。ロード履歴と行数、キー単位の照合を行い、取りこぼしと二重取込の両方を確認する。"
+      },
+      "docKeys": [
+        "copy_history",
+        "validate",
+        "pipe_validate"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-03-ingestion-troubleshooting-replay",
+      "imageAlt": "DEA-DM-03 Ingestion Troubleshooting & Replay。取込失敗の場所を特定し、成功済みデータを壊さずに再処理する。"
+    },
+    {
+      "id": "DEA-DM-04",
+      "slug": "dea-dm-04-continuous-pipeline-orchestration",
+      "domain": "D1",
+      "title": "Continuous Pipeline Orchestration",
+      "objectiveIds": [
+        "1.4"
+      ],
+      "goal": "Tasks、Streams、Dynamic Tables、Materialized Views、Snowpipeの責任を比較し、継続処理を設計する。",
+      "coreIds": [
+        "LC-05",
+        "PT-08",
+        "PT-06"
+      ],
+      "sections": [
+        {
+          "title": "取込：Stage / Snowpipe",
+          "body": "ファイル取込はStageとSnowpipe、明示的なバッチはCOPYが担当する。その後の変換を誰が起動し、どの変更を処理するかを別に決める。取込の成功と業務テーブルの更新成功を同じ状態として扱わない。 SnowpipeのAuto-ingestは対応するクラウド通知で到着を検知し、Snowpipe REST APIはクライアントからファイル取込を依頼する経路。行を直接送るStreamingとも、一般のSQLを実行するSQL APIとも区別する。"
+        },
+        {
+          "title": "変更：Streams / CDC",
+          "body": "Streamはソースの変更を読むためのオフセットを保持し、データの独立したバックアップではない。SELECTで読むだけでは消費されず、Streamを使うDMLのトランザクションがコミットされると位置が進む。複数の独立した消費処理には個別のStreamを設ける。"
+        },
+        {
+          "title": "変換：Tasks / Dynamic Tables",
+          "body": "TaskはSQLやProcedureの起動・依存関係を制御する。Task graphは実行順を表すが、グラフ全体が一つのトランザクションになるわけではない。Dynamic Tableは結果の定義とTarget Lagから更新を管理するため、明示的な処理手順が必要か、宣言的な結果を維持したいかで選ぶ。"
+        },
+        {
+          "title": "提供高速化：Materialized Views",
+          "body": "Materialized Viewは対応する問い合わせ結果を保守し、読み出しを速める仕組み。一般的な取込・任意の処理順序を管理する道具とは役割が違う。Target Lagは鮮度の目標であり、すべての状況での完了時刻を保証する値ではない。依存先の更新と失敗も監視する。"
+        }
+      ],
+      "scenario": "到着イベントから集計テーブルまでを鮮度要件付きで設計する。",
+      "pitfall": "Stream、Task、Dynamic Table、Materialized Viewは役割が異なり、組み合わせて使える。",
+      "takeaway": "変更の検出、処理の起動、結果の維持を区別する。",
+      "comparison": [
+        [
+          "Stream + Task",
+          "CDCと明示的な処理制御",
+          "消費・再実行・Task graphの失敗"
+        ],
+        [
+          "Dynamic Table",
+          "宣言したクエリ結果の継続更新",
+          "Target Lag・Refresh mode・依存関係"
+        ],
+        [
+          "Materialized View",
+          "適用可能な反復クエリの高速化",
+          "対応SQL・更新負荷・維持費"
+        ]
+      ],
+      "review": {
+        "question": "同じStreamを二つの独立したTaskで順に消費すると、両方が同じ変更を処理できる？",
+        "answer": "先のDMLがコミットしてStreamの位置を進めると、後の処理は同じ変更集合を読めない。独立した消費者ごとにStreamを作るか、一度取得した変更を共有する中間データへ保存する。単純なSELECTと消費するDMLの違いも確認する。"
+      },
+      "docKeys": [
+        "tasks",
+        "streams",
+        "dynamic",
+        "mv",
+        "pipe"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-04-continuous-pipeline-orchestration",
+      "imageAlt": "DEA-DM-04 Continuous Pipeline Orchestration。Tasks、Streams、Dynamic Tables、Materialized Views、Snowpipeの責任を比較し、継続処理を設計する。"
+    },
+    {
+      "id": "DEA-DM-05",
+      "slug": "dea-dm-05-streaming-kafka-recovery-boundaries",
+      "domain": "D1",
+      "title": "Streaming, Kafka & Recovery Boundaries",
+      "objectiveIds": [
+        "1.4"
+      ],
+      "goal": "Snowpipe StreamingとKafka Connectorの送信・コミット・再送境界を追う。",
+      "coreIds": [
+        "LC-05",
+        "LC-07",
+        "PT-08"
+      ],
+      "sections": [
+        {
+          "title": "Producer / Kafka → Connector・SDK",
+          "body": "Kafka ConnectorはKafkaとSnowflakeの接続を担当し、Snowpipe StreamingはSnowflakeへ行を送る取込方式。Connectorがどの取込方式・バージョンを利用しているかを最初に確認する。SDKを使うアプリではソースの再読取り機能も自分で設計する。"
+        },
+        {
+          "title": "Channel・Offset・Commitの状態",
+          "body": "Channel内の送信位置、Snowflake側のコミット済み位置、Kafka側のオフセットを分けて観測する。送信APIの成功だけで下流のデータ提供まで完了したと判断しない。順序と重複制御がどのChannel・Partitionの範囲で成立するかを明示する。"
+        },
+        {
+          "title": "切断・再起動・再送の時系列",
+          "body": "再起動時はコミット済み位置を確認し、未確定の入力を再送できるようにする。オフセットトークンの扱い、再接続、スキーマ不一致、エラー行の隔離などは選択したAPIとConnectorに従う。全方式へ一律にExactly-onceを宣言しない。"
+        },
+        {
+          "title": "下流での重複・順序・品質確認",
+          "body": "取込境界で重複が抑えられていても、別ソースや別Channelから同じ業務イベントが来る場合がある。イベントID、業務キー、イベント時刻で完全性・遅延・重複を検証する。ソース保持期間より長い停止が起きた場合の再取得手順も決める。"
+        }
+      ],
+      "scenario": "送信直後にクライアントが落ちた場合の再開地点を決める。",
+      "pitfall": "Exactly-onceや順序の保証は、利用するAPI・Connector・Channelの条件と範囲を確認する。",
+      "takeaway": "送信・確定・再開の境界を、利用するAPIごとに明示する。",
+      "comparison": [
+        [
+          "送信",
+          "クライアントがデータを渡す",
+          "送信成功と永続化を区別"
+        ],
+        [
+          "コミット",
+          "Snowflake側の確定位置",
+          "API・Channelの保証範囲"
+        ],
+        [
+          "再開",
+          "ソースの再読取り位置を選ぶ",
+          "確定済み位置と保持期間"
+        ],
+        [
+          "業務照合",
+          "最終テーブルの正しさを確認",
+          "イベントID・欠損・遅延"
+        ]
+      ],
+      "review": {
+        "question": "送信直後、ソース側のオフセット保存前にクライアントが停止した。どこから再開する？",
+        "answer": "選択したStreaming API／ConnectorでSnowflakeのコミット済み位置を確認し、それとソース位置を整合させる。最後に送信を試みた位置だけでは判断しない。再送が必要な範囲を保持し、下流でも業務キー単位に欠損と重複を確認する。"
+      },
+      "docKeys": [
+        "streaming",
+        "kafka"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-05-streaming-kafka-recovery-boundaries",
+      "imageAlt": "DEA-DM-05 Streaming, Kafka & Recovery Boundaries。Snowpipe StreamingとKafka Connectorの送信・コミット・再送境界を追う。"
+    },
+    {
+      "id": "DEA-DM-06",
+      "slug": "dea-dm-06-pipeline-apis-automation",
+      "domain": "D1",
+      "title": "Pipeline APIs & Automation",
+      "objectiveIds": [
+        "1.4"
+      ],
+      "goal": "SQL API、Openflow、Notebooks、UDF、Stored Procedure、Snowflake Scriptingの役割と実行境界を整理する。",
+      "coreIds": [
+        "FA-07",
+        "PT-08",
+        "LC-07"
+      ],
+      "sections": [
+        {
+          "title": "外部呼出し：Snowflake SQL API",
+          "body": "SQL APIは外部アプリからSQLを実行し、状態や結果を取得する経路。認証、実行Role、Warehouse、非同期実行時のStatement handle、キャンセル、リトライを設計する。通信が失敗したときはSQLが未実行なのか、実行後に応答だけ失われたのかを確認する。"
+        },
+        {
+          "title": "統合フロー：Openflow",
+          "body": "Openflowはソース接続とデータフローを組み立てる統合基盤。入力・処理・出力の流れに加えて、認証情報、ネットワーク、実行環境、エラー経路、再送を管理する。SQL内での変換と、外部ソースからデータを運ぶ処理の責任を分ける。"
+        },
+        {
+          "title": "対話・運用：Notebooks + Stored Procedures",
+          "body": "Notebookは調査、変換、結果の確認を一か所で進める開発環境。共通の複数SQL処理をProcedureへまとめ、Notebookから呼び出すと対話操作と再実行可能な処理を分離できる。定期運転へ移す際には実行権限、依存パッケージ、パラメータを固定する。"
+        },
+        {
+          "title": "自動化：UDF / Snowflake Scripting",
+          "body": "UDFはSQL式の中の計算、Stored Procedureは複数ステップの処理、Snowflake ScriptingはSQLで変数・分岐・ループ・例外処理を書く仕組み。処理単位を小さくし、入力パラメータと実行履歴を残すと、自動化した後の再実行と診断がしやすい。"
+        }
+      ],
+      "scenario": "外部オーケストレータとSnowflake内処理を組み合わせた取込パイプラインを設計する。",
+      "pitfall": "SQL API、Snowpipe REST API、External Functionは呼出し方向と目的が異なる。",
+      "takeaway": "APIの呼出し方向と、処理が実行される場所を押さえる。",
+      "comparison": [
+        [
+          "SQL API",
+          "外部からSQLを呼ぶ",
+          "認証・実行状態・結果取得"
+        ],
+        [
+          "Openflow",
+          "ソースとSnowflakeをつなぐ",
+          "接続・実行環境・再送"
+        ],
+        [
+          "Notebook",
+          "調査と開発",
+          "再現性・依存関係・実行Role"
+        ],
+        [
+          "Scripting / Procedure",
+          "複数SQLを制御する",
+          "例外・権限・トランザクション"
+        ]
+      ],
+      "review": {
+        "question": "外部ジョブからのSQL API呼出しがタイムアウトした。直ちに同じ更新SQLを再送してよい？",
+        "answer": "まずStatement handleや実行履歴で処理の状態を確認する。サーバーでは完了している可能性があるため、無条件の再送は二重更新の原因になる。APIのリクエスト識別・リトライ仕様と、処理自体の冪等性を組み合わせる。"
+      },
+      "docKeys": [
+        "sql_api",
+        "openflow",
+        "notebooks",
+        "scripting",
+        "udf"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-06-pipeline-apis-automation",
+      "imageAlt": "DEA-DM-06 Pipeline APIs & Automation。SQL API、Openflow、Notebooks、UDF、Stored Procedure、Snowflake Scriptingの役割と実行境界を整理する。"
+    },
+    {
+      "id": "DEA-DM-07",
+      "slug": "dea-dm-07-connector-selection-matrix",
+      "domain": "D1",
+      "title": "Connector Selection Matrix",
+      "objectiveIds": [
+        "1.5"
+      ],
+      "goal": "Kafka、Spark、Python、Native Connectorを用途・実行場所・運用責任で選ぶ。",
+      "coreIds": [
+        "LC-07",
+        "FA-07"
+      ],
+      "sections": [
+        {
+          "title": "Source／Engine／Applicationの起点",
+          "body": "接続の起点がメッセージング、分散処理エンジン、アプリ、業務サービスのどれかを確認する。既存基盤を残す必要があるか、Snowflake内に処理を移せるかによって接続方式と費用が変わる。ドライバ名だけでアーキテクチャを決めない。"
+        },
+        {
+          "title": "Kafka・Spark・Python・Nativeの役割",
+          "body": "Kafka Connectorはイベント取込、Spark ConnectorはSparkとのデータ交換と対応処理のPushdown、Python ConnectorはPythonアプリからのSQL実行やデータ入出力を担う。Snowflakeの各種Connectorは特定ソースとの同期を簡素化するが、サポートする対象・更新方法は個別に確認する。"
+        },
+        {
+          "title": "認証・ネットワーク・依存関係",
+          "body": "認証方式、Role、Warehouse、ネットワーク許可、Proxy、ライブラリの互換性をまとめて検証する。大量データをすべてクライアントへ戻すと転送とメモリがボトルネックになる。処理を実行する場所と結果を受け取る量を設計する。"
+        },
+        {
+          "title": "運用：version・retry・observability",
+          "body": "接続できることと継続運用できることは違う。バージョン更新、認証更新、エラー行、リトライ、取得位置、監視を担当する主体を決める。ソース固有の削除やスキーマ変更がどこまで伝播するかをテストする。"
+        }
+      ],
+      "scenario": "既存Spark処理、Kafkaイベント、Pythonバッチ、SaaS同期で接続方式を選ぶ。",
+      "pitfall": "Connectorは接続経路。接続できることだけでは、取込方式・実行場所・再送設計は決まらない。",
+      "takeaway": "接続元・実行場所・転送量・運用責任からConnectorを選ぶ。",
+      "comparison": [
+        [
+          "Kafka Connector",
+          "Kafkaのイベントを運ぶ",
+          "オフセット・取込方式・エラー処理"
+        ],
+        [
+          "Spark Connector",
+          "既存Sparkジョブと連携",
+          "Pushdown・転送量・互換性"
+        ],
+        [
+          "Python Connector",
+          "PythonからSQLと結果を扱う",
+          "認証・結果サイズ・再実行"
+        ],
+        [
+          "ソース別Connector",
+          "対応サービスを同期する",
+          "対応オブジェクト・変更伝播・運用"
+        ]
+      ],
+      "review": {
+        "question": "Pythonで大量データを取得して集計するとメモリ不足になる。Connectorの変更だけで解決できる？",
+        "answer": "まず集計をSQLやSnowparkへ移し、Snowflake側で絞り込んだ結果だけを取得する。Connectorは接続経路であり、実行場所と取得量の設計を自動的に直すものではない。既存処理との互換性と運用要件を確認して選択する。"
+      },
+      "docKeys": [
+        "kafka",
+        "spark",
+        "python",
+        "native_connectors"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-07-connector-selection-matrix",
+      "imageAlt": "DEA-DM-07 Connector Selection Matrix。Kafka、Spark、Python、Native Connectorを用途・実行場所・運用責任で選ぶ。"
+    },
+    {
+      "id": "DEA-DM-08",
+      "slug": "dea-dm-08-sharing-consumption-design",
+      "domain": "D1",
+      "title": "Sharing & Consumption Design",
+      "objectiveIds": [
+        "1.6"
+      ],
+      "goal": "Share、Clone、Listing、Auto-fulfillment、View、行フィルタ、Streamlitを消費者要件から組み合わせる。",
+      "coreIds": [
+        "CO-01",
+        "CO-02",
+        "CO-03",
+        "CO-04"
+      ],
+      "sections": [
+        {
+          "title": "要件：誰が・どこで・どう使うか",
+          "body": "利用者のアカウント、リージョン、必要な行・列、更新頻度、SQL利用かアプリ利用かを整理する。Reader Accountが必要な相手か、通常アカウントで消費するかも判断する。共有するオブジェクトと消費側のCompute費用を明示する。"
+        },
+        {
+          "title": "Share / Clone / Listing / Auto-fulfillment",
+          "body": "同一リージョンのSecure Data Sharingは、基本的にデータのコピーを作らず、許可したデータへの読取りを提供する。Cloneは特定時点から独立したオブジェクトを作る仕組みで、継続的な共有の代替ではない。Listingは提供・発見・利用条件の管理を担う。"
+        },
+        {
+          "title": "View・Row Accessによる提供面",
+          "body": "クロスリージョンのListingではAuto-fulfillmentなどによるデータ提供を検討し、対応オブジェクト、複製、更新間隔、転送・保存費用を確認する。Secure ViewやRow Access Policyで必要なデータ面を設計する。共有先で使えるコンテキスト関数やポリシーの制約もテストする。"
+        },
+        {
+          "title": "Streamlitによる探索・セルフサービス",
+          "body": "Streamlitでは利用者がパラメータを選び、分析結果を確認する画面を用意できる。アプリの実行Role・実行モードとデータ権限を確認し、閲覧者に元テーブルの全権限が渡ると仮定しない。ShareのGRANT、消費側データベース、実際の閲覧結果まで通して検証する。"
+        }
+      ],
+      "scenario": "別アカウントの利用者と業務部門向けアプリへ同じデータを提供する。",
+      "pitfall": "同一リージョンの共有特性を、クロスリージョンの提供へ無条件には適用できない。",
+      "takeaway": "誰に、どこで、どのデータ面を提供するかから共有方式を決める。",
+      "comparison": [
+        [
+          "Share",
+          "最新データを別アカウントで参照",
+          "提供対象・GRANT・Compute"
+        ],
+        [
+          "Clone",
+          "開発や検証の独立した写し",
+          "作成時点・後続変更・保持"
+        ],
+        [
+          "Listing / Auto-fulfillment",
+          "発見・配布・他リージョン提供",
+          "更新間隔・対応範囲・費用"
+        ],
+        [
+          "Streamlit",
+          "業務部門向けの対話的利用",
+          "アプリ権限・公開する情報"
+        ]
+      ],
+      "review": {
+        "question": "海外リージョンの利用者への提供も、同一リージョンと同じゼロコピー・即時更新と説明してよい？",
+        "answer": "無条件には説明できない。クロスリージョンではAuto-fulfillmentや複製の仕組み、更新間隔、対象オブジェクト、費用を確認する。同一リージョンのShareの性質と、別リージョンへのデータ供給を分けて評価する。"
+      },
+      "docKeys": [
+        "sharing",
+        "listings",
+        "streamlit"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-08-sharing-consumption-design",
+      "imageAlt": "DEA-DM-08 Sharing & Consumption Design。Share、Clone、Listing、Auto-fulfillment、View、行フィルタ、Streamlitを消費者要件から組み合わせる。"
+    },
+    {
+      "id": "DEA-DM-09",
+      "slug": "dea-dm-09-table-types-evolution-unload",
+      "domain": "D1",
+      "title": "Table Types, Evolution & Unload",
+      "objectiveIds": [
+        "1.7"
+      ],
+      "goal": "External、Iceberg、Hybrid Tableと通常テーブル、Horizon、Schema Evolution、Unloadを管理境界で比較する。",
+      "coreIds": [
+        "FA-03",
+        "LC-04",
+        "LC-06"
+      ],
+      "sections": [
+        {
+          "title": "保存場所・Catalog・書込み主体",
+          "body": "テーブルの選択では、ファイルの保存場所、Catalog、メタデータの管理者、更新するエンジン、必要なトランザクション特性を並べる。Snowflake管理テーブルと外部ファイルを参照するテーブルでは、更新通知や保守の責任が異なる。"
+        },
+        {
+          "title": "External / Iceberg / Hybrid / Snowflake table",
+          "body": "External Tableは外部ファイルへの読取りが中心で、通常テーブルのようにDMLを行うものではない。Iceberg Tableはオープン形式とCatalogの管理方式を確認する。Hybrid Tableは行指向のアクセスやトランザクション用途を想定し、分析向け通常テーブルと制約を比較する。"
+        },
+        {
+          "title": "Schema Evolutionと互換性",
+          "body": "Schema Evolutionは対応するロード経路と設定・権限が揃った場合に列の追加などを扱う。任意の型変更を自動的に安全な変更へ変える機能ではない。列追加後のView、dbtモデル、アプリの互換性を検証し、変更を許す範囲をデータ契約として管理する。 COPYによる自動進化ではENABLE_SCHEMA_EVOLUTION、MATCH_BY_COLUMN_NAME、ロード実行RoleのEVOLVE SCHEMAまたはOWNERSHIPなどの条件を確認する。"
+        },
+        {
+          "title": "Horizon federationとUnload",
+          "body": "Horizon Catalogの外部Catalog連携は発見・管理・相互運用の観点で整理する。外部システムへファイルを渡す場合はCOPY INTO locationでアンロードし、形式、圧縮、Partition、ファイル数、出力パスの権限を決める。テーブル共有とファイル出力では更新の伝達方法が違う。"
+        }
+      ],
+      "scenario": "外部エンジンと共有するデータセットのCatalog、更新主体、出力方法を決める。",
+      "pitfall": "IcebergやHybridを含め、すべてのテーブルで同じDML・保持・最適化が使えるわけではない。",
+      "takeaway": "形式名より、保存・Catalog・更新・変更管理の責任境界を見る。",
+      "comparison": [
+        [
+          "Snowflake table",
+          "管理された分析用データ",
+          "保持・種別・DML・最適化"
+        ],
+        [
+          "External table",
+          "外部ファイルの参照",
+          "メタデータ更新・読取り制約"
+        ],
+        [
+          "Iceberg table",
+          "オープン形式と複数エンジン",
+          "Catalog・更新主体・対応機能"
+        ],
+        [
+          "Hybrid table",
+          "点参照・トランザクション用途",
+          "主キー・制約・ワークロード"
+        ]
+      ],
+      "review": {
+        "question": "外部エンジンでも更新するIcebergデータを扱うとき、最初に確認することは？",
+        "answer": "どのCatalogが正となり、どのエンジンが更新でき、Snowflakeがどの方法・頻度で変更を認識するかを確認する。Icebergという名前だけでは管理方式と利用可能なDMLは決まらない。Schema Evolutionと下流互換性も含めてテストする。"
+      },
+      "docKeys": [
+        "external",
+        "iceberg",
+        "hybrid",
+        "horizon",
+        "schema",
+        "unload"
+      ],
+      "imageFolder": "d1-data-movement",
+      "imageBasename": "dea-dm-09-table-types-evolution-unload",
+      "imageAlt": "DEA-DM-09 Table Types, Evolution & Unload。External、Iceberg、Hybrid Tableと通常テーブル、Horizon、Schema Evolution、Unloadを管理境界で比較する。"
+    },
+    {
+      "id": "DEA-PO-01",
+      "slug": "dea-po-01-query-profile-diagnosis",
+      "domain": "D2",
+      "title": "Query Profile Diagnosis",
+      "objectiveIds": [
+        "2.1"
+      ],
+      "goal": "遅いクエリを見つけ、Profileと履歴から原因仮説を立てて改善を検証する。",
+      "coreIds": [
+        "PT-01",
+        "PT-02",
+        "PT-05"
+      ],
+      "sections": [
+        {
+          "title": "待ち・Compile・Executionの切り分け",
+          "body": "Query Historyで遅い処理を絞り、Queue、Compilation、Executionのどこに時間があるかを切り分ける。待ち時間が主因なら同時実行やWarehouseの稼働状態を、実行時間が主因ならQuery Profileのオペレータを調べる。"
+        },
+        {
+          "title": "Scan / Join / Aggregate / Spill",
+          "body": "Scanでは読み取ったPartition数とバイト量、Joinでは入力・出力の行数、AggregateやSortでは処理量とSpillを見る。Join条件不足による行数増幅はComputeを増やしても原因が残る。Remote spillはメモリ圧力を示す重要な手がかりになる。"
+        },
+        {
+          "title": "行数増幅・Pruning・Queue",
+          "body": "Pruningが効かない理由は、選択率、フィルタ式、データ配置などから考える。不要な列・行の読取りや過大な中間結果を減らし、変更ごとに仮説を検証する。クエリ単体と同時実行全体の問題を混ぜない。"
+        },
+        {
+          "title": "同条件での変更前後比較",
+          "body": "比較時はデータ量、Warehouse、キャッシュ、同時実行負荷、SQLを揃える。Query IDと実行条件を残し、時間だけでなく読み取り量・Spill・費用も見る。単発の速い実行を、そのまま持続的な改善の証拠にしない。"
+        }
+      ],
+      "scenario": "Warehouseを大きくする前に、遅延の根本原因を説明する。",
+      "pitfall": "キャッシュや同時実行の条件が異なる測定から、変更の効果を断定しない。",
+      "takeaway": "時間の内訳から仮説を立て、同条件で改善を検証する。",
+      "comparison": [
+        [
+          "Queueが長い",
+          "同時実行・Warehouse起動",
+          "分離・Scale out・稼働設定"
+        ],
+        [
+          "Scanが大きい",
+          "選択率・Pruning・列",
+          "SQLと配置の見直し"
+        ],
+        [
+          "Join後の行数増幅",
+          "Joinキー・多対多関係",
+          "条件・先行集約を確認"
+        ],
+        [
+          "Spillが多い",
+          "中間結果・メモリ圧力",
+          "SQL改善とScale upを比較"
+        ]
+      ],
+      "review": {
+        "question": "サイズを上げたら速くなったが、その回だけ結果キャッシュが使われていた。改善を確定できる？",
+        "answer": "できない。キャッシュと同時実行などの条件を揃えて再測定し、ProfileでScan・Join・Spillの変化を確認する。サイズ変更に因果関係があるか、費用増に見合うかを評価する。"
+      },
+      "docKeys": [
+        "profile",
+        "account_usage",
+        "performance"
+      ],
+      "imageFolder": "d2-performance-optimization",
+      "imageBasename": "dea-po-01-query-profile-diagnosis",
+      "imageAlt": "DEA-PO-01 Query Profile Diagnosis。遅いクエリを見つけ、Profileと履歴から原因仮説を立てて改善を検証する。",
+      "snippet": {
+        "language": "SQL",
+        "note": "現在の権限で参照できる直近の履歴を確認する。必要なDatabaseを選択して実行する。",
+        "code": "SELECT query_id, query_text, execution_status,\n       total_elapsed_time, execution_time, queued_overload_time,\n       bytes_scanned, bytes_spilled_to_local_storage,\n       bytes_spilled_to_remote_storage\nFROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY(RESULT_LIMIT => 100))\nORDER BY total_elapsed_time DESC;"
+      }
+    },
+    {
+      "id": "DEA-PO-02",
+      "slug": "dea-po-02-compute-scaling-cost",
+      "domain": "D2",
+      "title": "Compute Scaling & Cost",
+      "objectiveIds": [
+        "2.2"
+      ],
+      "goal": "Scale upとScale out、Warehouse属性、Snowpark最適化、Queue、Resource MonitorをSLAと費用で判断する。",
+      "coreIds": [
+        "FA-05",
+        "PT-04",
+        "AG-07"
+      ],
+      "sections": [
+        {
+          "title": "負荷：単一処理時間と同時実行数",
+          "body": "単一クエリが長いのか、多数のクエリが待つのかをまず区別する。BIとETLを別Warehouseへ分離すると、同時実行の干渉と費用の帰属を管理しやすい。停止・再開の設定は課金と起動遅延、Warehouse内キャッシュの保持に影響する。"
+        },
+        {
+          "title": "Size / Multi-cluster / Snowpark-optimized",
+          "body": "Scale upはWarehouseサイズを上げ、処理に使える資源を増やす。Multi-clusterによるScale outは同時実行への対策で、一つのクエリを複数Clusterへ自動分割して速める目的ではない。メモリを多く必要とする対応処理ではSnowpark-optimized Warehouseも検討する。"
+        },
+        {
+          "title": "Queue・稼働・Creditの観測",
+          "body": "Query History、Warehouseの負荷、ACCOUNT_USAGEでQueue、稼働、Creditを対応付ける。ACCOUNT_USAGEにはビューごとの反映遅延があるため、即時監視の代替と決め付けない。Credit単価を掛ける前に、Warehouseと各Serverlessサービスの利用量を分ける。"
+        },
+        {
+          "title": "性能・費用・分離の判断",
+          "body": "Resource Monitorは主にWarehouseのCredit利用を監視・制御する。すべてのServerless費用を止められるわけではないため、Budgetsや利用状況を併用する。Computeだけでなく、保持履歴、Cloneの差分、Materialized View、複製などのStorage費用も評価する。"
+        }
+      ],
+      "scenario": "BIと夜間ETLが競合する時に分離・サイズ・Cluster数を比較する。",
+      "pitfall": "Resource Monitorには対象外のServerless利用がある。サービス別の利用状況と費用も確認する。",
+      "takeaway": "単体性能・同時実行・分離・費用統制を別の判断として扱う。",
+      "comparison": [
+        [
+          "Scale up",
+          "単一処理の資源不足",
+          "Spill・処理時間・Credit"
+        ],
+        [
+          "Scale out",
+          "同時実行によるQueue",
+          "Cluster数・Edition・負荷"
+        ],
+        [
+          "Warehouse分離",
+          "異なるSLAと費用帰属",
+          "干渉・起動・稼働率"
+        ],
+        [
+          "Monitor / Budget",
+          "利用量の監視・通知・制御",
+          "対象サービスと制御できる範囲"
+        ]
+      ],
+      "review": {
+        "question": "夜間ETLとBIの競合でQueueが増えた。Multi-clusterだけを増やすのが唯一の解決策？",
+        "answer": "Warehouse分離、ETLの実行時刻、SQL改善、Scale outを比較する。単一ETLがメモリ不足ならScale upが必要な場合もある。SLAとCreditを測り、誰の負荷をどの資源で処理するかを決める。"
+      },
+      "docKeys": [
+        "warehouse",
+        "multicluster",
+        "resource_monitor",
+        "budgets",
+        "account_usage"
+      ],
+      "imageFolder": "d2-performance-optimization",
+      "imageBasename": "dea-po-02-compute-scaling-cost",
+      "imageAlt": "DEA-PO-02 Compute Scaling & Cost。Scale upとScale out、Warehouse属性、Snowpark最適化、Queue、Resource MonitorをSLAと費用で判断する。"
+    },
+    {
+      "id": "DEA-PO-03",
+      "slug": "dea-po-03-optimization-services-decision",
+      "domain": "D2",
+      "title": "Optimization Services Decision",
+      "objectiveIds": [
+        "2.2"
+      ],
+      "goal": "Clustering、Materialized Views、Search Optimization、QAS、キャッシュをクエリ特性と維持費で選ぶ。",
+      "coreIds": [
+        "PT-02",
+        "PT-03",
+        "PT-06"
+      ],
+      "sections": [
+        {
+          "title": "特性：範囲・点検索・反復集計・大規模Scan",
+          "body": "範囲検索、選択率の高い点検索、繰り返し集計、大規模Scanのどれが支配的かを調べる。表の大きさ、更新頻度、フィルタ列、実行回数を揃え、最適化の維持費を回収できるか見積もる。"
+        },
+        {
+          "title": "候補：Clustering / MV / SOS / QAS / Cache",
+          "body": "Clusteringはデータの配置を改善してPruningを助ける。Search Optimizationは対応する選択性の高い検索を高速化する。Materialized Viewは対応クエリの結果を保守し、QASは適格なクエリの一部を追加のComputeで支援する。各機能には対象と利用条件がある。"
+        },
+        {
+          "title": "効果：Pruning・再利用・並列処理",
+          "body": "Persisted Query Resultsは再利用条件を満たす結果を返し、Warehouseのローカルキャッシュは読み込んだデータを再利用する。両者を同じキャッシュとして扱わない。Warehouse停止時のローカルキャッシュと、結果再利用の条件を区別する。"
+        },
+        {
+          "title": "費用：保守・Storage・Compute",
+          "body": "高速化のために追加した構造は、更新時のComputeやStorage費用を生む。対象Query IDの改善とサービス別利用量を測る。複数の機能を併用する場合も、どのボトルネックへ効いたかが分かるよう一度に変える条件を絞る。"
+        }
+      ],
+      "scenario": "更新頻度の高い大規模表に追加最適化が必要か評価する。",
+      "pitfall": "最適化サービスは併用も可能。クエリ改善が不要な場合も含めて維持費を評価する。",
+      "takeaway": "検索の特徴と維持費を対にして最適化を評価する。",
+      "comparison": [
+        [
+          "Clustering",
+          "大規模表の範囲フィルタ等",
+          "Pruningと再クラスタリング費用"
+        ],
+        [
+          "Search Optimization",
+          "対応する高選択率の検索",
+          "検索条件と維持費"
+        ],
+        [
+          "Materialized View",
+          "繰り返す対応クエリ",
+          "定義制限・更新・Storage"
+        ],
+        [
+          "Query Acceleration",
+          "適格なScan等の負荷",
+          "適格性・サービスCredit"
+        ],
+        [
+          "Cache",
+          "再利用可能な結果やデータ",
+          "同一条件・更新・停止の影響"
+        ]
+      ],
+      "review": {
+        "question": "更新の激しい小さな表へ、全機能を有効にすればよい？",
+        "answer": "まず現状のProfileとSLAを確認する。効果が小さければ維持費が勝る。表の規模・検索形態・頻度に合う候補を絞り、個別に測定して導入する。すでに要件を満たす処理には追加最適化が不要な場合もある。"
+      },
+      "docKeys": [
+        "performance",
+        "clustering",
+        "mv",
+        "sos",
+        "qas"
+      ],
+      "imageFolder": "d2-performance-optimization",
+      "imageBasename": "dea-po-03-optimization-services-decision",
+      "imageAlt": "DEA-PO-03 Optimization Services Decision。Clustering、Materialized Views、Search Optimization、QAS、キャッシュをクエリ特性と維持費で選ぶ。"
+    },
+    {
+      "id": "DEA-PO-04",
+      "slug": "dea-po-04-pipeline-observability-data-quality",
+      "domain": "D2",
+      "title": "Pipeline Observability & Data Quality",
+      "objectiveIds": [
+        "2.3"
+      ],
+      "goal": "継続パイプラインの履歴・通知・鮮度・品質を監視し、復旧へつなげる。",
+      "coreIds": [
+        "AG-06",
+        "PT-08",
+        "AG-07"
+      ],
+      "sections": [
+        {
+          "title": "対象：Tasks / Streams / Streaming / Dynamic Tables",
+          "body": "到着、ロード、変換、提供の時刻を分け、ソースから利用可能になるまでの遅延を測る。Taskの成功だけでは入力欠損や古いデータを見抜けない。最終データ時刻、処理件数、異常件数を業務SLAと結び付ける。"
+        },
+        {
+          "title": "観測：History・Alert・Notification",
+          "body": "Task Historyとgraphの状態、StreamのSTALE_AFTERや消費位置、Streamingのエラーと遅延、Dynamic TableのRefresh履歴を確認する。処理が実行されないケースと、実行したが失敗したケースを区別する。長い停止にはソース保持と再処理の期限がある。"
+        },
+        {
+          "title": "品質：DMF・件数・NULL・鮮度",
+          "body": "Alertの条件と実行、Notification Integrationを使う通知先、受信後の対応を一組で設計する。同じ障害の通知連発を避ける単位と、誰がどの手順で再実行するかを定義する。アラートの発火自体もテストする。"
+        },
+        {
+          "title": "対応：原因特定 → 再処理 → 検証",
+          "body": "DMFは件数・NULL・一意性などの品質指標を計測する。期待値や閾値と評価結果を関連付け、品質異常とジョブ失敗を別に検出する。DMFの計測は不正データの取込を必ず防ぐ制約ではなく、結果を修復や隔離へつなげる運用が必要。"
+        }
+      ],
+      "scenario": "SQLは成功したが当日データが不足している状態を検知する。",
+      "pitfall": "実行成功は、最新データの到着やデータ品質の合格を保証しない。",
+      "takeaway": "ジョブの成功・データの鮮度・品質をそれぞれ監視する。",
+      "comparison": [
+        [
+          "鮮度",
+          "最終イベントと提供時刻",
+          "遅延の段階を特定"
+        ],
+        [
+          "実行",
+          "Task / Refresh / Load履歴",
+          "失敗・未実行・再試行"
+        ],
+        [
+          "変更位置",
+          "Stream / Streaming",
+          "失効・保持期間・再開点"
+        ],
+        [
+          "品質",
+          "DMFと期待値",
+          "NULL・件数・一意性と対応手順"
+        ]
+      ],
+      "review": {
+        "question": "すべてのTaskは成功なのに、利用者が「昨日のデータのまま」と言う。次に何を見る？",
+        "answer": "ソース到着時刻、ロード件数、最終イベント時刻、Stream消費、Dynamic TableのRefreshと依存関係を確認する。Task成功は処理がエラーなく終わったことを示すだけで、新しい入力があったことや鮮度SLAを満たすことの証明ではない。"
+      },
+      "docKeys": [
+        "tasks",
+        "account_usage",
+        "quality",
+        "alerts"
+      ],
+      "imageFolder": "d2-performance-optimization",
+      "imageBasename": "dea-po-04-pipeline-observability-data-quality",
+      "imageAlt": "DEA-PO-04 Pipeline Observability & Data Quality。継続パイプラインの履歴・通知・鮮度・品質を監視し、復旧へつなげる。"
+    },
+    {
+      "id": "DEA-SP-01",
+      "slug": "dea-sp-01-recovery-replication-boundaries",
+      "domain": "D3",
+      "title": "Recovery & Replication Boundaries",
+      "objectiveIds": [
+        "3.1"
+      ],
+      "goal": "Time Travel、Fail-safe、Streamsへの影響、Replicationを復旧目的別に整理する。",
+      "coreIds": [
+        "CO-05",
+        "PT-08",
+        "FA-06"
+      ],
+      "sections": [
+        {
+          "title": "障害：誤更新・削除・リージョン障害",
+          "body": "誤更新から過去の状態を戻す要件と、リージョン障害からサービスを再開する要件を分ける。許容データ損失をRPO、復旧までの目標時間をRTOとして定義し、保持期間と複製頻度、切替手順を決める。"
+        },
+        {
+          "title": "Time TravelとStream offsetへの影響",
+          "body": "Time Travelは保持期間内の過去データの照会・Clone・対応オブジェクトのUNDROPに使う。利用できる期間はEdition、オブジェクト種別、設定による。Streamは必要な変更履歴が利用できなくなると失効し得るため、STALE_AFTERと保持延長の仕組みを確認する。 通常の永久テーブルではStandard Editionは0〜1日、Enterprise以上は最大90日を設定できる。Transient・Temporaryは0〜1日。Iceberg等は別の対応条件を確認する。"
+        },
+        {
+          "title": "Fail-safeの目的と操作主体",
+          "body": "Fail-safeは対象となる永久テーブル等のデータをSnowflakeが災害復旧のために扱う期間で、利用者が通常のSQLで任意の時点を参照する機能ではない。Transient・TemporaryはFail-safeを持たない。Time Travelの代わりとして日常の復旧手順に組み込まない。 対象データのFail-safe期間はTime Travel終了後の7日間。"
+        },
+        {
+          "title": "Cross-region / cloud replication",
+          "body": "クロスリージョン／クラウドのReplicationでは、複製するデータベースやアカウントオブジェクト、対応条件、更新スケジュール、依存関係を確認する。Secondaryの最新時点がRPOに影響する。Failoverに必要なEdition・対象・切替権限・接続先まで通して検証する。"
+        }
+      ],
+      "scenario": "9日前の欠損復旧とリージョン障害対策を別の仕組みで設計する。",
+      "pitfall": "Fail-safeは利用者がSQLで参照できるTime Travelの延長ではない。",
+      "takeaway": "保持・最終復旧・複製・切替は目的と操作主体が異なる。",
+      "comparison": [
+        [
+          "Time Travel",
+          "保持内の誤操作から戻す",
+          "期間・テーブル種別・参照時点"
+        ],
+        [
+          "Fail-safe",
+          "Snowflakeによる最終的な復旧",
+          "対象種別・通常SQLでは操作不可"
+        ],
+        [
+          "Replication",
+          "他リージョン等へ複製する",
+          "対象・更新頻度・転送費用"
+        ],
+        [
+          "Failover",
+          "障害時の役割と接続を切り替える",
+          "対応条件・切替権限・アプリ接続"
+        ]
+      ],
+      "review": {
+        "question": "9日前のデータを戻したいがTime Travelの保持は1日。Fail-safeへSELECTすればよい？",
+        "answer": "Fail-safeに通常のSELECTはできない。まず別のClone、バックアップ、ソース再取得、複製先に利用可能な状態があるかを確認する。必要な復旧期間は事前にTime Travelや別の保全方法で設計する。Fail-safeの利用可否と復旧はSnowflake側の対応範囲になる。"
+      },
+      "docKeys": [
+        "time",
+        "failsafe",
+        "replication"
+      ],
+      "imageFolder": "d3-storage-data-protection",
+      "imageBasename": "dea-sp-01-recovery-replication-boundaries",
+      "imageAlt": "DEA-SP-01 Recovery & Replication Boundaries。Time Travel、Fail-safe、Streamsへの影響、Replicationを復旧目的別に整理する。"
+    },
+    {
+      "id": "DEA-SP-02",
+      "slug": "dea-sp-02-micro-partition-clustering-analysis",
+      "domain": "D3",
+      "title": "Micro-partition & Clustering Analysis",
+      "objectiveIds": [
+        "3.2"
+      ],
+      "goal": "クラスタリング深度・キー・Automatic Clusteringをシステム関数とコストで評価する。",
+      "coreIds": [
+        "FA-04",
+        "PT-02",
+        "PT-03"
+      ],
+      "sections": [
+        {
+          "title": "Micro-partition overlapの読み方",
+          "body": "Micro-partitionには列の範囲などのメタデータがあり、条件に合わないPartitionを読まずに済むとPruningが効く。キー値の範囲が多数のPartitionで重なると、狭い条件でも読取りが増え得る。重なりと実際の検索条件を一緒に見る。"
+        },
+        {
+          "title": "SYSTEM$CLUSTERING_INFORMATION / DEPTH",
+          "body": "SYSTEM$CLUSTERING_DEPTHは指定した式に対する平均深度を返し、SYSTEM$CLUSTERING_INFORMATIONでは深度分布やOverlapなどの情報を確認できる。深度は単独の合否基準ではない。対象表、式、測定時点を固定して比較する。"
+        },
+        {
+          "title": "Cluster key候補とクエリ特性",
+          "body": "Cluster keyは頻繁なフィルタやJoin、値の分布、列の順序から候補を選ぶ。高Cardinalityの値をそのまま使うより、日付への変換などが適切な場合もある。小さな表やすでにPruningが良い表では効果が小さいことがある。"
+        },
+        {
+          "title": "Automatic Clusteringの効果・費用",
+          "body": "Automatic Clusteringはデータ更新に合わせて配置を維持するが、追加Computeと書き換えに伴うStorageの影響がある。Query Profileの読取り削減と、更新頻度・維持費を比較する。キー追加前後の同条件のクエリを保存して判断する。"
+        }
+      ],
+      "scenario": "日付条件でPruningが悪化した表にCluster keyが妥当か判断する。",
+      "pitfall": "深度の数値だけでCluster keyを決めず、Query Profileと維持費を合わせて判断する。",
+      "takeaway": "物理配置の指標を、実際のPruningと費用へ結び付ける。",
+      "comparison": [
+        [
+          "Depth / Overlap",
+          "配置の重なりを評価",
+          "キー式と測定対象を固定"
+        ],
+        [
+          "Query Profile",
+          "実際の読取りを確認",
+          "Partitions scanned / total"
+        ],
+        [
+          "Cluster key",
+          "よく使う条件へ配置を合わせる",
+          "列順・Cardinality・式"
+        ],
+        [
+          "Automatic Clustering",
+          "更新後も配置を維持",
+          "効果とサービス費用"
+        ]
+      ],
+      "review": {
+        "question": "平均深度が高いから、ただちにCluster keyを追加してよい？",
+        "answer": "実際のワークロードでPruningが悪く、改善がSLAや費用に効くかを先に確認する。大半が全件Scanならキーを追加しても読取りは減りにくい。代表クエリのProfileと維持費を合わせて判断する。"
+      },
+      "docKeys": [
+        "clustering",
+        "profile"
+      ],
+      "imageFolder": "d3-storage-data-protection",
+      "imageBasename": "dea-sp-02-micro-partition-clustering-analysis",
+      "imageAlt": "DEA-SP-02 Micro-partition & Clustering Analysis。クラスタリング深度・キー・Automatic Clusteringをシステム関数とコストで評価する。",
+      "snippet": {
+        "language": "SQL",
+        "note": "対象名を自分の管理する演習用テーブルへ置き換える。",
+        "code": "SELECT SYSTEM$CLUSTERING_INFORMATION('LAB_DB.LAB_SCHEMA.EVENTS', '(EVENT_DATE)');\nSELECT SYSTEM$CLUSTERING_DEPTH('LAB_DB.LAB_SCHEMA.EVENTS', '(EVENT_DATE)');"
+      }
+    },
+    {
+      "id": "DEA-SP-03",
+      "slug": "dea-sp-03-clone-based-development-rollback",
+      "domain": "D3",
+      "title": "Clone-based Development & Rollback",
+      "objectiveIds": [
+        "3.3"
+      ],
+      "goal": "Zero-copy CloneとTime Travelで検証環境を作り、権限・変更・ロールバックを管理する。",
+      "coreIds": [
+        "CO-05",
+        "AG-01"
+      ],
+      "sections": [
+        {
+          "title": "Clone対象と参照時点",
+          "body": "Zero-copy Cloneは作成時点のデータを共有して独立したオブジェクトを作り、保持期間内ならAT / BEFOREで過去時点も指定できる。以後の元表とCloneの変更は独立する。どの時点のどの範囲を検証したいかを先に決める。"
+        },
+        {
+          "title": "権限継承と所有権の確認",
+          "body": "権限はClone対象、COPY GRANTSの指定、親コンテナと子オブジェクトなどで扱いが異なる。元のRole設計がそのまま安全に複製されると決め付けず、Ownership、既存GRANT、Future Grants、ポリシーの参照先を確認する。"
+        },
+        {
+          "title": "変更検証とPromotion",
+          "body": "検証環境ではデータ整合性、Row count、業務集計、権限ごとの表示、下流依存関係を確認する。Taskや外部Integrationなどを含む環境では、本番と同じ外部作用を起こさないかも確認する。コード変更とデータ変更を分けて昇格の手順を残す。"
+        },
+        {
+          "title": "Rollback / UNDROP / 再Clone",
+          "body": "失敗時は過去時点のCloneで比較・復元する、UNDROPを使うなど、変更種別に合う方法を選ぶ。名前を戻すだけで依存関係・権限・外部処理まで戻るとは限らない。Clone作成後の更新や保持データはStorage費用を生むため、使い終えた検証環境の寿命も管理する。"
+        }
+      ],
+      "scenario": "本番テーブル変更をCloneで試し、失敗時に安全に戻す。",
+      "pitfall": "Cloneは作成後の変更・保持に応じてStorageを消費する。権限の引継ぎも条件による。",
+      "takeaway": "Cloneの時点・権限・依存関係・差分Storageを確認する。",
+      "comparison": [
+        [
+          "Clone作成",
+          "特定時点の検証環境",
+          "時点・対象・保持内か"
+        ],
+        [
+          "権限確認",
+          "環境の分離",
+          "Ownership・GRANT・ポリシー"
+        ],
+        [
+          "Promotion",
+          "検証済み変更を反映",
+          "コード・データ・依存関係"
+        ],
+        [
+          "Rollback",
+          "変更前へ戻す",
+          "復元対象・権限・後続処理"
+        ]
+      ],
+      "review": {
+        "question": "Cloneを作ったので、本番とは同じ権限で、Storageは永久にゼロと考えてよい？",
+        "answer": "どちらも確認が必要。権限の引継ぎはClone対象とCOPY GRANTS等の条件で変わる。作成時はデータを共有しても、どちらかの更新と保持によって追加Storageが発生する。"
+      },
+      "docKeys": [
+        "clone",
+        "time"
+      ],
+      "imageFolder": "d3-storage-data-protection",
+      "imageBasename": "dea-sp-03-clone-based-development-rollback",
+      "imageAlt": "DEA-SP-03 Clone-based Development & Rollback。Zero-copy CloneとTime Travelで検証環境を作り、権限・変更・ロールバックを管理する。"
+    },
+    {
+      "id": "DEA-GV-01",
+      "slug": "dea-gv-01-classification-lineage-quality",
+      "domain": "D4",
+      "title": "Classification, Lineage & Quality",
+      "objectiveIds": [
+        "4.1"
+      ],
+      "goal": "タグ・分類・リネージ・依存関係・DMFを監視フローとして統合する。",
+      "coreIds": [
+        "AG-05",
+        "AG-06"
+      ],
+      "sections": [
+        {
+          "title": "発見：Classification",
+          "body": "Classificationで機微な情報の候補を検出し、意味やPrivacyの分類を確認する。検出結果をそのまま正解とせず、業務上の定義・誤検知・対象範囲をレビューする。どの列が保護対象かを継続的に発見する工程として位置付ける。"
+        },
+        {
+          "title": "意味付け：Tag",
+          "body": "Tagは機密区分、所有者、コストセンターなどのメタデータをオブジェクトへ付ける仕組み。Tagだけで値がMaskされるわけではない。Tag-based MaskingではTagとPolicyを関連付け、対応する列とデータ型、適用権限を確認する。"
+        },
+        {
+          "title": "影響：Lineage / Object dependencies",
+          "body": "Lineageはどこからどこへデータが流れたか、Object dependenciesはオブジェクト間の参照関係を調べる手掛かりになる。変更の影響調査には両方を使い、追跡できる操作・履歴の範囲を確認する。Access Historyは利用実態を調べる別の証跡として扱う。"
+        },
+        {
+          "title": "継続監視：DMFと通知",
+          "body": "DMFで欠損・一意性・件数などを測り、期待値と担当者・通知を結び付ける。分類・意味付け・依存関係・品質を一つの一覧へまとめると、誰がどの異常へ対応するか判断しやすい。観測とアクセス制御は役割を分けて管理する。"
+        }
+      ],
+      "scenario": "PII列の検出から下流影響と品質監視までを追う。",
+      "pitfall": "Tagを付けるだけでは列のMaskingは実施されない。Policyの関連付けと実際の結果を確認する。",
+      "takeaway": "発見、意味付け、影響調査、品質監視を保護へつなげる。",
+      "comparison": [
+        [
+          "Classification",
+          "機微情報の候補を見つける",
+          "検出範囲・誤検知・レビュー"
+        ],
+        [
+          "Tag",
+          "意味と管理属性を付ける",
+          "Policyとの関連付け"
+        ],
+        [
+          "Lineage / Dependencies",
+          "下流影響を調べる",
+          "取得できる関係・履歴"
+        ],
+        [
+          "DMF",
+          "品質を継続測定する",
+          "期待値・通知・修復担当"
+        ]
+      ],
+      "review": {
+        "question": "PII Tagを列に付けたので、分析Roleからは自動的に値が隠れる？",
+        "answer": "Tagだけでは隠れない。Masking Policyとの関連付けと適用状態を確認し、実際のRoleで問い合わせて期待した表示になるか検証する。Tagの発見・分類の役割と、Policyの保護の役割を区別する。"
+      },
+      "docKeys": [
+        "tags",
+        "classification",
+        "lineage",
+        "quality"
+      ],
+      "imageFolder": "d4-data-governance",
+      "imageBasename": "dea-gv-01-classification-lineage-quality",
+      "imageAlt": "DEA-GV-01 Classification, Lineage & Quality。タグ・分類・リネージ・依存関係・DMFを監視フローとして統合する。"
+    },
+    {
+      "id": "DEA-GV-02",
+      "slug": "dea-gv-02-policy-based-data-protection",
+      "domain": "D4",
+      "title": "Policy-based Data Protection",
+      "objectiveIds": [
+        "4.2"
+      ],
+      "goal": "Masking、Tokenization、Projection、Row Access、Aggregation PolicyをRBACとDDLで管理する。",
+      "coreIds": [
+        "AG-01",
+        "AG-05",
+        "CO-04"
+      ],
+      "sections": [
+        {
+          "title": "列保護：Masking / Tokenization / Projection",
+          "body": "Dynamic Data Maskingは問い合わせ時に列値の表示を変える。External Tokenizationは外部サービスを含むトークン化・復元の設計で、鍵や外部依存を確認する。Projection Policyは列を結果へ投影することを制限する。保存値・表示値・出力可否のどこを制御するかが異なる。 External Tokenizationでは取込前に機微値をトークンへ置き換え、問い合わせ時にMasking PolicyとExternal Functionを組み合わせて許可対象だけを復元する。"
+        },
+        {
+          "title": "行保護：Row Access",
+          "body": "Row Access Policyは実行コンテキストと条件に応じて返す行を制御する。Roleやユーザーと対応表の関係を設計し、必要なMapping tableへの権限を確認する。基本のUSAGE / SELECTなどのアクセス権を代替するものではない。"
+        },
+        {
+          "title": "集約制約：Aggregation Policy",
+          "body": "Aggregation Policyはデータを集計として利用させるための制約を設定する。少人数グループから個人を推測できるような出力を防ぐ設計と結び付ける。どの列が保護対象か、許可する集約、Group sizeの条件、他のPolicyとの併用制約を確認する。"
+        },
+        {
+          "title": "Role・Tag・DDL・評価順序",
+          "body": "CREATE POLICYで定義し、ALTER TABLE / VIEW等で対象へ適用し、SHOW / DESCRIBEやPolicy referencesで状態を確認する。Tag-based Maskingも含め、許可Roleと拒否Roleの両方でテストする。併用時はRow AccessとMaskingなどの評価関係・制約を公式Docsで確認する。"
+        }
+      ],
+      "scenario": "同じテーブルを職務別に異なる列・行・集約粒度で提供する。",
+      "pitfall": "PolicyはRBACのGRANTを代替しない。実行文脈と複数Policyの併用条件を確認する。",
+      "takeaway": "列値・行・投影・集約を分け、RBACと合わせて保護する。",
+      "comparison": [
+        [
+          "Masking",
+          "列の値を見せ分ける",
+          "実行Role・戻り型・適用"
+        ],
+        [
+          "Row Access",
+          "返す行を制御する",
+          "Mapping tableと文脈"
+        ],
+        [
+          "Projection",
+          "列を結果へ出せるか制御",
+          "対応する利用方法・制約"
+        ],
+        [
+          "Aggregation",
+          "集計での利用を制御する",
+          "Group size・対象・併用"
+        ],
+        [
+          "External Tokenization",
+          "トークン化した値を扱う",
+          "外部依存・権限・復元境界"
+        ]
+      ],
+      "review": {
+        "question": "社員名を隠し、担当地区の行だけを返し、集計単位も制限したい。Maskingだけで足りる？",
+        "answer": "列値にはMasking、行の範囲にはRow Access、集計利用にはAggregation Policyを検討する。基礎となるRBACのGRANTも必要。すべてを有効にする前に対象オブジェクトと併用条件を確認し、各Roleで結果を検証する。"
+      },
+      "docKeys": [
+        "masking",
+        "row_access",
+        "projection",
+        "aggregation",
+        "tokenization"
+      ],
+      "imageFolder": "d4-data-governance",
+      "imageBasename": "dea-gv-02-policy-based-data-protection",
+      "imageAlt": "DEA-GV-02 Policy-based Data Protection。Masking、Tokenization、Projection、Row Access、Aggregation PolicyをRBACとDDLで管理する。"
+    },
+    {
+      "id": "DEA-GV-03",
+      "slug": "dea-gv-03-federation-clean-room-collaboration",
+      "domain": "D4",
+      "title": "Federation & Clean Room Collaboration",
+      "objectiveIds": [
+        "4.2"
+      ],
+      "goal": "Horizon federationとData Clean Roomsを外部Catalog／安全な共同分析の要件で使い分ける。",
+      "coreIds": [
+        "CO-01",
+        "CO-04",
+        "AG-06"
+      ],
+      "sections": [
+        {
+          "title": "Horizon：外部Catalogと相互運用",
+          "body": "Horizon CatalogではSnowflake内外のデータを発見・管理し、外部CatalogやIcebergとの相互運用を検討する。どのCatalogがメタデータの正となり、認証・権限をどこで管理するかを整理する。接続しただけで外部のすべての制御が自動的に統一されるとは限らない。"
+        },
+        {
+          "title": "Clean Room：データを直接公開しない共同分析",
+          "body": "Data Clean Roomは参加者が定められたルールの下で共同分析を行うための環境。生データをそのまま相手へ公開する代わりに、許可したテンプレート、Join、出力、Privacyの制約を設計する。利用可能な分析と出力の範囲を具体的に確認する。"
+        },
+        {
+          "title": "UIとDeveloper APIの実装経路",
+          "body": "UIは標準的な設定と分析を進める入口、Developer APIはカスタムテンプレートや処理を組み込む実装経路になる。ProviderとConsumer、データの登録、招待・インストール、分析の実行を区別し、選んだ経路で使える機能を確認する。"
+        },
+        {
+          "title": "Policy・監査・提供境界",
+          "body": "参加者の許可、テンプレートのパラメータ、Join key、出力制約、実行履歴を管理する。相手に生データを見せない構成でも、少数グループや自由なパラメータから情報が推測されないかを評価する。Catalogの連携と共同分析の利用統制を別の要件として設計する。"
+        }
+      ],
+      "scenario": "外部Iceberg Catalog参照と広告主との共同分析を別要件として設計する。",
+      "pitfall": "Catalogの相互運用だけでは、共同分析のテンプレート・出力制約・監査は完成しない。",
+      "takeaway": "Catalogの相互運用と、共同分析の利用条件を分ける。",
+      "comparison": [
+        [
+          "Horizon / Federation",
+          "データ発見とCatalog相互運用",
+          "管理者・認証・メタデータ"
+        ],
+        [
+          "Clean Room UI",
+          "定めた共同分析を利用",
+          "参加者・利用可能なテンプレート"
+        ],
+        [
+          "Clean Room Developer API",
+          "共同分析を拡張・自動化",
+          "登録・テンプレート・出力制御"
+        ]
+      ],
+      "review": {
+        "question": "外部Iceberg Catalogを参照できれば、そのまま広告主との安全な共同分析も完成する？",
+        "answer": "Catalog参照はデータの発見・アクセスの仕組み。共同分析には、誰が参加し、どのJoinと集約を実行し、何を持ち出せるかという別の設計が必要。Clean RoomのテンプレートとPolicy、出力制約を確認する。"
+      },
+      "docKeys": [
+        "horizon",
+        "cleanrooms"
+      ],
+      "imageFolder": "d4-data-governance",
+      "imageBasename": "dea-gv-03-federation-clean-room-collaboration",
+      "imageAlt": "DEA-GV-03 Federation & Clean Room Collaboration。Horizon federationとData Clean Roomsを外部Catalog／安全な共同分析の要件で使い分ける。"
+    },
+    {
+      "id": "DEA-DT-01",
+      "slug": "dea-dt-01-udf-family-selection",
+      "domain": "D5",
+      "title": "UDF Family Selection",
+      "objectiveIds": [
+        "5.1"
+      ],
+      "goal": "Scalar UDF、UDTF、UDAF、Snowpark／SQL／JavaScript、Secure UDFを処理形態で選ぶ。",
+      "coreIds": [
+        "FA-07",
+        "PT-07"
+      ],
+      "sections": [
+        {
+          "title": "入力1行→1値：Scalar UDF",
+          "body": "Scalar UDFは引数から値を返し、SQL式の中で再利用する。標準SQLで表現できる処理かを先に確認し、共通の計算を関数へまとめる。副作用を伴う複数ステップの運用処理はStored Procedureの責任として考える。"
+        },
+        {
+          "title": "入力→複数行：UDTF",
+          "body": "UDTFは表形式の結果を返し、入力に対する複数行・複数列の生成に使う。呼出し側のJoinやLATERALとの組合せで行数が変わるため、入力と出力の対応を検証する。Scalar UDFの戻り値を配列にする設計との違いを説明できるようにする。"
+        },
+        {
+          "title": "複数行→1結果：UDAF",
+          "body": "UDAFは複数行を独自の集約状態へまとめる。部分集約の状態をどう結合して最終結果を返すかが重要になる。利用できる言語やHandler API、型の制約はUDFの種類ごとに確認し、すべての言語で同じ機能が使えると仮定しない。"
+        },
+        {
+          "title": "Runtime・Secure・Package・権限",
+          "body": "SQL・JavaScript・Snowpark系の言語を、処理内容、パッケージ、実行環境から選ぶ。Secure UDFは定義の露出や一部の最適化による情報漏えいを抑えるための性質で、ネットワーク認証そのものではない。権限、NULL、型、例外、性能を検証する。"
+        }
+      ],
+      "scenario": "トークン化、表形式展開、独自集約に適切なUDF型を選ぶ。",
+      "pitfall": "UDFはSQL内の計算、Procedureは複数ステップの制御が中心。言語ごとの対応範囲も異なる。",
+      "takeaway": "入力と出力の形からUDFの種類を選び、その後で言語を選ぶ。",
+      "comparison": [
+        [
+          "Scalar UDF",
+          "引数から単一の値",
+          "型・NULL・再利用"
+        ],
+        [
+          "UDTF",
+          "表形式の結果を生成",
+          "入力と出力の行数"
+        ],
+        [
+          "UDAF",
+          "独自の集約を行う",
+          "集約状態・結合・最終化"
+        ],
+        [
+          "Secure UDF",
+          "関数の情報保護を強める",
+          "定義の露出・性能・適用条件"
+        ]
+      ],
+      "review": {
+        "question": "商品説明から複数のタグを行として返す処理と、独自の集約値を返す処理では何を選ぶ？",
+        "answer": "前者はUDTF、後者はUDAFが候補。標準SQLで十分なら標準関数を先に検討する。利用する言語での対応と戻り型、行数、性能を確認して選ぶ。"
+      },
+      "docKeys": [
+        "udf",
+        "udaf"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-01-udf-family-selection",
+      "imageAlt": "DEA-DT-01 UDF Family Selection。Scalar UDF、UDTF、UDAF、Snowpark／SQL／JavaScript、Secure UDFを処理形態で選ぶ。"
+    },
+    {
+      "id": "DEA-DT-02",
+      "slug": "dea-dt-02-external-function-api-boundary",
+      "domain": "D5",
+      "title": "External Function & API Boundary",
+      "objectiveIds": [
+        "5.2"
+      ],
+      "goal": "External FunctionのAPI Integration、認証、要求・応答、失敗境界を設計する。",
+      "coreIds": [
+        "FA-07",
+        "AG-03",
+        "AG-04"
+      ],
+      "sections": [
+        {
+          "title": "SQL → Proxy / API → Remote service",
+          "body": "External FunctionはSQLの関数呼出しから、Proxyを介して外部サービスへ処理を委ねる。Snowflake内の実行、クラウド側Proxy、リモートサービスという境界を描き、どこで認証し、どこでタイムアウトやエラーが起きるかを整理する。"
+        },
+        {
+          "title": "API Integrationと認証境界",
+          "body": "API IntegrationはSnowflakeと対応するクラウドAPI基盤の信頼関係を管理する。許可するEndpointとRole、外部サービスの認証を確認する。UDF / ProcedureからネットワークへアクセスするExternal Access Integrationとは設定と実行の仕組みが異なる。"
+        },
+        {
+          "title": "Batch・timeout・retry・response",
+          "body": "要求は複数行を含むBatchになり得るため、行の識別、入力と応答の対応、Payload、エラー、リトライを設計する。同じ要求が再送される場合を考慮し、外部側の副作用を無条件に一度だけと見なさない。外部処理の速度と制限がSQLの遅延へ影響する。"
+        },
+        {
+          "title": "Secure functionと情報露出",
+          "body": "Secure属性は関数定義などの情報露出を抑えるが、送信データの適切さや外部APIの認証を代替しない。機微情報の送信範囲、ログへの記録、外部呼出し費用を評価する。外部停止時のエラー処理と再実行範囲をテストする。"
+        }
+      ],
+      "scenario": "外部スコアリングAPIをSQLから安全に呼び出す。",
+      "pitfall": "External FunctionとExternal Access Integrationは別の仕組み。SECURE属性も外部認証の代わりにはならない。",
+      "takeaway": "呼出し方向、認証境界、Batch、再送を分けて設計する。",
+      "comparison": [
+        [
+          "External Function",
+          "SQLから外部サービスを呼ぶ",
+          "API Integration・Proxy・応答形式"
+        ],
+        [
+          "External Access",
+          "UDF / Procedureから外部接続",
+          "Network rule・Secret・Integration"
+        ],
+        [
+          "SQL API",
+          "外部からSnowflakeへSQLを送る",
+          "Snowflake認証・実行状態"
+        ]
+      ],
+      "review": {
+        "question": "External FunctionをSECUREにしたら、外部APIの認証設定は不要になる？",
+        "answer": "不要にはならない。SECUREは関数の情報露出に関する性質。API Integration、Proxy、サービスの認証、許可Endpoint、送信データを別途設計する。"
+      },
+      "docKeys": [
+        "external_func",
+        "external_access"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-02-external-function-api-boundary",
+      "imageAlt": "DEA-DT-02 External Function & API Boundary。External FunctionのAPI Integration、認証、要求・応答、失敗境界を設計する。"
+    },
+    {
+      "id": "DEA-DT-03",
+      "slug": "dea-dt-03-stored-procedures-transactions",
+      "domain": "D5",
+      "title": "Stored Procedures & Transactions",
+      "objectiveIds": [
+        "5.3"
+      ],
+      "goal": "Snowpark、SQL Scripting、JavaScript Procedureとトランザクション境界を選ぶ。",
+      "coreIds": [
+        "FA-07",
+        "PT-08",
+        "AG-01"
+      ],
+      "sections": [
+        {
+          "title": "手続き制御と複数SQL",
+          "body": "Stored ProcedureはSQLの実行、分岐、ループ、例外処理をまとめ、処理をCALLで呼び出せる単位にする。引数、戻り値、変更するオブジェクト、ログ、再実行条件を明示する。呼出しが成功したことと業務整合性が成立することを分けて検証する。"
+        },
+        {
+          "title": "言語／runtimeの選択",
+          "body": "SQL ScriptingはSQL中心の制御、JavaScriptはその言語での手続き制御、Snowpark Procedureは対応言語とDataFrame処理を利用する場合に検討する。パッケージ、Runtime、依存関係を固定し、動的SQLでは識別子と値の渡し方を区別する。"
+        },
+        {
+          "title": "Owner / Caller rights",
+          "body": "Owner’s rightsとCaller’s rightsでは処理の権限コンテキストが異なる。権限を委譲したい処理か、呼出し元の権限で実行したい処理かを決める。Owner’s rightsにすれば任意のSQLを安全に受け付けられるわけではなく、引数と対象の制限が必要になる。"
+        },
+        {
+          "title": "BEGIN・COMMIT・ROLLBACKと例外",
+          "body": "Procedure全体が自動的に一つのトランザクションになるわけではない。BEGIN / COMMIT / ROLLBACKを適切なスコープで対応させ、例外時の処理を定義する。DDLは暗黙のコミットを伴うため、DMLと同じロールバック単位に入ると考えない。呼出し元との境界も確認する。"
+        }
+      ],
+      "scenario": "複数テーブル更新を一貫して実行し、途中失敗を処理する。",
+      "pitfall": "Procedure呼出し全体が自動的に単一トランザクションになるわけではない。DDLの暗黙コミットにも注意する。",
+      "takeaway": "実行権限とトランザクション境界を明示してProcedureを設計する。",
+      "comparison": [
+        [
+          "UDF",
+          "式の中で値を計算",
+          "戻り値と副作用の制約"
+        ],
+        [
+          "Procedure",
+          "複数ステップを制御",
+          "権限・例外・再実行"
+        ],
+        [
+          "明示的トランザクション",
+          "対応するDMLをまとめる",
+          "開始と終了のスコープ"
+        ],
+        [
+          "DDL",
+          "オブジェクト定義を変更",
+          "暗黙コミットと復元手順"
+        ]
+      ],
+      "review": {
+        "question": "Procedureの途中でCREATE TABLEを実行した後、例外でROLLBACKすれば、すべて元に戻る？",
+        "answer": "その前提は危険。DDLには暗黙のコミットがあり、Procedure全体が自動的に原子的な処理になるわけでもない。DDLとDMLの境界を分け、失敗時に何が残るかを検証し、必要ならClone等の別の復元手順を用意する。"
+      },
+      "docKeys": [
+        "procedures",
+        "transactions",
+        "scripting"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-03-stored-procedures-transactions",
+      "imageAlt": "DEA-DT-03 Stored Procedures & Transactions。Snowpark、SQL Scripting、JavaScript Procedureとトランザクション境界を選ぶ。"
+    },
+    {
+      "id": "DEA-DT-04",
+      "slug": "dea-dt-04-semi-structured-transformation",
+      "domain": "D5",
+      "title": "Semi-structured Transformation",
+      "objectiveIds": [
+        "5.4"
+      ],
+      "goal": "VARIANTを辿り、FLATTENし、型を検証し、構造化／半構造化を相互変換する。",
+      "coreIds": [
+        "LC-06",
+        "PT-07"
+      ],
+      "sections": [
+        {
+          "title": "VARIANT pathと型確認",
+          "body": "VARIANT内はパスで値を取り出し、TYPEOFなどで型を確認する。JSONのキーの大文字小文字とSQL識別子の扱いを混同しない。業務列へ移す前に、必須項目、数値・日時の型、欠落の扱いを決める。"
+        },
+        {
+          "title": "LATERAL FLATTENと行数",
+          "body": "LATERAL FLATTENは配列やオブジェクトを行へ展開する。配列のINDEXやVALUE、元のレコードIDを保持して入力と出力の対応を残す。二つの独立した配列を展開すると直積になることがある。OUTERの設定と空配列の扱いも確認する。"
+        },
+        {
+          "title": "TRY_PARSE_JSON / CAST / NULL",
+          "body": "PARSE_JSONとTRY_PARSE_JSON、CASTとTRY_CAST系の変換を目的に応じて選ぶ。TRY系でNULLになった結果をすべて正常扱いにせず、変換失敗の件数を残す。SQL NULL、JSON null、キー欠落は異なり、IS NULLとIS_NULL_VALUE等で区別する。"
+        },
+        {
+          "title": "OBJECT_CONSTRUCT / ARRAY_AGG",
+          "body": "OBJECT_CONSTRUCTとARRAY_AGGなどで構造化データを再び半構造化へまとめる。NULLを省くか残すか、配列の順序を保証するかを明示する。FLATTEN前後の件数とキーの照合で、欠損や意図しない増幅がないことを検証する。"
+        }
+      ],
+      "scenario": "ネスト配列を展開して明細化し、再びJSONへ構成する。",
+      "pitfall": "独立した複数配列の展開で直積が生じる場合がある。元IDとINDEXを保持して行数を照合する。",
+      "takeaway": "型・NULL・行数・順序を明示して相互変換する。",
+      "comparison": [
+        [
+          "Path + CAST",
+          "値を業務列へ取り出す",
+          "キー名・型・欠落"
+        ],
+        [
+          "FLATTEN",
+          "配列等を明細化",
+          "INDEX・OUTER・行数増幅"
+        ],
+        [
+          "TRY系の関数",
+          "不正値を扱いつつ処理",
+          "NULL化した失敗を別に計測"
+        ],
+        [
+          "OBJECT / ARRAY集約",
+          "JSON等へ再構成",
+          "NULLと順序の仕様"
+        ]
+      ],
+      "review": {
+        "question": "一つのレコードに長さ3と長さ4の配列があり、独立にFLATTENしたら12行になった。異常？",
+        "answer": "独立した展開の組合せで直積ができた可能性がある。求める関係がINDEXごとの対応なのか全組合せなのかを決め、Join条件や展開手順を修正する。元のレコードIDと配列INDEXを残して検証する。"
+      },
+      "docKeys": [
+        "semi"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-04-semi-structured-transformation",
+      "imageAlt": "DEA-DT-04 Semi-structured Transformation。VARIANTを辿り、FLATTENし、型を検証し、構造化／半構造化を相互変換する。",
+      "snippet": {
+        "language": "SQL",
+        "note": "そのまま実行できる小さな例。配列の2要素を2行に展開する。",
+        "code": "WITH source AS (\n  SELECT 1 AS id, PARSE_JSON('{\"items\":[{\"qty\":2},{\"qty\":3}]}') AS payload\n)\nSELECT s.id, f.index AS item_index, f.value:qty::NUMBER AS qty\nFROM source AS s, LATERAL FLATTEN(INPUT => s.payload:items) AS f\nORDER BY s.id, item_index;"
+      }
+    },
+    {
+      "id": "DEA-DT-05",
+      "slug": "dea-dt-05-unstructured-semantic-cortex-pipeline",
+      "domain": "D5",
+      "title": "Unstructured, Semantic & Cortex Pipeline",
+      "objectiveIds": [
+        "5.5"
+      ],
+      "goal": "Directory Table、URL、REST API、Semantic View、Cortex AIを非構造データ処理へ組み込む。",
+      "coreIds": [
+        "FA-08",
+        "LC-06",
+        "FA-07"
+      ],
+      "sections": [
+        {
+          "title": "Stage / Directory Table / URL",
+          "body": "非構造化ファイルはStageで管理し、Directory Tableでファイル名・サイズ等のメタデータを扱う。Directoryの更新と元ファイルの状態を合わせる。Stage file URL、Scoped URL、Pre-signed URLは認証・有効期間が異なるため、利用者と処理時間から選ぶ。"
+        },
+        {
+          "title": "文書・画像の取得とメタデータ",
+          "body": "ファイル取得のREST経路やSnowflake内の処理へ渡す参照を設計し、機微情報と権限を確認する。Directory Tableはファイルの内容を自動的にすべて構造化するものではない。元ファイル、抽出結果、処理バージョンを関連付けて追跡可能にする。"
+        },
+        {
+          "title": "Cortex AI：分類・抽出・テキスト／マルチモーダル",
+          "body": "Cortex AIの対応機能で分類、文書抽出、テキストやマルチモーダルの処理を組み込む。利用するモデル、Region、権限、入力形式、制限を最新Docsで確認する。結果は確率的で誤り得るため、評価データと品質基準、失敗時の扱いを設ける。"
+        },
+        {
+          "title": "Semantic Viewと利用・費用監視",
+          "body": "Semantic Viewは業務用語、Fact、Dimension、Metricなどの意味をモデル化し、利用者が一貫した定義で分析するために使う。Cortexの費用は呼出しとサービス別利用量で観測し、再処理量を制御する。AIを利用すれば課金が自動的に最適化されるという意味ではない。"
+        }
+      ],
+      "scenario": "文書ファイルを分類・抽出し、意味モデル経由で利用する。",
+      "pitfall": "Cortexの対応モデル・Region・権限・費用は変わり得る。公式Docsと小さな評価データで確認する。",
+      "takeaway": "ファイル管理・内容抽出・意味モデル・品質と費用を一続きで設計する。",
+      "comparison": [
+        [
+          "Directory Table",
+          "ファイルの一覧とメタデータ",
+          "更新・元ファイルとの対応"
+        ],
+        [
+          "Scoped / Pre-signed URL",
+          "必要な相手へファイル参照を渡す",
+          "認証・有効期間・共有範囲"
+        ],
+        [
+          "Cortex AI",
+          "分類・抽出・生成等",
+          "モデル・品質・Region・費用"
+        ],
+        [
+          "Semantic View",
+          "業務の意味を定義する",
+          "Fact・Dimension・Metric・関係"
+        ]
+      ],
+      "review": {
+        "question": "Directory Tableを有効にしたら、PDFの請求金額が自動的に業務列へ入る？",
+        "answer": "Directory Tableはファイルのメタデータを扱う。内容の抽出には対応するCortex機能や別の処理が必要。抽出結果の型、正しさ、元ファイルとの関連付け、再処理費用を設計する。"
+      },
+      "docKeys": [
+        "unstructured",
+        "semantic",
+        "cortex",
+        "urls"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-05-unstructured-semantic-cortex-pipeline",
+      "imageAlt": "DEA-DT-05 Unstructured, Semantic & Cortex Pipeline。Directory Table、URL、REST API、Semantic View、Cortex AIを非構造データ処理へ組み込む。"
+    },
+    {
+      "id": "DEA-DT-06",
+      "slug": "dea-dt-06-development-workflow-code-management",
+      "domain": "D5",
+      "title": "Development Workflow & Code Management",
+      "objectiveIds": [
+        "5.6"
+      ],
+      "goal": "Workspaces、Notebooks、Git、dbt Projects、デプロイ、テスト、環境管理を一連の開発フローにする。",
+      "coreIds": [
+        "FA-07",
+        "CO-05",
+        "AG-01"
+      ],
+      "sections": [
+        {
+          "title": "開発：Workspace / Notebook",
+          "body": "WorkspaceやNotebookではSQL・コード・結果を整理し、処理を再現できる形にする。対話実行で偶然残った状態へ依存しないよう、Role、Warehouse、Database、Schema、パッケージを明示する。機密情報をコードや出力へ保存しない。"
+        },
+        {
+          "title": "Version：Git repository",
+          "body": "Git Integrationでコードの版を管理し、レビューした変更を利用する。Gitへ接続しただけでテスト・承認・デプロイが自動で完成するわけではない。Branch、Commit、同期した内容と実行した内容を対応付ける。"
+        },
+        {
+          "title": "Build：dbt Projects / tests",
+          "body": "dbt Projectsではモデルの依存関係、実行、テストを管理する。ビルド成功とデータ品質を分け、NULL、一意性、参照整合性などのテストを要件に合わせる。設定、環境、Secretの扱い、実行権限も版管理と整合させる。"
+        },
+        {
+          "title": "Promote：Clone・environment・deployment",
+          "body": "開発・検証・本番を分け、必要に応じてCloneを利用して変更を検証する。昇格前にSQL差分、データの差分、権限、スケジュールを確認する。失敗時に戻すCommitとデータ状態を決め、実行履歴を残す。"
+        }
+      ],
+      "scenario": "開発・検証・本番へ同じ変換コードを昇格させる。",
+      "pitfall": "Git接続だけでCI/CDが完成するわけではない。テスト、環境、実行版、昇格手順を管理する。",
+      "takeaway": "コードの版、実行環境、データ検証を合わせて昇格する。",
+      "comparison": [
+        [
+          "Workspace / Notebook",
+          "開発と確認",
+          "実行状態・依存・再現性"
+        ],
+        [
+          "Git",
+          "変更履歴とレビュー",
+          "Commitと実行版の対応"
+        ],
+        [
+          "dbt",
+          "モデル依存とテスト",
+          "品質・設定・実行環境"
+        ],
+        [
+          "環境昇格",
+          "検証済み変更の反映",
+          "Role・データ差分・Rollback"
+        ]
+      ],
+      "review": {
+        "question": "Notebookは上から順に実行すると失敗するが、開発者のセッションでは動く。公開してよい？",
+        "answer": "再現性の問題が残っている。隠れた変数や前回の実行結果、Role・Schema・パッケージに依存していないかを確認し、クリーンな環境から再実行する。版管理、テスト、昇格手順を揃えてから運用する。"
+      },
+      "docKeys": [
+        "workspace",
+        "notebooks",
+        "git",
+        "dbt"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-06-development-workflow-code-management",
+      "imageAlt": "DEA-DT-06 Development Workflow & Code Management。Workspaces、Notebooks、Git、dbt Projects、デプロイ、テスト、環境管理を一連の開発フローにする。"
+    },
+    {
+      "id": "DEA-DT-07",
+      "slug": "dea-dt-07-snowpark-dataframe-transformations",
+      "domain": "D5",
+      "title": "Snowpark DataFrame Transformations",
+      "objectiveIds": [
+        "5.7"
+      ],
+      "goal": "Snowparkの遅延評価とDataFrame APIでfilter・join・aggregateをSnowflake内で実行する。",
+      "coreIds": [
+        "FA-07",
+        "PT-07",
+        "FA-05"
+      ],
+      "sections": [
+        {
+          "title": "Client code → logical plan",
+          "body": "SnowparkではクライアントコードからSnowflake内の処理を表現できる。DataFrameは結果をすべてローカルへ保持する配列ではなく、データと変換を表すオブジェクト。どの処理がSQLとして実行され、どこで言語Runtimeを使うかを区別する。"
+        },
+        {
+          "title": "DataFrame変換とlazy evaluation",
+          "body": "filter、select、join、group_by、aggなどの変換をつなぐと、実行計画が組み立てられる。多くのDataFrame操作は遅延評価され、その行で直ちに全データの処理が走るとは限らない。早い段階で不要な行・列を除き、Joinの関係を明確にする。"
+        },
+        {
+          "title": "ActionでSnowflake側実行",
+          "body": "collectやshow、保存などのActionが実行を起こす。collectは結果をクライアントへ取得するため、大規模結果でメモリと転送が問題になり得る。集計やテーブル保存をSnowflake側で行い、必要な結果だけを取得する。"
+        },
+        {
+          "title": "Query Profile・Warehouse・結果取得",
+          "body": "生成されたクエリとQuery Profileを確認し、Scan、Join、Spill、Warehouseのサイズを評価する。Pythonで書いていても、Pandasのローカル処理とSnowpark DataFrameでは実行場所が異なる。関数名だけでなくデータがどこを動いたかを追う。"
+        }
+      ],
+      "scenario": "大規模データをローカルへ収集せずに変換・集計する。",
+      "pitfall": "Snowpark DataFrameとローカルのPandasは実行場所が異なる。全件collectは転送・メモリの負荷になる。",
+      "takeaway": "遅延評価・実行場所・Actionによるデータ移動を説明できるようにする。",
+      "comparison": [
+        [
+          "Transformation",
+          "処理計画を構成する",
+          "filter・join・aggregate"
+        ],
+        [
+          "Action",
+          "計画を実行する",
+          "show・collect・保存"
+        ],
+        [
+          "collect",
+          "結果をクライアントへ取得",
+          "結果サイズ・ネットワーク・メモリ"
+        ],
+        [
+          "Profile",
+          "実際の実行を評価",
+          "SQL・Scan・Join・Spill"
+        ]
+      ],
+      "review": {
+        "question": "巨大なDataFrameへfilterを書いただけなのにすぐ戻った。フィルタ処理が完了した？",
+        "answer": "遅延評価で計画を構成しただけの可能性がある。Actionを実行した時点のQuery HistoryとProfileで実際の処理を確認する。結果を確認するために全件collectするのではなく、絞り込んだ表示やテーブル保存を選ぶ。"
+      },
+      "docKeys": [
+        "snowpark",
+        "profile"
+      ],
+      "imageFolder": "d5-data-transformation",
+      "imageBasename": "dea-dt-07-snowpark-dataframe-transformations",
+      "imageAlt": "DEA-DT-07 Snowpark DataFrame Transformations。Snowparkの遅延評価とDataFrame APIでfilter・join・aggregateをSnowflake内で実行する。",
+      "snippet": {
+        "language": "Python",
+        "note": "Snowparkのsessionと演習用テーブルがある環境向け。Actionは最後のshow。",
+        "code": "from snowflake.snowpark.functions import col, sum as sum_\n\nresult = (session.table(\"LAB_DB.LAB_SCHEMA.ORDERS\")\n    .filter(col(\"STATUS\") == \"COMPLETE\")\n    .group_by(\"CUSTOMER_ID\")\n    .agg(sum_(\"AMOUNT\").alias(\"TOTAL_AMOUNT\")))\n\n# ここまで主に計画を構成。showが実行と少量の結果取得を起こす。\nresult.show(10)"
+      }
+    }
+  ],
+  "labs": [
+    {
+      "id": "LAB-01",
+      "title": "失敗ファイルだけを再ロードする",
+      "scope": "Objective 1.1–1.3",
+      "lessonIds": [
+        "DEA-DM-01",
+        "DEA-DM-02",
+        "DEA-DM-03"
+      ],
+      "goal": "正常・異常ファイルを混ぜて取り込み、失敗範囲を絞って復旧する。",
+      "steps": [
+        "演習用SchemaとStageに、小さなCSVを3つ用意する。1つは数値列へ不正な文字列を入れ、ファイル名と想定行数を記録する。",
+        "File FormatとON_ERRORの動作を確認してCOPYする。Query IDとファイル単位の結果、COPY_HISTORYを保存する。",
+        "VALIDATE等で原因を特定し、失敗ファイルだけを修正・再処理する。全ファイルへのFORCE再ロードは行わない。",
+        "ソース件数とロード件数、業務キーの重複、元ファイル情報を照合する。演習用オブジェクトを片付ける。"
+      ],
+      "checks": [
+        "どのファイルのどの行が失敗したか説明できる",
+        "成功済みデータが二重に入っていない",
+        "形式・権限・パスの問題を切り分けられる"
+      ]
+    },
+    {
+      "id": "LAB-02",
+      "title": "CDCの消費と再実行を観察する",
+      "scope": "Objective 1.4 / 2.3",
+      "lessonIds": [
+        "DEA-DM-04",
+        "DEA-PO-04"
+      ],
+      "goal": "Streamの参照・消費・コミットの違いを小さな表で確認する。",
+      "steps": [
+        "演習用の元表、出力表、Streamを作り、INSERT・UPDATE・DELETEを行う。",
+        "StreamをSELECTし、METADATA$ACTION等と、同じSELECTを再実行した結果を記録する。",
+        "Streamを使うDMLをトランザクション内で実行し、ROLLBACK時とCOMMIT時の次回の結果を比較する。",
+        "独立した二つの消費者を想定し、個別Streamが必要になる理由を記録する。Taskへ移す場合の失敗・再開・監視も設計する。"
+      ],
+      "checks": [
+        "SELECTだけでオフセットが進まない",
+        "コミットしたDMLで位置が進む",
+        "Streamを全変更イベントの恒久ログと誤解しない"
+      ]
+    },
+    {
+      "id": "LAB-03",
+      "title": "Streamingの障害時系列を設計する",
+      "scope": "Objective 1.4–1.5",
+      "lessonIds": [
+        "DEA-DM-05",
+        "DEA-DM-06",
+        "DEA-DM-07"
+      ],
+      "goal": "送信後の切断を想定し、欠損・重複を検証できる再開手順を作る。",
+      "steps": [
+        "利用するSDKまたはKafka Connectorのバージョンと取込方式を決め、Channel・Partition・コミット位置の仕様を読む。",
+        "連番のイベントIDを持つ小さな入力を用意する。実行環境がなければ送信・確定・停止の時系列表を作る。",
+        "送信前、送信後、確定後の3地点で停止した場合を比較し、参照する状態と再送範囲を決める。",
+        "業務キーの欠損と重複を照合するSQL、エラー行の隔離、ソース保持期限を記録する。"
+      ],
+      "checks": [
+        "送信成功とコミットを区別できる",
+        "保証の範囲をChannel・Connector単位で説明できる",
+        "APIの再試行と業務の冪等性を区別できる"
+      ]
+    },
+    {
+      "id": "LAB-04",
+      "title": "遅いSQLの原因を測る",
+      "scope": "Objective 2.1–2.2 / 3.2",
+      "lessonIds": [
+        "DEA-PO-01",
+        "DEA-PO-02",
+        "DEA-PO-03",
+        "DEA-SP-02"
+      ],
+      "goal": "Query Profileを根拠に一つの改善を選び、同条件で検証する。",
+      "steps": [
+        "自分で管理する代表クエリを選び、SQL・データ量・Warehouse・キャッシュ・同時実行条件を記録する。",
+        "待ち時間と実行時間を分け、Scan、Join行数、SpillをProfileで確認する。",
+        "SQL、Warehouse、配置、最適化サービスのいずれか一つを仮説に沿って変更する。",
+        "同じ条件で複数回測り、時間・読取り量・費用を比較する。SLAを満たすかと、追加費用に見合うかを記録する。"
+      ],
+      "checks": [
+        "原因と変更の対応を説明できる",
+        "Cache差による誤判定を避けられる",
+        "Scale upとScale outを用途で選べる"
+      ]
+    },
+    {
+      "id": "LAB-05",
+      "title": "Cloneから変更と復元を検証する",
+      "scope": "Objective 3.1 / 3.3",
+      "lessonIds": [
+        "DEA-SP-01",
+        "DEA-SP-03"
+      ],
+      "goal": "元表に影響を与えず、過去時点・権限・変更差分を確認する。",
+      "steps": [
+        "演習用テーブルの保持設定と種別を確認し、小さなデータを入れ、時点とQuery IDを記録する。",
+        "Cloneを作り、Clone側だけを更新して元表が変わらないことを確認する。",
+        "SHOW GRANTS等でOwnershipとアクセス権を調べ、COPY GRANTSの有無やClone対象の違いを整理する。",
+        "保持内の過去時点を照会・Cloneし、復元するデータと権限の手順を記録する。検証後は演習用Cloneを片付ける。"
+      ],
+      "checks": [
+        "Clone後の変更が独立している",
+        "権限の引継ぎを確認している",
+        "Fail-safeを通常の復元SQLとして扱っていない"
+      ]
+    },
+    {
+      "id": "LAB-06",
+      "title": "Roleごとの保護をテストする",
+      "scope": "Objective 4.1–4.2",
+      "lessonIds": [
+        "DEA-GV-01",
+        "DEA-GV-02"
+      ],
+      "goal": "同じテーブルへ二つのRoleでアクセスし、列・行の違いを検証する。",
+      "steps": [
+        "実データを使わず、架空の氏名・地区・金額を持つ演習表と、閲覧条件の異なるRoleを準備する。",
+        "Tagを付けた状態だけで表示が変わるか確認し、MaskingとRow Accessを適用する。",
+        "許可Roleと制限Roleの両方で同じSELECTを実行し、期待する行・列の結果を記録する。",
+        "Policyの参照先、適用状態、権限、Lineageを確認する。Aggregation / Projectionを加える場合は対応条件と併用制約を先に調べる。"
+      ],
+      "checks": [
+        "Tagと保護の違いが分かる",
+        "GRANTとPolicyの両方を確認できる",
+        "拒否される側のケースも検証できる"
+      ]
+    },
+    {
+      "id": "LAB-07",
+      "title": "半構造化データの往復変換",
+      "scope": "Objective 5.4",
+      "lessonIds": [
+        "DEA-DT-04"
+      ],
+      "goal": "配列を展開・集計し、欠落とNULLを区別して再構成する。",
+      "steps": [
+        "入れ子配列、空配列、JSON null、キー欠落、不正な数値文字列を含む小さなJSONを用意する。",
+        "VARIANTパスとFLATTENを使い、元ID・INDEX・VALUEを残して明細化する。",
+        "TRY系関数で型をそろえ、変換失敗を別に数える。二つの配列を展開したときの行数を予測・照合する。",
+        "OBJECT_CONSTRUCTとARRAY_AGGで再構成し、NULLの扱い、順序、業務キーが要件に一致するか確認する。"
+      ],
+      "checks": [
+        "SQL NULLとJSON nullを区別できる",
+        "直積による行数増幅を説明できる",
+        "再構成の順序とNULLの仕様を示せる"
+      ]
+    },
+    {
+      "id": "LAB-08",
+      "title": "Procedureの失敗境界を検証する",
+      "scope": "Objective 5.1–5.3",
+      "lessonIds": [
+        "DEA-DT-01",
+        "DEA-DT-02",
+        "DEA-DT-03"
+      ],
+      "goal": "権限とトランザクションを明示し、途中失敗時に残る状態を理解する。",
+      "steps": [
+        "演習用Schema内で二つの表を更新する小さなProcedureを設計する。引数と実行権限を固定する。",
+        "DMLだけの明示的トランザクションで途中エラーを発生させ、COMMIT / ROLLBACK後の状態を確認する。",
+        "DDLを含む場合の暗黙コミットとスコープの制約を公式Docsと照合し、DMLのみの場合との違いを記録する。",
+        "Owner / Caller rightsの選択理由と、再実行しても二重反映しないための条件を説明する。外部呼出しがある場合は外部の副作用も整理する。"
+      ],
+      "checks": [
+        "CALL全体を自動的に一トランザクションと考えていない",
+        "Roleと引数をテストできる",
+        "DBのRollbackで外部の副作用まで消えると仮定しない"
+      ]
+    },
+    {
+      "id": "LAB-09",
+      "title": "Snowpark処理を版管理して昇格する",
+      "scope": "Objective 5.6–5.7",
+      "lessonIds": [
+        "DEA-DT-06",
+        "DEA-DT-07"
+      ],
+      "goal": "集計をSnowflake側で実行し、再現可能なコードと検証結果を残す。",
+      "steps": [
+        "小さなSnowpark DataFrame処理でfilter、join、group_by / aggを組み、Action前後のQuery Historyを観察する。",
+        "全件collectを避けて結果を演習用テーブルへ保存し、SQLによる同等の集計と照合する。",
+        "Role・Warehouse・依存パッケージを記録し、Gitへ載せるコードと環境固有の設定を分ける。",
+        "クリーンな環境で再実行し、dbt等のテストまたはSQLの品質検証を通す。昇格するCommitと戻す手順を記録する。"
+      ],
+      "checks": [
+        "Lazy evaluationとActionを観測できる",
+        "実行場所と取得量を説明できる",
+        "他の環境から同じ結果を再現できる"
+      ]
+    },
+    {
+      "id": "LAB-10",
+      "title": "総合設計：ファイルとイベントを提供する",
+      "scope": "実務への補助演習（複数Objectiveを横断）",
+      "lessonIds": [
+        "DEA-DM-08",
+        "DEA-DM-09",
+        "DEA-PO-04",
+        "DEA-GV-03",
+        "DEA-DT-05"
+      ],
+      "goal": "日次ファイルと随時イベントから、品質を保証した分析データを提供する。",
+      "steps": [
+        "Raw / Curated / Servingなど自分の層構造を定義し、量・鮮度・RPO/RTO・利用Roleを記録する。この層名称自体は公式Objective名ではない。",
+        "取込、MERGE等による業務キーの統合、重複排除、遅延到着、再実行の扱いを決める。必要ならSCDを選ぶ理由も記す。",
+        "別アカウントへの共有とStreamlit等の利用を設計し、Policy、Cloneによる検証、通知・品質監視を配置する。",
+        "文書処理や外部Catalog、Clean Roomが必要な場合の追加構成を比較する。停止・不正入力・権限不足の3ケースで復旧手順を説明する。"
+      ],
+      "checks": [
+        "方式選択の理由を複数ドメインで説明できる",
+        "観測・再実行・公開境界が抜けていない",
+        "実務上の補足と公式試験範囲を区別できる"
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Bulk COPY",
+      "definition": "Warehouseを使い、Stage上のファイルをテーブルへまとめてロードする処理。",
+      "lessonId": "DEA-DM-01"
+    },
+    {
+      "term": "Snowpipe",
+      "definition": "Stage上のファイルを継続ロードするサービス。通知連携とRESTによる取込依頼を区別する。",
+      "lessonId": "DEA-DM-04"
+    },
+    {
+      "term": "Snowpipe Streaming",
+      "definition": "ファイルStageを経由せず、行を継続送信する取込方式。",
+      "lessonId": "DEA-DM-05"
+    },
+    {
+      "term": "Storage Integration",
+      "definition": "Snowflakeから外部クラウドストレージへアクセスする信頼関係の設定。",
+      "lessonId": "DEA-DM-02"
+    },
+    {
+      "term": "INFER_SCHEMA",
+      "definition": "対応形式のファイルから列や型を検出し、初期スキーマの設計に使う関数。",
+      "lessonId": "DEA-DM-02"
+    },
+    {
+      "term": "METADATA$FILENAME",
+      "definition": "Stageを問い合わせる際に参照できる、元ファイル名のメタデータ列。",
+      "lessonId": "DEA-DM-02"
+    },
+    {
+      "term": "COPY_HISTORY",
+      "definition": "ロードされたファイルの状態や件数を調べる履歴。対象と保持期間を確認する。",
+      "lessonId": "DEA-DM-03"
+    },
+    {
+      "term": "VALIDATE",
+      "definition": "対応するCOPY実行で生じたロードエラーを確認するための関数。",
+      "lessonId": "DEA-DM-03"
+    },
+    {
+      "term": "VALIDATE_PIPE_LOAD",
+      "definition": "Snowpipeによるロードのエラーを確認するための関数。",
+      "lessonId": "DEA-DM-03"
+    },
+    {
+      "term": "Stream",
+      "definition": "変更データを読むためのオフセットを保持するオブジェクト。独立したデータ保管庫ではない。",
+      "lessonId": "DEA-DM-04"
+    },
+    {
+      "term": "Stream staleness",
+      "definition": "必要な変更履歴が利用できなくなり、Streamを継続消費できなくなる状態。",
+      "lessonId": "DEA-PO-04"
+    },
+    {
+      "term": "Task graph",
+      "definition": "Task間の依存関係を定義した実行構成。全体が一つのトランザクションとは限らない。",
+      "lessonId": "DEA-DM-04"
+    },
+    {
+      "term": "Dynamic Table",
+      "definition": "宣言したクエリ結果を、鮮度目標に基づくRefreshで維持するテーブル。",
+      "lessonId": "DEA-DM-04"
+    },
+    {
+      "term": "Target Lag",
+      "definition": "Dynamic Tableで設定する鮮度の目標。無条件の完了時刻保証ではない。",
+      "lessonId": "DEA-DM-04"
+    },
+    {
+      "term": "Channel / Offset token",
+      "definition": "Streamingの送信単位や処理位置の管理要素。採用APIで保証範囲を確認する。",
+      "lessonId": "DEA-DM-05"
+    },
+    {
+      "term": "SQL API",
+      "definition": "外部アプリからSnowflakeへSQLを送信し、状態や結果を取得するAPI。",
+      "lessonId": "DEA-DM-06"
+    },
+    {
+      "term": "Openflow",
+      "definition": "ソース接続と処理・配送のフローを構築するデータ統合基盤。",
+      "lessonId": "DEA-DM-06"
+    },
+    {
+      "term": "Pushdown",
+      "definition": "接続先で処理できる演算を、データを移す前に接続先へ実行させること。",
+      "lessonId": "DEA-DM-07"
+    },
+    {
+      "term": "Auto-fulfillment",
+      "definition": "Listingを他リージョン等のConsumerへ届けるためのデータ提供機構。",
+      "lessonId": "DEA-DM-08"
+    },
+    {
+      "term": "Secure View",
+      "definition": "定義や最適化による情報露出に配慮したView。共有するデータ面の設計に使う。",
+      "lessonId": "DEA-DM-08"
+    },
+    {
+      "term": "External Table",
+      "definition": "外部ストレージ上のファイルを、Snowflakeのテーブルとして参照する仕組み。",
+      "lessonId": "DEA-DM-09"
+    },
+    {
+      "term": "Iceberg Table",
+      "definition": "Apache Iceberg形式を扱うテーブル。Catalogと管理方式が機能・責任範囲を左右する。",
+      "lessonId": "DEA-DM-09"
+    },
+    {
+      "term": "Hybrid Table",
+      "definition": "行指向の保存を基礎に、点参照やトランザクション用途を想定したテーブル。",
+      "lessonId": "DEA-DM-09"
+    },
+    {
+      "term": "Schema Evolution",
+      "definition": "対応する取込経路と設定で、列追加等のスキーマ変更を取り込む仕組み。",
+      "lessonId": "DEA-DM-09"
+    },
+    {
+      "term": "Unload",
+      "definition": "COPY INTO location等でSnowflakeのデータをファイルへ書き出す処理。",
+      "lessonId": "DEA-DM-09"
+    },
+    {
+      "term": "Query Profile",
+      "definition": "クエリの実行オペレータ、行数、読取り、Spillなどを確認する診断情報。",
+      "lessonId": "DEA-PO-01"
+    },
+    {
+      "term": "Spill",
+      "definition": "中間データがメモリに収まらず、ローカルまたはリモートのStorageへ退避されること。",
+      "lessonId": "DEA-PO-01"
+    },
+    {
+      "term": "Scale up",
+      "definition": "Warehouseサイズを上げて利用可能な資源を増やすこと。",
+      "lessonId": "DEA-PO-02"
+    },
+    {
+      "term": "Scale out",
+      "definition": "Cluster数等を増やし、主に同時実行負荷へ対応すること。",
+      "lessonId": "DEA-PO-02"
+    },
+    {
+      "term": "Snowpark-optimized Warehouse",
+      "definition": "対応するメモリ負荷の高いSnowpark等の処理を想定したWarehouse。",
+      "lessonId": "DEA-PO-02"
+    },
+    {
+      "term": "Resource Monitor",
+      "definition": "WarehouseのCredit利用を監視・制御する仕組み。全Serverless費用の停止機構ではない。",
+      "lessonId": "DEA-PO-02"
+    },
+    {
+      "term": "ACCOUNT_USAGE",
+      "definition": "アカウントの利用履歴・メタデータを提供するビュー群。反映遅延はビューに依存する。",
+      "lessonId": "DEA-PO-02"
+    },
+    {
+      "term": "Search Optimization Service",
+      "definition": "対応する選択性の高い検索を高速化するサービス。維持費も評価する。",
+      "lessonId": "DEA-PO-03"
+    },
+    {
+      "term": "Query Acceleration Service",
+      "definition": "適格なクエリ処理の一部を追加Computeで支援するサービス。",
+      "lessonId": "DEA-PO-03"
+    },
+    {
+      "term": "Materialized View",
+      "definition": "対応するクエリ結果を保存・保守し、反復的な問合せを高速化するオブジェクト。",
+      "lessonId": "DEA-PO-03"
+    },
+    {
+      "term": "Persisted Query Results",
+      "definition": "再利用条件を満たす場合に利用される、保存されたクエリ結果。",
+      "lessonId": "DEA-PO-03"
+    },
+    {
+      "term": "DMF",
+      "definition": "Data Metric Function。NULLや件数等の品質指標を計測する関数。",
+      "lessonId": "DEA-PO-04"
+    },
+    {
+      "term": "Alert",
+      "definition": "データや状態の条件に基づいて、対応アクションを実行する仕組み。",
+      "lessonId": "DEA-PO-04"
+    },
+    {
+      "term": "RPO / RTO",
+      "definition": "許容するデータ損失の目標／復旧までの時間の目標。保持と複製・切替の設計に使う。",
+      "lessonId": "DEA-SP-01"
+    },
+    {
+      "term": "Time Travel",
+      "definition": "保持期間内の過去データの照会や復元に使う仕組み。種別とEditionで期間が異なる。",
+      "lessonId": "DEA-SP-01"
+    },
+    {
+      "term": "Fail-safe",
+      "definition": "対象データをSnowflakeが災害復旧のために扱う期間。利用者が直接SELECTするものではない。",
+      "lessonId": "DEA-SP-01"
+    },
+    {
+      "term": "Replication / Failover",
+      "definition": "他アカウント等への複製／障害時の役割切替。対象と利用条件を確認する。",
+      "lessonId": "DEA-SP-01"
+    },
+    {
+      "term": "Clustering depth",
+      "definition": "キー式に対するMicro-partitionの重なりを評価する指標の一つ。",
+      "lessonId": "DEA-SP-02"
+    },
+    {
+      "term": "Automatic Clustering",
+      "definition": "更新に伴うデータ配置を維持するサービス。Pruning効果と費用を比較する。",
+      "lessonId": "DEA-SP-02"
+    },
+    {
+      "term": "Zero-copy Clone",
+      "definition": "初期データを共有しつつ、独立して変更できるオブジェクトを作る仕組み。",
+      "lessonId": "DEA-SP-03"
+    },
+    {
+      "term": "COPY GRANTS",
+      "definition": "対応する作成・Clone等で、元オブジェクトの権限を引き継ぐ指定。対象と例外を確認する。",
+      "lessonId": "DEA-SP-03"
+    },
+    {
+      "term": "Classification",
+      "definition": "列に含まれる機微な情報などを分類・発見する機能。",
+      "lessonId": "DEA-GV-01"
+    },
+    {
+      "term": "Tag-based Masking",
+      "definition": "TagとMasking Policyを関連付け、対象列の保護へ利用する仕組み。",
+      "lessonId": "DEA-GV-02"
+    },
+    {
+      "term": "Lineage",
+      "definition": "データがどこからどこへ流れたかを表す関係情報。",
+      "lessonId": "DEA-GV-01"
+    },
+    {
+      "term": "Object dependencies",
+      "definition": "View等がどのオブジェクトを参照するかという依存関係。",
+      "lessonId": "DEA-GV-01"
+    },
+    {
+      "term": "Projection Policy",
+      "definition": "列をクエリの出力へ投影できるかを制御するPolicy。",
+      "lessonId": "DEA-GV-02"
+    },
+    {
+      "term": "Aggregation Policy",
+      "definition": "集計としての利用条件を制御し、個別データの露出を抑えるPolicy。",
+      "lessonId": "DEA-GV-02"
+    },
+    {
+      "term": "External Tokenization",
+      "definition": "取込前のトークン化と、許可に基づく問い合わせ時の復元を組み合わせる列保護。",
+      "lessonId": "DEA-GV-02"
+    },
+    {
+      "term": "Horizon Catalog",
+      "definition": "Snowflake内外のデータの発見、管理、ガバナンス、相互運用を支えるCatalog。",
+      "lessonId": "DEA-GV-03"
+    },
+    {
+      "term": "Data Clean Room",
+      "definition": "許可された分析・出力条件の下で共同分析を行う環境。",
+      "lessonId": "DEA-GV-03"
+    },
+    {
+      "term": "Scalar UDF / UDTF / UDAF",
+      "definition": "値を返す関数／表形式の関数／独自の集約関数。入力・出力の形で選ぶ。",
+      "lessonId": "DEA-DT-01"
+    },
+    {
+      "term": "Secure UDF",
+      "definition": "関数定義や最適化による情報露出に配慮するUDFの性質。",
+      "lessonId": "DEA-DT-01"
+    },
+    {
+      "term": "External Function",
+      "definition": "SQLからProxyを介して外部サービスの処理を呼ぶ関数。",
+      "lessonId": "DEA-DT-02"
+    },
+    {
+      "term": "External Access Integration",
+      "definition": "UDFやProcedure等が許可された外部ネットワークへ接続するための設定。",
+      "lessonId": "DEA-DT-02"
+    },
+    {
+      "term": "Owner / Caller rights",
+      "definition": "所有者／呼出し元を基礎とするProcedureの実行権限モデル。",
+      "lessonId": "DEA-DT-03"
+    },
+    {
+      "term": "Snowflake Scripting",
+      "definition": "SQLで変数、分岐、ループ、例外等を記述する手続き言語。",
+      "lessonId": "DEA-DT-03"
+    },
+    {
+      "term": "LATERAL FLATTEN",
+      "definition": "相関する配列やオブジェクトを行として展開する処理。",
+      "lessonId": "DEA-DT-04"
+    },
+    {
+      "term": "SQL NULL / JSON null",
+      "definition": "SQLの欠損値／JSON内のnull値。判定方法と意味を区別する。",
+      "lessonId": "DEA-DT-04"
+    },
+    {
+      "term": "Directory Table",
+      "definition": "Stage内の非構造化ファイルをメタデータの一覧として扱う仕組み。",
+      "lessonId": "DEA-DT-05"
+    },
+    {
+      "term": "Scoped URL / Pre-signed URL",
+      "definition": "ファイル参照を渡すURLの種類。認証・期限・公開範囲の違いを確認する。",
+      "lessonId": "DEA-DT-05"
+    },
+    {
+      "term": "Semantic View",
+      "definition": "Fact、Dimension、Metric等の業務上の意味と関係を定義するView。",
+      "lessonId": "DEA-DT-05"
+    },
+    {
+      "term": "Cortex AI",
+      "definition": "テキスト・文書・マルチモーダル等のAI処理をSnowflakeで利用する機能群。",
+      "lessonId": "DEA-DT-05"
+    },
+    {
+      "term": "dbt Project",
+      "definition": "SQLモデルの依存関係、構築、テストを管理するプロジェクト。",
+      "lessonId": "DEA-DT-06"
+    },
+    {
+      "term": "Lazy evaluation",
+      "definition": "変換をその場で実行せず、Actionまで処理計画として組み立てる評価方式。",
+      "lessonId": "DEA-DT-07"
+    },
+    {
+      "term": "DataFrame Action",
+      "definition": "collect、show、保存等、計画を実行する契機になる操作。",
+      "lessonId": "DEA-DT-07"
+    },
+    {
+      "term": "冪等性 / Idempotency",
+      "definition": "同じ処理を繰り返しても、意図した最終状態が変わらない性質。再実行設計で重要。",
+      "lessonId": "DEA-DM-03"
+    }
+  ],
+  "docs": [
+    {
+      "key": "load",
+      "label": "データロード概要",
+      "href": "https://docs.snowflake.com/en/user-guide/data-load-overview"
+    },
+    {
+      "key": "copy",
+      "label": "COPY INTO table",
+      "href": "https://docs.snowflake.com/en/sql-reference/sql/copy-into-table"
+    },
+    {
+      "key": "infer",
+      "label": "INFER_SCHEMA",
+      "href": "https://docs.snowflake.com/en/sql-reference/functions/infer_schema"
+    },
+    {
+      "key": "stage",
+      "label": "CREATE STAGE",
+      "href": "https://docs.snowflake.com/en/sql-reference/sql/create-stage"
+    },
+    {
+      "key": "integration",
+      "label": "Storage Integration",
+      "href": "https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration"
+    },
+    {
+      "key": "metadata",
+      "label": "Staged file metadata",
+      "href": "https://docs.snowflake.com/en/user-guide/querying-metadata"
+    },
+    {
+      "key": "validate",
+      "label": "VALIDATE",
+      "href": "https://docs.snowflake.com/en/sql-reference/functions/validate"
+    },
+    {
+      "key": "pipe_validate",
+      "label": "VALIDATE_PIPE_LOAD",
+      "href": "https://docs.snowflake.com/en/sql-reference/functions/validate_pipe_load"
+    },
+    {
+      "key": "copy_history",
+      "label": "COPY_HISTORY",
+      "href": "https://docs.snowflake.com/en/sql-reference/functions/copy_history"
+    },
+    {
+      "key": "tasks",
+      "label": "Tasks",
+      "href": "https://docs.snowflake.com/en/user-guide/tasks-intro"
+    },
+    {
+      "key": "streams",
+      "label": "Streams",
+      "href": "https://docs.snowflake.com/en/user-guide/streams-intro"
+    },
+    {
+      "key": "dynamic",
+      "label": "Dynamic Tables",
+      "href": "https://docs.snowflake.com/en/user-guide/dynamic-tables-about"
+    },
+    {
+      "key": "mv",
+      "label": "Materialized Views",
+      "href": "https://docs.snowflake.com/en/user-guide/views-materialized"
+    },
+    {
+      "key": "pipe",
+      "label": "Snowpipe",
+      "href": "https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro"
+    },
+    {
+      "key": "streaming",
+      "label": "Snowpipe Streaming",
+      "href": "https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview"
+    },
+    {
+      "key": "kafka",
+      "label": "Kafka Connector",
+      "href": "https://docs.snowflake.com/en/user-guide/kafka-connector-overview"
+    },
+    {
+      "key": "sql_api",
+      "label": "Snowflake SQL API",
+      "href": "https://docs.snowflake.com/en/developer-guide/sql-api/index"
+    },
+    {
+      "key": "openflow",
+      "label": "Openflow",
+      "href": "https://docs.snowflake.com/en/user-guide/data-integration/openflow/about"
+    },
+    {
+      "key": "notebooks",
+      "label": "Snowflake Notebooks",
+      "href": "https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks"
+    },
+    {
+      "key": "scripting",
+      "label": "Snowflake Scripting",
+      "href": "https://docs.snowflake.com/en/developer-guide/snowflake-scripting/index"
+    },
+    {
+      "key": "spark",
+      "label": "Spark Connector",
+      "href": "https://docs.snowflake.com/en/user-guide/spark-connector-overview"
+    },
+    {
+      "key": "python",
+      "label": "Python Connector",
+      "href": "https://docs.snowflake.com/en/developer-guide/python-connector/python-connector"
+    },
+    {
+      "key": "native_connectors",
+      "label": "Snowflake Connectors",
+      "href": "https://other-docs.snowflake.com/en/connectors"
+    },
+    {
+      "key": "sharing",
+      "label": "Secure Data Sharing",
+      "href": "https://docs.snowflake.com/en/user-guide/data-sharing-intro"
+    },
+    {
+      "key": "listings",
+      "label": "Listings",
+      "href": "https://docs.snowflake.com/en/collaboration/collaboration-listings-about"
+    },
+    {
+      "key": "streamlit",
+      "label": "Streamlit in Snowflake",
+      "href": "https://docs.snowflake.com/en/developer-guide/streamlit/about-streamlit"
+    },
+    {
+      "key": "external",
+      "label": "External Tables",
+      "href": "https://docs.snowflake.com/en/user-guide/tables-external-intro"
+    },
+    {
+      "key": "iceberg",
+      "label": "Iceberg Tables",
+      "href": "https://docs.snowflake.com/en/user-guide/tables-iceberg"
+    },
+    {
+      "key": "hybrid",
+      "label": "Hybrid Tables",
+      "href": "https://docs.snowflake.com/en/user-guide/tables-hybrid"
+    },
+    {
+      "key": "horizon",
+      "label": "Horizon Catalog",
+      "href": "https://docs.snowflake.com/en/user-guide/snowflake-horizon"
+    },
+    {
+      "key": "schema",
+      "label": "Schema Evolution",
+      "href": "https://docs.snowflake.com/en/user-guide/data-load-schema-evolution"
+    },
+    {
+      "key": "unload",
+      "label": "データのアンロード",
+      "href": "https://docs.snowflake.com/en/user-guide/data-unload-overview"
+    },
+    {
+      "key": "profile",
+      "label": "Query History / Query Profile",
+      "href": "https://docs.snowflake.com/en/user-guide/ui-snowsight-activity"
+    },
+    {
+      "key": "warehouse",
+      "label": "Virtual Warehouses",
+      "href": "https://docs.snowflake.com/en/user-guide/warehouses"
+    },
+    {
+      "key": "multicluster",
+      "label": "Multi-cluster Warehouses",
+      "href": "https://docs.snowflake.com/en/user-guide/warehouses-multicluster"
+    },
+    {
+      "key": "performance",
+      "label": "Performance Optimization",
+      "href": "https://docs.snowflake.com/en/guides-overview-performance"
+    },
+    {
+      "key": "account_usage",
+      "label": "ACCOUNT_USAGE",
+      "href": "https://docs.snowflake.com/en/sql-reference/account-usage"
+    },
+    {
+      "key": "resource_monitor",
+      "label": "Resource Monitors",
+      "href": "https://docs.snowflake.com/en/user-guide/resource-monitors"
+    },
+    {
+      "key": "quality",
+      "label": "Data Quality and DMFs",
+      "href": "https://docs.snowflake.com/en/user-guide/data-quality-intro"
+    },
+    {
+      "key": "time",
+      "label": "Time Travel",
+      "href": "https://docs.snowflake.com/en/user-guide/data-time-travel"
+    },
+    {
+      "key": "failsafe",
+      "label": "Fail-safe",
+      "href": "https://docs.snowflake.com/en/user-guide/data-failsafe"
+    },
+    {
+      "key": "replication",
+      "label": "Replication and Failover",
+      "href": "https://docs.snowflake.com/en/user-guide/account-replication-intro"
+    },
+    {
+      "key": "clustering",
+      "label": "Clustering",
+      "href": "https://docs.snowflake.com/en/user-guide/tables-clustering-keys"
+    },
+    {
+      "key": "clone",
+      "label": "Cloning",
+      "href": "https://docs.snowflake.com/en/user-guide/object-clone"
+    },
+    {
+      "key": "tags",
+      "label": "Object Tagging",
+      "href": "https://docs.snowflake.com/en/user-guide/object-tagging"
+    },
+    {
+      "key": "classification",
+      "label": "Data Classification",
+      "href": "https://docs.snowflake.com/en/user-guide/classify-intro"
+    },
+    {
+      "key": "lineage",
+      "label": "Data Lineage",
+      "href": "https://docs.snowflake.com/en/user-guide/ui-snowsight-lineage"
+    },
+    {
+      "key": "masking",
+      "label": "Dynamic Data Masking",
+      "href": "https://docs.snowflake.com/en/user-guide/security-column-ddm-intro"
+    },
+    {
+      "key": "row_access",
+      "label": "Row Access Policies",
+      "href": "https://docs.snowflake.com/en/user-guide/security-row-intro"
+    },
+    {
+      "key": "projection",
+      "label": "Projection Policies",
+      "href": "https://docs.snowflake.com/en/user-guide/projection-policies"
+    },
+    {
+      "key": "aggregation",
+      "label": "Aggregation Policies",
+      "href": "https://docs.snowflake.com/en/user-guide/aggregation-policies"
+    },
+    {
+      "key": "cleanrooms",
+      "label": "Data Clean Rooms",
+      "href": "https://docs.snowflake.com/en/user-guide/cleanrooms/overview"
+    },
+    {
+      "key": "udf",
+      "label": "UDF Overview",
+      "href": "https://docs.snowflake.com/en/developer-guide/udf/udf-overview"
+    },
+    {
+      "key": "external_func",
+      "label": "External Functions",
+      "href": "https://docs.snowflake.com/en/sql-reference/external-functions-introduction"
+    },
+    {
+      "key": "procedures",
+      "label": "Stored Procedures",
+      "href": "https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-overview"
+    },
+    {
+      "key": "transactions",
+      "label": "Transactions",
+      "href": "https://docs.snowflake.com/en/sql-reference/transactions"
+    },
+    {
+      "key": "semi",
+      "label": "Semi-structured Data",
+      "href": "https://docs.snowflake.com/en/user-guide/querying-semistructured"
+    },
+    {
+      "key": "unstructured",
+      "label": "Unstructured Data",
+      "href": "https://docs.snowflake.com/en/user-guide/unstructured-intro"
+    },
+    {
+      "key": "semantic",
+      "label": "Semantic Views",
+      "href": "https://docs.snowflake.com/en/user-guide/views-semantic/overview"
+    },
+    {
+      "key": "cortex",
+      "label": "Cortex AI Functions",
+      "href": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql"
+    },
+    {
+      "key": "workspace",
+      "label": "Workspaces",
+      "href": "https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces"
+    },
+    {
+      "key": "git",
+      "label": "Git Integration",
+      "href": "https://docs.snowflake.com/en/developer-guide/git/git-overview"
+    },
+    {
+      "key": "dbt",
+      "label": "dbt Projects on Snowflake",
+      "href": "https://docs.snowflake.com/en/user-guide/data-engineering/dbt-projects-on-snowflake"
+    },
+    {
+      "key": "snowpark",
+      "label": "Snowpark Developer Guide",
+      "href": "https://docs.snowflake.com/en/developer-guide/snowpark/index"
+    },
+    {
+      "key": "tokenization",
+      "label": "External Tokenization",
+      "href": "https://docs.snowflake.com/en/user-guide/security-column-ext-token-intro"
+    },
+    {
+      "key": "udaf",
+      "label": "Python UDAF",
+      "href": "https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-aggregate-functions"
+    },
+    {
+      "key": "alerts",
+      "label": "Alerts and Notifications",
+      "href": "https://docs.snowflake.com/en/guides-overview-alerts"
+    },
+    {
+      "key": "budgets",
+      "label": "Budgets",
+      "href": "https://docs.snowflake.com/en/user-guide/budgets"
+    },
+    {
+      "key": "external_access",
+      "label": "External Network Access",
+      "href": "https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview"
+    },
+    {
+      "key": "urls",
+      "label": "Unstructured Data Access",
+      "href": "https://docs.snowflake.com/en/user-guide/unstructured-intro"
+    },
+    {
+      "key": "sos",
+      "label": "Search Optimization Service",
+      "href": "https://docs.snowflake.com/en/user-guide/search-optimization-service"
+    },
+    {
+      "key": "qas",
+      "label": "Query Acceleration Service",
+      "href": "https://docs.snowflake.com/en/user-guide/query-acceleration-service"
+    }
+  ],
+  "capabilities": [
+    {
+      "label": "データレイク・API・オンプレミスから取得する",
+      "domains": [
+        "D1",
+        "D5"
+      ]
+    },
+    {
+      "label": "クラウド間で変換・複製・共有する",
+      "domains": [
+        "D1",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "label": "準リアルタイムのEnd-to-End Streamを設計する",
+      "domains": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "label": "スケーラブルなComputeを設計する",
+      "domains": [
+        "D2",
+        "D5"
+      ]
+    },
+    {
+      "label": "パフォーマンスメトリクスを評価する",
+      "domains": [
+        "D2",
+        "D3"
+      ]
+    }
+  ]
+}

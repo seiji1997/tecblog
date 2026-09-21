@@ -1,0 +1,20 @@
+---
+import { type Lesson } from '../../../data/snowproDataEngineer';
+import { lessonImage } from '../../../lib/snowproDataEngineerImages';
+interface Props { lesson: Lesson; compact?: boolean }
+const { lesson, compact = false } = Astro.props;
+const visual = lessonImage(lesson);
+---
+{visual ? (
+  <figure class="dea-figure">
+    <a href={visual.src} target="_blank" rel="noopener noreferrer" aria-label={`${lesson.title}の画像を拡大する`}>
+      <img src={visual.src} width={visual.width} height={visual.height} alt={lesson.imageAlt} loading="lazy" decoding="async" />
+    </a>
+    <figcaption>{lesson.id} · {lesson.title}<span>画像を開いて拡大 ↗</span></figcaption>
+  </figure>
+) : (
+  <div class:list={['dea-visual-pending', { compact }]} aria-label={`${lesson.id}の図解は後日追加予定`}>
+    <div class="dea-placeholder-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div><span class="dea-eyebrow">DIAGRAM TO FOLLOW</span><h3>図解は後日追加予定</h3><p>{compact ? '本文・比較表・確認問題は公開済みです。' : 'このページの本文・比較表・確認問題で、先に学習を進められます。'}</p></div>
+  </div>
+)}

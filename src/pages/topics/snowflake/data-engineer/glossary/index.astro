@@ -1,0 +1,11 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import { glossary, getLesson, lessonUrl, domains } from '../../../../../data/snowproDataEngineer';
+const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term, 'en'));
+---
+<Layout title="Glossary" active="glossary">
+  <header class="dea-title-block"><span class="dea-eyebrow">TERMS / CONTEXT / CONNECTIONS</span><h1>用語を、判断につなげる。</h1><p>Advancedで押さえる{terms.length}語。短い定義を確認し、対応教材で使いどころと注意点を学べます。</p></header>
+  <section data-dea-catalog aria-label="用語を検索"><div class="dea-filter-bar"><label>用語・説明で検索<input type="search" data-dea-query placeholder="例：Clone、権限、API" disabled /></label><label>分野<select data-dea-domain-filter disabled><option value="">すべての分野</option>{domains.map((domain) => <option value={domain.id}>{domain.id} {domain.label}</option>)}</select></label></div><p class="dea-filter-count" data-dea-result-count aria-live="polite">{terms.length} 件表示</p>
+    <div class="dea-glossary">{terms.map((term) => <article data-dea-search={`${term.term} ${term.definition}`} data-dea-domain={getLesson(term.lessonId).domain}><h2>{term.term}</h2><p>{term.definition}</p><a href={lessonUrl(getLesson(term.lessonId))}>{term.lessonId} · 教材で学ぶ →</a></article>)}</div><p class="dea-notice" data-dea-empty hidden>一致する用語がありません。キーワードや分野を変更してください。</p>
+  </section>
+</Layout>

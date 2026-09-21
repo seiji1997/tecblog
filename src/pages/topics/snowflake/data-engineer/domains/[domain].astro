@@ -1,0 +1,22 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import LessonCard from '../../../../../components/snowpro/dea/LessonCard.astro';
+import ObjectiveList from '../../../../../components/snowpro/dea/ObjectiveList.astro';
+import Progress from '../../../../../components/snowpro/dea/Progress.astro';
+import { domains, objectives, domainLessons, lessonDocs, labs, deaUrl } from '../../../../../data/snowproDataEngineer';
+export function getStaticPaths() { return domains.map((domain) => ({ params: { domain: domain.slug }, props: { domain } })); }
+const { domain } = Astro.props;
+const items = domainLessons(domain.id);
+const outcomes = objectives.filter((objective) => objective.domain === domain.id);
+const references = [...new Map(items.flatMap(lessonDocs).map((doc) => [doc.key, doc])).values()];
+const practice = labs.filter((lab) => lab.lessonIds.some((id) => items.some((item) => item.id === id)));
+---
+<Layout title={domain.title} description={domain.summary} active="domains" color={domain.color}>
+  <header class="dea-title-block"><span class="dea-eyebrow">{domain.id} / {domain.label} <span class="dea-topic-weight">{domain.weight}%</span></span><h1>{domain.title}</h1><p>{domain.summary}</p></header>
+  <div class="dea-two-col"><section class="dea-panel"><span class="dea-eyebrow">WHAT TO KNOW</span><h2>Coreから深めるポイント</h2><p>{domain.delta}</p></section><section class="dea-panel"><span class="dea-eyebrow">LEARNING OUTCOME</span><h2>選択の理由を説明する</h2><p>各項目について、要件・候補・選択理由・失敗時の対応・検証方法を説明できれば自己チェックを付けます。</p></section></div>
+  <Progress ids={domain.objectiveIds} />
+  <section class="dea-section"><div class="dea-section-heading"><div><span class="dea-eyebrow">LEARNING PAGES</span><h2>本文と図解で学ぶ</h2></div><span class="dea-note">{items.length} 教材</span></div><div class="dea-lesson-grid">{items.map((lesson) => <LessonCard lesson={lesson} />)}</div></section>
+  <section class="dea-section"><div class="dea-section-heading"><div><span class="dea-eyebrow">OBJECTIVES / SELF CHECK</span><h2>この分野で説明できること</h2></div></div><ObjectiveList items={outcomes} /></section>
+  <section class="dea-section"><h2>Practice Notes</h2><div class="dea-resource-grid">{practice.map((lab) => <a href={deaUrl(`notes/#${lab.id.toLowerCase()}`)}>{lab.title}<small>{lab.id} · {lab.scope}</small></a>)}</div></section>
+  <section class="dea-section"><h2>Official Documentation</h2><div class="dea-resource-grid">{references.map((doc) => <a href={doc.href} target="_blank" rel="noopener noreferrer">{doc.label} ↗<small>Snowflake Documentation</small></a>)}</div></section>
+</Layout>

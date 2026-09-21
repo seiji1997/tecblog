@@ -1,0 +1,12 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import ObjectiveList from '../../../../../components/snowpro/dea/ObjectiveList.astro';
+import Progress from '../../../../../components/snowpro/dea/Progress.astro';
+import { exam, domains, objectives, domainLessons, domainUrl } from '../../../../../data/snowproDataEngineer';
+---
+<Layout title="Exam Map" active="blueprint">
+  <header class="dea-title-block"><span class="dea-eyebrow">DEA-C02 / COVERAGE MAP</span><h1>22の学習項目を確認する。</h1><p>公式Study GuideのObjectiveに各教材を対応付けています。範囲の広い1.4・2.2・4.2は複数の教材で扱います。以下は学習用の日本語要約です。</p><a class="dea-body-link" href={exam.studyGuideUrl} target="_blank" rel="noopener noreferrer">基準のStudy Guide（{exam.guideUpdatedAt}更新）↗</a></header>
+  <Progress />
+  <div class="dea-table-wrap"><table><caption>ドメインと教材の対応</caption><thead><tr><th scope="col">Domain</th><th scope="col">配点</th><th scope="col">Objectives</th><th scope="col">教材数</th></tr></thead><tbody>{domains.map((domain) => <tr><td><a href={domainUrl(domain)}>{domain.id} · {domain.title}</a></td><td>{domain.weight}%</td><td>{domain.objectiveIds.length}</td><td>{domainLessons(domain.id).length}</td></tr>)}<tr><td>全体マップ</td><td>—</td><td>横断</td><td>1</td></tr></tbody></table></div>
+  {domains.map((domain) => <section class="dea-section" style={`--dea-accent:${domain.color}`}><span class="dea-eyebrow">{domain.id} · {domain.weight}%</span><h2>{domain.title}</h2><ObjectiveList items={objectives.filter((objective) => objective.domain === domain.id)} /></section>)}
+</Layout>

@@ -1,0 +1,37 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import DiagramVisual from '../../../../../components/snowpro/dea/DiagramVisual.astro';
+import { lessons, getDomain, coreLinks, lessonDocs, lessonUrl, domainUrl, deaUrl, labs, objectives, exam } from '../../../../../data/snowproDataEngineer';
+export function getStaticPaths() { return lessons.map((lesson) => ({ params: { slug: lesson.slug }, props: { lesson } })); }
+const { lesson } = Astro.props;
+const domain = getDomain(lesson.domain);
+const core = coreLinks(lesson);
+const references = lessonDocs(lesson);
+const practice = labs.filter((lab) => lab.lessonIds.includes(lesson.id));
+const index = lessons.findIndex((item) => item.id === lesson.id);
+const previous = lessons[index - 1];
+const next = lessons[index + 1];
+const outcomes = objectives.filter((objective) => lesson.objectiveIds.includes(objective.id));
+---
+<Layout title={lesson.title} description={lesson.goal} active="diagrams" color={domain?.color}>
+  <header class="dea-title-block"><span class="dea-eyebrow">{lesson.id} / {domain ? `${domain.id} ${domain.label}` : 'FULL STUDY MAP'}</span><h1>{lesson.title}</h1><p>{lesson.goal}</p><div class="dea-meta">{lesson.objectiveIds.map((id) => <span>Objective {id}</span>)}<span>本文・比較表・確認問題</span></div>{domain && <a class="dea-body-link" href={domainUrl(domain)}>← {domain.title}</a>}</header>
+  <DiagramVisual lesson={lesson} />
+  <div class="dea-takeaway"><span class="dea-eyebrow">KEY TAKEAWAY</span><p>{lesson.takeaway}</p></div>
+  <div class="dea-lesson-layout">
+    <article>
+      {lesson.sections.map((section, i) => <section class="dea-content-section" id={`concept-${i + 1}`}><span class="dea-eyebrow">CONCEPT {String(i + 1).padStart(2, '0')}</span><h2>{section.title}</h2><p>{section.body}</p></section>)}
+      <section class="dea-section" id="decision"><span class="dea-eyebrow">DECISION POINTS</span><h2>何を根拠に選ぶか</h2><div class="dea-table-wrap"><table><thead><tr><th scope="col">選択肢・観点</th><th scope="col">役割・適した条件</th><th scope="col">確認すること</th></tr></thead><tbody>{lesson.comparison.map((row) => <tr>{row.map((cell) => <td>{cell}</td>)}</tr>)}</tbody></table></div><div class="dea-notice"><p><strong>注意する誤解：</strong>{lesson.pitfall}</p></div></section>
+      {lesson.snippet && <section class="dea-section"><span class="dea-eyebrow">SMALL EXAMPLE / {lesson.snippet.language}</span><h2>小さな例で確かめる</h2><p>{lesson.snippet.note}</p><pre><code>{lesson.snippet.code}</code></pre></section>}
+      <section class="dea-panel" id="scenario"><span class="dea-eyebrow">DESIGN SCENARIO</span><h2>自分ならどう設計する？</h2><p>{lesson.scenario}</p><p class="dea-note">要件、候補、選択理由、失敗時の対応、検証方法の順に説明してみてください。</p></section>
+      <section class="dea-review" id="review"><span class="dea-eyebrow">REVIEW</span><h2>理解を確かめる</h2><p>{lesson.review.question}</p><details><summary>考え方を確認する</summary><p>{lesson.review.answer}</p></details></section>
+      {outcomes.length > 0 && <section class="dea-section"><h2>Objectiveの自己チェック</h2><p class="dea-note">同じObjectiveに複数教材がある場合は、すべて確認してからチェックします。</p>{outcomes.map((objective) => <label class="dea-check"><input type="checkbox" data-dea-objective={objective.id} disabled /><span>{objective.id}の範囲を説明できる <a class="dea-body-link" href={deaUrl(`blueprint/#objective-${objective.id.replace('.', '-')}`)}>範囲を確認</a></span></label>)}<p class="dea-note" data-dea-storage-status>自己チェックはこのブラウザに保存します。</p></section>}
+    </article>
+    <aside class="dea-aside" aria-label="関連教材">
+      <div class="dea-panel"><h2>このページ</h2><nav class="dea-link-list" aria-label="ページ内の目次">{lesson.sections.map((section, i) => <a href={`#concept-${i + 1}`}>{String(i + 1).padStart(2, '0')} · {section.title}</a>)}<a href="#decision">比較と注意点</a><a href="#review">確認問題</a></nav></div>
+      <div class="dea-panel"><h2>Coreで基礎を確認</h2><div class="dea-link-list">{core.map((item) => <a href={item.href}><small>{item.id}</small>{item.title} →</a>)}</div></div>
+      <div class="dea-panel"><h2>Official Docs</h2><div class="dea-link-list">{references.map((doc) => <a href={doc.href} target="_blank" rel="noopener noreferrer">{doc.label} ↗</a>)}{!references.length && <a href={exam.studyGuideUrl} target="_blank" rel="noopener noreferrer">公式Study Guide ↗</a>}</div></div>
+      {practice.length > 0 && <div class="dea-panel"><h2>Practice Notes</h2><div class="dea-link-list">{practice.map((lab) => <a href={deaUrl(`notes/#${lab.id.toLowerCase()}`)}><small>{lab.id}</small>{lab.title} →</a>)}</div></div>}
+    </aside>
+  </div>
+  <nav class="dea-pager" aria-label="前後の教材">{previous ? <a href={lessonUrl(previous)}><small>← PREVIOUS · {previous.id}</small>{previous.title}</a> : <a href={deaUrl()}>← Overview</a>}{next ? <a href={lessonUrl(next)}><small>NEXT · {next.id} →</small>{next.title}</a> : <a href={deaUrl('blueprint/')}>学習範囲を振り返る →</a>}</nav>
+</Layout>

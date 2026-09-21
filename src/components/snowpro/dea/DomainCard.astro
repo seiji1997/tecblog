@@ -1,0 +1,12 @@
+---
+import { type Domain, domainUrl, domainLessons } from '../../../data/snowproDataEngineer';
+interface Props { domain: Domain }
+const { domain } = Astro.props;
+---
+<a class="dea-domain-card" href={domainUrl(domain)} style={`--card-accent:${domain.color}`}>
+  <div class="dea-card-top"><span class="dea-mono">{domain.id}</span><strong>{domain.weight}<small>%</small></strong></div>
+  <h3>{domain.title}</h3><p class="dea-jp-label">{domain.label}</p>
+  <p>{domain.summary}</p>
+  <div class="dea-weight-track" aria-hidden="true"><span style={`width:${domain.weight}%`}></span></div>
+  <div class="dea-card-bottom"><span>{domain.objectiveIds.length} Objectives · {domainLessons(domain.id).length} 教材</span><span aria-hidden="true">↗</span></div>
+</a>

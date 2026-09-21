@@ -1,0 +1,15 @@
+---
+import { deaUrl } from '../../../data/snowproDataEngineer';
+interface Props { active: string }
+const { active } = Astro.props;
+const items = [
+  ['overview', 'Overview', ''], ['domains', 'Domains', 'domains/'],
+  ['blueprint', 'Exam Map', 'blueprint/'], ['diagrams', 'Diagrams', 'diagrams/'],
+  ['notes', 'Practice Notes', 'notes/'], ['glossary', 'Glossary', 'glossary/'],
+  ['resources', 'Resources', 'resources/'],
+];
+---
+<nav class="dea-nav" aria-label="Advanced Data Engineerの学習ナビゲーション">
+  <span class="dea-nav-code">DEA-C02</span>
+  {items.map(([key, label, path]) => <a href={deaUrl(path)} aria-current={active === key ? 'page' : undefined}>{label}</a>)}
+</nav>

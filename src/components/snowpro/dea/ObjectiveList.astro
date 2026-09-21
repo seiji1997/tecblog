@@ -1,0 +1,15 @@
+---
+import { type Objective, getLesson, lessonUrl } from '../../../data/snowproDataEngineer';
+interface Props { items: Objective[]; showTopics?: boolean }
+const { items, showTopics = true } = Astro.props;
+---
+<div class="dea-objectives">
+  {items.map((objective) => (
+    <article class="dea-objective" id={`objective-${objective.id.replace('.', '-')}`}>
+      <div class="dea-objective-heading"><span class="dea-objective-code">{objective.id}</span><h3>{objective.summary}</h3></div>
+      {showTopics && <div class="dea-tags">{objective.topics.map((topic) => <span>{topic}</span>)}</div>}
+      <div class="dea-objective-links">{objective.lessonIds.map((id) => <a href={lessonUrl(getLesson(id))}>{id} · {getLesson(id).title} →</a>)}</div>
+      <label class="dea-check"><input type="checkbox" data-dea-objective={objective.id} disabled /><span>選択理由・注意点を説明できる</span></label>
+    </article>
+  ))}
+</div>

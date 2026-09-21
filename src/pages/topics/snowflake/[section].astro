@@ -3,7 +3,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
   return [
-    { params: { section: 'data-engineer' }, props: { eyebrow:'CERTIFICATION', title:'Advanced Data Engineer', code:'DEA-C02', official:'https://learn.snowflake.com/en/certifications/snowpro-adv-dea-jpn-C02/' } },
     { params: { section: 'architect' }, props: { eyebrow:'CERTIFICATION', title:'Advanced Architect', code:'ARA-C01', official:'https://learn.snowflake.com/en/certifications/snowpro-adv-ara-jpn/' } },
     { params: { section: 'architecture' }, props: { eyebrow:'PLATFORM', title:'Architecture' } },
     { params: { section: 'data-engineering' }, props: { eyebrow:'PIPELINES', title:'Data Engineering' } },

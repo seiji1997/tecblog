@@ -1,0 +1,10 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import DomainCard from '../../../../../components/snowpro/dea/DomainCard.astro';
+import { domains, deaUrl } from '../../../../../data/snowproDataEngineer';
+---
+<Layout title="Domains" active="domains">
+  <header class="dea-title-block"><span class="dea-eyebrow">FIVE DOMAINS</span><h1>分野から学ぶ。</h1><p>D1とD5で処理の流れを作り、D2で評価し、D3・D4で復旧と保護を固めます。各ページでWhat to Know、Learning Outcomes、教材、公式Docsを確認できます。</p></header>
+  <div class="dea-domain-grid">{domains.map((domain) => <DomainCard domain={domain} />)}</div>
+  <div class="dea-actions"><a class="dea-button secondary" href={deaUrl('blueprint/')}>Objective別の対応表を見る →</a></div>
+</Layout>

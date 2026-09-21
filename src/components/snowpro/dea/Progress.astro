@@ -1,0 +1,10 @@
+---
+import { objectives } from '../../../data/snowproDataEngineer';
+interface Props { ids?: string[] }
+const { ids = objectives.map((item) => item.id) } = Astro.props;
+---
+<div class="dea-progress" data-dea-progress={ids.join(',')}>
+  <div><span class="dea-eyebrow">SELF CHECK</span><p>説明できる学習項目 <strong data-dea-progress-count>0 / {ids.length}</strong></p></div>
+  <progress value="0" max={ids.length} aria-label="説明できる学習項目の数"></progress>
+  <small data-dea-storage-status>自己チェックはこのブラウザに保存します。合格可能性を表す数値ではありません。</small>
+</div>

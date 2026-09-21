@@ -1,0 +1,48 @@
+---
+import Layout from '../../../../layouts/SnowproDataEngineerLayout.astro';
+import DomainCard from '../../../../components/snowpro/dea/DomainCard.astro';
+import DiagramVisual from '../../../../components/snowpro/dea/DiagramVisual.astro';
+import Progress from '../../../../components/snowpro/dea/Progress.astro';
+import { exam, domains, objectives, lessons, labs, capabilities, getLesson, lessonUrl, deaUrl, route } from '../../../../data/snowproDataEngineer';
+import { imageCount } from '../../../../lib/snowproDataEngineerImages';
+const master = getLesson('DEA-M-01');
+---
+<Layout title="Overview">
+  <section class="dea-hero dea-hero-grid">
+    <div>
+      <span class="dea-eyebrow">SNOWPRO ADVANCED / DEA-C02</span>
+      <h1>Data Engineer<br /><span>Study Atlas.</span></h1>
+      <p class="dea-hero-copy">Coreの理解を、設計できる知識へ。<br />データを運び、変換し、守り、性能を確かめる。</p>
+      <div class="dea-meta"><span>5ドメインの本文公開</span><span>図解 {imageCount} / {lessons.length} 掲載</span><span>Guide {exam.guideUpdatedAt}</span></div>
+      <div class="dea-actions"><a class="dea-button" href={deaUrl('domains/')}>ドメインから学ぶ →</a><a class="dea-button secondary" href={deaUrl('blueprint/')}>学習範囲を確認</a></div>
+    </div>
+    <div class="dea-hero-side"><div class="dea-stat-grid">
+      <div class="dea-stat"><strong>{domains.length}</strong><span>Domains</span></div>
+      <div class="dea-stat"><strong>{objectives.length}</strong><span>Objectives</span></div>
+      <div class="dea-stat"><strong>{lessons.length}</strong><span>Learning pages</span></div>
+      <div class="dea-stat"><strong>{labs.length}</strong><span>Practice labs</span></div>
+    </div><p class="dea-note">各ページに学習本文・判断の比較表・確認問題・Coreへの参照を用意しています。図解は順次追加します。</p></div>
+  </section>
+  <Progress />
+  <section class="dea-section" id="exam-map">
+    <div class="dea-section-heading"><div><span class="dea-eyebrow">01 / EXAM DOMAINS</span><h2>5つの分野を、ひとつの設計へ。</h2><p>配点はDEA-C02 Study Guideに準拠。各カードから学習項目と教材へ進めます。</p></div><a href={deaUrl('blueprint/')}>全22項目を見る →</a></div>
+    <div class="dea-domain-grid">{domains.map((domain) => <DomainCard domain={domain} />)}</div>
+  </section>
+  <section class="dea-section">
+    <div class="dea-section-heading"><div><span class="dea-eyebrow">02 / STUDY FLOW</span><h2>理解から、選択・検証へ。</h2></div></div>
+    <div class="dea-study-flow">
+      <article><h3>基礎をつなぐ</h3><p>教材内のCoreリンクで定義と基本構造を確認する。</p></article>
+      <article><h3>判断を学ぶ</h3><p>本文と比較表で、要件ごとの選択理由を整理する。</p></article>
+      <article><h3>手を動かす</h3><p>Practice Notesで成功時と失敗時の動きを検証する。</p></article>
+      <article><h3>説明して確かめる</h3><p>確認問題に答え、Objectiveの自己チェックを更新する。</p></article>
+    </div>
+  </section>
+  <section class="dea-section">
+    <div class="dea-section-heading"><div><span class="dea-eyebrow">03 / FULL STUDY MAP</span><h2>全体の見取り図</h2></div><a href={lessonUrl(master)}>全体像を読む →</a></div>
+    <DiagramVisual lesson={master} compact />
+  </section>
+  <section class="dea-section dea-two-col">
+    <article class="dea-panel"><span class="dea-eyebrow">FROM CORE TO ADVANCED</span><h2>基本はCore、判断はAdvanced。</h2><p>用語や基本構造をすべて書き直さず、必要なCore図解へ戻れるようにしています。ここでは方式選択、障害の切り分け、権限と実行境界、検証に集中します。</p><a href={route('topics/snowflake/core/')}>SnowPro Coreを開く →</a></article>
+    <article class="dea-panel"><span class="dea-eyebrow">FIVE CAPABILITIES</span><h2>公式概要の「5つの能力」</h2><p>能力の要約と、学習範囲を分けた5ドメインは一対一ではありません。</p><ul>{capabilities.map((item) => <li><span>{item.label}</span> <small>({item.domains.join('・')})</small></li>)}</ul><a href={exam.certificationUrl} target="_blank" rel="noopener noreferrer">公式試験概要 ↗</a></article>
+  </section>
+</Layout>

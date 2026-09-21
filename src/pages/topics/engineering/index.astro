@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { stackCategories, stackCategory, flowSteps, sapFamily, sapSources, developerFoundations, learningPriorities } from '../../../data/engineeringStack';
+import '../../../styles/engineeringStack.css';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const governance = stackCategory('governance');
+const foundations = ['cloud', 'engineering'].map(stackCategory);
+---
+<BaseLayout title="Engineering & Data Stack | Seiji Tech Atlas" description="企業システムからデータ基盤・BI・AIまで。技術の役割と関係性をつなぐEnterprise Technology Map。">
+  <div class="stack-page">
+    <a class="stack-skip" href="#technology-map">全体マップへ移動</a>
+    <a class="stack-back" href={route('')}>← Seiji Tech Atlas</a>
+    <header class="stack-hero">
+      <div><p class="stack-eyebrow">LEARN / ENGINEERING TOOLS</p><h1>Engineering<br />&amp; <span>Data Stack.</span></h1><p class="stack-lead">製品名を覚える前に、役割をつなぐ。</p><p class="stack-intro">企業システム、クラウド、データ基盤、連携、変換、ガバナンス、BI、AI、開発ツール。何を担い、どう関わるのかを理解するためのナレッジマップ。</p></div>
+      <aside class="stack-hero-note" aria-label="このページの読み方"><span class="stack-eyebrow">READ THE STACK</span><strong>Role.<br />Relationship.<br /><span>Reason.</span></strong><p>どこで生まれ、どう運ばれ、<br />誰に使われるデータなのか。</p><a href="#technology-map">全体像から見る <span aria-hidden="true">↓</span></a></aside>
+    </header>
+    <nav class="stack-jump-nav" aria-label="Engineeringページのセクション"><a href="#technology-map">01 全体マップ</a><a href="#category-guide">02 Category Guide</a><a href="#sap-family">SAP製品群の違い</a><a href="#developer-foundations">03 Developer Foundations</a><a href="#learning-priority">04 学習優先度</a></nav>
+
+    <section class="stack-section" id="technology-map" aria-labelledby="map-title">
+      <header class="stack-section-head"><div><span class="stack-eyebrow">01 / THE BIG PICTURE</span><h2 id="map-title">Enterprise Technology Map</h2></div><p>カテゴリや製品名を選ぶと、<br />このページの説明へ移動します。</p></header>
+      <div class="stack-map">
+        <div class="stack-map-caption"><span class="stack-dot" aria-hidden="true"></span><strong>データの流れ</strong><span>業務から、利用価値へ</span></div>
+        <ol class="stack-flow" aria-label="代表的なデータフローの5段階">
+          {flowSteps.map((step) => {
+            const category = stackCategory(step.category);
+            return <li class="stack-flow-step" style={`--stack-color:${category.color}`}>
+              <div class="stack-step-label"><span>{step.number}</span><strong>{step.label}</strong></div>
+              <article class="stack-map-card"><h3><a href={`#category-${category.id}`}>{category.title}</a></h3><p>{category.label}</p><ul class="stack-service-links">{category.services.map((item) => <li><a href={`#service-${item.id}`}>{item.name}</a></li>)}</ul><div class="stack-map-output">{step.output}</div></article>
+            </li>;
+          })}
+        </ol>
+        <div class="stack-governance-band" style={`--stack-color:${governance.color}`}>
+          <div class="stack-band-heading"><span class="stack-eyebrow">CONTROL ACROSS THE FLOW</span><h3><a href="#category-governance">MDM / Governance</a></h3><p>正本・意味・利用ルールを全体へ。<br />MDMの結果は業務にも戻る。</p></div>
+          <div class="stack-governance-groups">{['MDM','Catalog / Governance'].map((group) => <div><span class="stack-group-label">{group === 'MDM' ? 'MDM · マスタの正本を整える' : 'CATALOG / GOVERNANCE · 発見・意味・利用を管理'}</span><ul class="stack-inline-services">{governance.services.filter((item) => item.group === group).map((item) => <li><a href={`#service-${item.id}`}>{item.name}</a></li>)}</ul></div>)}</div>
+        </div>
+        <div class="stack-foundation-caption">FOUNDATIONS <span>各工程を支える横断レイヤー</span></div>
+        <div class="stack-foundation-bands">{foundations.map((category) => <div class="stack-foundation-band" style={`--stack-color:${category.color}`}><h3><a href={`#category-${category.id}`}>{category.title}</a></h3><ul class="stack-inline-services">{category.services.map((item) => <li><a href={`#service-${item.id}`}>{item.name}</a></li>)}</ul></div>)}</div>
+        <p class="stack-map-note">代表的な分析フローを主な役割で整理しています。変換はロード前後の両方で行われ、処理の制御・ガバナンスは複数段階にまたがります。製品のすべての機能や、必須の導入順を示すものではありません。</p>
+      </div>
+      <div class="stack-map-reading"><article><span>DATA</span><p>矢印は代表的なデータの流れ。すべての製品を順に導入する必要はありません。</p></article><article><span>CONTROL</span><p>変換・実行制御と、正本・品質・アクセスの統制は、複数の工程へ関わります。</p></article><article><span>FOUNDATION</span><p>クラウドと開発基盤は「次の工程」ではなく、全体が動くための土台です。</p></article></div>
+    </section>
+
+    <section class="stack-section" id="category-guide" aria-labelledby="guide-title">
+      <header class="stack-section-head"><div><span class="stack-eyebrow">02 / ROLE BEFORE PRODUCT</span><h2 id="guide-title">Category Guide</h2></div><p>何を担い、何と比較し、<br />どこで使うかを揃える。</p></header>
+      <div class="stack-category-index">{stackCategories.map((category) => <a href={`#category-${category.id}`}>{category.label} <span aria-hidden="true">↘</span></a>)}</div>
+      {stackCategories.map((category, index) => <article class="stack-guide-card" id={`category-${category.id}`} style={`--stack-color:${category.color}`}>
+        <header class="stack-guide-heading"><div><span class="stack-eyebrow">{String(index + 1).padStart(2,'0')} / {category.label}</span><h3>{category.title}</h3></div><a href="#technology-map" aria-label={`${category.label}から全体マップへ戻る`}>マップへ ↑</a></header>
+        <p class="stack-guide-question">{category.question}</p><p class="stack-responsibility">{category.responsibility}</p>
+        <div class="stack-guide-columns"><dl class="stack-role-details"><div><dt>アーキテクチャ上の位置</dt><dd>{category.position}</dd></div><div><dt>比較・代替の考え方</dt><dd>{category.comparison}</dd></div><div><dt>他カテゴリとの違い</dt><dd>{category.distinction}</dd></div></dl><div class="stack-product-details"><h4>代表的なサービス・技術</h4><dl>{category.services.map((item) => <div id={`service-${item.id}`}><dt>{item.name}{item.group && <span>{item.group}</span>}</dt><dd>{item.role}</dd></div>)}</dl></div></div>
+        <footer class="stack-guide-footer"><div class="stack-related"><span>ATLASで深める</span>{category.related.map((link) => <a href={link.href}>{link.label} →</a>)}</div>{category.sources && <div class="stack-sources"><span>公式参考：</span>{category.sources.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>}</footer>
+      </article>)}
+      <section class="stack-sap-panel" id="sap-family" aria-labelledby="sap-title"><div class="stack-section-head"><div><span class="stack-eyebrow">COMMON CONFUSION / SAP</span><h3 id="sap-title">「SAP」の次に、製品名を確かめる。</h3></div></div><p>SAPは企業・製品群の名前。同じ名前が入っていても、業務、DB、連携・開発、MDMでは役割が違います。</p><div class="stack-table-wrap" role="region" aria-label="SAP製品群の役割比較" tabindex="0"><table><caption>SAP製品群の位置付け</caption><thead><tr><th scope="col">名称</th><th scope="col">役割</th><th scope="col">関係性</th></tr></thead><tbody>{sapFamily.map((item) => <tr><th scope="row">{item.name}</th><td>{item.type}</td><td>{item.role}</td></tr>)}</tbody></table></div><div class="stack-sources"><span>公式参考：</span>{sapSources.map((source) => <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>)}</div></section>
+    </section>
+
+    <section class="stack-section" id="developer-foundations" aria-labelledby="developer-title"><header class="stack-section-head"><div><span class="stack-eyebrow">03 / BUILD & OPERATE</span><h2 id="developer-title">Developer Foundations</h2></div><p>どのデータ基盤を選んでも、<br />作り、確かめ、届ける力は共通。</p></header><div class="stack-developer-grid">{developerFoundations.map((item, index) => <article id={`developer-${item.id}`}><span class="stack-eyebrow">{String(index + 1).padStart(2,'0')}</span><h3>{item.title}</h3><span class="stack-developer-examples">{item.examples}</span><p>{item.description}</p><a href={item.link.href}>{item.link.label} →</a></article>)}</div></section>
+
+    <section class="stack-section" id="learning-priority" aria-labelledby="priority-title"><header class="stack-section-head"><div><span class="stack-eyebrow">04 / LEARN WITH INTENT</span><h2 id="priority-title">Learning Priority</h2></div><p>すべての製品を使える必要はありません。<br />まず役割、次に比較、必要な範囲で実践。</p></header><div class="stack-priority-intro"><strong>まずAを小さく動かし、Bは設計会話で見分け、Cは必要なときに調べる。</strong><p>Snowflakeで学んだ取込・変換・保護・利用を軸に、他の技術の位置付けを対応付けます。この優先度は学習の深さの目安です。</p></div><div class="stack-priority-grid">{learningPriorities.map((priority) => <article class="stack-priority-card" style={`--stack-color:${priority.color}`}><div class="stack-priority-heading"><span>PRIORITY</span><strong>{priority.level}</strong></div><h3>{priority.title}</h3><p>{priority.goal}</p><ul>{priority.items.map((item) => <li><a href={item.href}>{item.name}<span aria-hidden="true">↗</span></a><p>{item.note}</p></li>)}</ul></article>)}</div><div class="stack-next"><div><span class="stack-eyebrow">CONNECT THE MAP TO PRACTICE</span><h3>役割が見えたら、ひとつの基盤で手を動かす。</h3><p>Snowflakeの基礎から、設計・運用の判断へ進めます。</p></div><div><a href={route('topics/snowflake/core/')}>SnowPro Core →</a><a href={route('topics/snowflake/data-engineer/')}>Advanced Data Engineer →</a></div></div></section>
+    <p class="stack-page-note">整理日：2026-09-21 · 製品は主な役割で分類しています。個別機能や提供範囲の最新情報は公式資料を参照してください。</p>
+  </div>
+</BaseLayout>

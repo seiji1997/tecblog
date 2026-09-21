@@ -1,0 +1,15 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import LessonCard from '../../../../../components/snowpro/dea/LessonCard.astro';
+import { domains, lessons } from '../../../../../data/snowproDataEngineer';
+import { imageCount } from '../../../../../lib/snowproDataEngineerImages';
+---
+<Layout title="Diagrams & Lessons" active="diagrams">
+  <header class="dea-title-block"><span class="dea-eyebrow">DIAGRAMS & LEARNING PAGES</span><h1>概念をつなぎ、判断を学ぶ。</h1><p>全{lessons.length}教材。各ページに本文・比較表・確認問題を掲載しています。図解は現在 {imageCount} / {lessons.length} 枚掲載。未掲載のページにも学習内容があります。</p></header>
+  <section data-dea-catalog aria-label="教材を検索">
+    <div class="dea-filter-bar"><label>キーワード<input type="search" data-dea-query placeholder="例：Streaming、Clone、5.3" disabled /></label><label>ドメイン<select data-dea-domain-filter disabled><option value="">すべての分野</option><option value="MAP">全体マップ</option>{domains.map((domain) => <option value={domain.id}>{domain.id} {domain.label}</option>)}</select></label></div>
+    <p class="dea-filter-count" data-dea-result-count aria-live="polite">{lessons.length} 件表示</p>
+    <div class="dea-lesson-grid">{lessons.map((lesson) => <LessonCard lesson={lesson} filterable />)}</div>
+    <p class="dea-notice" data-dea-empty hidden>一致する教材がありません。キーワードやドメインを変更してください。</p>
+  </section>
+</Layout>

@@ -1,0 +1,9 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import { labs, getLesson, lessonUrl } from '../../../../../data/snowproDataEngineer';
+---
+<Layout title="Practice Notes" active="notes">
+  <header class="dea-title-block"><span class="dea-eyebrow">PRACTICE / DESIGN / VERIFY</span><h1>動かして、確かめる。</h1><p>10本の演習で、正常時だけでなく失敗・再実行・権限の違いを観察します。各演習の手順と確認観点を開いて、結果を自分の学習ノートに残してください。</p></header>
+  <section class="dea-panel"><h2>演習で残す5つの記録</h2><p>①要件と仮説　②実行Role・Warehouse・対象　③SQLや設定・Query ID　④結果と期待値の差　⑤次に試す変更。作成や変更は、自分の演習用Database / Schemaで行います。</p><p class="dea-note">機能によってEdition、クラウド側の環境、利用権限が必要です。環境がない演習も、設計案・障害時系列・期待する結果の整理に使えます。</p></section>
+  <div class="dea-section">{labs.map((lab) => <article class="dea-lab" id={lab.id.toLowerCase()}><span class="dea-eyebrow">{lab.id} / {lab.scope}</span><h2>{lab.title}</h2><p>{lab.goal}</p><div class="dea-tags">{lab.lessonIds.map((id) => <a href={lessonUrl(getLesson(id))}>{id} →</a>)}</div><details><summary>演習手順と確認観点を開く</summary><ol>{lab.steps.map((step) => <li>{step}</li>)}</ol><h3>説明できれば、この演習は完了</h3><ul>{lab.checks.map((check) => <li>{check}</li>)}</ul></details></article>)}</div>
+</Layout>

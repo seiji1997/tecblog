@@ -1,0 +1,15 @@
+---
+import { type Lesson, getDomain, lessonUrl } from '../../../data/snowproDataEngineer';
+import { lessonImage } from '../../../lib/snowproDataEngineerImages';
+interface Props { lesson: Lesson; filterable?: boolean }
+const { lesson, filterable = false } = Astro.props;
+const domain = getDomain(lesson.domain);
+const ready = Boolean(lessonImage(lesson));
+const search = [lesson.id, lesson.title, lesson.goal, lesson.takeaway, ...lesson.objectiveIds, ...lesson.sections.map((section) => `${section.title} ${section.body}`)].join(' ');
+---
+<article class="dea-lesson-card" data-dea-search={filterable ? search : undefined} data-dea-domain={lesson.domain} style={`--card-accent:${domain?.color ?? '#68d4f8'}`}>
+  <div class="dea-card-top"><span class="dea-mono">{lesson.id}</span><span class:list={['dea-badge', { ready }]}>{ready ? '図解あり' : '本文で学ぶ'}</span></div>
+  <h3><a href={lessonUrl(lesson)}>{lesson.title}</a></h3>
+  <p>{lesson.goal}</p>
+  <div class="dea-card-bottom"><span>{lesson.objectiveIds.length ? `Objective ${lesson.objectiveIds.join(' / ')}` : '5ドメインの全体像'}</span><a href={lessonUrl(lesson)} aria-label={`${lesson.title}を読む`}>学ぶ →</a></div>
+</article>

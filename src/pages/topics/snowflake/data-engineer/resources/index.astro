@@ -1,0 +1,13 @@
+---
+import Layout from '../../../../../layouts/SnowproDataEngineerLayout.astro';
+import { exam, domains, domainLessons, lessonDocs, route } from '../../../../../data/snowproDataEngineer';
+---
+<Layout title="Official Resources" active="resources">
+  <header class="dea-title-block"><span class="dea-eyebrow">PRIMARY SOURCES</span><h1>公式情報へ、すぐ戻れる。</h1><p>試験の範囲はStudy Guide、実装や利用条件はDocumentationで確認します。教材の各ページからも、その内容に対応するDocsへ進めます。</p></header>
+  <div class="dea-two-col"><article class="dea-panel"><span class="dea-eyebrow">EXAM SCOPE</span><h2>DEA-C02 Study Guide</h2><p>5ドメイン・22 Objectivesの基準。Study Guide更新：{exam.guideUpdatedAt}。旧版の配点と混ぜずに学習範囲を管理します。</p><a href={exam.studyGuideUrl} target="_blank" rel="noopener noreferrer">公式PDFを開く ↗</a></article><article class="dea-panel"><span class="dea-eyebrow">CERTIFICATION</span><h2>試験概要・受験情報</h2><p>対象者、評価する能力、受験条件などは公式の認定ページを確認します。能力の5項目とドメインの5分類は別の整理です。</p><a href={exam.certificationUrl} target="_blank" rel="noopener noreferrer">日本語試験ページ ↗</a></article></div>
+  {domains.map((domain) => {
+    const references = [...new Map(domainLessons(domain.id).flatMap(lessonDocs).map((doc) => [doc.key, doc])).values()];
+    return <section class="dea-section" style={`--dea-accent:${domain.color}`}><span class="dea-eyebrow">{domain.id} · {domain.label}</span><h2>{domain.title}</h2><div class="dea-resource-grid">{references.map((doc) => <a href={doc.href} target="_blank" rel="noopener noreferrer">{doc.label} ↗<small>Snowflake Documentation</small></a>)}</div></section>;
+  })}
+  <section class="dea-panel"><h2>基礎から確認する</h2><p>アーキテクチャやRole、ロード、共有などの基本事項はCoreのリソースへ戻れます。</p><a href={route('topics/snowflake/core/resources/')}>CoreのOfficial Resources →</a></section>
+</Layout>

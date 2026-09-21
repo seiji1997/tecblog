@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { workCareerEssays, workCareerNotes, workCareerUpdated } from '../../../data/workCareer';
+import '../../../styles/workCareer.css';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+---
+
+<BaseLayout
+  title="Work & Career | Seiji Tech Atlas"
+  description="研究からAI・データへ進んだ経緯と、これからのキャリア。価値、品質、信頼、推進力を大切にする仕事への向き合い方を、EssayとNotesにまとめます。"
+>
+  <div class="work-career" id="work-career-top">
+    <a class="wc-back" href={`${route('')}#thoughts`}>← Back to Thoughts</a>
+
+    <header class="wc-hero">
+      <p class="wc-kicker">THINK / WORK & CAREER</p>
+      <h1>Work & Career</h1>
+      <p class="wc-hero-title">専門性を深め、人と向き合い、仕事を前に進める。</p>
+      <p class="wc-intro">研究からAI・データの仕事へ。これまでの歩みと、これからの選択肢。そして、日々の仕事の中で大切にしたいことを、自分の言葉で残していきます。</p>
+      <div class="wc-meta"><span>Seiji Tanimoto</span><time datetime={workCareerUpdated}>2026.09.21</time></div>
+      <nav class="wc-tabs" aria-label="Work & Careerの目次">
+        <a href="#essays">Essay <span>02</span></a>
+        <a href="#notes">Notes <span>04</span></a>
+      </nav>
+    </header>
+
+    <section class="wc-section" id="essays" aria-labelledby="essays-heading">
+      <div class="wc-section-heading">
+        <div><p class="wc-kicker">EXPERIENCE & REFLECTION</p><h2 id="essays-heading">Essay</h2></div>
+        <p>これまでの経験と、今考えていること。</p>
+      </div>
+      <nav class="wc-essay-index" aria-label="Essay一覧">
+        {workCareerEssays.map((essay) => (
+          <a class="wc-essay-card" href={`#${essay.id}`}>
+            <span class="wc-card-number">ESSAY {essay.number}</span>
+            <h3>{essay.title}</h3>
+            <p>{essay.description}</p>
+            <span class="wc-read">本文を読む <span aria-hidden="true">↓</span></span>
+          </a>
+        ))}
+      </nav>
+
+      {workCareerEssays.map((essay) => (
+        <article class="wc-essay" id={essay.id} aria-labelledby={`${essay.id}-title`}>
+          <header class="wc-essay-heading">
+            <p class="wc-kicker">ESSAY {essay.number}</p>
+            <h3 id={`${essay.id}-title`}>{essay.title}</h3>
+            <p class="wc-summary">{essay.description}</p>
+          </header>
+          <div class="wc-essay-body">
+            {essay.sections.map((section) => (
+              <section class="wc-chapter">
+                <h4>{section.heading}</h4>
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </section>
+            ))}
+            <a class="wc-text-link" href="#essays">↑ Essay一覧に戻る</a>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="wc-section" id="notes" aria-labelledby="notes-heading">
+      <div class="wc-section-heading">
+        <div><p class="wc-kicker">QUESTIONS TO RETURN TO</p><h2 id="notes-heading">Notes</h2></div>
+        <p>仕事の中で立ち返りたい、四つの問い。</p>
+      </div>
+      <div class="wc-notes">
+        {workCareerNotes.map((note) => (
+          <article class="wc-note">
+            <p class="wc-kicker">{note.label}</p>
+            <h3>{note.title}</h3>
+            <p>{note.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <footer class="wc-page-footer">
+      <p>この文章は、2026年9月時点の考えです。経験を重ねながら、少しずつ書き足していきます。</p>
+      <a class="wc-text-link" href="#work-career-top">ページの先頭へ ↑</a>
+    </footer>
+  </div>
+</BaseLayout>

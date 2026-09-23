@@ -43,6 +43,2692 @@ const learningFlow = [
   { step: 'EVALUATE', title: '失敗を調べる', detail: '指標、セグメント、誤分類を確認' },
   { step: 'OPERATE', title: '運用で測る', detail: '品質、変化、費用を監視' },
 ];
+
+// AI glossary: edit the data below to maintain this single-page reference.
+// Content is an editorial synthesis of the linked official docs and original papers.
+const glossaryReviewedAt = '2026-09-23';
+type GlossaryTerm = {
+  id: string; title: string; en: string; ja: string; meaning: string;
+  example: string; note: string; sources: string[]; aliases: string;
+  kind: string; featured: boolean; related: string[];
+};
+type GlossaryGroup = { id: string; title: string; en: string; description: string; terms: GlossaryTerm[] };
+const glossarySources: Record<string, { title: string; url: string }> = {
+  "agi": {
+    "title": "Google DeepMind / Levels of AGI",
+    "url": "https://arxiv.org/abs/2311.02462"
+  },
+  "rsi": {
+    "title": "OpenAI / An Alien Mind",
+    "url": "https://openai.com/index/an-alien-mind/"
+  },
+  "dgm": {
+    "title": "Darwin Gödel Machine",
+    "url": "https://arxiv.org/abs/2505.22954"
+  },
+  "singularity": {
+    "title": "Vernor Vinge / The Coming Technological Singularity",
+    "url": "https://ntrs.nasa.gov/citations/19940022856"
+  },
+  "scaling": {
+    "title": "Scaling Laws for Neural Language Models",
+    "url": "https://arxiv.org/abs/2001.08361"
+  },
+  "chinchilla": {
+    "title": "Training Compute-Optimal Large Language Models",
+    "url": "https://arxiv.org/abs/2203.15556"
+  },
+  "emergence": {
+    "title": "Are Emergent Abilities of LLMs a Mirage?",
+    "url": "https://arxiv.org/abs/2304.15004"
+  },
+  "foundation": {
+    "title": "Stanford CRFM / Foundation Models",
+    "url": "https://arxiv.org/abs/2108.07258"
+  },
+  "google": {
+    "title": "Google / Machine Learning Glossary",
+    "url": "https://developers.google.com/machine-learning/glossary"
+  },
+  "tokenizer": {
+    "title": "Hugging Face / Tokenization Algorithms",
+    "url": "https://huggingface.co/docs/transformers/tokenizer_summary"
+  },
+  "transformer": {
+    "title": "Attention Is All You Need",
+    "url": "https://arxiv.org/abs/1706.03762"
+  },
+  "moe": {
+    "title": "Mixtral of Experts",
+    "url": "https://arxiv.org/abs/2401.04088"
+  },
+  "mamba": {
+    "title": "Mamba / Selective State Spaces",
+    "url": "https://arxiv.org/abs/2312.00752"
+  },
+  "instruct": {
+    "title": "InstructGPT / Learning from Human Feedback",
+    "url": "https://arxiv.org/abs/2203.02155"
+  },
+  "lora": {
+    "title": "LoRA / Low-Rank Adaptation",
+    "url": "https://arxiv.org/abs/2106.09685"
+  },
+  "qlora": {
+    "title": "QLoRA / Quantized Fine-Tuning",
+    "url": "https://arxiv.org/abs/2305.14314"
+  },
+  "constitution": {
+    "title": "Constitutional AI",
+    "url": "https://arxiv.org/abs/2212.08073"
+  },
+  "dpo": {
+    "title": "Direct Preference Optimization",
+    "url": "https://arxiv.org/abs/2305.18290"
+  },
+  "r1": {
+    "title": "DeepSeek-R1",
+    "url": "https://arxiv.org/abs/2501.12948"
+  },
+  "distill": {
+    "title": "Distilling the Knowledge in a Neural Network",
+    "url": "https://arxiv.org/abs/1503.02531"
+  },
+  "collapse": {
+    "title": "The Curse of Recursion / Model Collapse",
+    "url": "https://arxiv.org/abs/2305.17493"
+  },
+  "forget": {
+    "title": "Overcoming Catastrophic Forgetting",
+    "url": "https://arxiv.org/abs/1612.00796"
+  },
+  "reason": {
+    "title": "OpenAI / Learning to Reason with LLMs",
+    "url": "https://openai.com/index/learning-to-reason-with-llms/"
+  },
+  "cot": {
+    "title": "Chain-of-Thought Prompting",
+    "url": "https://arxiv.org/abs/2201.11903"
+  },
+  "ttc": {
+    "title": "Scaling LLM Test-Time Compute Optimally",
+    "url": "https://arxiv.org/abs/2408.03314"
+  },
+  "consistency": {
+    "title": "Self-Consistency Improves CoT Reasoning",
+    "url": "https://arxiv.org/abs/2203.11171"
+  },
+  "tot": {
+    "title": "Tree of Thoughts",
+    "url": "https://arxiv.org/abs/2305.10601"
+  },
+  "prm": {
+    "title": "Let's Verify Step by Step",
+    "url": "https://arxiv.org/abs/2305.20050"
+  },
+  "ttt": {
+    "title": "Learning to (Learn at Test Time)",
+    "url": "https://arxiv.org/abs/2407.04620"
+  },
+  "context": {
+    "title": "Anthropic / Effective Context Engineering",
+    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+  },
+  "fewshot": {
+    "title": "Language Models are Few-Shot Learners",
+    "url": "https://arxiv.org/abs/2005.14165"
+  },
+  "lost": {
+    "title": "Lost in the Middle / Long Contexts",
+    "url": "https://arxiv.org/abs/2307.03172"
+  },
+  "structured": {
+    "title": "OpenAI / Structured Model Outputs",
+    "url": "https://developers.openai.com/api/docs/guides/structured-outputs"
+  },
+  "rag": {
+    "title": "Retrieval-Augmented Generation",
+    "url": "https://arxiv.org/abs/2005.11401"
+  },
+  "azure": {
+    "title": "Microsoft / RAG and Generative AI",
+    "url": "https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview"
+  },
+  "hybrid": {
+    "title": "Elastic / Hybrid Search",
+    "url": "https://www.elastic.co/docs/solutions/search/hybrid-search"
+  },
+  "graphrag": {
+    "title": "Microsoft Research / GraphRAG",
+    "url": "https://arxiv.org/abs/2404.16130"
+  },
+  "agents": {
+    "title": "Anthropic / Building Effective Agents",
+    "url": "https://www.anthropic.com/engineering/building-effective-agents"
+  },
+  "react": {
+    "title": "ReAct / Reasoning and Acting",
+    "url": "https://arxiv.org/abs/2210.03629"
+  },
+  "harness": {
+    "title": "Anthropic / Harnesses for Long-Running Agents",
+    "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+  },
+  "mcp": {
+    "title": "Model Context Protocol / Official Documentation",
+    "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+  },
+  "a2a": {
+    "title": "Agent2Agent Protocol / Official Documentation",
+    "url": "https://a2a-protocol.org/latest/"
+  },
+  "skills": {
+    "title": "Agent Skills / Open Format",
+    "url": "https://agentskills.io/home"
+  },
+  "generate": {
+    "title": "Hugging Face / Text Generation",
+    "url": "https://huggingface.co/docs/transformers/llm_tutorial"
+  },
+  "sampling": {
+    "title": "Hugging Face / Generation Configuration",
+    "url": "https://huggingface.co/docs/transformers/main_classes/text_generation"
+  },
+  "cache": {
+    "title": "Hugging Face / How Caching Works",
+    "url": "https://huggingface.co/docs/transformers/cache_explanation"
+  },
+  "vllm": {
+    "title": "vLLM / Official Documentation",
+    "url": "https://docs.vllm.ai/en/latest/"
+  },
+  "flash": {
+    "title": "FlashAttention",
+    "url": "https://arxiv.org/abs/2205.14135"
+  },
+  "diffusion": {
+    "title": "Denoising Diffusion Probabilistic Models",
+    "url": "https://arxiv.org/abs/2006.11239"
+  },
+  "flow": {
+    "title": "Flow Matching for Generative Modeling",
+    "url": "https://arxiv.org/abs/2210.02747"
+  },
+  "dit": {
+    "title": "Scalable Diffusion Models with Transformers",
+    "url": "https://arxiv.org/abs/2212.09748"
+  },
+  "world": {
+    "title": "World Models",
+    "url": "https://arxiv.org/abs/1803.10122"
+  },
+  "vla": {
+    "title": "OpenVLA / Vision-Language-Action Model",
+    "url": "https://arxiv.org/abs/2406.09246"
+  },
+  "rt2": {
+    "title": "Google DeepMind / RT-2",
+    "url": "https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/"
+  },
+  "physical": {
+    "title": "NVIDIA / Physical AI",
+    "url": "https://www.nvidia.com/en-us/glossary/generative-physical-ai/"
+  },
+  "evals": {
+    "title": "Anthropic / Demystifying Evals for AI Agents",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+  },
+  "evalguide": {
+    "title": "OpenAI / Evaluation Best Practices",
+    "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices"
+  },
+  "injection": {
+    "title": "OWASP / Prompt Injection",
+    "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+  },
+  "safeagents": {
+    "title": "OpenAI / Safety in Building Agents",
+    "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety"
+  },
+  "interpret": {
+    "title": "Anthropic / Tracing the Thoughts of a Language Model",
+    "url": "https://www.anthropic.com/research/tracing-thoughts-language-model"
+  },
+  "misalignment": {
+    "title": "Anthropic / Agentic Misalignment",
+    "url": "https://www.anthropic.com/research/agentic-misalignment"
+  },
+  "osi": {
+    "title": "Open Source Initiative / Open Source AI Definition 1.0",
+    "url": "https://opensource.org/ai/open-source-ai-definition"
+  },
+  "modelcard": {
+    "title": "Hugging Face / Model Cards",
+    "url": "https://huggingface.co/docs/hub/model-cards"
+  },
+  "rlm": {
+    "title": "Recursive Language Models (2025)",
+    "url": "https://arxiv.org/abs/2512.24601"
+  },
+  "llada": {
+    "title": "LLaDA: Large Language Diffusion Models",
+    "url": "https://arxiv.org/abs/2502.09992"
+  },
+  "jepa": {
+    "title": "I-JEPA: Self-Supervised Learning from Images",
+    "url": "https://arxiv.org/abs/2301.08243"
+  },
+  "rl": {
+    "title": "OpenAI Spinning Up: Key Concepts in RL",
+    "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html"
+  },
+  "selfrefine": {
+    "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "url": "https://arxiv.org/abs/2303.17651"
+  },
+  "sycophancy": {
+    "title": "Towards Understanding Sycophancy in Language Models",
+    "url": "https://arxiv.org/abs/2310.13548"
+  },
+  "gaming": {
+    "title": "Google DeepMind: Specification gaming",
+    "url": "https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/"
+  }
+};
+const glossaryGroups: GlossaryGroup[] = [
+  {
+    "id": "frontier",
+    "title": "能力・将来像",
+    "en": "CAPABILITIES & FRONTIERS",
+    "description": "AGI・ASI・RSIなど、能力の定義と将来のシナリオを区別する。",
+    "terms": [
+      {
+        "id": "ani",
+        "title": "ANI",
+        "en": "Artificial Narrow Intelligence",
+        "ja": "特化型人工知能",
+        "meaning": "特定の課題や限られた領域に能力を絞ったAIを指す。",
+        "example": "画像の欠陥検出、特定競技のゲームAI。",
+        "note": "特定課題で人間を上回ることと、汎用性は別の軸。",
+        "sources": [
+          "agi"
+        ],
+        "aliases": "弱いAI narrow AI 特化型AI",
+        "kind": "概念・議論",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "agi",
+        "title": "AGI",
+        "en": "Artificial General Intelligence",
+        "ja": "汎用人工知能",
+        "meaning": "幅広い知的課題に対応する汎用的なAIを指す。何をもって到達とするかは定義・評価枠組みによって異なる。",
+        "example": "未知の領域へ知識や技能を転用できるかを問う。",
+        "note": "意識の有無や、ある試験での高得点と同義ではない。",
+        "sources": [
+          "agi"
+        ],
+        "aliases": "汎用的な人工知能 汎用AI HLAI 人間レベルAI",
+        "kind": "概念・議論",
+        "featured": true,
+        "related": [
+          "ani",
+          "asi",
+          "rsi"
+        ]
+      },
+      {
+        "id": "asi",
+        "title": "ASI",
+        "en": "Artificial Superintelligence",
+        "ja": "人工超知能",
+        "meaning": "幅広い知的能力で人間を大きく上回るAIを指す概念。",
+        "example": "科学研究など複数領域で、人間以上の能力を想定。",
+        "note": "AGIと同義ではなく、具体的な判定基準にも幅がある。",
+        "sources": [
+          "agi"
+        ],
+        "aliases": "超知能 superintelligence スーパーインテリジェンス",
+        "kind": "概念・議論",
+        "featured": true,
+        "related": [
+          "agi",
+          "singularity"
+        ]
+      },
+      {
+        "id": "rsi",
+        "title": "RSI",
+        "en": "Recursive Self-Improvement",
+        "ja": "再帰的自己改善",
+        "meaning": "AIによる改善が、そのAIや後継システムの「さらに改善する能力」も高め、次の改善へつながるループ。",
+        "example": "AIが研究・実装・評価を改善し、次の開発を進める。",
+        "note": "回答の書き直しや一度の性能向上だけで、強い意味のRSIが示されたとはいえない。",
+        "sources": [
+          "rsi",
+          "dgm"
+        ],
+        "aliases": "再帰的自己改良 自己進化 リカーシブ セルフインプルーブメント セルフインプルーヴメント",
+        "kind": "概念・議論",
+        "featured": true,
+        "related": [
+          "self-refinement",
+          "rlm",
+          "ai-rd",
+          "intelligence-explosion"
+        ]
+      },
+      {
+        "id": "ai-rd",
+        "title": "AI R&D automation",
+        "en": "AI Research and Development Automation",
+        "ja": "AI研究開発の自動化",
+        "meaning": "研究案、実験コード、評価、分析など、AI開発の工程をAIで支援・自動化すること。",
+        "example": "候補手法を実装し、テストで比較する。",
+        "note": "研究工程の自動化率と、RSIの成立は同じ指標ではない。",
+        "sources": [
+          "dgm",
+          "rsi"
+        ],
+        "aliases": "AI scientist AI researcher 自動研究 AI科学者",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "rsi",
+          "agent-harness"
+        ]
+      },
+      {
+        "id": "intelligence-explosion",
+        "title": "Intelligence explosion",
+        "en": "Intelligence Explosion",
+        "ja": "知能爆発",
+        "meaning": "自己改善などの正のフィードバックで、知能の向上が急激に加速するという仮説。",
+        "example": "改善能力の向上が、次の改善をさらに速める。",
+        "note": "必ず起こる現象や、確定した時期として扱わない。",
+        "sources": [
+          "rsi",
+          "singularity"
+        ],
+        "aliases": "知能の爆発 AI takeoff テイクオフ",
+        "kind": "概念・議論",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "singularity",
+        "title": "Singularity",
+        "en": "Technological Singularity",
+        "ja": "技術的特異点",
+        "meaning": "超人的な知能などによって社会や技術の変化が加速し、その先の予測が難しくなるという将来像。",
+        "example": "AIの進歩が既存の社会予測を大きく変える議論。",
+        "note": "AGIの別名でも、年が確定した科学的事実でもない。",
+        "sources": [
+          "singularity"
+        ],
+        "aliases": "シンギュラリティ 技術特異点",
+        "kind": "概念・議論",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "frontier-ai",
+        "title": "Frontier AI",
+        "en": "Frontier AI / Frontier Model",
+        "ja": "最先端能力のAI",
+        "meaning": "ある時点で高い能力を持ち、技術の先端を押し広げるAIを指す呼称。",
+        "example": "新しい能力やリスクの評価対象となるモデル。",
+        "note": "固定されたモデル一覧や、単一の技術方式ではない。",
+        "sources": [
+          "rsi"
+        ],
+        "aliases": "フロンティアAI フロンティアモデル",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "scaling-laws",
+        "title": "Scaling laws",
+        "en": "Neural Scaling Laws",
+        "ja": "スケーリング則",
+        "meaning": "モデル規模・データ量・計算量と、損失などの性能指標との経験的な関係。",
+        "example": "計算予算をモデルと学習データにどう配分するか。",
+        "note": "同じ改善が無制限に続く保証や、AGI到達の証明ではない。",
+        "sources": [
+          "scaling",
+          "chinchilla"
+        ],
+        "aliases": "スケーリング法則 Chinchilla 計算最適 スケーリング仮説",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "emergence",
+        "title": "Emergent abilities",
+        "en": "Emergent Abilities",
+        "ja": "創発的能力",
+        "meaning": "規模の増大に伴って、ある能力が急に現れたように見える現象を指す。",
+        "example": "小型モデルでは解けない課題を大型モデルが解く。",
+        "note": "評価指標の非連続性でも急変が見えるため、解釈には議論がある。",
+        "sources": [
+          "foundation",
+          "emergence"
+        ],
+        "aliases": "創発 エマージェンス emergent",
+        "kind": "概念・議論",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "models",
+    "title": "モデル・内部構造",
+    "en": "MODELS & ARCHITECTURE",
+    "description": "基盤モデルの種類と、トークン・Attention・MoEなどの構成要素。",
+    "terms": [
+      {
+        "id": "foundation-model",
+        "title": "Foundation model",
+        "en": "Foundation Model",
+        "ja": "基盤モデル",
+        "meaning": "幅広いデータで学習し、さまざまな下流タスクへ適応できるモデル。",
+        "example": "同じ基盤を要約、検索、分類へ展開する。",
+        "note": "LLMだけでなく、画像や音声を扱うモデルも含む。",
+        "sources": [
+          "foundation"
+        ],
+        "aliases": "FM ファウンデーションモデル",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "llm",
+          "vlm",
+          "genai"
+        ]
+      },
+      {
+        "id": "genai",
+        "title": "GenAI",
+        "en": "Generative AI",
+        "ja": "生成AI",
+        "meaning": "文章・画像・音声など、新たなコンテンツを生成するAIの総称。",
+        "example": "文章の下書き、画像生成、音声合成。",
+        "note": "生成できることは、内容の正確さを保証しない。",
+        "sources": [
+          "google"
+        ],
+        "aliases": "generative artificial intelligence ジェネレーティブAI",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "llm",
+        "title": "LLM",
+        "en": "Large Language Model",
+        "ja": "大規模言語モデル",
+        "meaning": "大量の言語データなどからパターンを学び、言語の処理や生成に使う大規模モデル。",
+        "example": "要約、翻訳、文章やコードの生成。",
+        "note": "大規模と呼ぶパラメータ数に、共通の固定境界はない。",
+        "sources": [
+          "foundation",
+          "fewshot"
+        ],
+        "aliases": "大規模言語モデル エルエルエム",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "token",
+          "transformer",
+          "reasoning-model"
+        ]
+      },
+      {
+        "id": "slm",
+        "title": "SLM",
+        "en": "Small Language Model",
+        "ja": "小規模言語モデル",
+        "meaning": "比較的小さな計算・メモリ資源で使える言語モデルを指す呼称。",
+        "example": "用途を絞った端末内処理や軽量な分類。",
+        "note": "小型だから必ず速い・安い・低精度とは限らない。",
+        "sources": [
+          "google",
+          "distill"
+        ],
+        "aliases": "小型言語モデル スモールランゲージモデル",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "token",
+        "title": "Token",
+        "en": "Token",
+        "ja": "トークン",
+        "meaning": "モデルが入力・出力を扱う単位。テキストでは文字、単語の一部、記号などに分かれる。",
+        "example": "同じ文でも、トークナイザーによって分割が変わる。",
+        "note": "1トークン＝1単語、または1文字ではない。",
+        "sources": [
+          "tokenizer"
+        ],
+        "aliases": "トークン数 tokenization",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "tokenizer",
+        "title": "Tokenizer",
+        "en": "Tokenizer / Tokenization",
+        "ja": "トークナイザー・トークン化",
+        "meaning": "文字列をモデルの語彙に対応するトークンIDへ変換する仕組み。",
+        "example": "BPEやSentencePieceなどの方式。",
+        "note": "方式の違いは、入力長や言語ごとの分割にも影響する。",
+        "sources": [
+          "tokenizer"
+        ],
+        "aliases": "トークナイザ BPE SentencePiece",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "embedding",
+        "title": "Embedding",
+        "en": "Embedding",
+        "ja": "埋め込み表現",
+        "meaning": "対象の特徴や関係を、学習された数値ベクトルとして表すもの。",
+        "example": "文章をベクトルにして類似した内容を探す。",
+        "note": "数値的に近いことと、事実として同一であることは別。",
+        "sources": [
+          "google",
+          "azure"
+        ],
+        "aliases": "埋込み 埋め込みベクトル ベクトル表現",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "parameters",
+        "title": "Parameters",
+        "en": "Model Parameters / Weights",
+        "ja": "パラメータ・重み",
+        "meaning": "学習で調整され、モデルの計算や出力を決める数値。",
+        "example": "モデルの線形変換に使う重み行列。",
+        "note": "MoEでは総パラメータ数と、各入力で使う数を区別する。",
+        "sources": [
+          "scaling",
+          "moe"
+        ],
+        "aliases": "モデルサイズ 重み weight active parameters",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "transformer",
+        "title": "Transformer",
+        "en": "Transformer",
+        "ja": "Transformer型モデル",
+        "meaning": "Attentionを中心に、入力中の関係を計算して表現を更新するニューラルネットワーク構造。",
+        "example": "文章生成、翻訳、画像処理。",
+        "note": "すべてのAIがTransformerというわけではない。",
+        "sources": [
+          "transformer"
+        ],
+        "aliases": "トランスフォーマー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "attention",
+        "title": "Attention",
+        "en": "Attention / Self-Attention",
+        "ja": "注意機構・自己注意",
+        "meaning": "Query・Keyなどから重みを計算し、Valueの情報を重み付きで集約する仕組み。",
+        "example": "文中の別の位置の情報を使って表現を作る。",
+        "note": "Attentionの重みだけで、モデルの判断理由を説明できるとは限らない。",
+        "sources": [
+          "transformer",
+          "interpret"
+        ],
+        "aliases": "QKV クエリ キー バリュー self attention",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "moe",
+        "title": "MoE",
+        "en": "Mixture of Experts",
+        "ja": "エキスパート混合",
+        "meaning": "複数の計算ブロックを持ち、ルーターが入力ごとに使用するものを選ぶ構造。",
+        "example": "疎なMoEでは、一部のexpertだけを動かす。",
+        "note": "人間の専門家や複数エージェントの会議とは異なる。",
+        "sources": [
+          "moe"
+        ],
+        "aliases": "ミクスチャーオブエキスパーツ sparse experts routing",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "dense",
+          "parameters",
+          "multi-agent"
+        ]
+      },
+      {
+        "id": "dense",
+        "title": "Dense model",
+        "en": "Dense Model",
+        "ja": "密なモデル",
+        "meaning": "疎なMoEとの対比では、各入力で主要なモデル重みを広く使う構造を指す。",
+        "example": "密なTransformerと疎なMoEを比較する。",
+        "note": "dense retrievalのdenseとは、指している対象が違う。",
+        "sources": [
+          "moe"
+        ],
+        "aliases": "デンスモデル 密モデル",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "ssm",
+        "title": "SSM / Mamba",
+        "en": "State Space Model / Mamba",
+        "ja": "状態空間モデル",
+        "meaning": "内部状態を更新しながら系列情報を扱うモデル群。Mambaは入力に応じた選択的な状態更新を使う。",
+        "example": "長い系列を効率よく処理する設計。",
+        "note": "状態空間モデル全体とMambaは同義ではない。",
+        "sources": [
+          "mamba"
+        ],
+        "aliases": "マムバ マンバ 選択的状態空間",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "diffusion-lm",
+        "title": "Diffusion LM / DLM",
+        "en": "Diffusion Language Model",
+        "ja": "拡散型言語モデル",
+        "meaning": "マスクやノイズを含む状態からトークン列を復元する過程などを学習し、言語を生成するモデル群。",
+        "example": "隠れたトークンを推定し、複数回の更新で文章を作る。",
+        "note": "LLMが必ず左から右への自己回帰生成を使うわけではない。生成手順は方式によって異なる。",
+        "sources": [
+          "llada"
+        ],
+        "aliases": "拡散言語モデル LLaDA masked diffusion",
+        "kind": "研究",
+        "featured": false,
+        "related": [
+          "autoregressive",
+          "diffusion"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "training",
+    "title": "学習・モデル適応",
+    "en": "TRAINING & ADAPTATION",
+    "description": "事前学習、追加学習、選好最適化、蒸留を切り分ける。",
+    "terms": [
+      {
+        "id": "pretraining",
+        "title": "Pre-training",
+        "en": "Pre-training",
+        "ja": "事前学習",
+        "meaning": "大規模なデータから、後のタスクに使える基本的な表現や能力を学習する段階。",
+        "example": "言語モデルが次のトークンを予測して学ぶ。",
+        "note": "自己教師あり学習がよく使われるが、目的関数はモデル次第。",
+        "sources": [
+          "foundation",
+          "fewshot"
+        ],
+        "aliases": "事前訓練 自己教師あり self-supervised learning",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "posttraining",
+        "title": "Post-training",
+        "en": "Post-training",
+        "ja": "事後学習",
+        "meaning": "事前学習の後に、指示への対応、推論、選好などを調整する学習の総称。",
+        "example": "SFTや強化学習を組み合わせる。",
+        "note": "RLHFだけを意味する言葉ではない。",
+        "sources": [
+          "instruct",
+          "r1"
+        ],
+        "aliases": "事後訓練 ポストトレーニング",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "sft",
+          "rlhf",
+          "rlvr"
+        ]
+      },
+      {
+        "id": "finetuning",
+        "title": "Fine-tuning",
+        "en": "Fine-tuning",
+        "ja": "ファインチューニング",
+        "meaning": "学習済みモデルを追加データで学習させ、特定の目的へ適応させること。",
+        "example": "自社の回答形式や専門タスクに合わせる。",
+        "note": "資料をプロンプトに添付するだけの処理とは異なる。",
+        "sources": [
+          "instruct",
+          "lora"
+        ],
+        "aliases": "追加学習 微調整 finetune FT",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "sft",
+          "lora",
+          "rag"
+        ]
+      },
+      {
+        "id": "sft",
+        "title": "SFT",
+        "en": "Supervised Fine-Tuning",
+        "ja": "教師ありファインチューニング",
+        "meaning": "入力と望ましい出力の例を使い、学習済みモデルを調整する方法。",
+        "example": "依頼と良い回答のペアで学習する。",
+        "note": "指示チューニングは、指示に従う例を使う代表的な形。",
+        "sources": [
+          "instruct"
+        ],
+        "aliases": "Instruction tuning 指示チューニング supervised finetuning",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "peft",
+        "title": "PEFT",
+        "en": "Parameter-Efficient Fine-Tuning",
+        "ja": "パラメータ効率のよい微調整",
+        "meaning": "全パラメータを更新せず、一部の重みや追加パラメータで適応する手法群。",
+        "example": "LoRAなどで学習対象を小さくする。",
+        "note": "効率化の程度と精度への影響は、手法と課題に依存する。",
+        "sources": [
+          "lora"
+        ],
+        "aliases": "パラメータ効率的 fine tuning adapter アダプター",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "lora",
+        "title": "LoRA",
+        "en": "Low-Rank Adaptation",
+        "ja": "低ランク適応",
+        "meaning": "元の重みを固定し、低ランクの行列で重みの更新分を学習する手法。",
+        "example": "基盤モデルに小さな学習済みアダプターを加える。",
+        "note": "モデル全体をゼロから学習し直すわけではない。",
+        "sources": [
+          "lora"
+        ],
+        "aliases": "ローラ ロラ 低ランク行列",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "qlora",
+        "title": "QLoRA",
+        "en": "Quantized LoRA",
+        "ja": "量子化とLoRAを組み合わせた微調整",
+        "meaning": "量子化した基盤モデルを用い、LoRAの追加パラメータを学習する省メモリ手法。",
+        "example": "元論文では4bitの基盤モデルを使って微調整する。",
+        "note": "単に学習後のモデルを量子化することとは異なる。",
+        "sources": [
+          "qlora"
+        ],
+        "aliases": "キューローラ 4bit finetuning",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "rlhf",
+        "title": "RLHF",
+        "en": "Reinforcement Learning from Human Feedback",
+        "ja": "人間のフィードバックによる強化学習",
+        "meaning": "人の評価や選好を報酬の手がかりとして、モデルの振る舞いを改善する学習。",
+        "example": "回答の比較評価から報酬モデルを学ぶ。",
+        "note": "好まれる回答と、正しい回答は必ずしも一致しない。",
+        "sources": [
+          "instruct"
+        ],
+        "aliases": "人間フィードバック 人の好み 報酬モデル reward model",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "rlaif",
+        "title": "RLAIF",
+        "en": "Reinforcement Learning from AI Feedback",
+        "ja": "AIのフィードバックによる強化学習",
+        "meaning": "人の代わりに、または人を補助する形でAIの評価を学習信号に使う方法。",
+        "example": "AIが回答同士を比較して選好を付ける。",
+        "note": "評価AIの誤りや偏りも受け継ぐ可能性がある。",
+        "sources": [
+          "constitution"
+        ],
+        "aliases": "AIフィードバック",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "dpo",
+        "title": "DPO",
+        "en": "Direct Preference Optimization",
+        "ja": "直接選好最適化",
+        "meaning": "好ましい回答と好ましくない回答のペアから、モデルを直接調整する方法。",
+        "example": "同じ質問に対するchosen/rejectedのペアで学習。",
+        "note": "元のDPOは、明示的な報酬モデルの別学習を不要にする。",
+        "sources": [
+          "dpo"
+        ],
+        "aliases": "直接嗜好最適化 選好学習 preference optimization",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "rlvr",
+        "title": "RLVR",
+        "en": "Reinforcement Learning with Verifiable Rewards",
+        "ja": "検証可能な報酬による強化学習",
+        "meaning": "正解判定や実行テストなど、比較的客観的に検証できる結果を報酬に使う強化学習。",
+        "example": "数学の正答や、コードのテスト成功を報酬にする。",
+        "note": "検証器の穴や、測っていない品質は別途確認が必要。",
+        "sources": [
+          "r1"
+        ],
+        "aliases": "検証可能報酬 ルールベース報酬 verifiable reward",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "grpo",
+          "verifier",
+          "reward-hacking"
+        ]
+      },
+      {
+        "id": "grpo",
+        "title": "GRPO",
+        "en": "Group Relative Policy Optimization",
+        "ja": "グループ相対方策最適化",
+        "meaning": "同じ問題への複数の出力をグループ内で相対評価し、方策を更新する強化学習手法。",
+        "example": "候補回答の報酬を比較して学習信号を作る。",
+        "note": "RLVRは報酬の性質、GRPOは最適化手法。分類の軸が違う。",
+        "sources": [
+          "r1"
+        ],
+        "aliases": "グループ相対 policy optimization",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "distillation",
+        "title": "Distillation",
+        "en": "Knowledge Distillation",
+        "ja": "知識蒸留",
+        "meaning": "教師モデルの出力や分布などを使い、別の生徒モデルへ能力を移す学習。",
+        "example": "大型モデルの回答を小型モデルの学習に使う。",
+        "note": "元モデルの能力や安全性が、そのまま再現される保証はない。",
+        "sources": [
+          "distill",
+          "r1"
+        ],
+        "aliases": "蒸留 teacher student 教師モデル 生徒モデル",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "synthetic-data",
+        "title": "Synthetic data",
+        "en": "Synthetic Data",
+        "ja": "合成データ",
+        "meaning": "モデルやシミュレーションなどで人工的に作る学習・評価用データ。",
+        "example": "生成した問題と解答を検証して学習に使う。",
+        "note": "量を増やすだけでなく、品質・多様性・重複を管理する。",
+        "sources": [
+          "r1",
+          "collapse"
+        ],
+        "aliases": "人工データ 生成データ データ合成",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "model-collapse",
+        "title": "Model collapse",
+        "en": "Model Collapse",
+        "ja": "モデル崩壊",
+        "meaning": "生成データを再帰的に学習する条件で、元の分布の多様性などが失われる現象。",
+        "example": "まれなパターンが世代を重ねて消える。",
+        "note": "合成データを使えば必ず劣化する、という意味ではない。",
+        "sources": [
+          "collapse"
+        ],
+        "aliases": "モデルコラプス 再帰学習",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "continual-learning",
+        "title": "Continual learning",
+        "en": "Continual Learning",
+        "ja": "継続学習",
+        "meaning": "新しいデータや課題を学びながら、既存の能力も保とうとする学習設定。",
+        "example": "新しい分野を学びつつ、以前のタスクも維持する。",
+        "note": "会話履歴を保存する機能とは違い、破滅的忘却が課題となる。",
+        "sources": [
+          "forget"
+        ],
+        "aliases": "継続的学習 lifelong learning catastrophic forgetting 破滅的忘却",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "rl",
+        "title": "RL",
+        "en": "Reinforcement Learning",
+        "ja": "強化学習",
+        "meaning": "環境との相互作用から得る報酬を手がかりに、累積報酬を高める行動の選び方を学習する枠組み。",
+        "example": "数学の正解やゲームの得点を使い、方策を改善する。",
+        "note": "AIがツールを使うだけでは、実行中に強化学習をしているとは限らない。",
+        "sources": [
+          "rl"
+        ],
+        "aliases": "方策 policy reward 報酬",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "rlhf",
+          "rlvr",
+          "grpo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reasoning",
+    "title": "推論・考える計算",
+    "en": "REASONING & TEST-TIME COMPUTE",
+    "description": "推論時に計算を増やす方法と、学習で重みを更新する方法の違い。",
+    "terms": [
+      {
+        "id": "inference",
+        "title": "Inference",
+        "en": "Model Inference",
+        "ja": "推論処理",
+        "meaning": "学習済みモデルに入力を与え、予測や生成結果を計算すること。",
+        "example": "ユーザーの入力から回答を生成する。",
+        "note": "問題を論理的に考えるreasoningと、意味が完全には一致しない。",
+        "sources": [
+          "generate"
+        ],
+        "aliases": "推論実行 inference time reasoning",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "reasoning-model",
+        "title": "Reasoning model",
+        "en": "Reasoning Model",
+        "ja": "推論重視モデル",
+        "meaning": "複数段階の問題解決などを重視して学習・設計されたモデルの呼称。",
+        "example": "数学、コード、計画のために中間計算を使う。",
+        "note": "常に正しいわけではなく、単純な処理では費用が増えることもある。",
+        "sources": [
+          "reason"
+        ],
+        "aliases": "推論モデル 思考モデル reasoning tokens 思考トークン",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "cot",
+        "title": "CoT",
+        "en": "Chain of Thought",
+        "ja": "段階的な推論の記述",
+        "meaning": "中間ステップを文章などで表し、段階的に問題を解く手法や、その推論列。",
+        "example": "条件整理から計算、結論へ段階を分ける。",
+        "note": "表示された説明が、内部計算を忠実に表すとは限らない。",
+        "sources": [
+          "cot",
+          "interpret"
+        ],
+        "aliases": "思考の連鎖 チェーンオブソート chain-of-thought",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "reasoning-model",
+          "interpretability"
+        ]
+      },
+      {
+        "id": "test-time-compute",
+        "title": "Test-time compute",
+        "en": "Test-time Compute / Inference-time Compute",
+        "ja": "推論時の計算量",
+        "meaning": "回答時に使う計算資源。候補生成、探索、検証などに配分できる。",
+        "example": "1回で答える代わりに複数案を比較する。",
+        "note": "学習時の計算量とは別で、待ち時間や費用にも影響する。",
+        "sources": [
+          "ttc"
+        ],
+        "aliases": "TTC 推論時計算 テストタイムコンピュート",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "test-time-scaling",
+        "title": "Test-time scaling",
+        "en": "Test-time Scaling",
+        "ja": "推論時スケーリング",
+        "meaning": "推論時に計算量を増やすことで、回答品質の改善を狙う考え方。",
+        "example": "より長く考える、候補を増やす、検証する。",
+        "note": "計算を増やせば必ず改善するわけではなく、配分も重要。",
+        "sources": [
+          "ttc",
+          "reason"
+        ],
+        "aliases": "Inference-time scaling 推論時スケール テストタイムスケーリング",
+        "kind": "技術・実務",
+        "featured": true,
+        "related": [
+          "test-time-compute",
+          "best-of-n",
+          "ttt"
+        ]
+      },
+      {
+        "id": "self-consistency",
+        "title": "Self-consistency",
+        "en": "Self-Consistency",
+        "ja": "自己整合性による回答選択",
+        "meaning": "異なる推論経路から得た複数の回答を集約し、一貫した結論を選ぶ方法。",
+        "example": "複数回解いた結果の多数決を取る。",
+        "note": "全候補が同じ誤解を共有していれば、多数決も誤る。",
+        "sources": [
+          "consistency"
+        ],
+        "aliases": "自己一貫性 多数決",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "best-of-n",
+        "title": "Best-of-N",
+        "en": "Best-of-N Sampling",
+        "ja": "複数候補からの最良選択",
+        "meaning": "N個の候補を生成し、評価器などのスコアで最良と判断したものを選ぶ。",
+        "example": "複数の解答を採点して1つを採用する。",
+        "note": "多数決で選ぶself-consistencyとは選択基準が違う。",
+        "sources": [
+          "ttc"
+        ],
+        "aliases": "BoN best of n リランキングサンプリング",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "tot",
+        "title": "ToT",
+        "en": "Tree of Thoughts",
+        "ja": "思考の木による探索",
+        "meaning": "中間的な思考を枝分かれさせ、候補を評価しながら探索する方法。",
+        "example": "有望な解法を伸ばし、行き詰まった枝を戻る。",
+        "note": "CoTを長くするだけでなく、分岐と探索の制御がある。",
+        "sources": [
+          "tot"
+        ],
+        "aliases": "ツリーオブソーツ 思考木",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "verifier",
+        "title": "Verifier",
+        "en": "Verifier",
+        "ja": "検証器",
+        "meaning": "出力や途中過程が基準を満たすか判定するルール、テスト、モデルなど。",
+        "example": "コードを実行してテストに合格するか調べる。",
+        "note": "検証できる範囲を超えた正しさまで保証するものではない。",
+        "sources": [
+          "prm",
+          "r1"
+        ],
+        "aliases": "検証モデル 自動検証 verification",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "prm",
+        "title": "PRM",
+        "en": "Process Reward Model",
+        "ja": "過程報酬モデル",
+        "meaning": "最終結果だけでなく、推論の途中ステップを評価する報酬モデル。",
+        "example": "数学の解答を一段階ずつ採点する。",
+        "note": "最終回答を採点する結果報酬モデル（ORM）とは区別する。",
+        "sources": [
+          "prm"
+        ],
+        "aliases": "過程監督 process supervision ORM outcome reward model",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "ttt",
+        "title": "TTT",
+        "en": "Test-Time Training",
+        "ja": "テスト時学習",
+        "meaning": "テスト・推論時の入力を使い、学習則で内部のパラメータや状態を適応させる手法群。",
+        "example": "系列を読む間に内部の学習器を更新する。",
+        "note": "長く考えるtest-time scalingと同義ではなく、更新対象は手法ごとに異なる。",
+        "sources": [
+          "ttt"
+        ],
+        "aliases": "テストタイムトレーニング 推論時学習 テスト時適応",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "test-time-scaling",
+          "icl",
+          "continual-learning"
+        ]
+      },
+      {
+        "id": "rlm",
+        "title": "RLM",
+        "en": "Recursive Language Model",
+        "ja": "再帰的言語モデル",
+        "meaning": "長い入力を外部の実行環境に置き、プログラムで調べたり、部分的な課題を言語モデルへ再帰的に依頼したりする推論の構成。",
+        "example": "大量の文書をコードで分割・抽出し、必要な部分を別のモデル呼び出しで処理する。",
+        "note": "モデル自身の改善能力を高めるRSIとは別概念。再帰的に呼び出すこと自体は重みの学習を意味しない。",
+        "sources": [
+          "rlm"
+        ],
+        "aliases": "Recursive Language Models 再帰言語モデル リカーシブ",
+        "kind": "研究",
+        "featured": true,
+        "related": [
+          "rsi",
+          "long-context",
+          "agent-harness"
+        ]
+      },
+      {
+        "id": "self-refinement",
+        "title": "Self-refinement",
+        "en": "Iterative Refinement with Self-Feedback",
+        "ja": "自己批評・反復修正",
+        "meaning": "出力に対してフィードバックを生成し、その内容を使って回答を修正する手順。",
+        "example": "文章を作り、問題点を指摘し、その指摘をもとに書き直す。",
+        "note": "Self-Refineでは追加の学習なしに反復する。改善が保証されるわけでも、これだけでRSIを示すわけでもない。",
+        "sources": [
+          "selfrefine"
+        ],
+        "aliases": "Self-Refine 自己修正 セルフリファイン 自己批評",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "rsi",
+          "verifier",
+          "test-time-compute"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "context",
+    "title": "プロンプト・文脈",
+    "en": "PROMPTS & CONTEXT",
+    "description": "何を伝え、何を覚え、どの情報を入力に残すか。",
+    "terms": [
+      {
+        "id": "prompt-engineering",
+        "title": "Prompt engineering",
+        "en": "Prompt Engineering",
+        "ja": "プロンプト設計",
+        "meaning": "指示、制約、例、出力形式などを整理し、望む応答を得やすくすること。",
+        "example": "目的・前提・完成条件を分けて書く。",
+        "note": "言い回しだけで、モデルの能力や誤りを完全には制御できない。",
+        "sources": [
+          "context"
+        ],
+        "aliases": "プロンプトエンジニアリング 指示文",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "context-engineering",
+        "title": "Context engineering",
+        "en": "Context Engineering",
+        "ja": "コンテキスト設計",
+        "meaning": "指示に加え、履歴、検索結果、ツール情報など、推論へ渡す情報全体を設計・管理すること。",
+        "example": "必要な資料だけを選び、古い履歴を整理する。",
+        "note": "長く詰め込むことではなく、関連性と情報の優先順位が重要。",
+        "sources": [
+          "context"
+        ],
+        "aliases": "コンテキストエンジニアリング 文脈設計",
+        "kind": "技術・実務",
+        "featured": true,
+        "related": [
+          "prompt-engineering",
+          "compaction",
+          "agent-memory"
+        ]
+      },
+      {
+        "id": "system-prompt",
+        "title": "System prompt",
+        "en": "System Prompt",
+        "ja": "システム指示",
+        "meaning": "役割や制約など、アプリ側がモデルへ渡す上位の指示。優先順位の仕様はサービスごとに異なる。",
+        "example": "回答方針や利用できるツールの条件を指定する。",
+        "note": "書いた禁止事項だけを、認可やセキュリティの仕組みにしない。",
+        "sources": [
+          "safeagents"
+        ],
+        "aliases": "システムプロンプト developer message system instruction",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "icl",
+        "title": "ICL",
+        "en": "In-Context Learning",
+        "ja": "文脈内学習",
+        "meaning": "重みを更新せず、入力中の指示や例から、その場の課題への対応を変える現象。",
+        "example": "例を見せ、同じ規則で新しい入力を処理させる。",
+        "note": "通常のファインチューニングとは違い、重みの学習更新はしない。",
+        "sources": [
+          "fewshot"
+        ],
+        "aliases": "インコンテキストラーニング 文脈学習",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "few-shot",
+        "title": "Zero-shot / Few-shot",
+        "en": "Zero-shot / Few-shot Prompting",
+        "ja": "例なし・少数例の指示",
+        "meaning": "解答例を渡さずに依頼するのがzero-shot、少数の例を渡すのがfew-shot。",
+        "example": "分類例を3件示して、4件目を分類させる。",
+        "note": "提示例の偏りや順番も結果に影響しうる。",
+        "sources": [
+          "fewshot"
+        ],
+        "aliases": "ゼロショット フューショット one-shot ワンショット",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "context-window",
+        "title": "Context window",
+        "en": "Context Window",
+        "ja": "コンテキストウィンドウ",
+        "meaning": "モデルが一度の推論で扱える文脈の容量。主にトークン数で表す。",
+        "example": "指示・履歴・資料・出力に使える枠を管理する。",
+        "note": "入力上限、出力上限、内部推論の扱いはモデルの仕様を確認する。",
+        "sources": [
+          "google"
+        ],
+        "aliases": "文脈長 コンテキスト長 context length",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "long-context",
+          "context-rot"
+        ]
+      },
+      {
+        "id": "long-context",
+        "title": "Long context",
+        "en": "Long-context Modeling",
+        "ja": "長文コンテキスト",
+        "meaning": "多くのトークンを含む資料や履歴を扱う能力・設定。",
+        "example": "長い文書を入力し、離れた箇所の関係を調べる。",
+        "note": "入る量と、必要情報を正しく使える能力は別。",
+        "sources": [
+          "lost"
+        ],
+        "aliases": "長文処理 ロングコンテキスト",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "context-rot",
+        "title": "Context rot",
+        "en": "Context Rot",
+        "ja": "文脈の増大・混雑に伴う品質低下",
+        "meaning": "文脈が長く複雑になるにつれ、必要情報を使う精度が落ちる現象の呼称。",
+        "example": "関連の薄い履歴が増え、重要な条件を取り落とす。",
+        "note": "起こり方はモデル・課題・情報の配置によって変わる。",
+        "sources": [
+          "lost",
+          "context"
+        ],
+        "aliases": "コンテキストロット 文脈劣化 文脈汚染",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "compaction",
+        "title": "Compaction",
+        "en": "Context Compaction",
+        "ja": "文脈の圧縮",
+        "meaning": "履歴を要約・整理し、必要な情報を残しながら文脈量を減らす処理。",
+        "example": "決定事項と未完了タスクを残し、長い出力を省く。",
+        "note": "削った条件は復元できないことがあるため、原文も保存する。",
+        "sources": [
+          "context"
+        ],
+        "aliases": "コンパクション 文脈圧縮 要約メモリ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "agent-memory",
+        "title": "Agent memory",
+        "en": "Agent Memory",
+        "ja": "エージェントの記憶",
+        "meaning": "セッション外の保存領域などに情報を残し、必要なときに取り出す仕組み。",
+        "example": "過去の決定や作業状況をファイルに保存する。",
+        "note": "保存した情報が、毎回すべてモデルへ渡るとは限らない。",
+        "sources": [
+          "harness",
+          "context"
+        ],
+        "aliases": "長期記憶 短期記憶 episodic semantic procedural memory",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "structured-output",
+        "title": "Structured outputs",
+        "en": "Structured Outputs",
+        "ja": "構造化出力",
+        "meaning": "JSON Schemaなど、指定した構造に沿って出力させる仕組み。",
+        "example": "必須項目を持つJSONをアプリへ返す。",
+        "note": "構文や型が正しくても、値の事実性や業務上の正しさは別。",
+        "sources": [
+          "structured"
+        ],
+        "aliases": "JSON schema constrained decoding 構造化応答",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "retrieval",
+    "title": "検索・知識接続",
+    "en": "RETRIEVAL & GROUNDING",
+    "description": "RAGを、検索・文書分割・再順位付け・根拠付けに分ける。",
+    "terms": [
+      {
+        "id": "rag",
+        "title": "RAG",
+        "en": "Retrieval-Augmented Generation",
+        "ja": "検索拡張生成",
+        "meaning": "外部から検索した情報を入力へ加え、それを使って回答を生成する構成。",
+        "example": "社内資料を検索して質問へ回答する。",
+        "note": "RAGを導入するだけで、幻覚や検索漏れがなくなるわけではない。",
+        "sources": [
+          "rag"
+        ],
+        "aliases": "ラグ 検索強化生成",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "finetuning",
+          "grounding",
+          "agentic-rag"
+        ]
+      },
+      {
+        "id": "grounding",
+        "title": "Grounding",
+        "en": "Grounding",
+        "ja": "根拠付け",
+        "meaning": "回答を、参照資料や観測、ツールの結果などの根拠に結び付けること。",
+        "example": "回答の主張と、裏付けとなる文書箇所を対応させる。",
+        "note": "引用の形があることと、引用が主張を支えていることは別。",
+        "sources": [
+          "azure"
+        ],
+        "aliases": "グラウンディング groundedness 根拠整合性",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "chunking",
+        "title": "Chunking",
+        "en": "Document Chunking",
+        "ja": "文書分割",
+        "meaning": "文書を検索や入力に適した小さな単位に分けること。",
+        "example": "見出しや段落を保って資料を分割する。",
+        "note": "細かすぎると文脈が失われ、大きすぎると不要情報が増える。",
+        "sources": [
+          "azure"
+        ],
+        "aliases": "チャンク チャンキング overlap オーバーラップ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "vector-database",
+        "title": "Vector database",
+        "en": "Vector Database / Vector Index",
+        "ja": "ベクトルDB・ベクトル索引",
+        "meaning": "埋め込みベクトルを保存し、類似したベクトルを効率的に探すための仕組み。",
+        "example": "質問と近いベクトルを持つ文書を検索する。",
+        "note": "近似検索の誤差、メタデータ条件、アクセス権も設計対象。",
+        "sources": [
+          "azure",
+          "hybrid"
+        ],
+        "aliases": "ベクトルデータベース vector search ANN 近似近傍探索",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "dense-retrieval",
+        "title": "Dense retrieval",
+        "en": "Dense Retrieval",
+        "ja": "密ベクトル検索",
+        "meaning": "学習した密なベクトル表現を使い、質問に関連する資料を探す方法。",
+        "example": "表現が異なっていても意味の近い文章を探す。",
+        "note": "型番や固有名詞の一致は、キーワード検索が有利な場合がある。",
+        "sources": [
+          "hybrid",
+          "rag"
+        ],
+        "aliases": "意味検索 semantic search デンス検索",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "sparse-retrieval",
+        "title": "Sparse retrieval / BM25",
+        "en": "Sparse Retrieval / BM25",
+        "ja": "疎な表現による検索",
+        "meaning": "単語などの疎な特徴を使う検索。BM25は語の出現頻度や文書長などを使う代表的な方式。",
+        "example": "商品コードや専門用語を含む文書を検索する。",
+        "note": "疎な検索には学習型の方式もあり、すべてがBM25ではない。",
+        "sources": [
+          "hybrid"
+        ],
+        "aliases": "キーワード検索 lexical search スパース検索",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "hybrid-search",
+        "title": "Hybrid search",
+        "en": "Hybrid Search",
+        "ja": "ハイブリッド検索",
+        "meaning": "キーワード検索とベクトル検索など、異なる検索方式の結果を組み合わせること。",
+        "example": "固有名詞の一致と、意味的な近さを両方使う。",
+        "note": "順位やスコアの統合方法も評価する必要がある。",
+        "sources": [
+          "hybrid"
+        ],
+        "aliases": "RRF reciprocal rank fusion 複合検索",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "reranker",
+        "title": "Reranker",
+        "en": "Reranker / Reranking",
+        "ja": "再順位付けモデル",
+        "meaning": "最初に取得した候補を、質問との関連性などで詳しく評価して並べ直す仕組み。",
+        "example": "上位50件から、回答へ渡す5件を選ぶ。",
+        "note": "最初の検索で取れなかった資料は、通常の再順位付けでは戻せない。",
+        "sources": [
+          "azure"
+        ],
+        "aliases": "リランカー rerank 再ランキング cross-encoder",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "graphrag",
+        "title": "GraphRAG",
+        "en": "Graph-based Retrieval-Augmented Generation",
+        "ja": "グラフを使う検索拡張生成",
+        "meaning": "実体と関係などのグラフ構造を検索・要約へ利用するRAG。Microsoftの同名手法もある。",
+        "example": "人・組織・出来事の関係をたどって全体を要約する。",
+        "note": "グラフの構築・更新にはコストがあり、常に通常のRAGより良いとは限らない。",
+        "sources": [
+          "graphrag"
+        ],
+        "aliases": "グラフRAG ナレッジグラフ knowledge graph",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "agentic-rag",
+        "title": "Agentic RAG",
+        "en": "Agentic Retrieval-Augmented Generation",
+        "ja": "エージェント型RAG",
+        "meaning": "エージェントが検索方法や追加検索の要否などを判断しながら回答する構成。",
+        "example": "不足情報に応じて、検索語や参照先を変える。",
+        "note": "固定の1回検索とは異なり、探索の回数と停止条件を管理する。",
+        "sources": [
+          "azure",
+          "agents"
+        ],
+        "aliases": "エージェンティックRAG adaptive RAG",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "agents",
+    "title": "エージェント・連携",
+    "en": "AGENTS & INTEROPERABILITY",
+    "description": "AIが何を判断し、どのツール・他のエージェントと連携するか。",
+    "terms": [
+      {
+        "id": "ai-agent",
+        "title": "AI agent",
+        "en": "AI Agent",
+        "ja": "AIエージェント",
+        "meaning": "目的に向けて状況を観測し、次の行動やツール利用を選び、結果を受けて処理を進めるシステム。",
+        "example": "調査、実装、テストを結果に応じて繰り返す。",
+        "note": "定義には幅があり、チャットUIや単発のAPI呼び出しと同義ではない。",
+        "sources": [
+          "agents"
+        ],
+        "aliases": "エージェント 自律型AI agentic AI",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "agentic-workflow",
+        "title": "Agentic workflow",
+        "en": "Agentic Workflow / Workflow",
+        "ja": "エージェント的な処理フロー",
+        "meaning": "LLMやツールを複数段階で組み合わせる処理。固定フローか、モデルが経路を選ぶかを区別する。",
+        "example": "分類→検索→下書き→レビューを順に実行。",
+        "note": "agenticという呼称だけで、どこまで自律的かは判断できない。",
+        "sources": [
+          "agents"
+        ],
+        "aliases": "ワークフロー エージェンティックAI",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "tool-use",
+        "title": "Tool use / Function calling",
+        "en": "Tool Use / Function Calling",
+        "ja": "ツール利用・関数呼び出し",
+        "meaning": "モデルがツール名や引数を出力し、実行環境が操作を実行して結果を返す仕組み。",
+        "example": "検索、計算、データベース照会を呼び出す。",
+        "note": "モデルが呼び出しを提案することと、実行を認可することは別。",
+        "sources": [
+          "structured",
+          "safeagents"
+        ],
+        "aliases": "ツールコール tool calling ファンクションコーリング",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "react",
+        "title": "ReAct",
+        "en": "Reasoning and Acting",
+        "ja": "推論と行動の組み合わせ",
+        "meaning": "推論、ツールなどの行動、観測を交互に使って課題を解く方法。",
+        "example": "次に調べることを考え、検索結果を見て進める。",
+        "note": "JavaScriptのUIライブラリReactとは別の用語。",
+        "sources": [
+          "react"
+        ],
+        "aliases": "リーズニング アクティング Reason Act",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "agent-harness",
+        "title": "Agent harness",
+        "en": "Agent Harness / Scaffolding",
+        "ja": "エージェント実行基盤",
+        "meaning": "ツール、状態、記憶、実行ループ、検証など、モデルの周囲で作業を支える仕組み。",
+        "example": "中断した作業を履歴とテストから再開する。",
+        "note": "同じモデルでも実行基盤によって、結果や安全性が変わる。",
+        "sources": [
+          "harness"
+        ],
+        "aliases": "ハーネス ハーネスエンジニアリング harness engineering scaffold スキャフォールディング",
+        "kind": "技術・実務",
+        "featured": true,
+        "related": []
+      },
+      {
+        "id": "long-horizon",
+        "title": "Long-horizon agent",
+        "en": "Long-horizon / Long-running Agent",
+        "ja": "長期タスクを扱うエージェント",
+        "meaning": "多数の手順や複数のセッションにわたって、状態を維持し作業するエージェント。",
+        "example": "大きなコード変更を小さな単位で進める。",
+        "note": "長時間動かせることと、信頼して無監督にできることは別。",
+        "sources": [
+          "harness"
+        ],
+        "aliases": "ロングホライズン 長時間稼働 persistent agent",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "multi-agent",
+        "title": "Multi-agent system",
+        "en": "Multi-agent System",
+        "ja": "マルチエージェントシステム",
+        "meaning": "複数のエージェントが役割や作業を分担し、協調する構成。",
+        "example": "調査担当と検証担当が結果を共有する。",
+        "note": "人数を増やすほど良いとは限らず、通信と重複作業の費用が増える。",
+        "sources": [
+          "agents",
+          "context"
+        ],
+        "aliases": "MAS 複数エージェント オーケストレーション orchestration subagent サブエージェント",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "mcp",
+        "title": "MCP",
+        "en": "Model Context Protocol",
+        "ja": "モデルコンテキストプロトコル",
+        "meaning": "AIアプリと外部のツール・データ・リソースなどの接続を標準化するオープンなプロトコル。",
+        "example": "同じ方式でファイルや検索ツールへ接続する。",
+        "note": "MCP自体はモデルでもRAGでもなく、権限設計を不要にするものでもない。",
+        "sources": [
+          "mcp"
+        ],
+        "aliases": "エムシーピー MCP server MCP client MCPサーバー",
+        "kind": "技術・実務",
+        "featured": true,
+        "related": [
+          "a2a",
+          "agent-skills",
+          "tool-use"
+        ]
+      },
+      {
+        "id": "a2a",
+        "title": "A2A",
+        "en": "Agent2Agent Protocol",
+        "ja": "エージェント間通信プロトコル",
+        "meaning": "異なる実装のエージェント同士が、能力の発見やタスクの依頼、結果のやり取りを行う規約。",
+        "example": "別のシステムの専門エージェントに仕事を委任する。",
+        "note": "MCPと競合する同一仕様ではなく、接続する対象と役割が異なる。",
+        "sources": [
+          "a2a"
+        ],
+        "aliases": "Agent-to-Agent エートゥーエー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "mcp",
+          "multi-agent"
+        ]
+      },
+      {
+        "id": "agent-skills",
+        "title": "Agent Skills",
+        "en": "Agent Skills",
+        "ja": "再利用可能な作業手順・知識の形式",
+        "meaning": "SKILL.mdを中心に、指示やスクリプト、参考資料などをまとめ、必要時に読み込む形式。",
+        "example": "報告書作成の手順とテンプレートを一組で渡す。",
+        "note": "新しい重みを学習する機能ではなく、外部の手順・資源を利用する。",
+        "sources": [
+          "skills"
+        ],
+        "aliases": "スキル SKILL.md スキルファイル progressive disclosure",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "mcp",
+          "agent-harness",
+          "finetuning"
+        ]
+      },
+      {
+        "id": "computer-use",
+        "title": "Computer use",
+        "en": "Computer Use / GUI Agent",
+        "ja": "画面操作型エージェント",
+        "meaning": "画面などを観測し、クリックや入力を通じてソフトウェアを操作するAIシステム。",
+        "example": "ブラウザーの画面からフォームを操作する。",
+        "note": "画面の変更や誤操作に備え、機密入力・送信・削除には制御を設ける。",
+        "sources": [
+          "safeagents",
+          "evals"
+        ],
+        "aliases": "GUI agent browser agent ブラウザーエージェント コンピューターユース",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "efficiency",
+    "title": "生成・推論の効率",
+    "en": "GENERATION & EFFICIENCY",
+    "description": "出力の選び方、メモリ、待ち時間、スループットを理解する。",
+    "terms": [
+      {
+        "id": "autoregressive",
+        "title": "Autoregressive generation",
+        "en": "Autoregressive Generation",
+        "ja": "自己回帰生成",
+        "meaning": "それまでの入力や生成済みの内容を条件に、次の要素を順次生成する方式。",
+        "example": "テキストを次のトークンの予測として生成する。",
+        "note": "すべての生成モデルが自己回帰型ではない。",
+        "sources": [
+          "generate"
+        ],
+        "aliases": "AR 自己回帰モデル next token prediction",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "temperature",
+        "title": "Temperature",
+        "en": "Sampling Temperature",
+        "ja": "サンプリング温度",
+        "meaning": "候補トークンの確率分布の鋭さを調整するパラメータ。",
+        "example": "低めにして高確率候補を選びやすくする。",
+        "note": "正確さの設定ではなく、低くしても誤りはなくならない。",
+        "sources": [
+          "sampling"
+        ],
+        "aliases": "テンパラチャー 温度パラメータ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "top-p",
+        "title": "Top-p / Top-k",
+        "en": "Nucleus Sampling / Top-k Sampling",
+        "ja": "生成候補の絞り込み",
+        "meaning": "top-pは累積確率、top-kは上位候補数を基準に、サンプリングする候補を絞る。",
+        "example": "候補の範囲を狭めて出力のばらつきを調整する。",
+        "note": "temperatureと役割は異なり、使える設定はモデルごとに確認する。",
+        "sources": [
+          "sampling"
+        ],
+        "aliases": "nucleus sampling ニュークリアスサンプリング 核サンプリング",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "prefill-decode",
+        "title": "Prefill / Decode",
+        "en": "Prefill / Decoding",
+        "ja": "入力処理・逐次生成",
+        "meaning": "prefillは入力文脈を処理する段階、decodeは生成を進める段階。",
+        "example": "長文を読む時間と、回答を出し続ける時間を分ける。",
+        "note": "入力量と出力量では、計算・メモリのボトルネックが異なりうる。",
+        "sources": [
+          "cache",
+          "vllm"
+        ],
+        "aliases": "プリフィル デコード",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "kv-cache",
+        "title": "KV cache",
+        "en": "Key-Value Cache",
+        "ja": "Key・Valueのキャッシュ",
+        "meaning": "Attentionで使う過去トークンのKey・Valueを再利用し、生成時の再計算を減らす仕組み。",
+        "example": "直前までのトークンの中間計算を再利用する。",
+        "note": "長い文脈や多い同時実行では、キャッシュもメモリを消費する。",
+        "sources": [
+          "cache"
+        ],
+        "aliases": "KVキャッシュ キーバリューキャッシュ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "prefix-cache",
+        "title": "Prefix caching",
+        "en": "Prefix / Prompt Caching",
+        "ja": "共通する入力のキャッシュ",
+        "meaning": "同じ入力の先頭部分などの計算結果を再利用し、重複する処理を減らす方法。",
+        "example": "共通の長いシステム指示を再利用する。",
+        "note": "最終回答を丸ごと保存して返す応答キャッシュとは異なる。",
+        "sources": [
+          "vllm"
+        ],
+        "aliases": "プロンプトキャッシュ prompt caching プレフィックスキャッシュ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "quantization",
+        "title": "Quantization",
+        "en": "Model Quantization",
+        "ja": "量子化",
+        "meaning": "重みや中間値を低いビット数などで表現し、メモリや計算負荷を減らす手法。",
+        "example": "重みを8bitや4bitで表す。",
+        "note": "精度や速度への影響は、量子化方式とハードウェアに依存する。",
+        "sources": [
+          "qlora",
+          "vllm"
+        ],
+        "aliases": "INT8 INT4 FP8 モデル圧縮",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "speculative-decoding",
+        "title": "Speculative decoding",
+        "en": "Speculative Decoding",
+        "ja": "投機的デコーディング",
+        "meaning": "軽量なモデルなどが先の候補を提案し、対象モデルがまとめて検証して生成を高速化する方法。",
+        "example": "ドラフトの候補を検証し、採用可能な部分を進める。",
+        "note": "受理率や負荷によって効果が変わり、常に速くなるとは限らない。",
+        "sources": [
+          "vllm",
+          "generate"
+        ],
+        "aliases": "投機的推論 speculative sampling draft model",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "continuous-batching",
+        "title": "Continuous batching",
+        "en": "Continuous Batching",
+        "ja": "連続バッチ処理",
+        "meaning": "リクエストの完了・到着に応じ、生成中のバッチの構成を更新する方式。",
+        "example": "処理が終わった枠へ新しいリクエストを入れる。",
+        "note": "処理量の最大化と、個別リクエストの待ち時間は別に測る。",
+        "sources": [
+          "vllm"
+        ],
+        "aliases": "動的バッチ in-flight batching",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "flashattention",
+        "title": "FlashAttention",
+        "en": "FlashAttention",
+        "ja": "入出力を最適化したAttention計算",
+        "meaning": "GPUメモリの読み書きを抑え、Attentionを効率的に計算するアルゴリズム。",
+        "example": "大きな中間行列のメモリ転送を削減する。",
+        "note": "元のFlashAttentionは、単なる近似Attentionではない。",
+        "sources": [
+          "flash"
+        ],
+        "aliases": "フラッシュアテンション IO aware",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "latency-throughput",
+        "title": "Latency / Throughput",
+        "en": "Latency / Throughput",
+        "ja": "応答遅延・単位時間の処理量",
+        "meaning": "latencyは応答に要する時間、throughputは単位時間に処理できる量。",
+        "example": "最初のトークンまでの時間（TTFT）と毎秒トークン数を測る。",
+        "note": "総時間・待ち行列・同時実行数も分けて比較する。",
+        "sources": [
+          "vllm",
+          "evalguide"
+        ],
+        "aliases": "TTFT TPS time to first token ITL inter-token latency スループット",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "multimodal",
+    "title": "画像・音声・物理世界",
+    "en": "MULTIMODAL & PHYSICAL AI",
+    "description": "複数の情報形式を扱うモデルから、世界モデルとロボットまで。",
+    "terms": [
+      {
+        "id": "multimodal",
+        "title": "Multimodal AI",
+        "en": "Multimodal AI",
+        "ja": "マルチモーダルAI",
+        "meaning": "テキスト、画像、音声、動画など、複数の情報形式を扱うAI。",
+        "example": "画像について音声で質問し、回答を得る。",
+        "note": "入力できる形式と出力できる形式は、モデルや製品によって異なる。",
+        "sources": [
+          "foundation"
+        ],
+        "aliases": "マルチモーダル モダリティ modality",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "lmm",
+        "title": "LMM / MLLM",
+        "en": "Large Multimodal Model / Multimodal Large Language Model",
+        "ja": "大規模マルチモーダルモデル",
+        "meaning": "複数モダリティを扱う大規模モデル、またはLLMを基盤に複数モダリティへ拡張したモデルの呼称。",
+        "example": "文章と画像を合わせて理解する。",
+        "note": "呼称の使い方には幅があり、対応する入出力を個別に見る。",
+        "sources": [
+          "rt2",
+          "foundation"
+        ],
+        "aliases": "大規模マルチモーダル言語モデル",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "vlm",
+        "title": "VLM",
+        "en": "Vision-Language Model",
+        "ja": "視覚言語モデル",
+        "meaning": "画像などの視覚情報と、言語を結び付けて扱うモデル。",
+        "example": "写真の説明や、画像に関する質問応答。",
+        "note": "画像を理解するVLMが、画像生成もできるとは限らない。",
+        "sources": [
+          "rt2"
+        ],
+        "aliases": "ビジョンランゲージモデル 画像言語モデル",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "diffusion",
+        "title": "Diffusion model",
+        "en": "Diffusion Model",
+        "ja": "拡散モデル",
+        "meaning": "ノイズを加える過程などをもとに、データを復元・生成する過程を学ぶモデル群。",
+        "example": "ノイズから段階的に画像を生成する。",
+        "note": "テキストの次トークン予測と同じ生成方式とは限らない。",
+        "sources": [
+          "diffusion"
+        ],
+        "aliases": "拡散過程 ディフュージョン denoising",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "dit",
+        "title": "DiT",
+        "en": "Diffusion Transformer",
+        "ja": "Transformerを使う拡散モデル",
+        "meaning": "拡散モデルの主要なネットワークとしてTransformerを使う構成。",
+        "example": "画像や動画の生成にTransformerを用いる。",
+        "note": "Transformerだから自己回帰型、というわけではない。",
+        "sources": [
+          "dit"
+        ],
+        "aliases": "ディフュージョントランスフォーマー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "flow-matching",
+        "title": "Flow matching",
+        "en": "Flow Matching",
+        "ja": "フローマッチング",
+        "meaning": "ノイズなどの分布からデータ分布へ移す流れを、ベクトル場の学習として扱う方法。",
+        "example": "学習した流れに沿って画像を生成する。",
+        "note": "拡散モデルと関連はあるが、名称や学習の定式化は区別する。",
+        "sources": [
+          "flow"
+        ],
+        "aliases": "フローマッチング rectified flow 連続正規化フロー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "latent-space",
+        "title": "Latent space",
+        "en": "Latent Space",
+        "ja": "潜在空間",
+        "meaning": "データの特徴を、モデル内部の変数や圧縮表現として扱う空間。",
+        "example": "画像を圧縮した表現で生成や予測を行う。",
+        "note": "潜在空間の軸が、そのまま人間の理解する意味になるとは限らない。",
+        "sources": [
+          "world",
+          "dit"
+        ],
+        "aliases": "潜在表現 latent representation",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "world-model",
+        "title": "World model",
+        "en": "World Model",
+        "ja": "世界モデル",
+        "meaning": "環境の状態や、その変化・行動の結果などを内部で予測するモデル。",
+        "example": "ある操作の後に何が起こるかを予測して計画する。",
+        "note": "もっともらしい動画を作ることと、物理的に正しい予測は別。",
+        "sources": [
+          "world"
+        ],
+        "aliases": "世界モデル ワールドモデル world modeling",
+        "kind": "技術・実務",
+        "featured": true,
+        "related": [
+          "vla",
+          "physical-ai",
+          "diffusion"
+        ]
+      },
+      {
+        "id": "vla",
+        "title": "VLA",
+        "en": "Vision-Language-Action Model",
+        "ja": "視覚・言語・行動モデル",
+        "meaning": "視覚情報や言語指示を使い、ロボットなどの行動を出力するモデル。",
+        "example": "カメラ画像と「物を取る」という指示から動作を作る。",
+        "note": "VLMの説明文出力と、現実の行動制御は区別する。",
+        "sources": [
+          "vla",
+          "rt2"
+        ],
+        "aliases": "視覚言語行動 ビジョンランゲージアクション",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "physical-ai",
+        "title": "Physical / Embodied AI",
+        "en": "Physical AI / Embodied AI",
+        "ja": "物理世界・身体性を扱うAI",
+        "meaning": "実世界や身体を持つ環境との相互作用を通じ、知覚・判断・行動を扱う領域。",
+        "example": "ロボットや自律機械が周囲に応じて動く。",
+        "note": "両語には重なりがあるが、組織や研究分野で用法に幅がある。",
+        "sources": [
+          "physical",
+          "rt2"
+        ],
+        "aliases": "フィジカルAI エンボディドAI 身体性AI",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "sim-to-real",
+        "title": "Sim-to-real",
+        "en": "Simulation-to-Real Transfer",
+        "ja": "シミュレーションから実世界への転移",
+        "meaning": "仮想環境で得た学習や検証結果を、実際のロボットなどへ移すこと。",
+        "example": "シミュレーターで学んだ動作を実機で試す。",
+        "note": "摩擦やセンサーなどの差（reality gap）を考慮する。",
+        "sources": [
+          "physical"
+        ],
+        "aliases": "sim2real シムトゥリアル reality gap ドメインランダム化",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "jepa",
+        "title": "JEPA",
+        "en": "Joint-Embedding Predictive Architecture",
+        "ja": "結合埋め込み予測アーキテクチャ",
+        "meaning": "入力の一部分から、別の部分の表現を埋め込み空間で予測する学習の構成。",
+        "example": "I-JEPAでは、画像の見えている領域から隠された領域の表現を予測する。",
+        "note": "画素そのものを復元する方式とは異なる。JEPAという名称だけで、汎用的な世界理解が証明されるわけではない。",
+        "sources": [
+          "jepa"
+        ],
+        "aliases": "I-JEPA Joint Embedding 予測表現学習",
+        "kind": "研究",
+        "featured": false,
+        "related": [
+          "embedding",
+          "world-model",
+          "latent-space"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "evaluation",
+    "title": "評価・品質・運用",
+    "en": "EVALUATION & OPERATIONS",
+    "description": "ベンチマークの数字だけでなく、現場の失敗と費用を測る。",
+    "terms": [
+      {
+        "id": "evals",
+        "title": "Evals",
+        "en": "Evaluations",
+        "ja": "評価・評価テスト",
+        "meaning": "モデルやシステムが要件を満たすか、タスクと判定基準を用いて測ること。",
+        "example": "変更前後を同じ評価セットで比較する。",
+        "note": "最終回答だけでなく、検索・行動・失敗対応も対象にする。",
+        "sources": [
+          "evals"
+        ],
+        "aliases": "イーバル 評価セット regression tests 回帰テスト",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "benchmark",
+        "title": "Benchmark",
+        "en": "Benchmark",
+        "ja": "比較用の評価課題",
+        "meaning": "モデルや手法を、一定の条件で比較するための課題群や測定の仕組み。",
+        "example": "コーディングや推論の共通タスクで比較する。",
+        "note": "得点は条件依存で、業務での有用性をすべて表すものではない。",
+        "sources": [
+          "evalguide"
+        ],
+        "aliases": "ベンチマーク leaderboard リーダーボード",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "llm-judge",
+        "title": "LLM-as-a-judge",
+        "en": "LLM-as-a-Judge",
+        "ja": "LLMによる評価",
+        "meaning": "LLMを評価器として使い、回答の品質や基準への適合を判定する方法。",
+        "example": "評価ルーブリックに沿って回答を採点する。",
+        "note": "人の評価との較正、順序バイアス、一貫性を確認する。",
+        "sources": [
+          "evalguide"
+        ],
+        "aliases": "モデル採点 AI judge 評価用LLM rubric",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "evals",
+          "pass-at-k"
+        ]
+      },
+      {
+        "id": "pass-at-k",
+        "title": "pass@k / pass^k",
+        "en": "Pass at k / Pass to the Power of k",
+        "ja": "複数回試行の成功指標",
+        "meaning": "pass@kはk回中少なくとも1回成功する能力、pass^kはk回すべて成功する安定性を見る指標。",
+        "example": "複数候補で解けるかと、毎回確実に解けるかを分ける。",
+        "note": "表記が似ていても意味は違う。試行条件と推定方法も確認する。",
+        "sources": [
+          "evals"
+        ],
+        "aliases": "pass k パスアットケー パストゥケー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "contamination",
+        "title": "Data contamination",
+        "en": "Benchmark / Data Contamination",
+        "ja": "評価データの汚染",
+        "meaning": "評価問題やその答えなどが、学習データや調整の過程に入り込むこと。",
+        "example": "公開問題の答えが事前学習に含まれる。",
+        "note": "高得点が未知の問題への汎化を示すか、慎重に解釈する。",
+        "sources": [
+          "fewshot",
+          "evalguide"
+        ],
+        "aliases": "ベンチマーク汚染 データリーク test leakage",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "hallucination",
+        "title": "Hallucination",
+        "en": "Hallucination",
+        "ja": "ハルシネーション・幻覚",
+        "meaning": "事実や根拠に合わない内容を、もっともらしい出力として生成すること。",
+        "example": "存在しない出典や、資料にない数値を回答する。",
+        "note": "検索や引用を付けても、主張と根拠の対応を確認する必要がある。",
+        "sources": [
+          "google",
+          "evalguide"
+        ],
+        "aliases": "幻覚 でっち上げ confabulation ハルシネーション",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "grounding",
+          "sycophancy"
+        ]
+      },
+      {
+        "id": "observability",
+        "title": "Observability / Tracing",
+        "en": "AI Observability / Tracing",
+        "ja": "観測可能性・実行追跡",
+        "meaning": "入力、ツール利用、出力、時間などを記録し、失敗の箇所や原因を追える状態にすること。",
+        "example": "どの検索結果から誤答が生まれたかを追う。",
+        "note": "個人情報や機密情報をログへ無制限に残さない。",
+        "sources": [
+          "evals"
+        ],
+        "aliases": "可観測性 トレース tracing trace ログ",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "llmops",
+        "title": "LLMOps / AgentOps",
+        "en": "LLM Operations / Agent Operations",
+        "ja": "LLM・エージェントの運用",
+        "meaning": "モデル、指示、ツール、評価、監視などを継続的に管理する実務の呼称。",
+        "example": "モデル更新時に評価し、悪化したら戻す。",
+        "note": "フレームワークを導入するだけで、運用品質が保証されるわけではない。",
+        "sources": [
+          "evals",
+          "evalguide"
+        ],
+        "aliases": "MLOps 運用管理 エルエルエムオプス",
+        "kind": "呼称",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "cost-per-success",
+        "title": "Cost per successful task",
+        "en": "Cost per Successful Task",
+        "ja": "成功タスクあたりの費用",
+        "meaning": "総費用を、要件を満たして完了したタスク数で捉える評価の考え方。",
+        "example": "再試行やツール利用も含め、1件の成功にかかった費用を比較。",
+        "note": "トークン単価が安くても、失敗や再試行が多ければ割高になる。",
+        "sources": [
+          "agents",
+          "evalguide"
+        ],
+        "aliases": "unit economics 成功あたりコスト タスク単価",
+        "kind": "実務の観点",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "safety",
+    "title": "安全性・信頼性",
+    "en": "SAFETY & ALIGNMENT",
+    "description": "モデルの振る舞いと、権限・検証・監督の設計を分ける。",
+    "terms": [
+      {
+        "id": "alignment",
+        "title": "Alignment",
+        "en": "AI Alignment",
+        "ja": "アラインメント・整合性",
+        "meaning": "AIの振る舞いや目標を、人の意図・価値・制約などに沿わせる研究・実践。",
+        "example": "ユーザーの意図に従いつつ、有害な行動を避ける。",
+        "note": "丁寧な応答や高い正答率だけで、整合性の問題が解決するわけではない。",
+        "sources": [
+          "instruct",
+          "misalignment"
+        ],
+        "aliases": "アライメント 価値整合 目標整合",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "constitutional-ai",
+        "title": "Constitutional AI",
+        "en": "Constitutional AI",
+        "ja": "憲法的AI",
+        "meaning": "明示した原則を使い、自己批評・修正やAIのフィードバックなどで振る舞いを学習させる方法。",
+        "example": "原則に照らして回答を評価・改訂する。",
+        "note": "規則文を通常のプロンプトに貼ることだけを指すわけではない。",
+        "sources": [
+          "constitution"
+        ],
+        "aliases": "CAI 憲法AI",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "sycophancy",
+        "title": "Sycophancy",
+        "en": "Sycophancy",
+        "ja": "迎合",
+        "meaning": "事実や適切な判断よりも、ユーザーの意見や期待への同調を優先する振る舞い。",
+        "example": "誤った前提を訂正せず、賛成する。",
+        "note": "親切な口調や共感と、事実を曲げて同調することは別。",
+        "sources": [
+          "sycophancy"
+        ],
+        "aliases": "おべっか 追従 シコファンシー",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "reward-hacking",
+        "title": "Reward hacking",
+        "en": "Reward Hacking / Specification Gaming",
+        "ja": "報酬ハッキング",
+        "meaning": "本来の目的を達成せず、報酬や評価指標の抜け道を使って高得点を得ること。",
+        "example": "品質を改善せず、テストの条件だけを満たす。",
+        "note": "指標の改善が、実際の目的の達成かを別に確かめる。",
+        "sources": [
+          "gaming"
+        ],
+        "aliases": "仕様の抜け道 評価ハック 報酬の悪用",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "prompt-injection",
+        "title": "Prompt injection",
+        "en": "Prompt Injection",
+        "ja": "プロンプトインジェクション",
+        "meaning": "外部文書などに含まれる指示によって、アプリが意図しない振る舞いへ誘導される攻撃。",
+        "example": "検索したページの文面が、元の指示の無視を要求する。",
+        "note": "データとして読む内容を、信頼できる命令に昇格させない。",
+        "sources": [
+          "injection"
+        ],
+        "aliases": "間接インジェクション indirect prompt injection",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "jailbreak",
+          "sandbox",
+          "guardrails"
+        ]
+      },
+      {
+        "id": "jailbreak",
+        "title": "Jailbreak",
+        "en": "Jailbreak",
+        "ja": "安全制約の回避",
+        "meaning": "モデルの安全上の制約や拒否を回避し、本来出さない回答などを引き出そうとする行為。",
+        "example": "安全制約を無視させようとする入力。",
+        "note": "prompt injectionとは重なる場合があるが、目的・経路の整理は異なる。",
+        "sources": [
+          "injection"
+        ],
+        "aliases": "ジェイルブレイク 脱獄",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "guardrails",
+        "title": "Guardrails",
+        "en": "Guardrails",
+        "ja": "ガードレール",
+        "meaning": "入力・出力・ツール利用などに検査や制約を置き、望ましくない動作を抑える仕組み。",
+        "example": "送信先や出力内容を検査して処理を止める。",
+        "note": "単独のフィルターではなく、認可・監視・評価と組み合わせる。",
+        "sources": [
+          "safeagents"
+        ],
+        "aliases": "安全柵 入出力検査 ガードレール",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "hitl",
+        "title": "HITL",
+        "en": "Human in the Loop",
+        "ja": "人間を含む確認・判断",
+        "meaning": "処理の途中に、人による確認、承認、修正などを組み込む設計。",
+        "example": "外部送信や削除の直前に承認を求める。",
+        "note": "承認者が内容や影響を理解できなければ、形式的な確認になりやすい。",
+        "sources": [
+          "safeagents"
+        ],
+        "aliases": "human-in-the-loop 人間参加型 人間の承認",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "sandbox",
+        "title": "Sandbox / Least privilege",
+        "en": "Sandboxing / Least Privilege",
+        "ja": "隔離実行・最小権限",
+        "meaning": "実行環境を隔離し、必要最小限の操作・データだけにアクセスを許す設計。",
+        "example": "書き込み先や通信先を制限した環境で実行する。",
+        "note": "モデルへの「禁止」という指示と、実行環境の制限は別物。",
+        "sources": [
+          "safeagents",
+          "injection"
+        ],
+        "aliases": "サンドボックス 最小権限 principle of least privilege",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "interpretability",
+        "title": "Mechanistic interpretability",
+        "en": "Mechanistic Interpretability",
+        "ja": "機構的解釈可能性",
+        "meaning": "内部の表現や計算の仕組みを調べ、モデルの振る舞いを説明しようとする研究。",
+        "example": "特徴や回路を調べ、どの計算が出力へ影響したか分析する。",
+        "note": "モデルが書いた説明を読むことと、内部機構の分析は異なる。",
+        "sources": [
+          "interpret"
+        ],
+        "aliases": "メカニスティック 解釈性 可解釈性 SAE sparse autoencoder",
+        "kind": "研究",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "scheming",
+        "title": "Scheming / Deception",
+        "en": "AI Scheming / Deception",
+        "ja": "戦略的な隠蔽・欺瞞",
+        "meaning": "目的のために、監督を避けたり意図を隠したりするような振る舞いを研究する概念。",
+        "example": "評価中だけ期待される振る舞いを見せる可能性を調べる。",
+        "note": "特定の実験条件での観測と、実環境での頻度や意識の有無は別。",
+        "sources": [
+          "misalignment"
+        ],
+        "aliases": "スキーミング 欺瞞的整合 deceptive alignment",
+        "kind": "研究",
+        "featured": false,
+        "related": []
+      }
+    ]
+  },
+  {
+    "id": "ecosystem",
+    "title": "公開形態・開発",
+    "en": "OPENNESS & DEVELOPMENT",
+    "description": "モデルの公開、利用条件、開発支援を整理する。",
+    "terms": [
+      {
+        "id": "open-weights",
+        "title": "Open weights",
+        "en": "Open-weight Model",
+        "ja": "重み公開モデル",
+        "meaning": "学習済みの重みを入手できるモデル。利用可能な行為は配布条件によって変わる。",
+        "example": "重みを取得して、自分の環境で動かす。",
+        "note": "重みの公開だけで、OSIのOpen Source AIの定義を満たすとは限らない。",
+        "sources": [
+          "osi"
+        ],
+        "aliases": "オープンウェイト オープンウエイト 重み公開",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": [
+          "open-source-ai",
+          "model-card"
+        ]
+      },
+      {
+        "id": "open-source-ai",
+        "title": "Open Source AI",
+        "en": "Open Source AI",
+        "ja": "オープンソースAI",
+        "meaning": "自由な利用・研究・改変・共有などを可能にする公開の考え方。OSIの定義では重み以外にも要件がある。",
+        "example": "必要なコードやデータに関する情報も確認する。",
+        "note": "無料、重み公開、学習データ全部公開は、それぞれ別の論点。",
+        "sources": [
+          "osi"
+        ],
+        "aliases": "OSS AI オープンソースAI OSAID",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "on-device",
+        "title": "On-device / Edge AI",
+        "en": "On-device AI / Edge AI",
+        "ja": "端末内・エッジAI",
+        "meaning": "端末やデータ発生源に近い計算環境で、AI処理を行う構成。",
+        "example": "クラウドに毎回送らず、手元のモデルで処理する。",
+        "note": "ローカル実行だけで、アプリ全体の通信や機密性まで保証されるわけではない。",
+        "sources": [
+          "google",
+          "distill"
+        ],
+        "aliases": "オンデバイスAI エッジAI ローカルLLM local AI",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "model-card",
+        "title": "Model card",
+        "en": "Model Card / System Card",
+        "ja": "モデル・システム説明文書",
+        "meaning": "用途、制約、評価などを記録し、モデルやシステムの利用判断を助ける文書。",
+        "example": "想定用途、不得意な条件、評価結果を読む。",
+        "note": "文書の存在だけで安全性が認証されるわけではなく、開示範囲も異なる。",
+        "sources": [
+          "modelcard"
+        ],
+        "aliases": "モデルカード システムカード",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      },
+      {
+        "id": "coding-agent",
+        "title": "Coding agent",
+        "en": "Coding Agent / Agentic Coding",
+        "ja": "コーディングエージェント",
+        "meaning": "コードの提案だけでなく、ファイルの編集やテストなどを繰り返して開発を進めるシステム。",
+        "example": "既存実装を読み、変更し、テスト結果から修正する。",
+        "note": "実行できたことと、要件・品質・安全性を満たすことは別。",
+        "sources": [
+          "harness"
+        ],
+        "aliases": "AI coding AI支援開発 エージェント開発 agentic engineering",
+        "kind": "技術・実務",
+        "featured": false,
+        "related": []
+      }
+    ]
+  }
+];
+const allTerms = glossaryGroups.flatMap((group) => group.terms);
+const termById = new Map(allTerms.map((term) => [term.id, term]));
+const featuredTerms = ["agi", "asi", "rsi", "test-time-scaling", "context-engineering", "agent-harness", "mcp", "world-model"].map((id) => termById.get(id)).filter((term): term is GlossaryTerm => Boolean(term));
 ---
 
 <BaseLayout title="AI / Machine Learning | Seiji Tech Atlas" description="古典的な機械学習から基盤モデル、RAG、AIエージェントまでをつなぐ学習マップ。">
@@ -53,7 +2739,7 @@ const learningFlow = [
         <p class="eyebrow">LEARN / AI & MACHINE LEARNING</p>
         <h1>AI / Machine<br /><em>Learning.</em></h1>
         <p class="lead">古典的な機械学習から、基盤モデルを使ったAIシステムまで。何を予測・生成し、どこで失敗し、どう評価するかを一つの地図にまとめる。</p>
-        <nav class="hero-links" aria-label="ページ内ナビゲーション"><a href="#modern-ai">Modern AI ↗</a><a href="#classical-ml">Machine Learning ↗</a></nav>
+        <nav class="hero-links" aria-label="ページ内ナビゲーション"><a href="#modern-ai">Modern AI ↗</a><a href="#classical-ml">Machine Learning ↗</a><a href="#ai-glossary">AI用語集 ↗</a></nav>
       </div>
       <div class="hero-mark" aria-hidden="true"><small>RESEARCH & EXPERIMENTS / 01</small><strong>AI</strong><span>Learn · Generate · Evaluate</span></div>
     </header>
@@ -67,6 +2753,86 @@ const learningFlow = [
       <div class="heading"><span>02 / MODERN AI</span><h2 id="modern-title">How today's AI works</h2><p>生成AIを、モデル・入力・外部情報・実行環境に分けて理解する。</p></div>
       <div class="concept-grid">{modernConcepts.map((concept) => <article class="concept"><small>{concept.key} / CONCEPT</small><h3>{concept.title}</h3><p>{concept.description}</p><div>{concept.example}</div></article>)}</div>
       <div class="callout"><strong>LLMは学習済みモデル。ChatGPTのような製品は、モデルにUI、指示、検索、ツール、運用機能などを組み合わせたシステムです。</strong><p>モデル名や順位は変わります。ここでは変化しても使える仕組みと設計判断を中心に置きます。</p></div>
+
+      <atlas-ai-glossary>
+        <details class="ai-glossary" id="ai-glossary" open>
+          <summary class="glossary-cover">
+            <span class="glossary-cover-copy"><span class="glossary-kicker">02.1 / THE AI VOCABULARY</span><span class="glossary-cover-title">AI用語集<span class="glossary-cover-en">A field guide to modern AI.</span></span></span>
+            <span class="glossary-cover-meta"><span>{allTerms.length} TERMS / {glossaryGroups.length} FIELDS</span><span class="glossary-chevron" aria-hidden="true">⌄</span></span>
+          </summary>
+          <div class="glossary-body">
+            <div class="glossary-intro">
+              <p>ニュースで見かける略語から、モデル・学習・エージェントの仕組みまで。<strong>言葉の意味と、混同しやすい点を一緒に読む。</strong></p>
+              <span class="glossary-date">REVIEWED <time datetime={glossaryReviewedAt}>{glossaryReviewedAt.replaceAll('-', '.')}</time></span>
+            </div>
+            <p class="glossary-scope">主要な技術用語・研究概念・業界の呼称をまとめた学習用の索引です。新語や専門分野までの完全網羅を保証するものではありません。「概念・議論」「研究」「呼称」のラベルは言葉の性質を示し、成熟度や実現の認定ではありません。</p>
+            <div class="glossary-spotlight">
+              <span>START HERE / 注目語</span>
+              <div>{featuredTerms.map((term) => <a href={`#term-${term.id}`}>{term.title}<span aria-hidden="true">↗</span></a>)}</div>
+            </div>
+            <div class="glossary-controls" data-controls hidden>
+              <label class="glossary-search-label" for="ai-glossary-search">用語を検索</label>
+              <div class="glossary-search-row">
+                <span class="glossary-search-icon" aria-hidden="true">⌕</span>
+                <input id="ai-glossary-search" data-search-input type="search" placeholder="AGI、自己改善、MCP、蒸留…" autocomplete="off" spellcheck="false" aria-describedby="ai-glossary-help" />
+                <button type="button" data-reset class="glossary-reset">リセット</button>
+              </div>
+              <p class="glossary-help" id="ai-glossary-help">日本語・英語・略語・別名に対応。空白で区切るとAND検索。検索内容は外部に送信しません。</p>
+              <div class="glossary-filters" role="group" aria-label="用語の分野で絞り込む">
+                <button type="button" data-category="all" aria-pressed="true">すべて <span>{allTerms.length}</span></button>
+                {glossaryGroups.map((group) => <button type="button" data-category={group.id} aria-pressed="false">{group.title}<span>{group.terms.length}</span></button>)}
+              </div>
+              <div class="glossary-toolbar">
+                <p data-result-count role="status" aria-live="polite" aria-atomic="true">{allTerms.length} / {allTerms.length} 語を表示</p>
+                <div><label class="glossary-featured-filter"><input type="checkbox" data-featured-only /> 注目語のみ</label><button type="button" data-expand>表示中を開く</button><button type="button" data-collapse>表示中を閉じる</button></div>
+              </div>
+            </div>
+            <noscript><p class="glossary-noscript">JavaScriptが無効なため検索・絞り込みは使えません。各分野と用語は、そのまま開いて読むことができます。</p></noscript>
+            <p class="glossary-empty" data-empty hidden>該当する用語がありません。検索語を短くするか、分野・注目語の絞り込みをリセットしてください。</p>
+            <div class="glossary-groups">
+              {glossaryGroups.map((group, index) => (
+                <details class="glossary-group" data-group={group.id} id={`glossary-group-${group.id}`}>
+                  <summary class="glossary-group-summary">
+                    <span class="glossary-group-index">{String(index + 1).padStart(2, '0')}</span>
+                    <span class="glossary-group-copy"><span class="glossary-group-en">{group.en}</span><h3>{group.title}</h3><span class="glossary-group-description">{group.description}</span></span>
+                    <span class="glossary-group-meta"><span data-group-count>{group.terms.length} 語</span><span class="glossary-chevron" aria-hidden="true">⌄</span></span>
+                  </summary>
+                  <div class="glossary-term-grid">
+                    {group.terms.map((term) => (
+                      <details class="glossary-term" id={`term-${term.id}`} data-term={term.id} data-featured={term.featured ? 'true' : 'false'} data-index={[term.title, term.en, term.ja, term.aliases, term.meaning].join(' ')}>
+                        <summary class="glossary-term-summary">
+                          <span class="glossary-term-head"><span class="glossary-term-name">{term.title}</span><span class="glossary-term-ja">{term.ja}</span></span>
+                          <span class="glossary-term-plus" aria-hidden="true">+</span>
+                        </summary>
+                        <div class="glossary-term-content">
+                          <div class="glossary-term-labels"><span class="glossary-kind" data-kind={term.kind}>{term.kind}</span>{term.featured && <span class="glossary-hot">注目語</span>}</div>
+                          <p class="glossary-term-en">{term.en}</p>
+                          <p class="glossary-definition">{term.meaning}</p>
+                          <dl class="glossary-term-notes"><div><dt>使う場面・例</dt><dd>{term.example}</dd></div><div class="glossary-caution"><dt>混同しない</dt><dd>{term.note}</dd></div></dl>
+                          {term.related.length > 0 && <div class="glossary-related"><span>RELATED</span><div>{term.related.map((id) => <a href={`#term-${id}`}>{termById.get(id)?.title} ↗</a>)}</div></div>}
+                          <div class="glossary-term-sources"><span>公式資料・原著論文</span>{term.sources.map((id) => <a href={glossarySources[id].url} target="_blank" rel="noopener noreferrer">{glossarySources[id].title} ↗</a>)}</div>
+                          <a class="glossary-permalink" href={`#term-${term.id}`} aria-label={`${term.title}への固定リンク`}># この用語へのリンク</a>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </details>
+              ))}
+            </div>
+            <details class="glossary-reading-guide">
+              <summary>似ている言葉を、どう読み分ける？ <span aria-hidden="true">+</span></summary>
+              <div class="glossary-comparisons">
+                <p><strong>能力の議論</strong><a href="#term-agi">AGI</a>・<a href="#term-asi">ASI</a> ／ 改善の仕組み <a href="#term-rsi">RSI</a></p>
+                <p><strong>学習で適応</strong><a href="#term-finetuning">Fine-tuning</a> ／ 外部情報を検索 <a href="#term-rag">RAG</a></p>
+                <p><strong>推論時の計算を増やす</strong><a href="#term-test-time-scaling">Test-time scaling</a> ／ 推論時に学習する <a href="#term-ttt">TTT</a></p>
+                <p><strong>外部ツール・データへ接続</strong><a href="#term-mcp">MCP</a> ／ 別のエージェントと通信 <a href="#term-a2a">A2A</a> ／ 作業手順を渡す <a href="#term-agent-skills">Skills</a></p>
+                <p><strong>言語と視覚</strong><a href="#term-vlm">VLM</a> ／ 行動まで出力 <a href="#term-vla">VLA</a> ／ 環境の変化を予測 <a href="#term-world-model">World model</a></p>
+              </div>
+            </details>
+            <p class="glossary-editorial">掲載日・用語確認日：<time datetime={glossaryReviewedAt}>{glossaryReviewedAt}</time>。説明は学習用に要約し、例と注意点を補足しています。研究の提案・企業の見解と、広く共有された定義を同一視しないよう、各項目から参照元を確認できます。</p>
+          </div>
+        </details>
+      </atlas-ai-glossary>
     </section>
 
     <section class="section" id="ai-systems" aria-labelledby="systems-title">
@@ -91,6 +2857,159 @@ const learningFlow = [
   </main>
 </BaseLayout>
 
+<script>
+/** A self-contained custom element. Re-initializes after Astro client-side navigation. */
+class AtlasAiGlossary extends HTMLElement {
+  private cleanup?: AbortController;
+
+  connectedCallback() {
+    // An already-registered element may connect before its children are parsed.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.initialize(), { once: true });
+    } else {
+      this.initialize();
+    }
+  }
+
+  private initialize() {
+    if (!this.isConnected || this.cleanup) return;
+    const cleanup = new AbortController();
+    this.cleanup = cleanup;
+    const options = { signal: cleanup.signal };
+    const input = this.querySelector<HTMLInputElement>('[data-search-input]');
+    const onlyFeatured = this.querySelector<HTMLInputElement>('[data-featured-only]');
+    const shell = this.querySelector<HTMLDetailsElement>('.ai-glossary');
+    const result = this.querySelector<HTMLElement>('[data-result-count]');
+    const empty = this.querySelector<HTMLElement>('[data-empty]');
+    if (!input || !onlyFeatured || !shell || !result || !empty) {
+      cleanup.abort();
+      this.cleanup = undefined;
+      return;
+    }
+    const groups = Array.from(this.querySelectorAll<HTMLDetailsElement>('[data-group]'));
+    const terms = Array.from(this.querySelectorAll<HTMLDetailsElement>('[data-term]'));
+    const categoryButtons = Array.from(this.querySelectorAll<HTMLButtonElement>('[data-category]'));
+    const normalize = (text: string) => text.normalize('NFKC').toLowerCase().replace(/[‐‑‒–—-]/g, ' ').replace(/\s+/g, ' ').trim();
+    const searchable = new Map(terms.map((term) => [term, normalize(term.dataset.index || '')]));
+    const groupedTerms = new Map(groups.map((group) => [group, terms.filter((term) => group.contains(term))]));
+    let category = 'all';
+    let filtering = false;
+    let previouslyOpen = new Set<HTMLDetailsElement>();
+
+    const matchesKeyword = (text: string, keyword: string) => {
+      // Short Latin abbreviations must match a word, so "RL" does not match "world".
+      if (/^[a-z0-9]{1,4}$/.test(keyword)) {
+        const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`(^|[^a-z0-9])${escaped}($|[^a-z0-9])`, 'i').test(text);
+      }
+      return text.includes(keyword);
+    };
+
+    const applyFilters = () => {
+      const words = normalize(input.value).split(/[\s,、]+/).filter(Boolean);
+      const isFiltered = words.length > 0 || category !== 'all' || onlyFeatured.checked;
+      if (isFiltered && !filtering) previouslyOpen = new Set([...groups, ...terms].filter((item) => item.open));
+      if (!isFiltered && filtering) [...groups, ...terms].forEach((item) => { item.open = previouslyOpen.has(item); });
+      filtering = isFiltered;
+      let total = 0;
+      groups.forEach((group) => {
+        let count = 0;
+        (groupedTerms.get(group) || []).forEach((term) => {
+          const show = (category === 'all' || category === group.dataset.group)
+            && (!onlyFeatured.checked || term.dataset.featured === 'true')
+            && words.every((word) => matchesKeyword(searchable.get(term) || '', word));
+          term.hidden = !show;
+          if (show) {
+            count += 1;
+            if (words.length > 0) term.open = true;
+          }
+        });
+        group.hidden = count === 0;
+        if (isFiltered && count > 0) group.open = true;
+        const label = group.querySelector<HTMLElement>('[data-group-count]');
+        if (label) label.textContent = `${count} 語`;
+        total += count;
+      });
+      categoryButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+      result.textContent = `${total} / ${terms.length} 語を表示`;
+      empty.hidden = total !== 0;
+    };
+
+    const reset = (focus = false) => {
+      input.value = '';
+      category = 'all';
+      onlyFeatured.checked = false;
+      applyFilters();
+      if (focus) input.focus();
+    };
+
+    const reveal = (hash: string, scroll = true, focus = false): boolean => {
+      let id: string;
+      try { id = decodeURIComponent(hash.replace(/^#/, '')); } catch { return false; }
+      if (id !== 'ai-glossary' && !id.startsWith('term-') && !id.startsWith('glossary-group-')) return false;
+      const target = document.getElementById(id);
+      if (!(target instanceof HTMLElement) || !this.contains(target)) return false;
+      // A permalink must work even when a previous search has hidden the target.
+      reset();
+      shell.open = true;
+      let current: HTMLElement | null = target;
+      while (current && current !== this) {
+        if (current instanceof HTMLDetailsElement) current.open = true;
+        current = current.parentElement;
+      }
+      requestAnimationFrame(() => {
+        if (!this.isConnected) return;
+        if (scroll) target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        if (focus) target.querySelector<HTMLElement>('summary')?.focus({ preventScroll: true });
+      });
+      return true;
+    };
+
+    let composing = false;
+    input.addEventListener('compositionstart', () => { composing = true; }, options);
+    input.addEventListener('compositionend', () => { composing = false; applyFilters(); }, options);
+    input.addEventListener('input', () => { if (!composing) applyFilters(); }, options);
+    input.addEventListener('search', applyFilters, options);
+    onlyFeatured.addEventListener('change', applyFilters, options);
+    this.querySelector<HTMLButtonElement>('[data-reset]')?.addEventListener('click', () => reset(true), options);
+    categoryButtons.forEach((button) => button.addEventListener('click', () => {
+      category = button.dataset.category || 'all';
+      applyFilters();
+    }, options));
+    this.querySelector<HTMLButtonElement>('[data-expand]')?.addEventListener('click', () => {
+      [...groups, ...terms].forEach((item) => { if (!item.hidden) item.open = true; });
+    }, options);
+    this.querySelector<HTMLButtonElement>('[data-collapse]')?.addEventListener('click', () => {
+      [...groups, ...terms].forEach((item) => { if (!item.hidden) item.open = false; });
+    }, options);
+    // Delegate at document level so the hero's glossary link works even if it is already the current hash.
+    document.addEventListener('click', (event) => {
+      if (!(event instanceof MouseEvent) || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const anchor = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
+      const hash = anchor?.getAttribute('href');
+      if (!anchor || !hash || anchor.target === '_blank') return;
+      if (reveal(hash, true, true)) {
+        event.preventDefault();
+        if (window.location.hash !== hash) history.pushState(null, '', hash);
+      }
+    }, options);
+    window.addEventListener('hashchange', () => reveal(window.location.hash), options);
+    this.querySelector<HTMLElement>('[data-controls]')?.removeAttribute('hidden');
+    applyFilters();
+    if (window.location.hash) reveal(window.location.hash);
+  }
+
+  disconnectedCallback() {
+    this.cleanup?.abort();
+    this.cleanup = undefined;
+  }
+}
+
+if (!customElements.get('atlas-ai-glossary')) {
+  customElements.define('atlas-ai-glossary', AtlasAiGlossary);
+}
+</script>
+
 <style>
   :global(body){background:radial-gradient(circle at 76% 8%,rgba(167,139,250,.14),transparent 30%),#0a1119}
   .ai-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 100px;color:#eef6f9}.back{color:#90a4b0;font-size:.82rem;text-decoration:none}.back:hover,.sources a:hover{color:#c7b5ff}
@@ -106,4 +3025,37 @@ const learningFlow = [
   .sources{margin-top:86px;padding-top:27px;border-top:1px solid #3a4454}.sources div{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}.sources a{color:#b9a7ec;font-size:.82rem;text-decoration:underline;text-underline-offset:3px}.sources p{margin-top:20px;color:#8295a2;font-size:.75rem;line-height:1.7}
   @media(max-width:800px){.hero{grid-template-columns:1fr;gap:26px;min-height:0}.hero-mark{min-height:180px}.hero-mark strong{font-size:5rem}.system-flow,.learning-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.system-flow li::after{display:none}}
   @media(max-width:600px){.ai-page{width:min(100% - 32px,1120px)}.hero{padding:40px 0 50px}h1{font-size:clamp(3.1rem,12vw,5rem)}.pillar-grid,.concept-grid,.system-grid,.ml-grid,.eval-columns{grid-template-columns:1fr}.system-flow,.learning-flow{grid-template-columns:1fr}.section{margin-top:65px}}
+  /* Glossary: only this page, no packages, no external scripts, no remote search. */
+  atlas-ai-glossary{display:block;margin-top:35px;min-width:0}
+  .ai-glossary{border:1px solid #514870;border-radius:20px;background:linear-gradient(145deg,rgba(24,28,46,.96),rgba(11,20,31,.98));scroll-margin-top:110px;overflow:hidden}
+  .ai-glossary [hidden]{display:none!important}
+  .ai-glossary summary{cursor:pointer;list-style:none}
+  .ai-glossary summary::-webkit-details-marker{display:none}
+  .ai-glossary summary::marker{content:''}
+  .ai-glossary :is(button,input,a,summary):focus-visible{outline:2px solid #dbc9ff;outline-offset:4px}
+  .ai-glossary button,.ai-glossary input{font:inherit}
+  .ai-glossary button{cursor:pointer}
+  .glossary-cover{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:30px 30px 28px;background:radial-gradient(ellipse at 95% 0,rgba(157,118,241,.16),transparent 75%)}
+  .glossary-cover-copy{min-width:0}.glossary-kicker{display:block;color:#bda6f5;font:700 .65rem/1.5 ui-monospace,monospace;letter-spacing:.13em}
+  .glossary-cover-title{display:block;margin-top:12px;font-size:1.8rem;letter-spacing:-.035em;font-weight:750}.glossary-cover-en{display:block;margin-top:7px;color:#aeb9c9;font-size:.81rem;font-weight:400;letter-spacing:0}
+  .glossary-cover-meta{display:flex;align-items:center;gap:18px;flex-shrink:0;color:#c7b2f8;font:700 .64rem/1.6 ui-monospace,monospace;letter-spacing:.03em}
+  .glossary-chevron{display:inline-grid;place-items:center;width:30px;height:30px;border:1px solid #5a4e79;border-radius:50%;color:#c7b2f8;font:400 1.15rem/1 sans-serif;transition:transform .16s}
+  .ai-glossary[open]>.glossary-cover .glossary-chevron,.glossary-group[open]>.glossary-group-summary .glossary-chevron{transform:rotate(180deg)}
+  .ai-glossary[open]>.glossary-cover{border-bottom:1px solid #37384e}
+  .glossary-body{padding:25px 28px 27px;min-width:0}.glossary-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:25px}
+  .glossary-intro p{max-width:660px;margin:0;color:#b0c0ca;font-size:.9rem;line-height:1.95}.glossary-intro strong{display:block;color:#e9e7f3;font-weight:600}.glossary-date{flex-shrink:0;padding-top:5px;color:#b2a4d4;font:.61rem/1.65 ui-monospace,monospace}.glossary-date time{display:block;text-align:right;font-size:.75rem}
+  .glossary-scope{margin:13px 0 23px;color:#93a4b1;font-size:.73rem;line-height:1.9}
+  .glossary-spotlight{padding:17px 18px 18px;border:1px solid #484060;border-radius:12px;background:#1d2135}.glossary-spotlight>span{display:block;margin-bottom:12px;color:#bba6e8;font:700 .61rem/1.5 ui-monospace,monospace;letter-spacing:.08em}
+  .glossary-spotlight>div{display:flex;flex-wrap:wrap;gap:8px}.glossary-spotlight a{display:inline-flex;align-items:center;gap:15px;padding:8px 11px;border:1px solid #605081;border-radius:7px;color:#e0d1ff;background:#2a2642;text-decoration:none;font-size:.75rem;font-weight:600}.glossary-spotlight a span{color:#bca5f1}.glossary-spotlight a:hover{background:#352d50;border-color:#b5a0e6}
+  .glossary-controls{margin-top:24px}.glossary-search-label{display:block;margin-bottom:9px;font-size:.79rem;font-weight:600;color:#d1d8e3}.glossary-search-row{position:relative;display:flex;gap:8px}.glossary-search-icon{position:absolute;left:15px;top:10px;pointer-events:none;color:#b8a4df;font-size:1.45rem;line-height:1}.glossary-search-row input{min-width:0;width:100%;height:46px;padding:10px 12px 10px 43px;border:1px solid #59607a;border-radius:9px;color:#edf3fa;background:#0d1622;outline:none;font-size:16px}.glossary-search-row input::placeholder{color:#8393a6;opacity:1}.glossary-search-row input:focus{border-color:#c0a4fa;box-shadow:0 0 0 2px #8e6be32b}.glossary-reset{flex-shrink:0;padding:0 15px;border:1px solid #545169;border-radius:9px;color:#c4b9da;background:#22253a;font-size:.76rem!important}.glossary-reset:hover{border-color:#af98d8;color:#eee5ff}.glossary-help{margin:9px 0 18px;color:#9caabd;font-size:.69rem;line-height:1.8}
+  .glossary-filters{display:flex;flex-wrap:wrap;gap:7px}.glossary-filters button{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:7px 10px;border:1px solid #3d465b;border-radius:7px;background:#151f2c;color:#aebccb;font-size:.69rem}.glossary-filters button span{color:#8e97b0;font:500 .63rem ui-monospace,monospace}.glossary-filters button:hover{border-color:#8a74b9;color:#e0d4f8}.glossary-filters button[aria-pressed=true]{border-color:#b9a0ed;background:#332b4e;color:#ecddff}.glossary-filters button[aria-pressed=true] span{color:#d2bbff}
+  .glossary-toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:18px;padding:0 0 14px;border-bottom:1px solid #353d50}.glossary-toolbar>p{margin:0;color:#bbc4d2;font-size:.72rem;flex-shrink:0}.glossary-toolbar>div{display:flex;align-items:center;gap:13px;flex-wrap:wrap}.glossary-featured-filter{display:inline-flex;align-items:center;gap:6px;font-size:.69rem;color:#c3bbd2;cursor:pointer}.glossary-featured-filter input{accent-color:#b59bfa;width:15px;height:15px;margin:0}.glossary-toolbar button{padding:5px 0;color:#c6b2ed;border:0;background:transparent;font-size:.69rem}.glossary-toolbar button:hover{text-decoration:underline;text-underline-offset:3px}
+  .glossary-groups{display:grid;gap:10px;margin-top:19px}.glossary-group{min-width:0;border:1px solid #3c4659;border-radius:12px;background:#101b28;scroll-margin-top:110px}.glossary-group-summary{display:flex;align-items:center;gap:18px;padding:20px}.glossary-group-summary:hover{background:#a98ae806;border-radius:12px}.glossary-group-index{align-self:flex-start;margin-top:4px;color:#b8a0ee;font:700 .8rem/1.5 ui-monospace,monospace}.glossary-group-copy{flex:1;min-width:0}.glossary-group-en{color:#a394c0;font:700 .57rem/1.6 ui-monospace,monospace;letter-spacing:.08em}.glossary-group-copy h3{margin:6px 0;font-size:1rem;line-height:1.5;letter-spacing:.015em;color:#e9edf5}.glossary-group-description{display:block;color:#9dabbc;font-size:.73rem;line-height:1.7}.glossary-group-meta{display:flex;align-items:center;gap:13px;flex-shrink:0;color:#b8a6d6;font:.68rem/1.6 ui-monospace,monospace}.glossary-group-meta .glossary-chevron{width:25px;height:25px;font-size:1rem;border-color:#47425d}
+  .glossary-term-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:9px;padding:0 15px 16px}.glossary-term{min-width:0;border:1px solid #42465e;border-radius:9px;background:#1a2233;scroll-margin-top:110px}.glossary-term[open]{border-color:#79649e;background:#1d2538}.glossary-term:target{border-color:#d3b9ff;box-shadow:0 0 0 2px #b492f324}.glossary-term-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px}.glossary-term-head{min-width:0}.glossary-term-name{display:block;color:#e4d9fb;font-size:.89rem;font-weight:650;line-height:1.45;overflow-wrap:anywhere}.glossary-term-ja{display:block;margin-top:6px;color:#adb9c7;font-size:.73rem;line-height:1.6}.glossary-term-plus{flex-shrink:0;color:#b59ddb;font-size:1.15rem;font-weight:300;transition:transform .16s}.glossary-term[open]>.glossary-term-summary .glossary-term-plus{transform:rotate(45deg)}.glossary-term-content{padding:0 17px 16px;min-width:0;overflow-wrap:anywhere}.glossary-term-labels{display:flex;gap:6px;flex-wrap:wrap}.glossary-kind,.glossary-hot{display:inline-block;padding:3px 7px;border:1px solid #53627a;border-radius:4px;font-size:.59rem;color:#b9c8db;background:#253247}.glossary-kind[data-kind="概念・議論"],.glossary-kind[data-kind="研究"]{color:#e1c18e;background:#362c28;border-color:#665238}.glossary-kind[data-kind="呼称"]{color:#d1c5de;background:#312a3c;border-color:#5d4c72}.glossary-hot{color:#d4bdff;background:#33274b;border-color:#6e5694}.glossary-term-en{margin:12px 0 11px;color:#b7a6d5;font:.65rem/1.65 ui-monospace,monospace;overflow-wrap:anywhere}.glossary-definition{margin:0 0 16px;color:#c8d2df;font-size:.81rem;line-height:1.95}
+  .glossary-term-notes{margin:0;padding:0}.glossary-term-notes>div{padding:11px 12px;background:#111b29;border-radius:7px}.glossary-term-notes dt{margin:0 0 5px;color:#acb6cb;font-size:.62rem;font-weight:700;letter-spacing:.04em}.glossary-term-notes dd{margin:0;color:#bac6d4;font-size:.73rem;line-height:1.85}.glossary-term-notes>.glossary-caution{margin-top:7px;border-left:2px solid #a084ce;background:#24243a}.glossary-caution dt{color:#d7beff}
+  .glossary-related{margin-top:16px}.glossary-related>span,.glossary-term-sources>span{display:block;margin-bottom:7px;color:#a89abd;font:.58rem/1.5 ui-monospace,monospace;letter-spacing:.07em}.glossary-related>div{display:flex;flex-wrap:wrap;gap:6px}.glossary-related a{padding:4px 7px;border:1px solid #504560;border-radius:5px;color:#d4c0f7;font-size:.63rem;text-decoration:none;background:#2a253c;line-height:1.5}.glossary-related a:hover{border-color:#b19ad6}.glossary-term-sources{margin-top:16px;padding-top:12px;border-top:1px solid #444457}.glossary-term-sources a{display:block;margin:5px 0;color:#b7bbd6;font-size:.64rem;line-height:1.75;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.glossary-term-sources a:hover{color:#e2d3ff}.glossary-permalink{display:inline-block;margin-top:12px;color:#ae9cc6;font-size:.63rem;text-decoration:none}.glossary-permalink:hover{text-decoration:underline;text-underline-offset:3px}
+  .glossary-empty,.glossary-noscript{padding:20px;border:1px dashed #756087;border-radius:10px;background:#2b2039;color:#d8c5ec;font-size:.81rem;line-height:1.9}.glossary-reading-guide{margin-top:18px;border-top:1px solid #414256;border-bottom:1px solid #414256}.glossary-reading-guide>summary{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:20px 0;color:#c9b4ed;font-size:.79rem}.glossary-reading-guide[open]>summary span{transform:rotate(45deg)}.glossary-comparisons{padding:0 0 17px}.glossary-comparisons p{margin:7px 0;color:#a8b4c8;font-size:.74rem;line-height:1.9}.glossary-comparisons strong{display:block;font-size:.65rem;color:#c4bdcf;font-weight:600}.glossary-comparisons a{color:#cbb4f5;text-decoration:underline;text-underline-offset:3px}.glossary-editorial{margin:18px 0 0;color:#92a1b5;font-size:.68rem;line-height:1.9}
+  @media(max-width:800px){.glossary-intro{display:block}.glossary-date{display:flex;gap:9px;margin-top:11px}.glossary-date time{font-size:inherit}.glossary-cover{padding:25px}.glossary-body{padding:22px}.glossary-toolbar{align-items:flex-start;flex-direction:column;gap:11px}}
+  @media(max-width:600px){.glossary-cover{padding:22px 18px;gap:12px}.glossary-cover-title{font-size:1.55rem}.glossary-cover-en{font-size:.7rem;line-height:1.6}.glossary-cover-meta{flex-direction:column;align-items:flex-end;gap:10px;font-size:.52rem}.glossary-kicker{font-size:.56rem}.glossary-body{padding:20px 14px}.glossary-spotlight{padding:14px}.glossary-spotlight a{padding:7px 9px;gap:10px;font-size:.68rem}.glossary-reset{padding:0 10px;font-size:.7rem!important}.glossary-filters{gap:6px}.glossary-filters button{font-size:.64rem;gap:5px;padding:7px 9px;min-height:36px}.glossary-group-summary{padding:16px 13px;gap:11px}.glossary-group-meta{flex-direction:column;gap:8px;font-size:.6rem}.glossary-group-copy h3{font-size:.92rem}.glossary-group-description{font-size:.67rem}.glossary-group-en{font-size:.49rem;letter-spacing:.055em}.glossary-group-index{font-size:.7rem}.glossary-term-grid{grid-template-columns:1fr;padding:0 10px 12px}.glossary-term-summary{padding:16px}.glossary-term-content{padding:0 16px 17px}.glossary-toolbar>div{gap:14px}.glossary-scope{font-size:.68rem}.glossary-intro p{font-size:.81rem}}
+  @media(prefers-reduced-motion:reduce){.glossary-chevron,.glossary-term-plus{transition:none}}
 </style>

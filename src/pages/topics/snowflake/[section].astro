@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
+// This file owns only these eight existing routes. Core and Data Engineer are separate pages.
 export function getStaticPaths() {
   return [
     { params: { section: 'architect' }, props: { eyebrow:'CERTIFICATION', title:'Advanced Architect', code:'ARA-C01', official:'https://learn.snowflake.com/en/certifications/snowpro-adv-ara-jpn/' } },
@@ -13,35 +14,1212 @@ export function getStaticPaths() {
     { params: { section: 'apps-development' }, props: { eyebrow:'BUILD', title:'Apps & Development' } },
   ];
 }
-
+interface Props { eyebrow: string; title: string; code?: string; official?: string; }
+type Track = 'C' | 'D' | 'A' | 'X';
+interface Term {
+  id: string; title: string; ja: string; meaning: string; example: string; note: string;
+  sources: string[]; tracks: Track[]; aliases: string; featured: boolean; related: string[]; sql?: string;
+}
+interface Group { id: string; title: string; en: string; sections: string[]; description: string; terms: Term[]; }
+interface Source { title: string; url: string; }
 const { eyebrow, title, code, official } = Astro.props;
+const currentSection = Astro.params.section || 'architecture';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const reviewed = '2026-09-23';
+const sources: Record<string, Source> = {
+  "architecture": {
+    "title": "Architecture & key concepts",
+    "url": "https://docs.snowflake.com/en/user-guide/intro-key-concepts"
+  },
+  "editions": {
+    "title": "Snowflake editions",
+    "url": "https://docs.snowflake.com/en/user-guide/intro-editions"
+  },
+  "accounts": {
+    "title": "Organizations & accounts",
+    "url": "https://docs.snowflake.com/en/guides-overview-manage"
+  },
+  "warehouses": {
+    "title": "Virtual warehouses",
+    "url": "https://docs.snowflake.com/en/user-guide/warehouses-overview"
+  },
+  "multicluster": {
+    "title": "Multi-cluster warehouses",
+    "url": "https://docs.snowflake.com/en/user-guide/warehouses-multicluster"
+  },
+  "warehouse-use": {
+    "title": "Working with warehouses",
+    "url": "https://docs.snowflake.com/en/user-guide/warehouses-tasks"
+  },
+  "warehouse-consider": {
+    "title": "Warehouse considerations",
+    "url": "https://docs.snowflake.com/en/user-guide/warehouses-considerations"
+  },
+  "snowpark-wh": {
+    "title": "Snowpark-optimized warehouses",
+    "url": "https://docs.snowflake.com/en/user-guide/warehouses-snowpark-optimized"
+  },
+  "micro": {
+    "title": "Micro-partitions & clustering",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions"
+  },
+  "tables": {
+    "title": "Tables & views",
+    "url": "https://docs.snowflake.com/en/guides-overview-db"
+  },
+  "temporary": {
+    "title": "Temporary & transient tables",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-temp-transient"
+  },
+  "iceberg": {
+    "title": "Apache Iceberg tables",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-iceberg"
+  },
+  "hybrid": {
+    "title": "Hybrid tables",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-hybrid"
+  },
+  "external-table": {
+    "title": "External tables",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-external-intro"
+  },
+  "views": {
+    "title": "Overview of views",
+    "url": "https://docs.snowflake.com/en/user-guide/views-introduction"
+  },
+  "materialized": {
+    "title": "Materialized views",
+    "url": "https://docs.snowflake.com/en/user-guide/views-materialized"
+  },
+  "secure-view": {
+    "title": "Secure views",
+    "url": "https://docs.snowflake.com/en/user-guide/views-secure"
+  },
+  "semantic": {
+    "title": "Semantic views",
+    "url": "https://docs.snowflake.com/en/user-guide/views-semantic/overview"
+  },
+  "constraints": {
+    "title": "Constraints",
+    "url": "https://docs.snowflake.com/en/sql-reference/constraints-overview"
+  },
+  "clone": {
+    "title": "Cloning considerations",
+    "url": "https://docs.snowflake.com/en/user-guide/object-clone"
+  },
+  "time-travel": {
+    "title": "Time Travel",
+    "url": "https://docs.snowflake.com/en/user-guide/data-time-travel"
+  },
+  "failsafe": {
+    "title": "Fail-safe",
+    "url": "https://docs.snowflake.com/en/user-guide/data-failsafe"
+  },
+  "lifecycle": {
+    "title": "Storage lifecycle policies",
+    "url": "https://docs.snowflake.com/en/user-guide/storage-management/storage-lifecycle-policies"
+  },
+  "load": {
+    "title": "Data loading overview",
+    "url": "https://docs.snowflake.com/en/user-guide/data-load-overview"
+  },
+  "stage": {
+    "title": "CREATE STAGE",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/create-stage"
+  },
+  "copy": {
+    "title": "COPY INTO table",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/copy-into-table"
+  },
+  "unload": {
+    "title": "COPY INTO location",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/copy-into-location"
+  },
+  "fileformat": {
+    "title": "CREATE FILE FORMAT",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/create-file-format"
+  },
+  "put": {
+    "title": "PUT",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/put"
+  },
+  "get": {
+    "title": "GET",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/get"
+  },
+  "snowpipe": {
+    "title": "Snowpipe",
+    "url": "https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro"
+  },
+  "streaming": {
+    "title": "Snowpipe Streaming",
+    "url": "https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview"
+  },
+  "schema-evolution": {
+    "title": "Table schema evolution",
+    "url": "https://docs.snowflake.com/en/user-guide/data-load-schema-evolution"
+  },
+  "infer": {
+    "title": "INFER_SCHEMA",
+    "url": "https://docs.snowflake.com/en/sql-reference/functions/infer_schema"
+  },
+  "storage-integration": {
+    "title": "CREATE STORAGE INTEGRATION",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/create-storage-integration"
+  },
+  "unstructured": {
+    "title": "Unstructured data",
+    "url": "https://docs.snowflake.com/en/user-guide/unstructured-intro"
+  },
+  "directory": {
+    "title": "Directory tables",
+    "url": "https://docs.snowflake.com/en/user-guide/data-load-dirtables"
+  },
+  "streams": {
+    "title": "Streams",
+    "url": "https://docs.snowflake.com/en/user-guide/streams-intro"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "url": "https://docs.snowflake.com/en/user-guide/tasks-intro"
+  },
+  "task-graphs": {
+    "title": "Task graphs",
+    "url": "https://docs.snowflake.com/en/user-guide/tasks-graphs"
+  },
+  "dynamic": {
+    "title": "Dynamic tables",
+    "url": "https://docs.snowflake.com/en/user-guide/dynamic-tables/overview"
+  },
+  "rowtime": {
+    "title": "Row timestamps",
+    "url": "https://docs.snowflake.com/en/user-guide/data-engineering/row-timestamps"
+  },
+  "openflow": {
+    "title": "Snowflake Openflow",
+    "url": "https://docs.snowflake.com/en/user-guide/data-integration/openflow/about"
+  },
+  "dbt": {
+    "title": "dbt Projects on Snowflake",
+    "url": "https://docs.snowflake.com/en/user-guide/data-engineering/dbt-projects-on-snowflake"
+  },
+  "dcm": {
+    "title": "DCM Projects",
+    "url": "https://docs.snowflake.com/en/user-guide/dcm-projects/dcm-projects-overview"
+  },
+  "merge": {
+    "title": "MERGE",
+    "url": "https://docs.snowflake.com/en/sql-reference/sql/merge"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "url": "https://docs.snowflake.com/en/sql-reference/transactions"
+  },
+  "sql": {
+    "title": "SQL query syntax",
+    "url": "https://docs.snowflake.com/en/sql-reference/constructs"
+  },
+  "qualify": {
+    "title": "QUALIFY",
+    "url": "https://docs.snowflake.com/en/sql-reference/constructs/qualify"
+  },
+  "flatten": {
+    "title": "FLATTEN",
+    "url": "https://docs.snowflake.com/en/sql-reference/functions/flatten"
+  },
+  "variant": {
+    "title": "Semi-structured data types",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-semistructured"
+  },
+  "structured": {
+    "title": "Structured data types",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-structured"
+  },
+  "window": {
+    "title": "Window functions",
+    "url": "https://docs.snowflake.com/en/user-guide/functions-window-using"
+  },
+  "asof": {
+    "title": "ASOF JOIN",
+    "url": "https://docs.snowflake.com/en/sql-reference/constructs/asof-join"
+  },
+  "pivot": {
+    "title": "PIVOT",
+    "url": "https://docs.snowflake.com/en/sql-reference/constructs/pivot"
+  },
+  "match": {
+    "title": "MATCH_RECOGNIZE",
+    "url": "https://docs.snowflake.com/en/sql-reference/constructs/match_recognize"
+  },
+  "numeric": {
+    "title": "Numeric data types",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-numeric"
+  },
+  "datetime": {
+    "title": "Date & time data types",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-datetime"
+  },
+  "geospatial": {
+    "title": "Geospatial data",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-geospatial"
+  },
+  "vector": {
+    "title": "VECTOR data type",
+    "url": "https://docs.snowflake.com/en/sql-reference/data-types-vector"
+  },
+  "sequence": {
+    "title": "Sequences",
+    "url": "https://docs.snowflake.com/en/user-guide/querying-sequences"
+  },
+  "search-opt": {
+    "title": "Search optimization service",
+    "url": "https://docs.snowflake.com/en/user-guide/search-optimization-service"
+  },
+  "clustering": {
+    "title": "Clustering keys",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-clustering-keys"
+  },
+  "auto-cluster": {
+    "title": "Automatic Clustering",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-auto-reclustering"
+  },
+  "qas": {
+    "title": "Query Acceleration Service",
+    "url": "https://docs.snowflake.com/en/user-guide/query-acceleration-service"
+  },
+  "persisted": {
+    "title": "Persisted query results",
+    "url": "https://docs.snowflake.com/en/user-guide/querying-persisted-results"
+  },
+  "profile": {
+    "title": "Query Profile",
+    "url": "https://docs.snowflake.com/en/user-guide/ui-query-profile"
+  },
+  "performance": {
+    "title": "Performance optimization",
+    "url": "https://docs.snowflake.com/en/guides-overview-performance"
+  },
+  "cost": {
+    "title": "Cost & billing",
+    "url": "https://docs.snowflake.com/en/guides-overview-cost"
+  },
+  "resource-monitor": {
+    "title": "Resource monitors",
+    "url": "https://docs.snowflake.com/en/user-guide/resource-monitors"
+  },
+  "budgets": {
+    "title": "Budgets",
+    "url": "https://docs.snowflake.com/en/user-guide/budgets"
+  },
+  "account-usage": {
+    "title": "ACCOUNT_USAGE",
+    "url": "https://docs.snowflake.com/en/sql-reference/account-usage"
+  },
+  "information-schema": {
+    "title": "INFORMATION_SCHEMA",
+    "url": "https://docs.snowflake.com/en/sql-reference/info-schema"
+  },
+  "query-history": {
+    "title": "QUERY_HISTORY",
+    "url": "https://docs.snowflake.com/en/sql-reference/account-usage/query_history"
+  },
+  "query-tag": {
+    "title": "Parameters / QUERY_TAG",
+    "url": "https://docs.snowflake.com/en/sql-reference/parameters"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "url": "https://docs.snowflake.com/en/user-guide/alerts"
+  },
+  "notification": {
+    "title": "Notifications",
+    "url": "https://docs.snowflake.com/en/user-guide/notifications/about-notifications"
+  },
+  "access": {
+    "title": "Access control overview",
+    "url": "https://docs.snowflake.com/en/user-guide/security-access-control-overview"
+  },
+  "access-config": {
+    "title": "Configuring access control",
+    "url": "https://docs.snowflake.com/en/user-guide/security-access-control-configure"
+  },
+  "access-priv": {
+    "title": "Access control privileges",
+    "url": "https://docs.snowflake.com/en/user-guide/security-access-control-privileges"
+  },
+  "network": {
+    "title": "Network policies",
+    "url": "https://docs.snowflake.com/en/user-guide/network-policies"
+  },
+  "network-rule": {
+    "title": "Network rules",
+    "url": "https://docs.snowflake.com/en/user-guide/network-rules"
+  },
+  "private": {
+    "title": "Private connectivity",
+    "url": "https://docs.snowflake.com/en/user-guide/private-connectivity-inbound"
+  },
+  "mfa": {
+    "title": "Multi-factor authentication",
+    "url": "https://docs.snowflake.com/en/user-guide/security-mfa"
+  },
+  "keypair": {
+    "title": "Key-pair authentication",
+    "url": "https://docs.snowflake.com/en/user-guide/key-pair-auth"
+  },
+  "oauth": {
+    "title": "OAuth",
+    "url": "https://docs.snowflake.com/en/user-guide/oauth-intro"
+  },
+  "sso": {
+    "title": "Federated authentication",
+    "url": "https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview"
+  },
+  "scim": {
+    "title": "SCIM",
+    "url": "https://docs.snowflake.com/en/user-guide/scim-intro"
+  },
+  "wif": {
+    "title": "Workload identity federation",
+    "url": "https://docs.snowflake.com/en/user-guide/workload-identity-federation"
+  },
+  "encryption": {
+    "title": "Encryption",
+    "url": "https://docs.snowflake.com/en/user-guide/security-encryption"
+  },
+  "trisecret": {
+    "title": "Tri-Secret Secure",
+    "url": "https://docs.snowflake.com/en/user-guide/security-encryption-manage"
+  },
+  "horizon": {
+    "title": "Snowflake Horizon Catalog",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-horizon"
+  },
+  "tags": {
+    "title": "Object tagging",
+    "url": "https://docs.snowflake.com/en/user-guide/object-tagging"
+  },
+  "masking": {
+    "title": "Dynamic Data Masking",
+    "url": "https://docs.snowflake.com/en/user-guide/security-column-ddm-intro"
+  },
+  "row-access": {
+    "title": "Row access policies",
+    "url": "https://docs.snowflake.com/en/user-guide/security-row-intro"
+  },
+  "classification": {
+    "title": "Sensitive data classification",
+    "url": "https://docs.snowflake.com/en/user-guide/classify-intro"
+  },
+  "access-history": {
+    "title": "ACCESS_HISTORY",
+    "url": "https://docs.snowflake.com/en/sql-reference/account-usage/access_history"
+  },
+  "lineage": {
+    "title": "Data lineage",
+    "url": "https://docs.snowflake.com/en/user-guide/ui-snowsight-lineage"
+  },
+  "quality": {
+    "title": "Data quality monitoring",
+    "url": "https://docs.snowflake.com/en/user-guide/data-quality-intro"
+  },
+  "aggregation": {
+    "title": "Aggregation policies",
+    "url": "https://docs.snowflake.com/en/user-guide/aggregation-policies"
+  },
+  "projection": {
+    "title": "Projection policies",
+    "url": "https://docs.snowflake.com/en/user-guide/projection-policies"
+  },
+  "join-policy": {
+    "title": "Join policies",
+    "url": "https://docs.snowflake.com/en/user-guide/join-policies"
+  },
+  "sharing": {
+    "title": "Secure Data Sharing",
+    "url": "https://docs.snowflake.com/en/user-guide/data-sharing-intro"
+  },
+  "reader": {
+    "title": "Reader accounts",
+    "url": "https://docs.snowflake.com/en/user-guide/data-sharing-reader-create"
+  },
+  "listing": {
+    "title": "Listings",
+    "url": "https://docs.snowflake.com/en/collaboration/collaboration-listings-about"
+  },
+  "exchange": {
+    "title": "Data Exchange",
+    "url": "https://docs.snowflake.com/en/user-guide/data-exchange"
+  },
+  "cleanroom": {
+    "title": "Data Clean Rooms",
+    "url": "https://docs.snowflake.com/en/user-guide/cleanrooms/overview"
+  },
+  "opencatalog": {
+    "title": "Snowflake Open Catalog",
+    "url": "https://other-docs.snowflake.com/en/opencatalog/overview"
+  },
+  "external-volume": {
+    "title": "External volumes",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-external-volume"
+  },
+  "catalog": {
+    "title": "Catalog integrations",
+    "url": "https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration"
+  },
+  "replication": {
+    "title": "Replication & failover",
+    "url": "https://docs.snowflake.com/en/user-guide/account-replication-intro"
+  },
+  "redirect": {
+    "title": "Client Redirect",
+    "url": "https://docs.snowflake.com/en/user-guide/client-redirect"
+  },
+  "snowpark": {
+    "title": "Snowpark API",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowpark/index"
+  },
+  "udf": {
+    "title": "User-defined functions",
+    "url": "https://docs.snowflake.com/en/developer-guide/udf/udf-overview"
+  },
+  "procedure": {
+    "title": "Stored procedures",
+    "url": "https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-overview"
+  },
+  "rights": {
+    "title": "Owner’s rights & caller’s rights",
+    "url": "https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-rights"
+  },
+  "scripting": {
+    "title": "Snowflake Scripting",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowflake-scripting/index"
+  },
+  "external-function": {
+    "title": "External functions",
+    "url": "https://docs.snowflake.com/en/sql-reference/external-functions-introduction"
+  },
+  "external-access": {
+    "title": "External network access",
+    "url": "https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview"
+  },
+  "streamlit": {
+    "title": "Streamlit in Snowflake",
+    "url": "https://docs.snowflake.com/en/developer-guide/streamlit/about-streamlit"
+  },
+  "notebook": {
+    "title": "Legacy Snowflake Notebooks / migration notes",
+    "url": "https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks"
+  },
+  "container": {
+    "title": "Snowpark Container Services",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowpark-container-services/overview"
+  },
+  "native": {
+    "title": "Snowflake Native Apps",
+    "url": "https://docs.snowflake.com/en/developer-guide/native-apps/native-apps-about"
+  },
+  "git": {
+    "title": "Git integration",
+    "url": "https://docs.snowflake.com/en/developer-guide/git/git-overview"
+  },
+  "cli": {
+    "title": "Snowflake CLI",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowflake-cli/index"
+  },
+  "sqlapi": {
+    "title": "SQL API",
+    "url": "https://docs.snowflake.com/en/developer-guide/sql-api/index"
+  },
+  "python-connector": {
+    "title": "Python Connector",
+    "url": "https://docs.snowflake.com/en/developer-guide/python-connector/python-connector"
+  },
+  "spark": {
+    "title": "Spark Connector",
+    "url": "https://docs.snowflake.com/en/user-guide/spark-connector-overview"
+  },
+  "postgres": {
+    "title": "Snowflake Postgres",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-postgres/about"
+  },
+  "ai-overview": {
+    "title": "Snowflake AI & ML",
+    "url": "https://docs.snowflake.com/en/guides-overview-ai-features"
+  },
+  "ai": {
+    "title": "Cortex AI Functions",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql"
+  },
+  "analyst": {
+    "title": "Cortex Analyst",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst"
+  },
+  "cortex-search": {
+    "title": "Cortex Search",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview"
+  },
+  "agents": {
+    "title": "Cortex Agents",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents"
+  },
+  "ai-observability": {
+    "title": "AI Observability",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/ai-observability"
+  },
+  "cortex-code": {
+    "title": "Cortex Code / Snowflake CoCo",
+    "url": "https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code"
+  },
+  "ml": {
+    "title": "Snowflake ML",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowflake-ml/overview"
+  },
+  "feature-store": {
+    "title": "Feature Store",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/overview"
+  },
+  "registry": {
+    "title": "Model Registry",
+    "url": "https://docs.snowflake.com/en/developer-guide/snowflake-ml/model-registry/overview"
+  },
+  "ml-functions": {
+    "title": "ML Functions",
+    "url": "https://docs.snowflake.com/en/guides-overview-ml-functions"
+  },
+  "cert": {
+    "title": "SnowPro Certifications",
+    "url": "https://learn.snowflake.com/en/certifications/"
+  },
+  "mcp": {
+    "title": "Snowflake-managed MCP server",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp"
+  },
+  "ai-gateway": {
+    "title": "Cortex AI Gateway",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-ai-gateway"
+  },
+  "cowork": {
+    "title": "Snowflake CoWork",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/snowflake-cowork"
+  },
+  "guardrails": {
+    "title": "Cortex AI Guardrails",
+    "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-ai-guardrails"
+  },
+  "authentication-policy": {
+    "title": "Authentication policies",
+    "url": "https://docs.snowflake.com/en/user-guide/authentication-policies"
+  },
+  "session-policy": {
+    "title": "Session policies",
+    "url": "https://docs.snowflake.com/en/user-guide/session-policies"
+  }
+};
+
+// One shared knowledge base. Track tags are editorial learning lenses, NOT an exam blueprint.
+const groups: Group[] = [
+{"id": "platform", "title": "基盤・アーキテクチャ", "en": "PLATFORM & ARCHITECTURE", "sections": ["architecture"], "description": "Snowflakeの構造、アカウント境界、設計の前提をつかむ。", "terms": [
+  {"id": "three-layers", "title": "Three-layer architecture", "ja": "3層アーキテクチャ", "meaning": "データストレージ、クエリ処理、クラウドサービスを分離した基本構造。役割の違いから性能・費用・運用を考える。", "example": "保存データを共有し、BI用とETL用の計算を分離する。", "note": "3層は論理的な責務の区分。すべての新機能が単一の仮想ウェアハウスで動くわけではない。", "sources": ["architecture"], "tracks": ["C", "D", "A"], "aliases": "三層 アーキテクチャ compute storage cloud services", "featured": true, "related": ["storage-compute", "cloud-services", "virtual-warehouse"]},
+  {"id": "storage-compute", "title": "Storage / compute separation", "ja": "ストレージとコンピュートの分離", "meaning": "データを保存する仕組みと処理する計算資源を独立させる設計。データを複製せずに複数の計算基盤から利用できる。", "example": "同じ売上テーブルを分析チーム別のウェアハウスで集計する。", "note": "別ウェアハウスでも同じデータを更新する処理には競合や依存関係があり得る。", "sources": ["architecture"], "tracks": ["C", "D", "A"], "aliases": "分離型 独立拡張", "featured": false, "related": ["three-layers", "cloud-services", "virtual-warehouse"]},
+  {"id": "cloud-services", "title": "Cloud Services", "ja": "クラウドサービス層", "meaning": "認証、メタデータ管理、クエリ解析・最適化などを担う制御の層。実データを大量に走査する処理とは役割が異なる。", "example": "SQLを解析し、利用権限と実行計画を確認する。", "note": "クラウドサービスの利用量と請求額は同じではない。調整規則は料金資料で確認する。", "sources": ["architecture", "cost"], "tracks": ["C", "D", "A"], "aliases": "メタデータ 制御層", "featured": false, "related": ["three-layers", "storage-compute", "virtual-warehouse"]},
+  {"id": "organization", "title": "Organization", "ja": "組織", "meaning": "複数のSnowflakeアカウントをまとめて管理する上位の単位。アカウント配置や組織レベルの管理を考える起点になる。", "example": "本番・検証・別地域のアカウントを一つの組織で管理する。", "note": "アカウントを分けると、通常のロールやオブジェクトが自動的に共有されるわけではない。", "sources": ["accounts"], "tracks": ["C", "A"], "aliases": "組織 ORG", "featured": false, "related": ["three-layers"]},
+  {"id": "account", "title": "Account", "ja": "アカウント", "meaning": "データ、ユーザー、ロール、ウェアハウス等を管理する環境の境界。クラウドとリージョンを選んで作成する。", "example": "日本と欧州の運用環境を別アカウントにする。", "note": "アカウントとユーザーは別物。1アカウントに複数のユーザーが所属する。", "sources": ["accounts", "architecture"], "tracks": ["C", "D", "A"], "aliases": "環境 アカウント識別子 locator", "featured": false, "related": ["three-layers"]},
+  {"id": "region-cloud", "title": "Region / cloud platform", "ja": "リージョンとクラウド", "meaning": "アカウントを配置する地理的リージョンと基盤クラウド。所在地、機能の提供範囲、転送経路に影響する。", "example": "AWS東京とAzureの別地域で可用性・連携を比較する。", "note": "すべての機能が全クラウド・全リージョンで同時提供されるとは限らない。", "sources": ["architecture", "accounts"], "tracks": ["C", "A"], "aliases": "AWS Azure GCP Google Cloud リージョン", "featured": false, "related": ["three-layers"]},
+  {"id": "edition", "title": "Snowflake editions", "ja": "エディション", "meaning": "Standard、Enterprise、Business Criticalなど、利用できる機能や保護要件に関わるサービス区分。", "example": "拡張Time Travelや高度なセキュリティ要件から必要な区分を確認する。", "note": "エディションはウェアハウスのサイズではない。機能の最低条件は個別資料で確認する。", "sources": ["editions"], "tracks": ["C", "A"], "aliases": "Standard Enterprise Business Critical VPS", "featured": false, "related": ["three-layers"]},
+  {"id": "object-hierarchy", "title": "Object hierarchy", "ja": "オブジェクト階層", "meaning": "データベース、スキーマ、テーブル等の包含関係。ウェアハウスやアカウントロールなど、スキーマ外のオブジェクトもある。", "example": "DB.SCHEMA.TABLEの完全修飾名で表を指定する。", "note": "すべてのオブジェクトがデータベース配下にあると考えない。", "sources": ["tables", "access"], "tracks": ["C", "D", "A"], "aliases": "階層 完全修飾名 namespace", "featured": false, "related": ["identifiers", "session-context"], "sql": "SHOW DATABASES;\nSHOW SCHEMAS IN DATABASE example_db;\nSHOW TABLES IN SCHEMA example_db.public;"},
+  {"id": "schema", "title": "Database / schema", "ja": "データベースとスキーマ", "meaning": "データベースはスキーマを、スキーマはテーブルやビューなどを整理する論理的な入れ物。", "example": "RAW、CURATED、MARTをスキーマで分ける。", "note": "スキーマを分けただけでは権限分離は完成しない。GRANT設計と合わせて使う。", "sources": ["tables", "access-config"], "tracks": ["C", "D", "A"], "aliases": "database データベース schema 名前空間", "featured": false, "related": ["three-layers"]},
+  {"id": "snowsight", "title": "Snowsight", "ja": "Webインターフェース", "meaning": "SQL実行、オブジェクト探索、監視などを行うSnowflakeのWeb UI。見える機能やデータは権限に依存する。", "example": "ワークシートでSQLを実行し、Query Profileを見る。", "note": "UIの操作と裏で実行されるSQL・計算資源を分けて理解する。", "sources": ["architecture"], "tracks": ["C", "D"], "aliases": "Web UI Worksheets ワークシート", "featured": false, "related": ["three-layers"]},
+  {"id": "session-context", "title": "Session context", "ja": "セッションの実行コンテキスト", "meaning": "現在のロール、ウェアハウス、データベース、スキーマ等の実行環境。名前解決や権限、計算資源の選択に関わる。", "example": "USE ROLEとUSE WAREHOUSEで処理の実行条件を明示する。", "note": "同じSQLでもセッションのロール・パラメーターが違えば結果や挙動が変わり得る。", "sources": ["access", "query-tag"], "tracks": ["C", "D", "A"], "aliases": "USE CURRENT_ROLE CURRENT_WAREHOUSE セッション", "featured": false, "related": ["identifiers", "object-hierarchy"], "sql": "SELECT CURRENT_ACCOUNT(), CURRENT_ROLE(),\n       CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_SCHEMA();"},
+  {"id": "workload-isolation", "title": "Workload isolation", "ja": "ワークロード分離", "meaning": "用途別に計算資源や権限を分けて、処理の混雑や障害の影響範囲を抑える設計。", "example": "ロード、BI、開発に別のウェアハウスを割り当てる。", "note": "ウェアハウス分離はデータコピーや完全な業務上の分離を意味しない。", "sources": ["architecture", "warehouses"], "tracks": ["C", "D", "A"], "aliases": "ETL BI リソース分離", "featured": false, "related": ["three-layers"]}
+]},
+{"id": "compute", "title": "計算資源・ウェアハウス", "en": "COMPUTE & WAREHOUSES", "sections": ["architecture", "performance-cost"], "description": "サイズ、同時実行、起動停止、サーバーレスを使い分ける。", "terms": [
+  {"id": "virtual-warehouse", "title": "Virtual warehouse", "ja": "仮想ウェアハウス", "meaning": "SQLクエリやロード等を処理する計算資源のまとまり。保存データとは独立して作成・停止・変更できる。", "example": "BI用に小さなウェアハウス、重い変換用に別のウェアハウスを用意する。", "note": "停止してもテーブルのデータは消えない。ストレージ等の費用は別に発生する。", "sources": ["warehouses"], "tracks": ["C", "D", "A"], "aliases": "VW WH 仮想倉庫 バーチャルウェアハウス", "featured": true, "related": ["three-layers", "storage-compute", "cloud-services"], "sql": "SHOW WAREHOUSES;\n-- 実行資源と現在の状態を確認する。"},
+  {"id": "warehouse-size", "title": "Warehouse size", "ja": "ウェアハウスサイズ", "meaning": "処理に割り当てる計算資源の規模。メモリー不足や並列処理能力の改善を検討するときの設定。", "example": "大量集計でサイズ変更前後の実行時間とクレジットを比較する。", "note": "サイズを倍にしてもSQLが必ず半分の時間で終わるわけではない。", "sources": ["warehouses", "warehouse-consider"], "tracks": ["C", "D", "A"], "aliases": "XS S M L XL サイズ", "featured": false, "related": ["scale-up", "scale-out", "multi-cluster"]},
+  {"id": "scale-up", "title": "Scale up / down", "ja": "スケールアップ・ダウン", "meaning": "一つのウェアハウスクラスターの規模を変更すること。重い処理やメモリー不足の対策として検討する。", "example": "大きな結合でスピルが起きるためサイズを上げる。", "note": "多数の同時利用者による待ち行列の対策は、スケールアウトと比較する。", "sources": ["warehouse-consider"], "tracks": ["C", "D", "A"], "aliases": "resize 垂直拡張", "featured": true, "related": ["scale-out", "multi-cluster", "warehouse-size"]},
+  {"id": "scale-out", "title": "Scale out / in", "ja": "スケールアウト・イン", "meaning": "マルチクラスターで稼働クラスター数を変え、主に同時実行への対応力を調整すること。", "example": "昼間だけBI利用者が増えるためクラスターを追加する。", "note": "一つのSQLを複数クラスターに分散して必ず高速化する仕組みではない。", "sources": ["multicluster"], "tracks": ["C", "D", "A"], "aliases": "水平拡張 concurrency 同時実行", "featured": true, "related": ["scale-up", "multi-cluster", "warehouse-size"]},
+  {"id": "multi-cluster", "title": "Multi-cluster warehouse", "ja": "マルチクラスターウェアハウス", "meaning": "同じ構成の複数クラスターを使ってクエリの混雑に対応するウェアハウス。最小・最大数等を設定する。", "example": "月次レポートの同時アクセスで待ち時間を抑える。", "note": "利用可能なエディションや上限を確認する。常時複数稼働にすると費用も増える。", "sources": ["multicluster"], "tracks": ["C", "A"], "aliases": "MCW マルチクラスタ", "featured": true, "related": ["scale-up", "scale-out", "warehouse-size"]},
+  {"id": "scaling-policy", "title": "Scaling policy", "ja": "スケーリングポリシー", "meaning": "マルチクラスターの自動起動・停止の判断に関わるポリシー。StandardとEconomyで性能・費用の考え方が異なる。", "example": "待ち時間優先のダッシュボードと費用重視の処理を分ける。", "note": "ウェアハウスサイズを自動変更する設定ではない。", "sources": ["multicluster"], "tracks": ["C", "A"], "aliases": "Standard Economy Auto-scale", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "suspend-resume", "title": "Auto-suspend / auto-resume", "ja": "自動停止・自動再開", "meaning": "アイドル時にウェアハウスを停止し、必要時に再開する設定。使わない計算資源の稼働を抑える。", "example": "夜間に利用がない分析用ウェアハウスを自動停止する。", "note": "短すぎる停止設定は再開の頻発やデータキャッシュ消失につながり得る。", "sources": ["warehouse-use", "warehouse-consider"], "tracks": ["C", "D", "A"], "aliases": "AUTO_SUSPEND AUTO_RESUME 起動停止", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "warehouse-cache", "title": "Warehouse data cache", "ja": "ウェアハウスのデータキャッシュ", "meaning": "ウェアハウスが読み込んだデータを再利用するキャッシュ。類似の走査処理で外部ストレージからの読み込みを減らす。", "example": "同じテーブルを続けて集計する。", "note": "クエリ結果キャッシュとは別。ウェアハウスの停止後も同じキャッシュが保持されるとは考えない。", "sources": ["warehouse-consider", "persisted"], "tracks": ["C", "D", "A"], "aliases": "local disk cache ローカルキャッシュ", "featured": false, "related": ["result-cache", "result-scan"]},
+  {"id": "serverless", "title": "Serverless compute", "ja": "サーバーレスコンピュート", "meaning": "Snowflakeが特定サービスの計算資源を管理する実行方式。Snowpipe等で利用される。", "example": "ロード用ウェアハウスを個別管理せず継続取り込みする。", "note": "サーバーレスは無料という意味ではない。サービスごとに課金単位・監視手段が違う。", "sources": ["snowpipe", "cost"], "tracks": ["C", "D", "A"], "aliases": "サーバレス managed compute", "featured": true, "related": ["serverless-task", "resource-monitor", "budget"]},
+  {"id": "snowpark-optimized", "title": "Snowpark-optimized warehouse", "ja": "Snowpark最適化ウェアハウス", "meaning": "メモリーを多く使うSnowpark処理等に向けたウェアハウスの選択肢。通常の分析SQL用構成と比較して選ぶ。", "example": "大きなデータを使う機械学習やPython処理を実行する。", "note": "Snowpark APIを使うために常にこの種類が必須というわけではない。", "sources": ["snowpark-wh"], "tracks": ["D", "A"], "aliases": "MEMORY Snowpark 最適化", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "warehouse-generation", "title": "Warehouse generation / resource constraint", "ja": "世代・リソース構成", "meaning": "ウェアハウスの種類、ハードウェア世代、対応するリソース構成を選ぶ考え方。同じサイズ名だけで性能を決めつけない。", "example": "移行前後で実測し、利用リージョンで選べる構成を確認する。", "note": "提供状況と設定名は更新される。サイズ・種類・世代を区別して公式仕様を見る。", "sources": ["warehouses"], "tracks": ["D", "A"], "aliases": "Gen1 Gen2 generation RESOURCE_CONSTRAINT", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "query-queue", "title": "Query queue / concurrency", "ja": "待ち行列と同時実行", "meaning": "計算資源の混雑等でクエリが待機する状態。実行時間とは別に、待ち時間を切り分けて調べる。", "example": "QUERY_HISTORYから待機時間が大きい時間帯を探す。", "note": "SQLそのものが遅い場合と、混雑で実行を待っている場合で対策が異なる。", "sources": ["profile", "query-history"], "tracks": ["C", "D", "A"], "aliases": "queuing QUEUED_OVERLOAD_TIME", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "statement-timeout", "title": "Statement timeout", "ja": "実行・待機時間の上限", "meaning": "長時間実行や待機を制御するパラメーター。処理特性に合わせてタイムアウトを設定する。", "example": "誤った結合で処理が長時間走り続けるのを抑える。", "note": "費用全体の厳密な上限設定ではない。適用されるパラメーターの優先順位も確認する。", "sources": ["query-tag"], "tracks": ["D", "A"], "aliases": "STATEMENT_TIMEOUT_IN_SECONDS STATEMENT_QUEUED_TIMEOUT_IN_SECONDS", "featured": false, "related": ["virtual-warehouse", "scale-up"]},
+  {"id": "query-acceleration", "title": "Query Acceleration Service", "ja": "クエリアクセラレーション", "meaning": "対象クエリの一部を追加のサーバーレス資源に委譲し、ウェアハウスの処理を補助するサービス。", "example": "大規模走査を含む適格な分析SQLで効果を測る。", "note": "すべてのSQLに有効ではなく、追加費用もある。マルチクラスターとは目的が異なる。", "sources": ["qas"], "tracks": ["D", "A"], "aliases": "QAS Query Acceleration", "featured": false, "related": ["pruning", "clustering-key", "search-optimization"]}
+]},
+{"id": "tables", "title": "テーブル・ビュー・保存形式", "en": "TABLES, VIEWS & FORMATS", "sections": ["storage-data"], "description": "どこに何を保存し、どの単位で参照・更新するかを選ぶ。", "terms": [
+  {"id": "standard-table", "title": "Standard Snowflake table", "ja": "標準Snowflakeテーブル", "meaning": "Snowflake管理のストレージとマイクロパーティションを使う分析向けの基本テーブル。", "example": "履歴データを格納し、SQLで大規模集計する。", "note": "IcebergやHybridとは、保存方式、制約、運用条件が異なる。", "sources": ["tables", "micro"], "tracks": ["C", "D", "A"], "aliases": "native table ネイティブテーブル", "featured": true, "related": ["hybrid-table", "iceberg-table", "external-table"]},
+  {"id": "permanent-table", "title": "Permanent table", "ja": "永続テーブル", "meaning": "明示的に削除するまで保持する通常のテーブル。対象データにはTime TravelとFail-safeの保護が適用される。", "example": "再作成が難しい業務の正本を保持する。", "note": "履歴保持やFail-safeのストレージも費用に関わる。", "sources": ["temporary", "failsafe"], "tracks": ["C", "D", "A"], "aliases": "恒久テーブル permanent", "featured": false, "related": ["transient-table", "temporary-table"]},
+  {"id": "transient-table", "title": "Transient table", "ja": "トランジェントテーブル", "meaning": "セッションを超えて存続するがFail-safeを持たないテーブル。再作成できるデータ等に使う。", "example": "再ロード可能な中間加工データを保存する。", "note": "一時テーブルと違いセッション終了では消えない。復旧できる期間を過信しない。", "sources": ["temporary"], "tracks": ["C", "D", "A"], "aliases": "transient 一過性テーブル", "featured": false, "related": ["permanent-table", "temporary-table"]},
+  {"id": "temporary-table", "title": "Temporary table", "ja": "一時テーブル", "meaning": "作成したセッション内で利用するテーブル。作業途中のデータを他セッションから隔離する。", "example": "複雑な変換を一時的な中間表に分ける。", "note": "長く続くセッションでは保存費用が続く。永続テーブルと同名の場合の名前解決にも注意する。", "sources": ["temporary"], "tracks": ["C", "D"], "aliases": "temp 一時表", "featured": false, "related": ["permanent-table", "transient-table"]},
+  {"id": "hybrid-table", "title": "Hybrid table", "ja": "ハイブリッドテーブル", "meaning": "低遅延の小規模読み書きやトランザクション処理に向けたテーブル。主キー、インデックス、行レベルロック等が特徴。", "example": "アプリケーションの注文状態や参照データを更新する。", "note": "標準テーブルの単なる高速版ではない。利用可能地域・制限・課金を確認する。", "sources": ["hybrid"], "tracks": ["C", "D", "A"], "aliases": "Unistore OLTP ハイブリッド", "featured": true, "related": ["standard-table", "iceberg-table", "external-table", "constraints", "check-constraint"]},
+  {"id": "iceberg-table", "title": "Apache Iceberg table", "ja": "Icebergテーブル", "meaning": "オープンなApache Iceberg形式のデータをSnowflakeで扱うテーブル。カタログの管理主体や保存先に複数の構成がある。", "example": "同じデータをSnowflakeと別のIceberg対応エンジンから利用する。", "note": "すべてSnowflake管理、またはすべて外部管理と一括りにしない。構成で機能差がある。", "sources": ["iceberg"], "tracks": ["C", "D", "A"], "aliases": "Apache Iceberg アイスバーグ", "featured": true, "related": ["standard-table", "hybrid-table", "external-table", "external-volume", "catalog-integration", "open-catalog"]},
+  {"id": "iceberg-managed", "title": "Snowflake-managed Iceberg", "ja": "Snowflake管理のIceberg", "meaning": "SnowflakeをカタログとしてIcebergテーブルのメタデータやライフサイクルを管理する構成。", "example": "オープン形式を保ちながらSnowflakeでテーブルを更新する。", "note": "データの保存場所とカタログの管理主体は別の設計要素。", "sources": ["iceberg"], "tracks": ["D", "A"], "aliases": "Snowflake as catalog managed Iceberg", "featured": false, "related": ["standard-table", "hybrid-table"]},
+  {"id": "iceberg-external", "title": "Externally managed Iceberg", "ja": "外部カタログ管理のIceberg", "meaning": "外部のIcebergカタログを参照してテーブルを利用する構成。同期方法や読み書きの対応を確認する。", "example": "既存の外部Icebergテーブルをカタログ連携で扱う。", "note": "更新可否・自動同期・利用制限はカタログや構成に依存する。常に読み取り専用と断定しない。", "sources": ["iceberg", "catalog"], "tracks": ["D", "A"], "aliases": "external catalog REST catalog", "featured": false, "related": ["standard-table", "hybrid-table"]},
+  {"id": "external-table", "title": "External table", "ja": "外部テーブル", "meaning": "外部ステージ上のファイルを、Snowflake内に行データとして取り込まず問い合わせる仕組み。メタデータでファイルを把握する。", "example": "S3の既存ParquetファイルをSQLで参照する。", "note": "標準テーブルのように行を直接更新する用途ではない。Icebergテーブルとも別の機能。", "sources": ["external-table"], "tracks": ["C", "D", "A"], "aliases": "external table 外部表", "featured": false, "related": ["standard-table", "hybrid-table", "iceberg-table"]},
+  {"id": "micro-partition", "title": "Micro-partition", "ja": "マイクロパーティション", "meaning": "標準テーブルのデータを自動分割して保持する単位。列ごとの値の範囲等のメタデータが読み飛ばしに使われる。", "example": "日付条件に関係しない保存領域を走査から除外する。", "note": "一般的な手動パーティション表のように、利用者が一つずつパーティションを定義する仕組みではない。", "sources": ["micro"], "tracks": ["C", "D", "A"], "aliases": "MP columnar 列指向", "featured": true, "related": ["standard-table", "hybrid-table"]},
+  {"id": "view", "title": "View", "ja": "ビュー", "meaning": "SELECT文をオブジェクトとして保存し、表のように参照する仕組み。通常のビューは結果データを永続化しない。", "example": "部門向けの列だけを公開する論理的な窓口を作る。", "note": "ビューを作るだけで計算結果が保存され、必ず高速化するわけではない。", "sources": ["views"], "tracks": ["C", "D", "A"], "aliases": "論理ビュー logical view", "featured": false, "related": ["secure-view", "materialized-view"]},
+  {"id": "secure-view", "title": "Secure view", "ja": "セキュアビュー", "meaning": "定義の露出や一部の最適化に伴う情報漏えいリスクを抑えるためのビュー。データ共有や保護用途で使う。", "example": "元テーブルを直接公開せず、限定したデータを共有する。", "note": "SECUREを付けるだけで必要な行・列の制限が自動設定されるわけではない。", "sources": ["secure-view"], "tracks": ["C", "D", "A"], "aliases": "secure 安全なビュー", "featured": false, "related": ["view", "materialized-view"]},
+  {"id": "materialized-view", "title": "Materialized view", "ja": "マテリアライズドビュー", "meaning": "対象クエリの計算結果を保持し、基表の変更に合わせてメンテナンスする仕組み。特定の繰り返し参照を速める。", "example": "同じ表の一部の列・集計を繰り返し利用する。", "note": "対応SQLに制限があり、保存・更新費用も発生する。汎用ETLの代替とは限らない。", "sources": ["materialized"], "tracks": ["C", "D", "A"], "aliases": "MV マテビュー 実体化ビュー", "featured": false, "related": ["dynamic-table", "target-lag", "refresh-mode", "view", "secure-view"]},
+  {"id": "semantic-view", "title": "Semantic view", "ja": "セマンティックビュー", "meaning": "業務上のディメンション、メトリクス、テーブル間の関係を定義するスキーマオブジェクト。分析で意味を共有する。", "example": "売上の定義と顧客・日付の関係を共通化する。", "note": "集計結果を物理保存するMaterialized Viewとは別。定義の正しさは設計者が確認する。", "sources": ["semantic"], "tracks": ["D", "A", "X"], "aliases": "semantic layer メトリクス ディメンション", "featured": false, "related": ["cortex-analyst", "semantic-model"]},
+  {"id": "constraints", "title": "Constraints", "ja": "制約", "meaning": "主キー、外部キー、一意性、NOT NULL等のデータ規則。実際に強制されるかは制約とテーブルの種類で異なる。", "example": "標準テーブルのPK/FK宣言と、業務バリデーションを区別して設計する。", "note": "標準テーブルのPK/FK/UNIQUEを宣言しただけで全て検証されるとは考えない。Hybridでは挙動が異なる。", "sources": ["constraints", "hybrid"], "tracks": ["C", "D", "A"], "aliases": "PK FK UNIQUE NOT NULL 主キー 参照整合", "featured": false, "related": ["check-constraint", "hybrid-table"]},
+  {"id": "sequence", "title": "Sequence / identity", "ja": "シーケンス・自動採番", "meaning": "値を自動生成して識別子等に利用する仕組み。SEQUENCEやIDENTITY／AUTOINCREMENTを使う。", "example": "新規レコードにサロゲートキーを付ける。", "note": "連番に欠番がないことや、業務上の時系列順まで保証する用途には使わない。", "sources": ["sequence"], "tracks": ["C", "D"], "aliases": "AUTOINCREMENT IDENTITY SEQUENCE 採番", "featured": false, "related": ["standard-table", "hybrid-table"]},
+  {"id": "check-constraint", "title": "CHECK constraint", "ja": "CHECK制約", "meaning": "列や行の値が指定した条件を満たすかを検証する制約。標準テーブルでは対応するCHECK制約が強制される。", "example": "負の金額など、許容しない値の登録を防ぐ。", "note": "標準テーブルのPK・FK・UNIQUEとは強制の扱いが異なる。Hybrid TableではCHECKをサポートしないため、対象と制限を確認する。", "sources": ["constraints"], "tracks": ["C", "D"], "aliases": "CHECK constraint チェック制約 enforced", "featured": false, "related": ["constraints", "hybrid-table"], "sql": "CREATE TEMP TABLE check_example (\n  amount NUMBER,\n  CONSTRAINT nonnegative_amount CHECK (amount >= 0)\n);\n-- NULLも拒否するならNOT NULLを別途指定する。"}
+]},
+{"id": "lifecycle", "title": "履歴・復旧・ライフサイクル", "en": "HISTORY & DATA LIFECYCLE", "sections": ["storage-data", "architecture"], "description": "削除前後の復元、クローン、保存期間の違いを理解する。", "terms": [
+  {"id": "time-travel", "title": "Time Travel", "ja": "タイムトラベル", "meaning": "設定された保持期間内の過去データを参照・複製・復元する機能。変更や削除への対応に使う。", "example": "誤更新の直前のテーブルを確認する。", "note": "任意の過去を無制限に参照できるわけではない。対象オブジェクトと保持期間を確認する。", "sources": ["time-travel"], "tracks": ["C", "D", "A"], "aliases": "履歴 過去データ", "featured": true, "related": ["fail-safe", "zero-copy-clone", "replication", "retention", "historical-storage"]},
+  {"id": "retention", "title": "Data retention period", "ja": "データ保持期間", "meaning": "Time Travelで過去データを保持する期間。標準テーブルではエディションや表種別で設定可能範囲が変わる。", "example": "永続表は長め、再作成可能な中間表は短めに設計する。", "note": "保持期間を延ばしても、すでに利用できなくなった過去データが復活するわけではない。", "sources": ["time-travel"], "tracks": ["C", "D", "A"], "aliases": "DATA_RETENTION_TIME_IN_DAYS 保持日数 90日 1日", "featured": false, "related": ["time-travel", "historical-storage"]},
+  {"id": "at-before", "title": "AT / BEFORE", "ja": "時点指定", "meaning": "時刻、相対オフセット、クエリIDを使い、対象時点のデータを問い合わせるTime Travel構文。", "example": "誤ったDELETEのクエリIDより前の状態を調べる。", "note": "ATとBEFOREで境界の扱いが異なる。現在のスキーマで過去データを読む点にも注意する。", "sources": ["time-travel"], "tracks": ["C", "D"], "aliases": "TIMESTAMP OFFSET STATEMENT", "featured": false, "related": ["time-travel", "zero-copy-clone"], "sql": "SELECT * FROM orders AT (OFFSET => -60);\n-- 60秒前の参照例。保持期間や作成時点等の条件がある。"},
+  {"id": "undrop", "title": "UNDROP", "ja": "削除オブジェクトの復元", "meaning": "保持期間内にある対応オブジェクトのDROPを取り消すコマンド。", "example": "誤って削除したテーブルを戻す。", "note": "DELETEされた行を直接UNDROPするわけではない。同名オブジェクトの存在も確認する。", "sources": ["time-travel"], "tracks": ["C", "D"], "aliases": "復元 DROP 取り消し", "featured": false, "related": ["time-travel", "zero-copy-clone"]},
+  {"id": "zero-copy-clone", "title": "Zero-copy cloning", "ja": "ゼロコピークローン", "meaning": "作成時点のデータを共有して論理的なコピーを作る仕組み。標準テーブルでは初期のデータ全量コピーを避けられる。", "example": "本番に近いテストデータを短時間で用意する。", "note": "作成後の変更は独立する。変更分や履歴のストレージは増え得るため永久に無料ではない。", "sources": ["clone"], "tracks": ["C", "D", "A"], "aliases": "CLONE ゼロコピー", "featured": true, "related": ["time-travel", "fail-safe", "replication"], "sql": "CREATE TABLE orders_copy CLONE orders;\n-- テーブルを作成する例。履歴・権限・依存関係を確認する。"},
+  {"id": "clone-scope", "title": "Cloning scope & grants", "ja": "クローンの対象と権限", "meaning": "データベース・スキーマ・テーブル等を複製するとき、含まれるオブジェクト、参照先、権限を確認する観点。", "example": "テスト環境のクローン後にタスク・外部参照・アクセス権を点検する。", "note": "すべてのオブジェクトやデータファイルが同じ規則でコピーされるわけではない。", "sources": ["clone"], "tracks": ["D", "A"], "aliases": "COPY GRANTS clone grants", "featured": false, "related": ["time-travel", "zero-copy-clone"]},
+  {"id": "fail-safe", "title": "Fail-safe", "ja": "フェイルセーフ", "meaning": "対象の永続データについて、Time Travel後にSnowflakeが復旧を試みるための保護期間。通常のユーザー操作による履歴検索とは異なる。", "example": "重大なデータ損失時の最後の保護として理解する。", "note": "通常のバックアップや日常的な復元手段ではない。Transient・Temporaryにはない。", "sources": ["failsafe"], "tracks": ["C", "D", "A"], "aliases": "7日 failsafe 災害復旧", "featured": true, "related": ["time-travel", "zero-copy-clone", "replication"]},
+  {"id": "historical-storage", "title": "Historical storage", "ja": "履歴ストレージ", "meaning": "現在のデータだけでなく、変更前データ、クローン参照、保護期間中のデータ等が占める保存領域。", "example": "削除したのにストレージ使用量がすぐ減らない理由を調べる。", "note": "論理削除やDROPが即座に物理ストレージの削減になるとは限らない。", "sources": ["time-travel", "failsafe", "clone"], "tracks": ["D", "A"], "aliases": "TIME_TRAVEL_BYTES FAILSAFE_BYTES retained for clone", "featured": false, "related": ["retention", "time-travel"]},
+  {"id": "storage-lifecycle", "title": "Storage lifecycle policy", "ja": "ストレージライフサイクルポリシー", "meaning": "条件に応じたデータのライフサイクル管理を行うポリシー機能。古いデータの保持や整理を設計する際に参照する。", "example": "期間を過ぎたデータの扱いを明示的なポリシーで管理する。", "note": "Time Travelの保持期間設定とは別機能。対応表種別・操作・提供条件は最新仕様を確認する。", "sources": ["lifecycle"], "tracks": ["D", "A", "X"], "aliases": "retention policy archive lifecycle", "featured": false, "related": ["time-travel", "zero-copy-clone"]}
+]},
+{"id": "ingestion", "title": "ロード・アンロード・ファイル", "en": "INGESTION & FILES", "sections": ["data-engineering", "sharing-integration"], "description": "ファイル配置、取り込み、エラー処理、外部ストレージの接続を整理する。", "terms": [
+  {"id": "stage", "title": "Stage", "ja": "ステージ", "meaning": "ロード元・アンロード先などのファイルを扱うための場所、またはその場所への参照。内部と外部がある。", "example": "CSVを置いてからCOPY INTOで表にロードする。", "note": "ステージはテーブルそのものではない。ファイル配置と行データの取り込みを区別する。", "sources": ["stage", "load"], "tracks": ["C", "D", "A"], "aliases": "@stage ステージング", "featured": true, "related": ["external-stage", "storage-integration", "external-volume"]},
+  {"id": "internal-stage", "title": "Internal stage", "ja": "内部ステージ", "meaning": "Snowflakeが管理するストレージ上のファイル置き場。ユーザー、テーブル、名前付きの種類がある。", "example": "ローカルのCSVを名前付き内部ステージにPUTする。", "note": "内部ステージ上のファイルにも保存費用が関わる。表にロード済みでも元ファイルは別に管理する。", "sources": ["load", "stage"], "tracks": ["C", "D"], "aliases": "internal named stage 内部", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "external-stage", "title": "External stage", "ja": "外部ステージ", "meaning": "S3、Azure、GCS等の外部ストレージの位置とアクセス設定を持つオブジェクト。", "example": "共同バケットの特定パスをロード元として登録する。", "note": "外部ステージを作成してもファイルがSnowflake内にコピーされるわけではない。", "sources": ["stage", "load"], "tracks": ["C", "D", "A"], "aliases": "S3 bucket Azure container GCS 外部", "featured": false, "related": ["stage", "storage-integration", "external-volume"]},
+  {"id": "user-table-stage", "title": "User stage / table stage", "ja": "ユーザーステージ・テーブルステージ", "meaning": "ユーザーに対応する@~とテーブルに対応する@%tableの内部ステージ。名前付きステージとは管理単位が違う。", "example": "一人の作業用ファイルにユーザーステージを使う。", "note": "独立した名前付きステージと同じ権限・変更操作ができると考えない。", "sources": ["load"], "tracks": ["C", "D"], "aliases": "@~ @% ユーザ テーブルステージ", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "file-format", "title": "File format", "ja": "ファイル形式定義", "meaning": "区切り文字、引用符、圧縮、NULLの扱い等、ファイルの読み書き規則を設定するオブジェクト。", "example": "UTF-8のCSVでヘッダーや空文字の解釈を明示する。", "note": "拡張子だけでは正しく読めない。空文字、NULL文字列、引用符を別々に確認する。", "sources": ["fileformat"], "tracks": ["C", "D", "A"], "aliases": "CSV JSON Parquet Avro ORC XML UTF-8 NULL_IF", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "copy-into", "title": "COPY INTO table", "ja": "バルクロード", "meaning": "ステージ上のファイルからテーブルへ行データを取り込むSQL。ファイル形式やエラー時の動作を指定できる。", "example": "日次で届くCSVを一括ロードする。", "note": "PUTはファイル転送、COPYは行の取り込み。通常のバルクロードにはウェアハウスを使う。", "sources": ["copy", "load"], "tracks": ["C", "D", "A"], "aliases": "COPY INTO load バルク", "featured": true, "related": ["snowpipe", "snowpipe-streaming"], "sql": "COPY INTO target_table\nFROM @load_stage\nFILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1)\nVALIDATION_MODE = RETURN_ERRORS;\n-- この例はロードせず、エラーを検証する。"},
+  {"id": "copy-unload", "title": "COPY INTO location", "ja": "アンロード", "meaning": "SELECT結果やテーブルのデータを、内部・外部ステージのファイルへ出力するSQL。", "example": "加工済みデータをS3へParquetで出力する。", "note": "外部へ書き出す権限やファイル上書き、暗号化、転送費用を確認する。", "sources": ["unload"], "tracks": ["C", "D", "A"], "aliases": "export unload エクスポート", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "put-get", "title": "PUT / GET", "ja": "内部ステージへの転送", "meaning": "PUTはローカルから内部ステージへ、GETは内部ステージからローカルへファイルを転送するコマンド。", "example": "CLIや対応ドライバーでCSVをアップロード・取得する。", "note": "外部ストレージへの一般的なアップロード手段ではない。実行クライアントの対応も確認する。", "sources": ["put", "get"], "tracks": ["C", "D"], "aliases": "アップロード ダウンロード", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "snowpipe", "title": "Snowpipe", "ja": "ファイルの継続取り込み", "meaning": "ステージに届くファイルを継続的に取り込むサーバーレスサービス。イベント通知やAPIでロードを開始する。", "example": "S3に追加されたファイルを自動ロードする。", "note": "行を直接送るSnowpipe Streamingとは別。料金モデルや遅延条件は個別資料で確認する。", "sources": ["snowpipe"], "tracks": ["C", "D", "A"], "aliases": "スノーパイプ PIPE", "featured": true, "related": ["copy-into", "snowpipe-streaming"]},
+  {"id": "pipe", "title": "Pipe / auto-ingest", "ja": "パイプ・自動取り込み", "meaning": "ロード用COPY文等の定義を持つオブジェクト。ファイル取り込みではクラウドイベントと連携して自動化できる。", "example": "ファイル到着の通知でSnowpipeを起動する。", "note": "通知設定とストレージ権限がそろう必要がある。パイプ作成だけで全過去ファイルが自動ロードされるとは限らない。", "sources": ["snowpipe"], "tracks": ["D", "A"], "aliases": "AUTO_INGEST SNS SQS Event Grid Pub/Sub", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "snowpipe-streaming", "title": "Snowpipe Streaming", "ja": "行データのストリーミング取り込み", "meaning": "SDKやAPIを通して行データを送る取り込み方式。ファイルの配置を前提とするSnowpipeとは区別する。", "example": "アプリケーションのイベントを低遅延で送信する。", "note": "Classicと新しいアーキテクチャでAPI・機能が違う。遅延の目安を全環境の保証と捉えない。", "sources": ["streaming"], "tracks": ["C", "D", "A"], "aliases": "streaming ストリーミング high performance classic", "featured": true, "related": ["copy-into", "snowpipe"]},
+  {"id": "streaming-channel", "title": "Streaming channel / offset token", "ja": "チャネル・オフセットトークン", "meaning": "ストリーミング取り込みの単位や進捗を管理する仕組み。対応SDKで順序・再送・処理済み位置を設計する。", "example": "接続断後に送信済み位置を照合して再開する。", "note": "APIを呼ぶだけで業務全体のexactly-onceが完成するわけではない。チャネル方式やソース側の再送設計が必要。", "sources": ["streaming"], "tracks": ["D", "A"], "aliases": "channel offset token exactly once", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "load-validation", "title": "VALIDATION_MODE / ON_ERROR", "ja": "ロード検証とエラー処理", "meaning": "ロード前の検証や、エラー時に中断・スキップ等をどう扱うかを指定するCOPYオプション。", "example": "本番ロード前にCSVの型・列数エラーを検出する。", "note": "形式チェックが通っても、業務上の重複や親子整合まで検証済みとは限らない。", "sources": ["copy"], "tracks": ["C", "D"], "aliases": "RETURN_ERRORS ABORT_STATEMENT CONTINUE SKIP_FILE", "featured": false, "related": ["try-cast", "schema-evolution"]},
+  {"id": "load-history", "title": "Load metadata / duplicate file prevention", "ja": "ロード履歴と重複ファイル判定", "meaning": "読み込んだファイルのメタデータを使って、同じファイルの再ロードを抑える仕組み。", "example": "再実行時に既ロードファイルがスキップされる理由を確認する。", "note": "履歴によるファイル判定は行単位の業務キー重複排除ではない。FORCE等で再ロードされ得る。", "sources": ["copy"], "tracks": ["D", "A"], "aliases": "FORCE COPY_HISTORY 重複ロード", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "schema-evolution", "title": "Schema evolution", "ja": "スキーマの自動進化", "meaning": "条件を満たすロード時に、新しい列などのファイル構造変化を表へ反映する機能。", "example": "供給元が列を追加するParquetデータを取り込む。", "note": "あらゆる型変更を安全に自動吸収する機能ではない。有効化、権限、対応方式を確認する。", "sources": ["schema-evolution"], "tracks": ["D", "A"], "aliases": "ENABLE_SCHEMA_EVOLUTION MATCH_BY_COLUMN_NAME", "featured": false, "related": ["try-cast", "load-validation"]},
+  {"id": "infer-schema", "title": "INFER_SCHEMA / USING TEMPLATE", "ja": "スキーマ推定と表定義生成", "meaning": "対応ファイルを読み、列名や型を推定する関数と、その結果をテーブル作成に使う仕組み。", "example": "Parquetの構造から取り込み先テーブルのひな形を作る。", "note": "推定結果は業務上の型設計や品質保証そのものではない。対象ファイルとオプションに依存する。", "sources": ["infer"], "tracks": ["D", "A"], "aliases": "INFER_SCHEMA CREATE TABLE USING TEMPLATE", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "storage-integration", "title": "Storage integration", "ja": "ストレージ統合", "meaning": "外部クラウドストレージへの認証・許可先を管理するオブジェクト。外部ステージ等から参照する。", "example": "長期アクセスキーを直接SQLに書かずS3へのアクセスを設定する。", "note": "クラウド側のIAM設定とSnowflake側のGRANTの両方が必要。External Volumeとは別用途。", "sources": ["storage-integration"], "tracks": ["C", "D", "A"], "aliases": "IAM trust STORAGE_ALLOWED_LOCATIONS", "featured": false, "related": ["stage", "external-stage", "external-volume"]},
+  {"id": "unstructured", "title": "Unstructured data", "ja": "非構造化データ", "meaning": "PDF、画像、音声等のファイルをステージ等に置き、参照・処理する機能群。", "example": "申請書PDFを処理し、抽出結果を表へ格納する。", "note": "VARIANTで扱うJSON等の半構造化データと同じものではない。", "sources": ["unstructured"], "tracks": ["C", "D", "X"], "aliases": "PDF image audio 非構造化", "featured": false, "related": ["stage", "copy-into"]},
+  {"id": "file-urls", "title": "Scoped URL / file URL / presigned URL", "ja": "ファイル参照URL", "meaning": "ステージのファイルを参照するための複数のURL形式。認証、権限確認、期限、共有方法が異なる。", "example": "権限を限定したファイル参照をアプリケーションへ渡す。", "note": "URLを知るだけでアクセスできる形式もある。種類を混同して公開しない。", "sources": ["unstructured"], "tracks": ["D", "A"], "aliases": "BUILD_SCOPED_FILE_URL BUILD_STAGE_FILE_URL GET_PRESIGNED_URL", "featured": false, "related": ["stage", "copy-into"]}
+]},
+{"id": "pipelines", "title": "パイプライン・変更追跡", "en": "PIPELINES & CHANGE DATA CAPTURE", "sections": ["data-engineering"], "description": "差分処理、自動実行、宣言的変換、運用時の再実行をつなぐ。", "terms": [
+  {"id": "stream", "title": "Stream", "ja": "ストリーム", "meaning": "対象オブジェクトの変更を追跡し、前回のオフセット以降の差分を取得するオブジェクト。差分処理の起点になる。", "example": "変更された顧客データを下流のマスタへ反映する。", "note": "Stream自体に元データの完全コピーを保持するわけではない。保持期間と消費方法が重要。", "sources": ["streams"], "tracks": ["C", "D", "A"], "aliases": "CDC change data capture 差分", "featured": true, "related": ["stream-offset", "stream-stale", "change-tracking", "task", "dynamic-table"], "sql": "SELECT * FROM changes_stream;\n-- SELECTだけではStreamのオフセットは進まない。"},
+  {"id": "stream-types", "title": "Standard / append-only / insert-only stream", "ja": "ストリームの種類", "meaning": "更新・削除を含む変更、追加行だけ、外部表等への挿入中心など、対象と必要な差分で種類を選ぶ。", "example": "追記ログにはappend-only、更新のあるマスタにはstandardを検討する。", "note": "対象テーブルによって使える種類が異なる。append-onlyで更新・削除まで同様に追えるとは考えない。", "sources": ["streams"], "tracks": ["D", "A"], "aliases": "APPEND_ONLY INSERT_ONLY 標準ストリーム", "featured": false, "related": ["stream", "task"]},
+  {"id": "stream-offset", "title": "Stream offset / consumption", "ja": "ストリームのオフセットと消費", "meaning": "どこまでの変更を処理したかを示す位置。StreamをDML等で消費し、トランザクションがコミットされると進む。", "example": "差分をMERGEで反映して処理済み位置を進める。", "note": "単にSELECTしただけではオフセットは進まない。複数の独立利用者には別Streamを検討する。", "sources": ["streams"], "tracks": ["C", "D", "A"], "aliases": "consume offset COMMIT 消費", "featured": false, "related": ["stream", "stream-stale", "change-tracking"]},
+  {"id": "stream-stale", "title": "Stream staleness", "ja": "ストリームの陳腐化", "meaning": "必要な履歴が保持されなくなり、差分を正しく取得できなくなる状態。未消費期間と保持設定に注意する。", "example": "長期停止していたパイプラインの再開前にSTALE_AFTERを確認する。", "note": "Streamを作れば変更履歴が永久保存されるわけではない。", "sources": ["streams"], "tracks": ["D", "A"], "aliases": "stale STALE_AFTER MAX_DATA_EXTENSION_TIME_IN_DAYS", "featured": false, "related": ["stream", "stream-offset", "change-tracking"]},
+  {"id": "change-tracking", "title": "CHANGE_TRACKING / CHANGES", "ja": "変更追跡とCHANGES句", "meaning": "変更追跡を有効にし、指定区間の差分を問い合わせる仕組み。Streamオブジェクトを使わない取得方法もある。", "example": "期間を指定して変更を調査する。", "note": "CHANGES句は自動で利用者ごとの処理済み位置を管理するStreamと同一ではない。", "sources": ["streams"], "tracks": ["D", "A"], "aliases": "CHANGE_TRACKING CHANGES", "featured": false, "related": ["stream", "stream-offset", "stream-stale"]},
+  {"id": "stream-metadata", "title": "Stream metadata columns", "ja": "変更メタデータ列", "meaning": "METADATA$ACTION、METADATA$ISUPDATE、METADATA$ROW_ID等で、差分の操作種別や識別情報を表す。", "example": "UPDATE由来のDELETE/INSERTの組を考慮してMERGEする。", "note": "ACTIONだけを見て業務上の削除と判断しない。更新が複数行として表現される場合がある。", "sources": ["streams"], "tracks": ["D", "A"], "aliases": "METADATA$ACTION METADATA$ISUPDATE METADATA$ROW_ID", "featured": false, "related": ["stream", "task"]},
+  {"id": "task", "title": "Task", "ja": "タスク", "meaning": "スケジュールや条件に基づきSQLやプロシージャを実行するオブジェクト。定期処理やパイプラインを自動化する。", "example": "毎時の集計や申請データの検証を実行する。", "note": "Streamは変更追跡、Taskは実行。片方だけで両方の役割を持つわけではない。", "sources": ["tasks"], "tracks": ["C", "D", "A"], "aliases": "CREATE TASK CRON SCHEDULE", "featured": true, "related": ["stream", "dynamic-table"]},
+  {"id": "serverless-task", "title": "Serverless task", "ja": "サーバーレスタスク", "meaning": "利用者がウェアハウスを指定せず、Snowflake管理の資源で実行するタスク。", "example": "負荷が変動する定期処理の計算管理を簡素化する。", "note": "ユーザー管理ウェアハウスのタスクと、費用・権限・制御方法を比較する。", "sources": ["tasks"], "tracks": ["D", "A"], "aliases": "USER_TASK_MANAGED_INITIAL_WAREHOUSE_SIZE", "featured": false, "related": ["serverless", "resource-monitor", "budget"]},
+  {"id": "triggered-task", "title": "Triggered task", "ja": "トリガータスク", "meaning": "Streamへの変更などの条件を契機に実行するタスク。固定間隔のスケジュールと使い分ける。", "example": "新しい注文差分があるときだけ処理する。", "note": "変更検知の条件は、実際に処理すべき行が必ず存在する保証とは限らない。", "sources": ["tasks"], "tracks": ["D", "A"], "aliases": "WHEN SYSTEM$STREAM_HAS_DATA triggered", "featured": false, "related": ["stream", "task"]},
+  {"id": "task-graph", "title": "Task graph", "ja": "タスクグラフ", "meaning": "依存関係を持つ複数タスクを連結した処理グラフ。先行処理、並行処理、最終処理を組み立てる。", "example": "ロード完了後に複数マートを更新し、最後に通知する。", "note": "再実行時の重複、副作用、部分成功を設計する必要がある。", "sources": ["task-graphs"], "tracks": ["D", "A"], "aliases": "DAG AFTER root child finalizer", "featured": false, "related": ["stream", "task"]},
+  {"id": "task-retry", "title": "Task retry / error notification", "ja": "タスクの再試行・障害通知", "meaning": "失敗したタスクやグラフの再実行、エラー通知、実行履歴の確認に関わる仕組み。", "example": "一時的な接続エラーを再試行し、失敗継続時に通知する。", "note": "再実行できることと冪等であることは別。通知統合や権限も必要。", "sources": ["tasks", "task-graphs"], "tracks": ["D", "A"], "aliases": "TASK_AUTO_RETRY_ATTEMPTS ERROR_INTEGRATION TASK_HISTORY", "featured": false, "related": ["stream", "task"]},
+  {"id": "dynamic-table", "title": "Dynamic table", "ja": "動的テーブル", "meaning": "SELECTで望む結果と鮮度目標を定義し、Snowflakeが更新処理と依存関係を管理するテーブル。", "example": "生データから加工済みデータへ宣言的なパイプラインを作る。", "note": "通常のビューと違って結果を保持する。任意の手続き処理をそのまま置き換えられるわけではない。", "sources": ["dynamic"], "tracks": ["C", "D", "A"], "aliases": "DT ダイナミックテーブル 宣言的", "featured": true, "related": ["stream", "task", "target-lag", "refresh-mode", "materialized-view"], "sql": "SHOW DYNAMIC TABLES;\n-- ラグや更新の詳細は、対象の履歴・定義も確認する。"},
+  {"id": "target-lag", "title": "Target lag", "ja": "目標遅延", "meaning": "Dynamic Tableで許容するデータの古さを指定する考え方。依存する上流からの鮮度を意識する。", "example": "分析表の目標遅延を設定し、更新頻度と費用を調整する。", "note": "厳密な実行間隔や常時達成されるSLAではない。DOWNSTREAM指定の意味も確認する。", "sources": ["dynamic"], "tracks": ["D", "A"], "aliases": "TARGET_LAG DOWNSTREAM 鮮度", "featured": false, "related": ["dynamic-table", "refresh-mode", "materialized-view"]},
+  {"id": "refresh-mode", "title": "Incremental / full refresh", "ja": "差分更新・全件更新", "meaning": "Dynamic Tableの結果を変更分から計算するか、全体を再計算するかの方式。対応SQLと設定に依存する。", "example": "差分が小さい処理でincrementalの効果を確認する。", "note": "差分更新だから常に安いとは限らない。変更割合とクエリ構造で費用が変わる。", "sources": ["dynamic"], "tracks": ["D", "A"], "aliases": "REFRESH_MODE AUTO INCREMENTAL FULL", "featured": false, "related": ["dynamic-table", "target-lag", "materialized-view"]},
+  {"id": "row-timestamps", "title": "Row timestamps", "ja": "行タイムスタンプ", "meaning": "行の取り込みや更新に関する時刻を使い、パイプラインの遅延を測る機能。", "example": "ソースイベントの発生時刻と取り込み時刻を比較する。", "note": "業務イベント時刻そのものと同一ではない。対応オブジェクトや設定を確認する。", "sources": ["rowtime"], "tracks": ["D", "X"], "aliases": "METADATA$ROW_LAST_COMMIT_TIME latency", "featured": false, "related": ["stream", "task"]},
+  {"id": "openflow", "title": "Snowflake Openflow", "ja": "Openflow", "meaning": "Apache NiFiを基盤とするデータ統合サービス。コネクタとフローを使って各種ソースの取り込み・連携を構成する。", "example": "データベースやSaaSからデータを継続的に取り込む。", "note": "SnowpipeやTaskの別名ではない。デプロイ方式、コネクタ、稼働費用を確認する。", "sources": ["openflow"], "tracks": ["D", "A", "X"], "aliases": "NiFi ETL connector BYOC", "featured": false, "related": ["stream", "task"]},
+  {"id": "dbt-projects", "title": "dbt Projects on Snowflake", "ja": "Snowflake上のdbtプロジェクト", "meaning": "dbtプロジェクトをSnowflake上で管理・実行する機能。SQLモデルやテストをプロジェクトとして扱う。", "example": "Git管理したdbtモデルをデプロイし、変換を実行する。", "note": "dbtの全製品・全外部機能が同じ形で含まれるわけではない。対応版や実行方法を確認する。", "sources": ["dbt"], "tracks": ["D", "A", "X"], "aliases": "dbt Core models tests", "featured": false, "related": ["stream", "task"]},
+  {"id": "dcm-projects", "title": "DCM Projects", "ja": "宣言的変更管理プロジェクト", "meaning": "定義した望ましい状態を基に、Snowflakeオブジェクトやデータパイプラインの変更管理を行う仕組み。", "example": "開発・本番で構成の差分を確認し、宣言的に反映する。", "note": "通常のSQLスクリプトやdbtと役割を混同しない。対象オブジェクト・制約を確認する。", "sources": ["dcm"], "tracks": ["D", "A", "X"], "aliases": "Declarative Change Management DCM", "featured": false, "related": ["stream", "task"]},
+  {"id": "idempotency", "title": "Idempotency", "ja": "冪等性", "meaning": "同じ処理を再実行しても意図した結果が変わらないようにする設計特性。Snowflake固有の単一機能名ではない。", "example": "申請IDや業務キーで二重登録を防ぎながら再処理する。", "note": "COPYのファイル判定、Streamの消費、MERGEだけで全工程の冪等性が自動保証されるわけではない。", "sources": ["copy", "streams", "merge"], "tracks": ["D", "A"], "aliases": "再実行 exactly-once 重複排除", "featured": false, "related": ["merge", "transaction"]}
+]},
+{"id": "sql", "title": "SQL・変換・データ型", "en": "SQL & TRANSFORMATION", "sections": ["data-engineering", "storage-data"], "description": "SnowflakeらしいSQLと、実装時に間違えやすい型・NULL・更新をまとめる。", "terms": [
+  {"id": "merge", "title": "MERGE", "ja": "条件付き挿入・更新・削除", "meaning": "ソースと対象の一致条件に基づきINSERT、UPDATE、DELETEを組み合わせるSQL。増分反映やマスタ更新に使う。", "example": "検証済み申請を業務キーでMasterへ反映する。", "note": "ソースに同じキーが複数ある場合の結果を確認する。MERGEを使えば重複が自動解消されるわけではない。", "sources": ["merge"], "tracks": ["C", "D", "A"], "aliases": "upsert アップサート", "featured": true, "related": ["idempotency", "transaction"], "sql": "MERGE INTO customer_master AS t\nUSING request_source AS s ON t.customer_id = s.customer_id\nWHEN MATCHED THEN UPDATE SET t.name = s.name\nWHEN NOT MATCHED THEN INSERT (customer_id, name)\nVALUES (s.customer_id, s.name);\n-- 更新を伴う例。ソースIDの一意性を先に検証する。"},
+  {"id": "transaction", "title": "Transaction", "ja": "トランザクション", "meaning": "複数の処理をコミットまたはロールバックする単位。中途半端な反映を防ぐための境界を設計する。", "example": "複数表への業務更新をBEGIN/COMMITで扱う。", "note": "DDLの暗黙コミットやストアドプロシージャ内のスコープを確認する。全SQLが一律にロールバック可能とは限らない。", "sources": ["transactions"], "tracks": ["C", "D", "A"], "aliases": "ACID BEGIN COMMIT ROLLBACK AUTOCOMMIT", "featured": false, "related": ["merge", "idempotency"]},
+  {"id": "variant", "title": "VARIANT", "ja": "半構造化データ型", "meaning": "JSON等の多様な値を保持できる型。値の型情報とともに保持し、パスで内部要素を参照する。", "example": "APIレスポンスや検証結果をJSONとして受け渡す。", "note": "JSON文字列をVARCHARに入れることと、PARSE_JSONしてVARIANTにすることは違う。", "sources": ["variant"], "tracks": ["C", "D", "A"], "aliases": "JSON semi-structured 半構造化", "featured": true, "related": ["flatten", "json-null", "object-array"], "sql": "SELECT PARSE_JSON('{\"customer_id\":101,\"active\":true}') AS payload;"},
+  {"id": "object-array", "title": "OBJECT / ARRAY", "ja": "オブジェクト・配列", "meaning": "キーと値の集合や値の並びを扱う型。半構造化と構造化の形式があり、必要な型保証で選ぶ。", "example": "申請の属性群をOBJECT、エラーの一覧をARRAYにまとめる。", "note": "配列内の位置と業務キーを同一視しない。構造化型との違いにも注意する。", "sources": ["variant", "structured"], "tracks": ["C", "D"], "aliases": "配列 オブジェクト", "featured": false, "related": ["variant", "flatten", "json-null"]},
+  {"id": "flatten", "title": "FLATTEN / LATERAL", "ja": "配列・オブジェクトの行展開", "meaning": "入れ子のデータを複数行へ展開するテーブル関数。LATERALで元の行と対応づけて扱える。", "example": "注文JSONの明細配列を行単位に変換する。", "note": "展開で行数が増えるため、元の粒度の金額等を重複集計しない。", "sources": ["flatten"], "tracks": ["C", "D"], "aliases": "展開 explode LATERAL FLATTEN", "featured": false, "related": ["variant", "json-null", "object-array"], "sql": "SELECT f.value::NUMBER AS item\nFROM TABLE(FLATTEN(INPUT => PARSE_JSON('[10,20,30]'))) AS f;"},
+  {"id": "json-null", "title": "SQL NULL / JSON null", "ja": "SQLのNULLとJSONのnull", "meaning": "SQL上の欠損と、VARIANT内にあるJSONのnullは区別される。判定関数や変換時の挙動も異なる。", "example": "JSONで未設定・明示null・空文字を別々に扱う。", "note": "NULL、空文字、文字列「null」、存在しないキーを一律に同じ値として処理しない。", "sources": ["variant"], "tracks": ["C", "D"], "aliases": "IS_NULL_VALUE PARSE_JSON null", "featured": false, "related": ["variant", "flatten", "object-array"], "sql": "SELECT IS_NULL_VALUE(PARSE_JSON('null')) AS json_null,\n       PARSE_JSON('null') IS NULL AS sql_null;"},
+  {"id": "try-cast", "title": "TRY_CAST / TRY_TO_*", "ja": "失敗時にNULLを返す変換", "meaning": "対応する型変換で、変換不能な値をエラーにせずNULLとして扱う関数群。", "example": "日付や数値が混在するCSVを検証する。", "note": "NULLになったことを成功と扱わない。元データの欠損と変換失敗を区別する。", "sources": ["numeric", "datetime"], "tracks": ["C", "D"], "aliases": "TRY_TO_DATE TRY_TO_NUMBER TRY_TO_TIMESTAMP", "featured": false, "related": ["load-validation", "schema-evolution"]},
+  {"id": "qualify", "title": "QUALIFY", "ja": "ウィンドウ計算後の絞り込み", "meaning": "ウィンドウ関数を評価した結果で行を絞り込む句。サブクエリを減らして書ける。", "example": "ROW_NUMBERでキーごとの最新1行を残す。", "note": "WHEREやHAVINGと評価対象が異なる。順位を決めるORDER BYを明示する。", "sources": ["qualify"], "tracks": ["C", "D"], "aliases": "ROW_NUMBER 最新行 重複排除", "featured": true, "related": ["window-function", "cte"], "sql": "SELECT customer_id, event_at\nFROM events\nQUALIFY ROW_NUMBER() OVER (\n  PARTITION BY customer_id ORDER BY event_at DESC\n) = 1;\n-- 同時刻がある場合は、一意に決まる並び順を追加する。"},
+  {"id": "window-function", "title": "Window functions", "ja": "ウィンドウ関数", "meaning": "行を残したまま、指定した区分と順序・範囲で集計や順位づけをする関数。", "example": "顧客別の累積売上や前回値との差を計算する。", "note": "GROUP BYの集約とは粒度が違う。暗黙のフレームや同順位行の扱いを確認する。", "sources": ["window"], "tracks": ["C", "D"], "aliases": "OVER PARTITION BY ROWS RANGE LAG LEAD", "featured": false, "related": ["qualify", "cte"], "sql": "SELECT sale_date, amount,\n       SUM(amount) OVER (ORDER BY sale_date\n         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total\nFROM daily_sales;\n-- この例はsale_dateが一意であることを前提とする。"},
+  {"id": "cte", "title": "CTE / recursive CTE", "ja": "共通テーブル式・再帰CTE", "meaning": "WITH句で名前付きの中間結果を定義する構文。再帰CTEは階層の探索等に使う。", "example": "組織階層や依存関係をたどる。", "note": "通常のCTEが永続テーブルとして保存されるわけではない。再帰では停止条件を設計する。", "sources": ["sql"], "tracks": ["D", "A"], "aliases": "WITH RECURSIVE 再帰", "featured": false, "related": ["qualify", "window-function"]},
+  {"id": "asof-join", "title": "ASOF JOIN", "ja": "時刻に基づく近傍結合", "meaning": "条件を満たす最も近い時点の行を対応づける結合。時系列データの突合に使う。", "example": "取引時点で有効だった価格の行を対応づける。", "note": "同時刻の複数候補やキーの粒度を確認する。通常の完全一致JOINとは異なる。", "sources": ["asof"], "tracks": ["D", "X"], "aliases": "時系列結合 MATCH_CONDITION", "featured": false, "related": ["timestamp-types", "point-in-time"]},
+  {"id": "pivot", "title": "PIVOT / UNPIVOT", "ja": "行列変換", "meaning": "カテゴリの値を列に広げる、または列を行へ戻す構文。分析用の形を整える。", "example": "月ごとの売上を横並びにする。", "note": "集約やNULLの扱いにより元データを完全に復元できるとは限らない。", "sources": ["pivot"], "tracks": ["C", "D"], "aliases": "ピボット アンピボット", "featured": false, "related": ["merge", "variant"]},
+  {"id": "match-recognize", "title": "MATCH_RECOGNIZE", "ja": "行パターン認識", "meaning": "順序づけられた行の並びに対して、条件で定義したパターンを検索するSQL機能。", "example": "連続するイベントや状態遷移のパターンを探す。", "note": "文字列の正規表現そのものではなく、行の並びを対象にする。", "sources": ["match"], "tracks": ["D", "X"], "aliases": "PATTERN DEFINE 行パターン", "featured": false, "related": ["merge", "variant"]},
+  {"id": "number-float", "title": "NUMBER / FLOAT", "ja": "固定小数点・浮動小数点", "meaning": "NUMBERは精度・スケールを指定する数値型、FLOATは近似的な浮動小数点型。計算要件で選ぶ。", "example": "厳密な小数計算が必要な金額に適した型を設計する。", "note": "FLOATの等値比較や丸め誤差に注意する。NUMBERでも定義した精度・スケールの限界がある。", "sources": ["numeric"], "tracks": ["C", "D"], "aliases": "DECIMAL NUMERIC precision scale", "featured": false, "related": ["merge", "variant"], "sql": "SELECT 1.25::NUMBER(10,2) AS fixed_point,\n       1.25::FLOAT AS floating_point;"},
+  {"id": "timestamp-types", "title": "TIMESTAMP_NTZ / LTZ / TZ", "ja": "タイムスタンプの種類", "meaning": "タイムゾーンを持たない値、セッションのタイムゾーンに応じた表示、オフセットを保持する値を区別する型。", "example": "日本と欧州のログをUTC基準で突き合わせる。", "note": "TIMESTAMP_TZが地域名と将来の夏時間規則をそのまま保存するとは考えない。", "sources": ["datetime"], "tracks": ["C", "D", "A"], "aliases": "UTC JST TIMEZONE NTZ LTZ TZ", "featured": false, "related": ["asof-join", "point-in-time"]},
+  {"id": "date-time", "title": "DATE / TIME / date functions", "ja": "日付・時刻と日付関数", "meaning": "日付、時刻、期間差、切り捨て等を扱う型と関数群。粒度やカレンダーの基準を明示する。", "example": "月初で売上をまとめ、営業日と経過日数を区別する。", "note": "週の開始曜日やタイムゾーン等のセッション設定で結果が変わり得る。", "sources": ["datetime", "query-tag"], "tracks": ["C", "D"], "aliases": "DATE_TRUNC DATEADD DATEDIFF CONVERT_TIMEZONE", "featured": false, "related": ["merge", "variant"]},
+  {"id": "geography", "title": "GEOGRAPHY / GEOMETRY", "ja": "地理空間データ型", "meaning": "地球上の位置を扱うGEOGRAPHYと平面座標を扱うGEOMETRY。距離・交差・包含等の空間分析に使う。", "example": "店舗と顧客の位置関係を分析する。", "note": "座標系、単位、地球表面と平面の違いを無視して距離を比較しない。", "sources": ["geospatial"], "tracks": ["D", "X"], "aliases": "ST_DISTANCE ST_CONTAINS WKT WKB SRID H3", "featured": false, "related": ["merge", "variant"], "sql": "SELECT ST_DISTANCE(\n  TO_GEOGRAPHY('POINT(139.7671 35.6812)'),\n  TO_GEOGRAPHY('POINT(139.7630 35.6751)')\n) AS meters;"},
+  {"id": "vector", "title": "VECTOR", "ja": "ベクトル型", "meaning": "決まった要素型と次元を持つベクトルを扱う型。埋め込みや類似度計算に使う。", "example": "文章の埋め込みベクトルを保存する。", "note": "VECTOR列を作るだけでCortex Searchサービスが構築されるわけではない。", "sources": ["vector"], "tracks": ["D", "X"], "aliases": "embedding cosine 次元", "featured": false, "related": ["ai-similarity", "ai-embed"]},
+  {"id": "identifiers", "title": "Identifiers / case sensitivity", "ja": "識別子と大文字・小文字", "meaning": "オブジェクト名や列名の解釈規則。引用符なしと二重引用符ありで大文字・小文字等の扱いが異なる。", "example": "外部ツールで作った混在ケースの列名を正確に参照する。", "note": "文字列リテラルのシングルクォートと、識別子のダブルクォートを混同しない。", "sources": ["sql"], "tracks": ["C", "D"], "aliases": "double quotes case sensitive 名前", "featured": false, "related": ["session-context", "object-hierarchy"]},
+  {"id": "result-scan", "title": "RESULT_SCAN", "ja": "実行済み結果の再参照", "meaning": "過去に実行したコマンド等の結果を表形式で再利用する関数。SHOW結果の分析などに使う。", "example": "SHOW TABLESの結果を絞り込む。", "note": "元データへ再問い合わせするのとは違う。結果保持期限と参照権限がある。", "sources": ["persisted"], "tracks": ["C", "D"], "aliases": "LAST_QUERY_ID RESULT_SCAN SHOW", "featured": false, "related": ["warehouse-cache", "result-cache"]}
+]},
+{"id": "performance", "title": "性能最適化・クエリ診断", "en": "PERFORMANCE & QUERY DIAGNOSTICS", "sections": ["performance-cost"], "description": "走査量・並列性・キャッシュ・待機を切り分け、対策を選ぶ。", "terms": [
+  {"id": "pruning", "title": "Partition / column pruning", "ja": "読み取り対象の削減", "meaning": "条件に不要なマイクロパーティションや列を走査から除外する最適化。読み取り量削減の基本となる。", "example": "日付条件や必要列の指定で走査を絞る。", "note": "WHEREがあるだけで必ず十分に読み飛ばせるわけではない。条件式とデータの並びに依存する。", "sources": ["micro"], "tracks": ["C", "D", "A"], "aliases": "プルーニング pruning scan", "featured": true, "related": ["clustering-key", "search-optimization", "query-acceleration"]},
+  {"id": "clustering-key", "title": "Clustering key", "ja": "クラスタリングキー", "meaning": "大きなテーブルのデータ配置を検索条件に合わせて整理するための列・式。読み飛ばしを改善する目的で選ぶ。", "example": "大規模な時系列表で日付や頻繁に絞る列を検討する。", "note": "一般的なB-treeインデックスとは別。高カーディナリティの列を無条件に指定しない。", "sources": ["clustering"], "tracks": ["C", "D", "A"], "aliases": "CLUSTER BY cardinality クラスタキー", "featured": false, "related": ["pruning", "search-optimization", "query-acceleration"]},
+  {"id": "clustering-depth", "title": "Clustering depth / overlap", "ja": "クラスタリング深度・重なり", "meaning": "キーの値の範囲がマイクロパーティション間でどの程度重なるかを評価する指標。", "example": "配置が悪化した表のクラスタリング状態を調べる。", "note": "指標だけで最適化を決めず、実際のクエリと費用の変化で判断する。", "sources": ["clustering", "micro"], "tracks": ["D", "A"], "aliases": "SYSTEM$CLUSTERING_INFORMATION SYSTEM$CLUSTERING_DEPTH", "featured": false, "related": ["pruning", "search-optimization"]},
+  {"id": "automatic-clustering", "title": "Automatic Clustering", "ja": "自動クラスタリング", "meaning": "定義されたクラスタリングキーに沿ってデータ配置を維持するサーバーレス機能。", "example": "継続更新される大規模表の読み飛ばし性能を維持する。", "note": "すべての表に自動でキーが設定されるわけではない。更新・履歴保存に追加費用が関わる。", "sources": ["auto-cluster"], "tracks": ["D", "A"], "aliases": "reclustering 再クラスタリング", "featured": false, "related": ["pruning", "search-optimization"]},
+  {"id": "search-optimization", "title": "Search Optimization Service", "ja": "検索最適化サービス", "meaning": "対応する条件の選択性の高い検索を速めるため、追加の検索アクセスパスを管理するサービス。", "example": "大きな表から特定IDに対応する少数行を検索する。", "note": "Cortex Searchとは別。保持・メンテナンス費用と、対応する述語・型を確認する。", "sources": ["search-opt"], "tracks": ["C", "D", "A"], "aliases": "SOS 検索最適化 point lookup", "featured": true, "related": ["pruning", "clustering-key", "query-acceleration", "cortex-search", "ai-embed"]},
+  {"id": "result-cache", "title": "Persisted result cache", "ja": "永続化されたクエリ結果", "meaning": "条件を満たす再実行で、以前のクエリ結果を再利用する仕組み。計算を省ける場合がある。", "example": "同じSQLを、元データに変更がない状態で再実行する。", "note": "同じ意味のSQLなら常に再利用できるわけではない。権限・式・データ変更等の条件がある。", "sources": ["persisted"], "tracks": ["C", "D", "A"], "aliases": "USE_CACHED_RESULT 結果キャッシュ", "featured": true, "related": ["warehouse-cache", "result-scan"]},
+  {"id": "query-profile", "title": "Query Profile", "ja": "クエリプロファイル", "meaning": "SQLの実行を演算子単位で見て、時間、行数、走査、スピル等を調べるための情報。", "example": "最も時間を使うJOINやTableScanを探す。", "note": "クエリ全体の時間と各演算子の時間の関係を確認し、単純加算で解釈しない。", "sources": ["profile"], "tracks": ["C", "D", "A"], "aliases": "プロファイル bottleneck operator", "featured": false, "related": ["spill", "join-explosion"]},
+  {"id": "spill", "title": "Local / remote spilling", "ja": "ローカル・リモートへのスピル", "meaning": "処理に必要なデータがメモリーに収まらず、ディスクやリモートストレージへ退避される状態。", "example": "大規模ソートや結合の遅さを調べる。", "note": "サイズ変更だけでなく、処理行数、結合条件、不要列の削減も検討する。", "sources": ["profile", "performance"], "tracks": ["D", "A"], "aliases": "BYTES_SPILLED_TO_LOCAL_STORAGE BYTES_SPILLED_TO_REMOTE_STORAGE", "featured": false, "related": ["query-profile", "join-explosion"]},
+  {"id": "join-explosion", "title": "Join explosion / data skew", "ja": "結合による行数膨張・偏り", "meaning": "多対多結合等による中間行数の急増や、一部キーへのデータ集中。性能と結果の正しさの両方に影響する。", "example": "顧客IDの重複で売上行が増えていないか確認する。", "note": "ウェアハウスを大きくする前に、データの粒度とJOIN条件を点検する。", "sources": ["profile"], "tracks": ["D", "A"], "aliases": "Cartesian join exploding join skew", "featured": false, "related": ["query-profile", "spill"]},
+  {"id": "query-insights", "title": "Query insights", "ja": "クエリ改善のヒント", "meaning": "実行状況から問題や改善候補を把握するための診断情報。プロファイルと併せて使う。", "example": "非効率な結合や走査の候補を見つける。", "note": "ヒントが全処理の最適解を保証するわけではない。対象SQLの実測が必要。", "sources": ["performance", "profile"], "tracks": ["D", "A"], "aliases": "insights recommendation 診断", "featured": false, "related": ["pruning", "search-optimization"]},
+  {"id": "query-attribution", "title": "Query cost attribution", "ja": "クエリ別の計算費用分析", "meaning": "クエリに帰属する計算利用量等を使って、処理別の費用を分析する観点。", "example": "高コストSQLを探し、QUERY_TAGと合わせて用途別に集計する。", "note": "アイドル時間や別サービス費用を含む請求総額と、クエリ帰属費用は一致しない場合がある。", "sources": ["account-usage", "cost"], "tracks": ["D", "A"], "aliases": "QUERY_ATTRIBUTION_HISTORY query cost", "featured": false, "related": ["resource-monitor", "budget", "cost-attribution"]},
+  {"id": "optimization-choice", "title": "Optimization trade-offs", "ja": "最適化手段の使い分け", "meaning": "サイズ、クラスター数、クラスタリング、検索最適化、MV、QAS等をボトルネック別に比較する設計観点。", "example": "単一SQLが遅いのか、同時実行が多いのかを先に分ける。", "note": "すべての最適化を有効にすると費用や更新負荷が増える。導入前後で測定する。", "sources": ["performance"], "tracks": ["C", "D", "A"], "aliases": "tuning チューニング 最適化", "featured": false, "related": ["pruning", "search-optimization"]}
+]},
+{"id": "operations", "title": "費用・監視・運用", "en": "COST & OBSERVABILITY", "sections": ["performance-cost"], "description": "利用量と請求を分けて理解し、監視・通知・制御へつなぐ。", "terms": [
+  {"id": "credits", "title": "Credits / consumption", "ja": "クレジットと消費量", "meaning": "Snowflakeの計算サービス等の使用を表す単位。クレジット量と通貨での請求額を分けて見る。", "example": "処理時間とクレジットを比較して効率を測る。", "note": "単価は契約、エディション、リージョン等に依存する。すべての費用がクレジット課金ではない。", "sources": ["cost"], "tracks": ["C", "D", "A"], "aliases": "credit クレジット 課金", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "billing-components", "title": "Compute / storage / transfer costs", "ja": "計算・保存・転送費用", "meaning": "ウェアハウスや各種サービスの計算、データ保存、データ転送等から費用を分解する見方。", "example": "ウェアハウス停止後にも続く費用の原因を調べる。", "note": "「操作していない」ことと「利用資源がない」ことは同じではない。自動更新や稼働中アプリも確認する。", "sources": ["cost"], "tracks": ["C", "D", "A"], "aliases": "課金 内訳 storage egress", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "resource-monitor", "title": "Resource monitor", "ja": "リソースモニター", "meaning": "ウェアハウスのクレジット利用を監視し、しきい値で通知や停止を行う仕組み。", "example": "検証用ウェアハウスで消費超過を検知する。", "note": "Snowpipe等すべてのサーバーレス費用を停止する万能な上限機能ではない。", "sources": ["resource-monitor"], "tracks": ["C", "D", "A"], "aliases": "quota suspend notify RESOURCE MONITOR", "featured": true, "related": ["serverless", "serverless-task", "budget", "cost-attribution", "query-attribution"]},
+  {"id": "budget", "title": "Budget", "ja": "予算", "meaning": "対応するオブジェクトやサービスのクレジット利用を監視し、予測・通知等を行う機能。", "example": "サーバーレスを含む対象の費用見込みを確認する。", "note": "予算を設定するだけで全費用が厳密な金額で停止するわけではない。対応サービスとアクションを確認する。", "sources": ["budgets"], "tracks": ["C", "D", "A"], "aliases": "SNOWFLAKE.CORE.BUDGET 予算予測", "featured": true, "related": ["serverless", "serverless-task", "resource-monitor", "cost-attribution", "query-attribution"]},
+  {"id": "account-usage", "title": "ACCOUNT_USAGE", "ja": "アカウント利用履歴", "meaning": "アカウント内のオブジェクト・クエリ・費用等の履歴を提供するSNOWFLAKEデータベースのスキーマ。", "example": "長めの期間で利用量や実行傾向を分析する。", "note": "ビューごとに遅延、保持期間、必要権限が異なる。即時監視と同一視しない。", "sources": ["account-usage"], "tracks": ["C", "D", "A"], "aliases": "SNOWFLAKE.ACCOUNT_USAGE 運用ビュー", "featured": false, "related": ["information-schema", "query-history"], "sql": "SELECT *\nFROM SNOWFLAKE.ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY\nWHERE start_time >= DATEADD(day, -1, CURRENT_TIMESTAMP())\nLIMIT 20;\n-- 参照権限とビューの反映遅延を確認する。"},
+  {"id": "information-schema", "title": "INFORMATION_SCHEMA", "ja": "情報スキーマ", "meaning": "データベースのメタデータ等を問い合わせる標準的なスキーマと関連テーブル関数。", "example": "表の列定義やオブジェクト一覧を取得する。", "note": "ACCOUNT_USAGEと対象範囲・履歴・遅延が異なる。現在のロールで見える情報にも依存する。", "sources": ["information-schema"], "tracks": ["C", "D", "A"], "aliases": "情報スキーマ COLUMNS TABLES", "featured": false, "related": ["account-usage", "query-history"]},
+  {"id": "query-history", "title": "QUERY_HISTORY", "ja": "クエリ履歴", "meaning": "SQLの実行時刻、状態、実行時間、待機、読み取り量等を調べる情報。", "example": "失敗SQLや高負荷の時間帯を探す。", "note": "SQL文字列に機密情報を埋め込むと履歴に残り得る。アクセス権も管理する。", "sources": ["query-history"], "tracks": ["C", "D", "A"], "aliases": "QUERY_ID EXECUTION_STATUS query log", "featured": false, "related": ["account-usage", "information-schema"], "sql": "SELECT query_id, query_text, total_elapsed_time\nFROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())\nORDER BY start_time DESC\nLIMIT 10;\n-- 閲覧できる履歴は実行ロール等の条件に依存する。"},
+  {"id": "query-tag", "title": "QUERY_TAG", "ja": "クエリタグ", "meaning": "クエリに用途やアプリケーション等の識別情報を付けるパラメーター。運用分析や費用集計に使う。", "example": "パイプライン名・実行IDを付けて追跡する。", "note": "オブジェクトタグとは別。機密値そのものをタグに保存しない。", "sources": ["query-tag"], "tracks": ["D", "A"], "aliases": "query tag タグ セッションパラメータ", "featured": false, "related": ["resource-monitor", "budget"], "sql": "ALTER SESSION SET QUERY_TAG = 'learning:sample';\nSELECT CURRENT_TIMESTAMP();\nALTER SESSION UNSET QUERY_TAG;\n-- セッション設定を変更する例。共有接続では運用に注意する。"},
+  {"id": "metering-history", "title": "Metering / warehouse load history", "ja": "利用計測・ウェアハウス負荷履歴", "meaning": "利用量と稼働・混雑の履歴を使い、請求や待ち時間を分析する機能群。", "example": "アイドル稼働とクエリ混雑の時間帯を切り分ける。", "note": "異なる履歴ビューの時間粒度や更新遅延をそろえて比較する。", "sources": ["account-usage", "cost"], "tracks": ["D", "A"], "aliases": "METERING_HISTORY WAREHOUSE_METERING_HISTORY WAREHOUSE_LOAD_HISTORY", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "alert", "title": "Alert", "ja": "アラート", "meaning": "条件を評価し、満たされた場合にアクションを実行するオブジェクト。データや運用上の異常検知に使う。", "example": "データ到着遅延や異常な件数を検知する。", "note": "Taskと同じものではない。実行方式・スケジュール・通知連携の設定が必要。", "sources": ["alerts"], "tracks": ["D", "A"], "aliases": "CREATE ALERT alert", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "notification", "title": "Notification integration", "ja": "通知統合", "meaning": "メール、クラウドのメッセージサービス、Webhook等の対応する通知先を管理する統合オブジェクト。", "example": "パイプライン失敗や予算超過を通知する。", "note": "通知経路を作っただけで任意のエラーが自動通知されるわけではない。送信側の連携設定も必要。", "sources": ["notification"], "tracks": ["D", "A"], "aliases": "email webhook 通知 integration", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "event-table", "title": "Event table / telemetry", "ja": "イベントテーブルとテレメトリー", "meaning": "ハンドラーや対応サービスのログ、トレース、メトリクス等を収集・分析するためのテーブル。", "example": "Pythonプロシージャのエラーや処理段階を追う。", "note": "QUERY_HISTORYとは観測対象が違う。詳細ログの量・費用・機密情報に注意する。", "sources": ["procedure", "account-usage"], "tracks": ["D", "A"], "aliases": "logging tracing OpenTelemetry ログ", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "release-bcr", "title": "Release notes / behavior change bundle", "ja": "リリースと動作変更バンドル", "meaning": "機能追加や既存動作への変更を把握する情報と、その適用を管理する仕組み。", "example": "依存するSQLや認証方式への変更を事前に検証する。", "note": "新機能の追加と互換性に影響する変更は分けて確認する。", "sources": ["architecture"], "tracks": ["D", "A"], "aliases": "BCR BCB リリースノート behavior change", "featured": false, "related": ["resource-monitor", "budget"]},
+  {"id": "cost-attribution", "title": "Cost attribution / chargeback", "ja": "費用配賦と可視化", "meaning": "ウェアハウス、処理、チーム等へ利用量を対応付ける運用の考え方。", "example": "チーム別の計算利用をQuery Tagや利用履歴で確認する。", "note": "クエリ別の利用量だけでは待機資源や全サービス費用を説明できない。集計範囲を明示する。", "sources": ["cost", "account-usage"], "tracks": ["D", "A"], "aliases": "showback chargeback FinOps 配賦", "featured": false, "related": ["resource-monitor", "budget", "query-attribution"]}
+]},
+{"id": "security", "title": "権限・認証・ネットワーク", "en": "IDENTITY, ACCESS & NETWORK", "sections": ["security-governance"], "description": "誰が、どの権限で、どこから接続できるかを設計する。", "terms": [
+  {"id": "rbac", "title": "RBAC", "ja": "ロールベースアクセス制御", "meaning": "権限をロールにまとめ、ユーザーや上位ロールへ付与してアクセスを管理する方式。Snowflakeの権限設計の中心となる。", "example": "読取、更新、運用を別ロールに分ける。", "note": "ロール付与だけでなく、実行時の有効ロールとオブジェクト階層の権限を確認する。", "sources": ["access"], "tracks": ["C", "D", "A"], "aliases": "Role-Based Access Control RBAC", "featured": true, "related": ["account-role", "database-role", "role-hierarchy"], "sql": "SHOW GRANTS TO ROLE analyst_role;\n-- analyst_roleは例示用。対象ロール名へ置き換える。"},
+  {"id": "account-role", "title": "Account role", "ja": "アカウントロール", "meaning": "アカウント内の権限をまとめ、ユーザーへ割り当てたりロール階層に組み込んだりするロール。", "example": "分析者に必要な複数データベースの権限を束ねる。", "note": "Database Roleとスコープが異なる。作業用に管理者権限を常用しない。", "sources": ["access"], "tracks": ["C", "D", "A"], "aliases": "CREATE ROLE role", "featured": false, "related": ["rbac", "database-role", "role-hierarchy"]},
+  {"id": "database-role", "title": "Database role", "ja": "データベースロール", "meaning": "一つのデータベース内の権限を整理するロール。アカウントロールに付与して利用する等の設計に使う。", "example": "製品データベースごとに読取ロールを用意する。", "note": "アカウントロールと同様に直接セッションで有効化できるとは考えない。", "sources": ["access"], "tracks": ["C", "D", "A"], "aliases": "CREATE DATABASE ROLE", "featured": false, "related": ["rbac", "account-role", "role-hierarchy"]},
+  {"id": "role-hierarchy", "title": "Role hierarchy / inheritance", "ja": "ロール階層と継承", "meaning": "ロールを他のロールへ付与し、権限を継承させる構造。業務ロールとアクセスロールを分離して設計する。", "example": "表単位のアクセス権を業務ロールへまとめる。", "note": "親子の向きを誤ると意図しない権限が広がる。循環と管理者権限の扱いに注意する。", "sources": ["access", "access-config"], "tracks": ["C", "D", "A"], "aliases": "inheritance GRANT ROLE 継承", "featured": false, "related": ["rbac", "account-role", "database-role"]},
+  {"id": "system-roles", "title": "System-defined roles", "ja": "システム定義ロール", "meaning": "ACCOUNTADMIN、SECURITYADMIN、SYSADMIN、USERADMIN、PUBLIC等の組み込みロール。役割が異なる。", "example": "ユーザー管理とオブジェクト管理を分離する。", "note": "SYSADMINが必ずすべての表を読めると考えない。カスタムロールの継承と所有権設計による。", "sources": ["access"], "tracks": ["C", "D", "A"], "aliases": "ACCOUNTADMIN SECURITYADMIN SYSADMIN USERADMIN PUBLIC", "featured": false, "related": ["rbac"]},
+  {"id": "ownership", "title": "OWNERSHIP / MANAGE GRANTS", "ja": "所有権と権限管理", "meaning": "オブジェクトを所有する権限と、権限付与を管理する権限を区別する考え方。所有権移譲も設計対象。", "example": "退職者が作成したオブジェクトの管理責任を移す。", "note": "オブジェクトを参照できること、変更できること、権限を付与できることは同義ではない。", "sources": ["access-priv", "access-config"], "tracks": ["C", "D", "A"], "aliases": "GRANT OWNERSHIP COPY CURRENT GRANTS", "featured": false, "related": ["future-grants", "managed-access"]},
+  {"id": "usage-select", "title": "USAGE / SELECT privileges", "ja": "利用権限と読取権限", "meaning": "コンテナや計算資源を使う権限と、表のデータを読む権限。通常は必要な階層の権限を組み合わせる。", "example": "DB・Schema・Warehouseの利用権限とTableのSELECTを確認する。", "note": "SELECTだけで実行に必要な権限が必ずそろうわけではない。", "sources": ["access-priv"], "tracks": ["C", "D"], "aliases": "USAGE SELECT grant", "featured": false, "related": ["rbac"]},
+  {"id": "future-grants", "title": "Future grants", "ja": "将来オブジェクトへの権限付与", "meaning": "今後作成される対象オブジェクトに権限を自動付与する設定。新規表の追加時の運用を標準化する。", "example": "新しいMARTテーブルを読取ロールから利用できるようにする。", "note": "既存オブジェクトへの一括付与とは別。データベースとスキーマでの優先関係も確認する。", "sources": ["access-config"], "tracks": ["C", "D", "A"], "aliases": "ON FUTURE TABLES 未来権限", "featured": false, "related": ["ownership", "managed-access"]},
+  {"id": "managed-access", "title": "Managed access schema", "ja": "管理アクセススキーマ", "meaning": "スキーマ内のオブジェクトの権限管理を集中させるスキーマ。個別所有者による分散したGRANTを抑える。", "example": "データ製品のアクセス付与を管理担当へ集約する。", "note": "表の所有者が通常スキーマと同じように権限付与できるとは限らない。", "sources": ["access"], "tracks": ["D", "A"], "aliases": "WITH MANAGED ACCESS", "featured": false, "related": ["ownership", "future-grants"]},
+  {"id": "secondary-roles", "title": "Primary / secondary roles", "ja": "プライマリ・セカンダリロール", "meaning": "セッションの主ロールと、追加で有効にするロール群。操作時の権限評価に関わる。", "example": "複数の業務ロールの読取権限を組み合わせる。", "note": "オブジェクト作成時の所有権等は別途確認する。有効なロールと付与済みロールを混同しない。", "sources": ["access"], "tracks": ["D", "A"], "aliases": "USE SECONDARY ROLES ALL CURRENT_SECONDARY_ROLES", "featured": false, "related": ["rbac"]},
+  {"id": "mfa", "title": "MFA", "ja": "多要素認証", "meaning": "パスワード等に加え別の要素で本人確認する仕組み。人間のユーザーの認証保護に使う。", "example": "対話的ログインのアカウント乗っ取りリスクを下げる。", "note": "適用要件や対応方法は更新される。サービスユーザーの認証方式とは分けて設計する。", "sources": ["mfa"], "tracks": ["C", "A"], "aliases": "multi-factor authentication 多要素", "featured": false, "related": ["rbac"]},
+  {"id": "sso", "title": "Federated authentication / SSO", "ja": "フェデレーション認証・SSO", "meaning": "外部のIDプロバイダーと連携し、組織の認証基盤からSnowflakeへログインする仕組み。", "example": "企業のIdPでユーザー認証を統一する。", "note": "認証できることとデータへの権限があることは別。SCIMのユーザー同期とも役割が違う。", "sources": ["sso"], "tracks": ["C", "A"], "aliases": "SAML IdP single sign-on", "featured": false, "related": ["rbac"]},
+  {"id": "key-pair", "title": "Key-pair authentication", "ja": "鍵ペア認証", "meaning": "秘密鍵で署名し、ユーザーに設定した公開鍵で検証する認証方式。機械的な接続等に使われる。", "example": "パスワードを埋め込まないバッチ接続を構成する。", "note": "秘密鍵は安全に保管しローテーションする。鍵を使えば権限管理が不要になるわけではない。", "sources": ["keypair"], "tracks": ["C", "D", "A"], "aliases": "RSA JWT public private key", "featured": false, "related": ["oauth", "workload-identity", "least-privilege"]},
+  {"id": "oauth", "title": "OAuth", "ja": "OAuthによる認可連携", "meaning": "トークンを使い、外部アプリケーションからの接続や権限委譲を行う仕組み。Snowflake OAuthとExternal OAuth等を区別する。", "example": "BIツールをユーザーの権限に応じて接続する。", "note": "SAML SSOと同じ方式ではない。トークンの発行元・有効期限・ロール制約を確認する。", "sources": ["oauth"], "tracks": ["C", "D", "A"], "aliases": "External OAuth Snowflake OAuth token", "featured": false, "related": ["key-pair", "workload-identity", "least-privilege"]},
+  {"id": "scim", "title": "SCIM", "ja": "ユーザー・グループの自動管理", "meaning": "IDプロバイダーからユーザーやグループの作成・変更を同期するための標準と連携機能。", "example": "入社・異動・退職に伴うアカウント管理を自動化する。", "note": "SCIM自体がログイン時の認証を行うわけではない。同期対象と削除時の挙動を確認する。", "sources": ["scim"], "tracks": ["A"], "aliases": "provisioning deprovisioning プロビジョニング", "featured": false, "related": ["rbac"]},
+  {"id": "workload-identity", "title": "Workload identity federation", "ja": "ワークロードID連携", "meaning": "外部クラウド等が発行する短期IDを使い、長期シークレット管理を減らしてSnowflakeへ認証する仕組み。", "example": "クラウド上のジョブを実行環境のIDで接続する。", "note": "対応プロバイダー、ドライバー、サービスユーザー等の条件がある。どの環境でも自動利用できるわけではない。", "sources": ["wif"], "tracks": ["D", "A", "X"], "aliases": "WIF identity federation OIDC", "featured": false, "related": ["key-pair", "oauth", "least-privilege"]},
+  {"id": "network-policy", "title": "Network policy", "ja": "ネットワークポリシー", "meaning": "接続元のネットワークを許可・制限するためのポリシー。対象ユーザーやアカウントへの適用を管理する。", "example": "社内や承認された経路からの接続に限定する。", "note": "データの行・列を制御するポリシーではない。適用の優先順位と管理者の接続経路も確認する。", "sources": ["network"], "tracks": ["C", "D", "A"], "aliases": "IP allowlist blocklist ネットワーク", "featured": false, "related": ["network-rule", "private-connectivity"]},
+  {"id": "network-rule", "title": "Network rule", "ja": "ネットワークルール", "meaning": "IPやドメイン等のネットワーク識別子をまとめるオブジェクト。ポリシーや外部アクセス統合等から利用される。", "example": "アプリの外部接続先を許可リストとして管理する。", "note": "ルールを作っただけで接続制限が適用されるわけではない。方向と使用先を確認する。", "sources": ["network-rule"], "tracks": ["D", "A"], "aliases": "INGRESS EGRESS HOST_PORT", "featured": false, "related": ["network-policy", "private-connectivity"]},
+  {"id": "private-connectivity", "title": "Private connectivity", "ja": "プライベート接続", "meaning": "対応クラウドのプライベート経路でSnowflake等へ接続する仕組み。ネットワーク要件から利用を検討する。", "example": "公開インターネットを避けた接続経路を構成する。", "note": "利用エディション、DNS、エンドポイント、接続対象別の設定を確認する。認証・認可は別途必要。", "sources": ["private"], "tracks": ["C", "A"], "aliases": "AWS PrivateLink Azure Private Link PSC", "featured": false, "related": ["network-policy", "network-rule"]},
+  {"id": "encryption", "title": "Encryption / Tri-Secret Secure", "ja": "暗号化・Tri-Secret Secure", "meaning": "保存時・通信時の暗号化と鍵管理。Tri-Secret Secureでは顧客管理鍵を組み合わせる保護を提供する。", "example": "顧客管理鍵の要件を満たす構成を検討する。", "note": "マスキングとは別。鍵を利用不能にしたときの影響、復旧手順、利用条件を確認する。", "sources": ["encryption", "trisecret"], "tracks": ["C", "A"], "aliases": "CMK KMS TLS customer-managed key", "featured": false, "related": ["rbac"]},
+  {"id": "authentication-policy", "title": "Authentication policy / session policy", "ja": "認証ポリシー・セッションポリシー", "meaning": "許可する認証方式やセッションの条件を、対応するポリシーで制御する仕組み。", "example": "サービス用ユーザーと対話利用者で認証条件を分ける。", "note": "Network Policyは接続元、認証ポリシーは認証条件という違いがある。接続不能に備えて段階的に適用する。", "sources": ["authentication-policy", "session-policy"], "tracks": ["C", "A"], "aliases": "AUTHENTICATION POLICY SESSION POLICY idle timeout", "featured": false, "related": ["rbac"]},
+  {"id": "least-privilege", "title": "Least privilege / service user", "ja": "最小権限とサービス用ユーザー", "meaning": "必要な操作だけを許可し、人の操作とプログラムの実行主体を分ける設計。", "example": "バッチ用ユーザーに対象データと実行資源だけを許可する。", "note": "ユーザー種別と認証方式を確認する。管理者権限の共有や資格情報のコード埋め込みを避ける。", "sources": ["access", "keypair", "wif"], "tracks": ["C", "D", "A"], "aliases": "SERVICE PERSON LEGACY_SERVICE 最小権限", "featured": false, "related": ["key-pair", "oauth", "workload-identity"]}
+]},
+{"id": "governance", "title": "ガバナンス・品質・プライバシー", "en": "GOVERNANCE & DATA QUALITY", "sections": ["security-governance"], "description": "機密性、利用条件、来歴、品質をデータと一緒に管理する。", "terms": [
+  {"id": "horizon", "title": "Snowflake Horizon Catalog", "ja": "Horizon Catalog", "meaning": "データの発見、メタデータ、ガバナンス等を扱う機能群の総称。保護や品質、来歴の理解につなげる。", "example": "どこにどのデータがあり、どう管理されるかを把握する。", "note": "単一のSQLオブジェクトやOpen Catalogの別名ではない。", "sources": ["horizon"], "tracks": ["C", "A", "X"], "aliases": "Horizon カタログ", "featured": false, "related": ["lineage", "access-history"]},
+  {"id": "object-tag", "title": "Object tagging", "ja": "オブジェクトタグ", "meaning": "キーと値でオブジェクトの属性を付け、分類や管理に使う仕組み。", "example": "機密区分や担当部署を表・列に付ける。", "note": "タグを付けるだけでデータがマスクされたりアクセス拒否されたりするわけではない。", "sources": ["tags"], "tracks": ["C", "D", "A"], "aliases": "TAG 機密分類 タグ", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "masking-policy", "title": "Masking policy", "ja": "マスキングポリシー", "meaning": "列を問い合わせる際、実行コンテキスト等に応じて返す値を変えるポリシー。", "example": "権限のない利用者にはメールアドレスを伏せて表示する。", "note": "保存データ自体の削除・置換やネットワーク制限とは別。管理権限と適用権限も確認する。", "sources": ["masking"], "tracks": ["C", "D", "A"], "aliases": "Dynamic Data Masking DDM 動的マスキング", "featured": true, "related": ["row-access-policy", "tag-based-masking"]},
+  {"id": "tag-based-masking", "title": "Tag-based masking", "ja": "タグベースのマスキング", "meaning": "タグに関連づけたポリシーを使い、対象列へ一貫したマスキングを適用する仕組み。", "example": "機密区分タグを基に保護を展開する。", "note": "ポリシーの型、直接適用との関係、タグの継承・伝播条件を確認する。", "sources": ["masking", "tags"], "tracks": ["D", "A"], "aliases": "tag masking タグ連動", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "row-access-policy", "title": "Row access policy", "ja": "行アクセスポリシー", "meaning": "条件に応じて利用者が参照できる行を制限するポリシー。地域や組織別の閲覧制御等に使う。", "example": "担当する国のデータだけを表示する。", "note": "列の値を変えるマスキングとは別。ポリシー評価の権限と参照テーブルを設計する。", "sources": ["row-access"], "tracks": ["C", "D", "A"], "aliases": "RAP row level security RLS", "featured": true, "related": ["masking-policy", "tag-based-masking"]},
+  {"id": "classification", "title": "Sensitive data classification", "ja": "機密データ分類", "meaning": "列の内容等から機密性のカテゴリを識別し、ガバナンスへつなげる機能。", "example": "個人情報を含む可能性のある列を検出する。", "note": "分類結果が正しいとは限らず、検証が必要。分類とアクセス制御の実施は別工程。", "sources": ["classification"], "tracks": ["C", "D", "A"], "aliases": "PII semantic category privacy category", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "access-history", "title": "Access History", "ja": "データアクセス履歴", "meaning": "どのオブジェクト・列等がアクセスされたかを分析する履歴。監査や影響分析の材料になる。", "example": "特定の機密列がどの処理で参照されたかを調べる。", "note": "すべての監査要件を単一ビューだけで満たせるとは限らない。提供条件・遅延・保持を確認する。", "sources": ["access-history"], "tracks": ["D", "A"], "aliases": "ACCESS_HISTORY base_objects_accessed", "featured": false, "related": ["horizon", "lineage"]},
+  {"id": "lineage", "title": "Data lineage / object dependencies", "ja": "データリネージと依存関係", "meaning": "データの生成元・加工先やオブジェクト間の依存関係を把握する仕組み。", "example": "列変更の前に影響を受ける表やビューを確認する。", "note": "すべての外部処理や動的SQLまで完全に自動追跡されるとは考えない。", "sources": ["lineage", "access-history"], "tracks": ["D", "A"], "aliases": "リネージ 血統 OBJECT_DEPENDENCIES", "featured": false, "related": ["horizon", "access-history"]},
+  {"id": "data-metric-function", "title": "Data metric function", "ja": "データメトリック関数", "meaning": "NULL数、重複数、鮮度等の品質指標を計算する関数。スケジュール監視や独自チェックに使う。", "example": "主キー候補の重複や入力遅延を監視する。", "note": "品質を測ることと不正レコードの登録を自動防止することは別。", "sources": ["quality"], "tracks": ["D", "A"], "aliases": "DMF DATA METRIC FUNCTION NULL_COUNT DUPLICATE_COUNT", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "quality-expectation", "title": "Data quality expectation", "ja": "データ品質の期待条件", "meaning": "計測された品質指標が満たすべき条件を設定し、違反を検出する考え方・機能。", "example": "重複件数が0であることを継続監視する。", "note": "ビジネス上許容される値を設計する必要がある。しきい値の設定だけで品質が修復されるわけではない。", "sources": ["quality"], "tracks": ["D", "A"], "aliases": "expectation 品質チェック", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "aggregation-policy", "title": "Aggregation policy", "ja": "集約ポリシー", "meaning": "一定の集約条件等を満たす分析に利用を制限し、個々のレコードの露出を抑えるポリシー。", "example": "一定数以上のグループ単位でのみ分析を許可する。", "note": "どのような推論攻撃も完全に防げるという意味ではない。許可条件と他の制御を確認する。", "sources": ["aggregation"], "tracks": ["A"], "aliases": "privacy minimum group size", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "projection-policy", "title": "Projection policy", "ja": "プロジェクションポリシー", "meaning": "列の値をクエリの結果へ直接出力できるかを制御するポリシー。", "example": "結合キーとして利用しても、その値の出力は制限する。", "note": "マスキングや行フィルターとは別。対応するクエリでの利用規則を確認する。", "sources": ["projection"], "tracks": ["A"], "aliases": "列出力 projection", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "join-policy", "title": "Join policy", "ja": "結合ポリシー", "meaning": "保護対象のデータへのクエリについて、結合の要否や許可された結合条件等を制御する仕組み。", "example": "承認されたキーでの結合を前提にデータを利用させる。", "note": "PK/FKの整合性検証ではない。サポートするJOINと例外条件を確認する。", "sources": ["join-policy"], "tracks": ["A", "X"], "aliases": "join constraint allowed join keys", "featured": false, "related": ["masking-policy", "row-access-policy"]},
+  {"id": "secure-udf", "title": "Secure UDF / secure objects", "ja": "セキュアな関数・オブジェクト", "meaning": "定義の露出や評価時の情報漏えいを抑えるためにSECURE指定を使う機能。", "example": "内部ロジックを公開せず計算機能を提供する。", "note": "SECUREはすべての業務上の秘匿を自動で保証する印ではない。返す情報そのものも設計する。", "sources": ["udf", "secure-view"], "tracks": ["D", "A"], "aliases": "SECURE FUNCTION privacy", "featured": false, "related": ["masking-policy", "row-access-policy"]}
+]},
+{"id": "sharing", "title": "共有・カタログ・外部連携", "en": "SHARING, CATALOGS & INTEGRATION", "sections": ["sharing-integration"], "description": "コピーしない共有と、データ移動・カタログ連携の境界を理解する。", "terms": [
+  {"id": "secure-sharing", "title": "Secure Data Sharing", "ja": "セキュアデータ共有", "meaning": "対応するデータベースオブジェクトを別アカウントへ共有し、同一リージョン等の条件下でデータコピーなしに参照させる仕組み。", "example": "取引先へ必要なデータを提供する。", "note": "すべてのクラウド・リージョン間で無転送という意味ではない。消費側の計算費用等も確認する。", "sources": ["sharing"], "tracks": ["C", "D", "A"], "aliases": "share データ共有 zero copy", "featured": true, "related": ["listing", "replication"]},
+  {"id": "provider-consumer", "title": "Provider / consumer", "ja": "提供者・利用者", "meaning": "共有データを公開する側と、それを参照する側。アクセス権、更新、費用の責任を分けて考える。", "example": "提供者が表を更新し、利用者が自分の計算資源で分析する。", "note": "共有で受け取ったデータを、通常の自分の表と同様に自由に更新できるわけではない。", "sources": ["sharing"], "tracks": ["C", "D", "A"], "aliases": "data provider data consumer", "featured": false, "related": ["secure-sharing"]},
+  {"id": "share-object", "title": "Share / imported database", "ja": "共有オブジェクトと取込データベース", "meaning": "提供側が共有対象を定義するShareと、利用側がその共有を利用するデータベースの関係。", "example": "共有されたビューを利用側のデータベースから参照する。", "note": "通常のETLによるデータインポートとは異なる。利用権限の付与方法も確認する。", "sources": ["sharing"], "tracks": ["C", "D", "A"], "aliases": "CREATE SHARE IMPORTED PRIVILEGES", "featured": false, "related": ["secure-sharing"]},
+  {"id": "reader-account", "title": "Reader account", "ja": "リーダーアカウント", "meaning": "提供者が管理し、共有データの利用に使うアカウント。独自のSnowflake契約がない相手への提供に使う。", "example": "外部の小規模な利用者へ分析環境を提供する。", "note": "通常の独立した消費者アカウントと管理・費用負担が異なる。作成者側の費用を見落とさない。", "sources": ["reader", "sharing"], "tracks": ["C", "A"], "aliases": "managed account reader", "featured": false, "related": ["secure-sharing"]},
+  {"id": "listing", "title": "Listing", "ja": "リスティング", "meaning": "データやアプリケーションの製品情報・提供条件・配布方法をまとめた公開単位。公開先やアクセス方法を管理する。", "example": "利用方法や説明を添えてデータ製品を配布する。", "note": "Shareそのものと同じではない。公開・非公開やリージョン展開等の条件を確認する。", "sources": ["listing"], "tracks": ["C", "A"], "aliases": "public private listing", "featured": false, "related": ["secure-sharing", "replication"]},
+  {"id": "marketplace", "title": "Snowflake Marketplace", "ja": "マーケットプレイス", "meaning": "データ製品やアプリケーションを発見・利用・提供する場。リスティングを通じて配布する。", "example": "外部の参照データを探して分析へ組み込む。", "note": "すべて無料、すべて即時に利用可能、という意味ではない。提供者の条件を確認する。", "sources": ["listing"], "tracks": ["C", "A"], "aliases": "marketplace データ製品", "featured": false, "related": ["secure-sharing"]},
+  {"id": "data-exchange", "title": "Data Exchange", "ja": "データエクスチェンジ", "meaning": "特定の参加者間でデータを発見・共有するための管理された共有環境。", "example": "関連会社やパートナー間のデータ提供を整理する。", "note": "公開Marketplaceと参加範囲・管理方法が異なる。", "sources": ["exchange"], "tracks": ["C", "A"], "aliases": "private exchange", "featured": false, "related": ["secure-sharing"]},
+  {"id": "cross-region-sharing", "title": "Cross-region sharing / auto-fulfillment", "ja": "リージョンをまたぐ共有・自動展開", "meaning": "別リージョン等で利用できるように共有データを提供する仕組み。リスティングの自動展開等を含む。", "example": "国内の提供データを海外アカウントでも利用できるようにする。", "note": "同一リージョンの直接共有と異なり、複製・保存・転送・更新遅延を考慮する。", "sources": ["listing", "replication"], "tracks": ["C", "A"], "aliases": "Cross-Cloud Auto-Fulfillment CAF", "featured": false, "related": ["secure-sharing"]},
+  {"id": "clean-room", "title": "Data Clean Room", "ja": "データクリーンルーム", "meaning": "複数者のデータをプライバシーや利用条件の制約下で共同分析する環境・機能。", "example": "互いの生データを直接渡さず集約的な分析を行う。", "note": "単に表を共有しただけの状態ではない。許可する分析、出力、ポリシーの設計が必要。", "sources": ["cleanroom"], "tracks": ["A", "X"], "aliases": "cleanroom collaboration privacy", "featured": false, "related": ["secure-sharing"]},
+  {"id": "open-catalog", "title": "Snowflake Open Catalog", "ja": "Open Catalog", "meaning": "Apache Iceberg等のオープンなテーブルのカタログを管理し、対応エンジン間で利用するためのサービス。", "example": "異なるエンジンでIcebergテーブルのカタログ情報を共有する。", "note": "Horizon Catalogと役割が違う。カタログの権限とストレージの権限は別。", "sources": ["opencatalog"], "tracks": ["D", "A", "X"], "aliases": "Apache Polaris REST catalog ポラリス", "featured": false, "related": ["external-volume", "catalog-integration", "iceberg-table"]},
+  {"id": "external-volume", "title": "External volume", "ja": "外部ボリューム", "meaning": "Icebergテーブル等で利用するクラウドストレージへのアクセスを設定するアカウントレベルのオブジェクト。", "example": "Icebergデータを保存するバケットと権限を指定する。", "note": "CSVロード用のExternal StageやStorage Integrationとは用途が異なる。", "sources": ["external-volume", "iceberg"], "tracks": ["D", "A"], "aliases": "EXTERNAL VOLUME storage location", "featured": false, "related": ["stage", "external-stage", "storage-integration", "catalog-integration", "open-catalog", "iceberg-table"]},
+  {"id": "catalog-integration", "title": "Catalog integration", "ja": "カタログ統合", "meaning": "外部Icebergカタログ等の情報へアクセスするための設定オブジェクト。テーブルのメタデータ取得に使う。", "example": "外部RESTカタログとSnowflakeを接続する。", "note": "カタログへの接続だけで、データファイルへアクセスする権限まで自動でそろうとは限らない。", "sources": ["catalog", "iceberg"], "tracks": ["D", "A"], "aliases": "CATALOG INTEGRATION Glue REST", "featured": false, "related": ["external-volume", "open-catalog", "iceberg-table"]},
+  {"id": "catalog-linked-db", "title": "Catalog-linked database", "ja": "カタログ連携データベース", "meaning": "外部の対応カタログとデータベースを連携し、名前空間やテーブルの同期を扱う仕組み。", "example": "外部Icebergカタログ内の複数テーブルをまとめて利用する。", "note": "通常のデータベースやデータ共有と異なる。対応するカタログ、同期、読み書き条件を確認する。", "sources": ["iceberg", "catalog"], "tracks": ["D", "A", "X"], "aliases": "catalog linked database CLD", "featured": false, "related": ["secure-sharing"]},
+  {"id": "directory-table", "title": "Directory table", "ja": "ディレクトリテーブル", "meaning": "ステージにあるファイルの名前、サイズ、URL等のメタデータを一覧として扱う仕組み。", "example": "処理対象のPDF一覧を取得する。", "note": "ファイル本文を行へ変換したテーブルではない。ファイル変更の反映方法も確認する。", "sources": ["directory"], "tracks": ["C", "D"], "aliases": "DIRECTORY metadata ファイル一覧", "featured": false, "related": ["secure-sharing"]},
+  {"id": "kafka", "title": "Kafka connectors", "ja": "Kafka連携", "meaning": "KafkaのイベントをSnowflakeへ送るコネクタ群。SnowpipeやStreaming等の取り込み経路を構成する。", "example": "イベントストリームを分析テーブルへ連携する。", "note": "コネクタの世代・方式でエラー処理や順序・重複への対応が変わる。", "sources": ["streaming", "openflow"], "tracks": ["D", "A"], "aliases": "Kafka Connector Kafka Connect", "featured": false, "related": ["secure-sharing"]},
+  {"id": "spark-connector", "title": "Snowflake Connector for Spark", "ja": "Sparkコネクタ", "meaning": "SparkとSnowflake間でデータを読み書きするコネクタ。対応する処理をSnowflakeへプッシュダウンできる。", "example": "既存SparkジョブからSnowflakeのデータを利用する。", "note": "Snowpark APIやSnowpark Connectとは別。実行エンジンとデータ移動を確認する。", "sources": ["spark", "snowpark"], "tracks": ["D", "A"], "aliases": "Apache Spark connector pushdown", "featured": false, "related": ["snowpark", "connectors"]}
+]},
+{"id": "resilience", "title": "複製・可用性・災害復旧", "en": "REPLICATION & RESILIENCE", "sections": ["architecture", "sharing-integration"], "description": "障害に備えたデータ配置、復旧目標、切替手順を考える。", "terms": [
+  {"id": "replication", "title": "Replication", "ja": "レプリケーション", "meaning": "データベースや対応オブジェクトを別アカウントへ複製する仕組み。地域分散や災害復旧に使う。", "example": "別リージョンへ重要データを定期複製する。", "note": "すべてのオブジェクトが同じ条件で複製されるわけではない。更新の遅れや費用を考慮する。", "sources": ["replication"], "tracks": ["C", "D", "A"], "aliases": "複製 replication", "featured": true, "related": ["time-travel", "fail-safe", "zero-copy-clone", "secure-sharing", "listing", "replication-group"]},
+  {"id": "replication-group", "title": "Replication group", "ja": "レプリケーショングループ", "meaning": "対象データベースや対応アカウントオブジェクトをまとめて複製する単位。", "example": "相互依存するデータベースと関連設定を同時に複製する。", "note": "単一データベース複製との違い、対象オブジェクト、利用条件を確認する。", "sources": ["replication"], "tracks": ["D", "A"], "aliases": "REPLICATION GROUP refresh", "featured": false, "related": ["replication", "failover-group", "rpo-rto"]},
+  {"id": "failover-group", "title": "Failover group", "ja": "フェイルオーバーグループ", "meaning": "複製に加え、対応するセカンダリ側をプライマリへ昇格するためのグループ。", "example": "主環境の障害時に別アカウントへ処理を切り替える。", "note": "グループを作っただけでアプリ接続や運用がすべて自動切替されるとは限らない。", "sources": ["replication"], "tracks": ["A"], "aliases": "FAILOVER GROUP primary secondary", "featured": false, "related": ["replication", "replication-group", "rpo-rto"]},
+  {"id": "failover-failback", "title": "Failover / failback", "ja": "切替と切り戻し", "meaning": "障害時に待機側へ切り替え、復旧後に必要に応じて元の配置へ戻す運用。", "example": "切替訓練で読取・書込・通知の動作を確認する。", "note": "データの正本、復旧後の差分、外部連携の再開まで手順に含める。", "sources": ["replication"], "tracks": ["A"], "aliases": "failover failback DR", "featured": false, "related": ["replication"]},
+  {"id": "client-redirect", "title": "Client Redirect", "ja": "クライアント接続のリダイレクト", "meaning": "対応する接続オブジェクト等を使い、アプリケーションの接続先切替を扱う機能。", "example": "災害復旧で利用するアカウントの変更を支援する。", "note": "データを複製する機能そのものではない。ドライバー・接続方法・認証の対応を確認する。", "sources": ["redirect"], "tracks": ["A"], "aliases": "connection URL redirect", "featured": false, "related": ["replication"]},
+  {"id": "rpo-rto", "title": "RPO / RTO", "ja": "復旧時点目標・復旧時間目標", "meaning": "どの時点までのデータ損失を許容するかと、どれだけの時間で復旧するかを表す設計指標。", "example": "複製頻度と切替訓練の結果を業務要件に照らす。", "note": "機能を有効化しただけで目標達成が保証されるわけではない。RPOとRTOは別の値。", "sources": ["replication", "redirect"], "tracks": ["A"], "aliases": "Recovery Point Objective Recovery Time Objective", "featured": false, "related": ["replication", "replication-group", "failover-group"]},
+  {"id": "replication-cost", "title": "Replication scope / cost", "ja": "複製範囲と費用", "meaning": "複製に必要な計算、保存、転送等を、範囲と更新頻度に応じて見積もる観点。", "example": "重要データだけを対象にして費用と復旧要件を両立する。", "note": "通常のクローンを別リージョンの災害復旧対策と同一視しない。", "sources": ["replication", "cost"], "tracks": ["D", "A"], "aliases": "data transfer refresh frequency", "featured": false, "related": ["replication"]}
+]},
+{"id": "development", "title": "開発・アプリ・実行環境", "en": "DEVELOPMENT & APPLICATIONS", "sections": ["apps-development"], "description": "SQLの拡張、Python、アプリケーション、API、配布方法をつなぐ。", "terms": [
+  {"id": "snowpark", "title": "Snowpark", "ja": "Snowpark API", "meaning": "Python、Java、Scala等のAPIでSnowflake内のデータ処理を記述するライブラリ。DataFrame等から処理を組み立てる。", "example": "Pythonで変換を定義して、処理をSnowflakeへ送る。", "note": "Sparkクラスターそのものではない。手元のPython処理がすべて自動分散されるわけでもない。", "sources": ["snowpark"], "tracks": ["C", "D", "A"], "aliases": "スノーパーク DataFrame Python Java Scala", "featured": true, "related": ["connectors", "spark-connector"]},
+  {"id": "lazy-evaluation", "title": "Lazy evaluation / pushdown", "ja": "遅延評価・プッシュダウン", "meaning": "処理計画を組み立て、アクション時にSnowflake側で評価する考え方。データを外へ移す処理を減らす。", "example": "selectやfilterを連結し、必要な時点で実行する。", "note": "collectやto_pandasで大量データをクライアントへ取得すると、転送やメモリーの問題が起き得る。", "sources": ["snowpark"], "tracks": ["D", "A"], "aliases": "collect to_pandas action lazy", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "udf", "title": "User-defined function", "ja": "ユーザー定義関数", "meaning": "SQL等から呼び出せる独自の計算処理。対応言語のハンドラーを使って式として利用する。", "example": "独自の整形や計算をSELECT内で再利用する。", "note": "複数の管理処理や更新を制御するStored Procedureとは役割が異なる。", "sources": ["udf"], "tracks": ["C", "D", "A"], "aliases": "UDF FUNCTION handler", "featured": false, "related": ["udtf", "stored-procedure", "execution-rights"]},
+  {"id": "udtf", "title": "User-defined table function", "ja": "ユーザー定義テーブル関数", "meaning": "入力に対して複数の行・列を返す独自関数。表形式の結果をSQLから利用する。", "example": "1件の入力から複数の明細行を生成する。", "note": "単一値を返すスカラーUDFとは戻り値の形や処理モデルが異なる。", "sources": ["udf"], "tracks": ["D", "A"], "aliases": "UDTF table function", "featured": false, "related": ["udf", "stored-procedure", "execution-rights"]},
+  {"id": "vectorized-udf", "title": "Vectorized Python UDF", "ja": "ベクトル化Python UDF", "meaning": "複数行をバッチで受け取り処理するPython UDFの方式。ライブラリのベクトル演算等を利用する。", "example": "行単位の呼び出しより効率の良いバッチ推論を行う。", "note": "入力順序、バッチサイズ、メモリー使用量を仮定しすぎない。", "sources": ["udf"], "tracks": ["D", "A"], "aliases": "pandas batch vectorized", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "stored-procedure", "title": "Stored procedure", "ja": "ストアドプロシージャ", "meaning": "複数のSQLや処理手順をまとめてCALLで実行する機能。更新・制御・エラー処理などを実装する。", "example": "VARIANTの申請を受け、検証結果を返す。", "note": "呼び出しが成功したことと、業務ルールが満たされたことは別。戻り値・例外・トランザクションを設計する。", "sources": ["procedure"], "tracks": ["C", "D", "A"], "aliases": "SP CALL プロシージャ", "featured": true, "related": ["udf", "udtf", "execution-rights"], "sql": "CALL validate_request(PARSE_JSON('{\"request_id\":\"example\"}'));\n-- 同名のプロシージャが実装済みである場合の呼出例。"},
+  {"id": "execution-rights", "title": "Owner’s rights / caller’s rights", "ja": "所有者権限・呼出者権限", "meaning": "処理を誰の権限で実行するかの選択。安全な権限委譲や利用者ごとの制御に関わる。", "example": "管理処理を限定したプロシージャとして提供する。", "note": "所有者権限では意図しない高権限処理に注意する。Restricted caller’s rights等の対応も個別に確認する。", "sources": ["rights"], "tracks": ["C", "D", "A"], "aliases": "EXECUTE AS OWNER CALLER restricted", "featured": false, "related": ["udf", "udtf", "stored-procedure"]},
+  {"id": "snowflake-scripting", "title": "Snowflake Scripting", "ja": "SQLベースの手続き処理", "meaning": "変数、条件分岐、ループ、例外処理等を使い、SQLに手続き的な処理を組み合わせる仕組み。", "example": "SQL中心の処理をプロシージャや匿名ブロックにまとめる。", "note": "JavaScriptプロシージャとは別の言語・実行記法。トランザクション境界も確認する。", "sources": ["scripting"], "tracks": ["D", "A"], "aliases": "DECLARE BEGIN EXCEPTION cursor RESULTSET", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "external-function", "title": "External function", "ja": "外部関数", "meaning": "Snowflakeから外部のサービスで実行される処理を呼び出す関数。API統合等の対応する構成を使う。", "example": "外部で管理する計算ロジックをSQLから利用する。", "note": "Python UDFのExternal Accessとは接続方式が異なる。再送・副作用・遅延を考慮する。", "sources": ["external-function"], "tracks": ["D", "A"], "aliases": "API integration remote service", "featured": false, "related": ["external-access", "secret"]},
+  {"id": "external-access", "title": "External access integration", "ja": "外部アクセス統合", "meaning": "UDFやプロシージャ等の対応ハンドラーから、許可した外部ネットワークへアクセスする設定。", "example": "Pythonの検証処理から承認済みAPIを呼ぶ。", "note": "ネットワークルール、Secret、GRANTを組み合わせる。任意のインターネット接続を一律に許可しない。", "sources": ["external-access"], "tracks": ["D", "A"], "aliases": "EAI EXTERNAL_ACCESS_INTEGRATIONS", "featured": false, "related": ["external-function", "secret"]},
+  {"id": "secret", "title": "Secret", "ja": "認証情報オブジェクト", "meaning": "外部アクセス等で使用する認証情報を管理するオブジェクト。コードへの直接埋め込みを避ける。", "example": "外部APIのトークンをコードから切り離して管理する。", "note": "Secretを使ってもログへ値を出せば漏えいし得る。参照権限と更新手順を設計する。", "sources": ["external-access"], "tracks": ["D", "A"], "aliases": "CREATE SECRET シークレット", "featured": false, "related": ["external-function", "external-access"]},
+  {"id": "streamlit", "title": "Streamlit in Snowflake", "ja": "Snowflake内のStreamlitアプリ", "meaning": "Pythonでデータアプリを構築し、Snowflakeの認証・権限・実行環境と連携して公開する機能。", "example": "CSV申請のアップロード、検証結果の表示、登録操作を提供する。", "note": "画面を操作していないことと、実行資源が停止していることは同じではない。ランタイム別の課金・停止条件を確認する。", "sources": ["streamlit"], "tracks": ["C", "D", "A"], "aliases": "Streamlit st UI データアプリ", "featured": true, "related": ["notebooks", "container-services", "native-app", "application-package"]},
+  {"id": "notebooks", "title": "Snowflake Notebooks", "ja": "ノートブック", "meaning": "SQLやPython等をセル単位で実行し、探索・実験・開発を行う環境。ランタイムに応じた計算資源を使う。", "example": "特徴量の調査や変換ロジックの試作を行う。", "note": "従来のNotebooksと新しい実行環境で仕様が異なる。Legacy表記・移行案内・利用条件を確認する。", "sources": ["notebook", "ml"], "tracks": ["C", "D", "X"], "aliases": "Jupyter notebook ノートブック", "featured": false, "related": ["streamlit", "container-services"]},
+  {"id": "container-services", "title": "Snowpark Container Services", "ja": "コンテナー実行サービス", "meaning": "Snowflakeの環境でコンテナー化したサービスやジョブを動かす機能。任意ライブラリや対応するCPU/GPU処理を実装する。", "example": "カスタム推論APIや継続稼働するアプリを実行する。", "note": "Virtual Warehouseとは別の計算資源。稼働状態・ネットワーク公開・費用を管理する。", "sources": ["container"], "tracks": ["D", "A", "X"], "aliases": "SPCS Docker container コンテナ", "featured": true, "related": ["streamlit", "notebooks", "compute-pool", "container-runtime"]},
+  {"id": "compute-pool", "title": "Compute pool", "ja": "コンピュートプール", "meaning": "Snowpark Container Servicesでサービスやジョブを実行する計算ノードのまとまり。規模と構成を管理する。", "example": "GPUを使う推論処理の実行基盤を用意する。", "note": "ウェアハウスサイズ変更とは別。最小ノード数や自動停止を含めて稼働費用を確認する。", "sources": ["container"], "tracks": ["D", "A"], "aliases": "COMPUTE POOL CPU GPU nodes", "featured": false, "related": ["container-services", "container-runtime"]},
+  {"id": "image-repository", "title": "Image repository / service / job", "ja": "イメージ・サービス・ジョブ", "meaning": "コンテナーイメージの保存先、継続提供するサービス、終了する処理のジョブという実行要素。", "example": "イメージを登録し、一回実行のバッチをジョブとして動かす。", "note": "エンドポイント公開と内部サービス通信を区別し、シークレットやログも管理する。", "sources": ["container"], "tracks": ["D", "A"], "aliases": "image repository service job endpoint", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "native-app", "title": "Snowflake Native App", "ja": "ネイティブアプリ", "meaning": "コードやデータ等をパッケージ化し、利用者のSnowflake環境へ提供するアプリケーションの仕組み。", "example": "顧客環境で動く分析アプリを配布する。", "note": "単に自分のStreamlit画面を公開することと同じではない。権限要求や更新管理が必要。", "sources": ["native"], "tracks": ["C", "A", "X"], "aliases": "Native App Framework application", "featured": false, "related": ["application-package", "streamlit"]},
+  {"id": "application-package", "title": "Application package / application role", "ja": "アプリケーションパッケージ・ロール", "meaning": "提供するアプリの内容や版、アクセス権を管理する構成要素。インストール済みApplicationと区別する。", "example": "利用者のアカウントへ配布する機能の版を管理する。", "note": "提供者側のパッケージと利用者側のインスタンスの責務を混同しない。", "sources": ["native"], "tracks": ["D", "A"], "aliases": "manifest setup script version patch APPLICATION ROLE", "featured": false, "related": ["native-app", "streamlit"]},
+  {"id": "git-integration", "title": "Git integration", "ja": "Git連携", "meaning": "Gitリポジトリと連携し、コードの取得や開発・デプロイに利用する仕組み。", "example": "プロシージャやアプリのソースをバージョン管理する。", "note": "Gitへ接続するだけで自動テスト・CI/CD・本番承認が完成するわけではない。", "sources": ["git"], "tracks": ["D", "A"], "aliases": "repository branch commit fetch", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "snowflake-cli", "title": "Snowflake CLI / SnowSQL", "ja": "コマンドラインツール", "meaning": "接続、SQL実行、対応オブジェクトの開発・デプロイをコマンドから行うツール群。", "example": "アプリやSQL処理のデプロイを自動化する。", "note": "Snowflake CLIとSnowSQLは同じコマンドセットではない。新規利用時は対象機能と現行ツールを確認する。", "sources": ["cli"], "tracks": ["C", "D", "A"], "aliases": "snow snowsql command line", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "sql-api", "title": "SQL API / REST APIs", "ja": "SQL APIとREST API群", "meaning": "HTTP経由でSQLを実行したり、対応リソースを管理したりするAPI。外部サービス連携に使う。", "example": "WebサービスからSQLを送信し実行状況を確認する。", "note": "認証、非同期処理、ページ分割、再送を設計する。SQL APIと各リソースのREST APIを区別する。", "sources": ["sqlapi"], "tracks": ["C", "D", "A"], "aliases": "HTTP REST API statement handle", "featured": false, "related": ["snowpark", "stored-procedure"]},
+  {"id": "connectors", "title": "Drivers / Python Connector", "ja": "ドライバーとPythonコネクタ", "meaning": "JDBC、ODBC、Python等のクライアントからSnowflakeへ接続する仕組み。認証とセッション管理を行う。", "example": "Pythonアプリからバインド変数付きでSQLを実行する。", "note": "Python ConnectorとSnowparkは役割が違う。SQL文字列への入力値の直接連結を避ける。", "sources": ["python-connector", "architecture"], "tracks": ["C", "D", "A"], "aliases": "JDBC ODBC Python connector Node.js bind", "featured": false, "related": ["snowpark", "spark-connector"]},
+  {"id": "snowflake-postgres", "title": "Snowflake Postgres", "ja": "マネージドPostgres", "meaning": "Snowflakeが提供するPostgres向けのサービス。トランザクション系のアプリケーションで利用を検討する。", "example": "Postgres互換性が必要なアプリの保存先を検討する。", "note": "Snowflakeの標準テーブルやHybrid Tableと同一のエンジン・SQL環境ではない。", "sources": ["postgres"], "tracks": ["A", "X"], "aliases": "PostgreSQL Postgres OLTP", "featured": false, "related": ["snowpark", "stored-procedure"]}
+]},
+{"id": "ai", "title": "AI・Cortex・エージェント", "en": "CORTEX AI & AGENTS", "sections": ["apps-development"], "description": "AI SQL、検索、自然言語分析、エージェントを役割で区別する。", "terms": [
+  {"id": "cortex-ai", "title": "Cortex AI", "ja": "CortexのAI機能群", "meaning": "生成AIによる処理、検索、自然言語分析、エージェント等をSnowflakeのデータと組み合わせる機能群。", "example": "社内データを使った問い合わせ対応を構成する。", "note": "Cortexは単一モデル名ではない。機能ごとに利用権限、モデル、地域、費用が異なる。", "sources": ["ai-overview"], "tracks": ["C", "X"], "aliases": "コーテックス Cortex AISQL LLM 生成AI", "featured": true, "related": ["ai-complete", "cortex-analyst", "cortex-search"]},
+  {"id": "ai-complete", "title": "AI_COMPLETE", "ja": "生成・補完", "meaning": "選択した対応モデルに指示や入力を渡し、回答や構造化出力等を生成するAI関数。", "example": "問い合わせ内容を読み、回答案やJSON形式の項目を作る。", "note": "出力は事実性を保証しない。従来のCOMPLETEと入力形式・対応機能の差を確認する。", "sources": ["ai"], "tracks": ["X"], "aliases": "COMPLETE completion LLM structured output", "featured": false, "related": ["cortex-ai", "cortex-analyst", "cortex-search", "ai-summarize", "ai-aggregate"]},
+  {"id": "ai-classify", "title": "AI_CLASSIFY", "ja": "AIによる分類", "meaning": "テキストや画像等の対応入力を、指定したカテゴリへ分類する関数。", "example": "問い合わせを配送・請求・製品などに振り分ける。", "note": "業務ルールの完全な代替ではない。分類名の曖昧さや誤分類を評価する。", "sources": ["ai"], "tracks": ["X"], "aliases": "CLASSIFY_TEXT 分類 classification", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "ai-filter", "title": "AI_FILTER", "ja": "自然言語条件の判定", "meaning": "自然言語で表した条件に対し、対応するテキスト・画像等を判定するAI関数。", "example": "返品を求めている問い合わせを候補として抽出する。", "note": "通常の比較演算と違い判定が揺れ得る。大量行への適用は費用も確認する。", "sources": ["ai"], "tracks": ["X"], "aliases": "boolean true false semantic filter", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "ai-extract", "title": "AI_EXTRACT", "ja": "情報抽出", "meaning": "文章や対応ファイルから、指定する項目や情報を抽出するAI関数。", "example": "文書から発注者・品目・期日の候補を取り出す。", "note": "抽出した値は型・範囲・参照整合を別途検証する。空欄と推測値を区別する。", "sources": ["ai"], "tracks": ["X"], "aliases": "EXTRACT_ANSWER document extraction", "featured": false, "related": ["ai-parse-document", "ai-transcribe"]},
+  {"id": "ai-sentiment", "title": "AI_SENTIMENT", "ja": "感情分析", "meaning": "文章の感情や、対応する観点ごとの感情を分析するAI関数。", "example": "レビューの傾向を集計する。", "note": "皮肉や専門文脈の解釈は誤ることがある。従来関数との戻り値の違いを確認する。", "sources": ["ai"], "tracks": ["X"], "aliases": "SENTIMENT 感情分析", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "ai-summarize", "title": "AI_SUMMARIZE", "ja": "内容の要約", "meaning": "対応するテキスト・画像・文書の重要な内容を要約するAI関数。", "example": "長い報告書の確認用サマリーを作る。", "note": "要約で省略された条件がないか原文で確認する。複数行を集約する関数とは区別する。", "sources": ["ai"], "tracks": ["X"], "aliases": "SUMMARIZE summary 要約", "featured": false, "related": ["ai-aggregate", "ai-complete"]},
+  {"id": "ai-aggregate", "title": "AI_AGG / AI_SUMMARIZE_AGG", "ja": "複数行にまたがるAI集約", "meaning": "複数行のテキストをまとめ、指示に沿った分析や要約を得る集約関数群。", "example": "月間の問い合わせから共通の不満を抽出する。", "note": "件数や金額の正確な算術集計は通常のSQLで行い、AIの要約と混同しない。", "sources": ["ai"], "tracks": ["X"], "aliases": "AI_AGG AI_SUMMARIZE_AGG aggregate", "featured": false, "related": ["ai-summarize", "ai-complete"]},
+  {"id": "ai-embed", "title": "AI_EMBED / AI_MULTI_EMBED", "ja": "埋め込みベクトルの生成", "meaning": "テキストや画像等をベクトルへ変換するAI関数群。MULTI版は対応する複数モダリティや区間情報を扱う。", "example": "文章やメディアの意味検索に利用する特徴表現を作る。", "note": "入力種別、次元、モデルをそろえる。異なるモデルのベクトルをそのまま比較しない。", "sources": ["ai", "vector"], "tracks": ["D", "X"], "aliases": "EMBED_TEXT_768 EMBED_TEXT_1024 AI_MULTI_EMBED embedding 埋め込み", "featured": false, "related": ["cortex-search", "search-optimization", "ai-similarity", "vector"]},
+  {"id": "ai-similarity", "title": "AI_SIMILARITY", "ja": "埋め込みによる類似度", "meaning": "対応する入力間の埋め込み類似度を求めるAI関数。意味の近さを比較する。", "example": "類似する問い合わせや説明文の候補を探す。", "note": "類似度は事実の一致や重複の確定を保証しない。VECTORの距離関数との使い分けを確認する。", "sources": ["ai", "vector"], "tracks": ["X"], "aliases": "cosine similarity 類似度", "featured": false, "related": ["ai-embed", "vector"]},
+  {"id": "ai-parse-document", "title": "AI_PARSE_DOCUMENT", "ja": "文書解析・OCR", "meaning": "ステージ上の対応文書から文字やレイアウト情報等を抽出するAI関数。OCRとLAYOUT等の方式を使い分ける。", "example": "PDFの内容を検索・抽出用パイプラインへ渡す。", "note": "ファイル形式、ページ制限、解析品質を確認する。文字を読めることと項目を正しく理解することは別。", "sources": ["ai"], "tracks": ["D", "X"], "aliases": "PARSE_DOCUMENT OCR LAYOUT PDF document AI Document AI", "featured": false, "related": ["ai-extract", "ai-transcribe"]},
+  {"id": "ai-transcribe", "title": "AI_TRANSCRIBE", "ja": "音声・動画の文字起こし", "meaning": "ステージ上の対応する音声・動画から、発話や時刻・話者情報等を抽出するAI関数。", "example": "会議音声から検索可能なテキストを作る。", "note": "話者分離や固有名詞は誤り得る。対応形式・言語・利用条件を確認する。", "sources": ["ai"], "tracks": ["X"], "aliases": "transcription 音声認識 speech video", "featured": false, "related": ["ai-extract", "ai-parse-document"]},
+  {"id": "ai-redact", "title": "AI_REDACT", "ja": "個人情報の墨消し", "meaning": "テキスト内の個人情報を検出し、秘匿化に利用するAI関数。", "example": "分析前のテキストから個人情報を減らす。", "note": "検出漏れがないとは限らない。Dynamic Data Maskingやアクセス権設定の代替にはしない。", "sources": ["ai", "masking"], "tracks": ["A", "X"], "aliases": "PII redact 墨消し 匿名化", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "ai-translate", "title": "AI_TRANSLATE", "ja": "AI翻訳", "meaning": "対応言語間でテキストを翻訳するAI関数。", "example": "多言語の問い合わせを分析用の言語へそろえる。", "note": "専門用語や否定条件、数値を確認する。法的・業務的な最終判断に無検証で使わない。", "sources": ["ai"], "tracks": ["X"], "aliases": "TRANSLATE translation 翻訳", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "ai-helpers", "title": "TO_FILE / AI_COUNT_TOKENS / PROMPT", "ja": "AI関数の入力補助", "meaning": "ステージ内ファイルの参照、トークン数の確認、プロンプトオブジェクトの構築を支える関数群。", "example": "文書を入力するAI処理で参照と入力形式を整える。", "note": "文字数とトークン数は一致しない。参照を作るだけでファイル閲覧権限が付くわけではない。", "sources": ["ai"], "tracks": ["D", "X"], "aliases": "TO_FILE FILE AI_COUNT_TOKENS COUNT_TOKENS PROMPT", "featured": false, "related": ["cortex-ai", "cortex-analyst"]},
+  {"id": "cortex-analyst", "title": "Cortex Analyst", "ja": "自然言語からの構造化データ分析", "meaning": "業務用語とデータ構造を結び付け、自然言語の質問からSQL生成等を支援する機能。", "example": "商品別売上を日本語で質問する。", "note": "生成SQLは定義・粒度・フィルターを確認する。文書検索を主とするCortex Searchとは役割が異なる。", "sources": ["analyst", "semantic"], "tracks": ["C", "A", "X"], "aliases": "Text to SQL NL2SQL Analyst アナリスト", "featured": true, "related": ["cortex-ai", "ai-complete", "cortex-search", "semantic-view", "semantic-model"]},
+  {"id": "semantic-model", "title": "Semantic model / verified query", "ja": "意味モデルと検証済みクエリ", "meaning": "指標、次元、関係、用語や確認済みSQL例を使い、業務の意味を分析機能へ伝える仕組み。", "example": "売上の定義や「顧客数」の集計粒度を統一する。", "note": "YAMLのSemantic ModelとSnowflakeオブジェクトのSemantic Viewは同一ではない。検証例は全質問の正しさを保証しない。", "sources": ["analyst", "semantic"], "tracks": ["D", "A", "X"], "aliases": "YAML VQR Verified Query Repository semantic model", "featured": false, "related": ["cortex-analyst", "semantic-view"]},
+  {"id": "cortex-search", "title": "Cortex Search", "ja": "検索サービス", "meaning": "テキスト等への検索をアプリやRAGに組み込むマネージドサービス。語句と意味に基づく検索等を提供する。", "example": "規程やマニュアルから質問に関連する箇所を取得する。", "note": "Search Optimization Serviceとは別物。検索インデックス、更新、アクセス制御、稼働費用を確認する。", "sources": ["cortex-search"], "tracks": ["C", "D", "X"], "aliases": "RAG hybrid search semantic search 検索", "featured": true, "related": ["cortex-ai", "ai-complete", "cortex-analyst", "search-optimization", "ai-embed"]},
+  {"id": "cortex-agents", "title": "Cortex Agents", "ja": "データを扱うAIエージェント", "meaning": "質問を解釈し、Analyst・Search・カスタムツール等を選んで複数段階の処理を行う機能。", "example": "指標をSQLで調べ、関連文書も参照して説明する。", "note": "ツール実行権限、操作の承認、ループ・費用の上限を設計する。自律動作と無制限権限は別。", "sources": ["agents"], "tracks": ["A", "X"], "aliases": "agent tool orchestration エージェント", "featured": true, "related": ["managed-mcp", "snowflake-cowork", "cortex-code"]},
+  {"id": "snowflake-cowork", "title": "Snowflake CoWork", "ja": "業務向け対話型AIアプリ", "meaning": "自然言語で企業データを分析し、結果の可視化やツールを使った操作を行う対話型アプリ。Cortex Agents等を利用する。", "example": "業務利用者が指標や文書を会話で調べる。", "note": "機能群のCortexや個々のAgentとは階層が違う。旧称・名称変更を含め最新の公式案内を確認する。", "sources": ["cowork", "agents"], "tracks": ["A", "X"], "aliases": "Snowflake Intelligence SI CoWork business intelligence", "featured": false, "related": ["cortex-agents", "managed-mcp", "cortex-code"]},
+  {"id": "cortex-code", "title": "Snowflake CoCo / Cortex Code", "ja": "AIコーディング支援", "meaning": "Snowflakeの文脈を利用し、コードやSQL、開発作業を支援するAIエージェント系ツール。公式概要ではCoCoの名称を使用する。", "example": "変換コードの作成や修正、開発作業の補助に使う。", "note": "生成コードの検証と権限管理が必要。Snowsight・CLI等で利用条件が異なる。", "sources": ["cortex-code"], "tracks": ["D", "X"], "aliases": "Cortex Code CoCo coding agent コーテックスコード", "featured": false, "related": ["cortex-agents", "managed-mcp", "snowflake-cowork"]},
+  {"id": "managed-mcp", "title": "Snowflake-managed MCP server", "ja": "マネージドMCPサーバー", "meaning": "MCPを通じてSnowflakeの対応機能やカスタム処理を外部AIクライアントのツールとして提供する機能。", "example": "外部エージェントから許可された分析ツールを呼ぶ。", "note": "MCPサーバーへの接続権限と、各ツール・データの権限は別。公開する処理を最小限にする。", "sources": ["mcp"], "tracks": ["D", "A", "X"], "aliases": "Model Context Protocol MCP SERVER", "featured": false, "related": ["cortex-agents", "snowflake-cowork", "cortex-code"]},
+  {"id": "cortex-ai-gateway", "title": "Cortex AI Gateway", "ja": "AI推論の統制用ゲートウェイ", "meaning": "AIモデルへの呼び出しを統制する入口。利用状況の観測、アクセス、費用管理等に使う。", "example": "複数のAIクライアントの推論利用をまとめて管理する。", "note": "MLモデルの配信先を振り分けるSnowflake ML Gatewayとは別のオブジェクト。", "sources": ["ai-gateway"], "tracks": ["A", "X"], "aliases": "AI GATEWAY endpoint inference gateway", "featured": false, "related": ["ai-guardrails", "ai-observability"]},
+  {"id": "ai-observability", "title": "AI Observability", "ja": "AIアプリの評価・観測", "meaning": "AI処理のトレースや評価指標を収集し、回答品質・検索品質・実行の振る舞いを調べる仕組み。", "example": "RAGの検索失敗と生成失敗を分けて分析する。", "note": "評価モデルのスコアだけを正解としない。実例、期待回答、遅延、費用と併せて見る。", "sources": ["ai-observability"], "tracks": ["D", "A", "X"], "aliases": "TruLens evaluation trace groundedness observability", "featured": false, "related": ["ai-guardrails", "cortex-ai-gateway"]},
+  {"id": "ai-guardrails", "title": "Cortex AI Guardrails", "ja": "AIへの攻撃を検知・緩和する保護機能", "meaning": "対応するAIアプリで、プロンプトインジェクション等を検知・緩和する実行時の保護機能。", "example": "外部文書やツール出力に紛れた悪意ある指示への対策を追加する。", "note": "完全防御を保証しない。エディション、地域間推論、対応アプリ、追加費用の条件を確認する。", "sources": ["guardrails"], "tracks": ["A", "X"], "aliases": "guardrails jailbreak prompt injection", "featured": false, "related": ["ai-observability", "cortex-ai-gateway"]},
+  {"id": "ai-access-region", "title": "AI privileges / model availability", "ja": "AIの権限・モデル・地域条件", "meaning": "AI機能の使用権限とモデルへのアクセス、対応地域や地域間推論の設定を確認する観点。", "example": "必要なモデルを使える範囲と処理地域を管理する。", "note": "AI関数の権限、データ権限、モデルの利用可否は別。地域間推論をデータ所在地要件と照合する。", "sources": ["ai", "ai-overview"], "tracks": ["D", "A", "X"], "aliases": "CORTEX_USER AI_FUNCTIONS_USER USE AI FUNCTIONS cross region inference", "featured": false, "related": ["cortex-ai", "cortex-analyst"]}
+]},
+{"id": "ml", "title": "ML・特徴量・MLOps", "en": "MACHINE LEARNING & MLOPS", "sections": ["apps-development", "data-engineering"], "description": "特徴量から学習・配信・監視までのつながりを整理する。", "terms": [
+  {"id": "snowflake-ml", "title": "Snowflake ML", "ja": "機械学習の開発・運用機能群", "meaning": "特徴量作成、モデル学習、管理、推論、監視等をSnowflakeのデータ上でつなぐ機能群。", "example": "売上や離反を予測するモデルの開発と運用を行う。", "note": "Snowpark APIやCortexの生成AI関数とは対象・役割が異なる。ライブラリと実行環境を確認する。", "sources": ["ml"], "tracks": ["D", "X"], "aliases": "Snowpark ML machine learning 機械学習 MLOps", "featured": false, "related": ["feature-store", "model-registry", "ml-functions"]},
+  {"id": "feature-store", "title": "Feature Store", "ja": "特徴量ストア", "meaning": "特徴量の定義、管理、再利用、取得等を支える仕組み。学習と推論で共通した特徴量を使う。", "example": "複数モデルで顧客ごとの行動特徴量を共有する。", "note": "特徴量を保存しただけでデータ漏洩を防げるわけではない。時点と更新の管理が重要。", "sources": ["feature-store"], "tracks": ["D", "X"], "aliases": "FeatureStore 特徴量 feature engineering", "featured": false, "related": ["snowflake-ml", "model-registry", "ml-functions", "feature-view", "point-in-time"]},
+  {"id": "feature-view", "title": "Entity / Feature View", "ja": "エンティティと特徴量ビュー", "meaning": "特徴量を結び付ける対象と、特徴量のまとまりを管理する構成要素。更新や版の管理にも関わる。", "example": "顧客IDに対して直近の購買回数を定義する。", "note": "SQLの通常のViewとFeature Viewの管理上の役割を区別する。", "sources": ["feature-store"], "tracks": ["D", "X"], "aliases": "Entity FeatureView feature view refresh", "featured": false, "related": ["feature-store", "point-in-time"]},
+  {"id": "point-in-time", "title": "Point-in-time correct features", "ja": "時点整合した特徴量", "meaning": "予測対象の時点で利用可能だった特徴量だけを対応付ける考え方。未来情報の混入を避ける。", "example": "過去の離反予測を学習するとき、その当時の顧客属性を使う。", "note": "単なる最新値JOINでは学習時に未来の情報が混ざり得る。イベント時刻と利用可能時刻も確認する。", "sources": ["feature-store"], "tracks": ["D", "X"], "aliases": "PIT point in time join data leakage 時点結合", "featured": false, "related": ["asof-join", "timestamp-types", "feature-store", "feature-view"]},
+  {"id": "ml-dataset", "title": "Dataset / versioned training data", "ja": "学習データセットと版管理", "meaning": "学習用データを管理し、再現可能な入力として扱うための仕組み。データ・特徴量・モデルの対応を残す。", "example": "再学習したモデルがどのデータを使ったか追跡する。", "note": "元テーブルの最新版を読んでいるだけでは、過去の学習を再現できない場合がある。", "sources": ["ml"], "tracks": ["D", "X"], "aliases": "Dataset immutable version snapshot dataset", "featured": false, "related": ["model-registry"]},
+  {"id": "model-registry", "title": "Model Registry", "ja": "モデルレジストリ", "meaning": "学習済みモデルとその版、メタデータ、実行インターフェース等を管理する機能。", "example": "承認したモデルを登録し、推論に利用する。", "note": "モデルの登録と、継続稼働する配信環境の作成は同じではない。実行場所と対応モデルを確認する。", "sources": ["registry"], "tracks": ["D", "X"], "aliases": "MODEL model registry log_model", "featured": true, "related": ["snowflake-ml", "feature-store", "ml-functions", "model-version", "model-inference"]},
+  {"id": "model-version", "title": "Model version / signature", "ja": "モデルの版と入出力定義", "meaning": "モデルの版と、推論時に必要な入力・出力の構造を管理する要素。", "example": "新旧モデルを比較し、呼び出し側の互換性を確認する。", "note": "列名が一致しても単位や欠損の意味が変わると予測が崩れる。署名だけで意味の整合は保証されない。", "sources": ["registry"], "tracks": ["D", "X"], "aliases": "ModelVersion signature version alias", "featured": false, "related": ["model-registry", "model-inference"]},
+  {"id": "model-inference", "title": "Batch / online inference", "ja": "バッチ推論・オンライン推論", "meaning": "蓄積データへまとめて予測する方式と、要求に応じて予測を返す方式。実行資源と遅延要件で使い分ける。", "example": "毎晩の需要予測と、利用者操作に応じた即時予測を分離する。", "note": "対応するモデル、ランタイム、ウェアハウスとコンテナー配信の条件を確認する。", "sources": ["registry", "ml"], "tracks": ["D", "X"], "aliases": "inference predict serving real time batch", "featured": false, "related": ["model-registry", "model-version"]},
+  {"id": "ml-training", "title": "Training / tuning / experiments", "ja": "学習・調整・実験比較", "meaning": "モデルの学習やハイパーパラメーター探索を実行し、設定と結果を比較・記録する機能群。", "example": "複数の設定を比較してモデルを選ぶ。", "note": "データ分割や評価指標が不適切だと、学習を大規模化しても良いモデルにはならない。", "sources": ["ml"], "tracks": ["D", "X"], "aliases": "distributed training tuning experiment tracking", "featured": false, "related": ["ml-jobs", "model-observability"]},
+  {"id": "ml-jobs", "title": "ML Jobs / pipelines", "ja": "MLジョブとパイプライン", "meaning": "機械学習の処理をジョブとして実行し、前処理・学習・評価等の依存関係を運用する仕組み。", "example": "再学習を定期実行し、評価結果を保存する。", "note": "通常のSQL Taskと同一の実行モデルとは限らない。リトライ時の副作用と実行資源を確認する。", "sources": ["ml"], "tracks": ["D", "X"], "aliases": "ML Jobs pipeline Ray CPU GPU", "featured": false, "related": ["ml-training", "model-observability"]},
+  {"id": "model-observability", "title": "Model observability / explainability", "ja": "モデルの監視・説明可能性", "meaning": "モデルの入力や予測の変化、性能等を監視し、出力に関わる要因を調べる機能群。", "example": "モデル劣化や入力分布の変化を検知する。", "note": "特徴量の寄与度は因果関係を証明しない。正解ラベル到着の遅れや観測範囲も考慮する。", "sources": ["ml"], "tracks": ["D", "X"], "aliases": "drift model monitoring explainability SHAP ML lineage", "featured": false, "related": ["ml-training", "ml-jobs"]},
+  {"id": "ml-functions", "title": "ML Functions", "ja": "SQLで使うML機能", "meaning": "時系列予測、異常検知、分類などの対応するML処理をSQLから利用する機能群。", "example": "履歴データから需要予測や異常候補を得る。", "note": "Cortexの文章分類とは手法・入力が異なる。必要データ量、系列、評価方法を確認する。", "sources": ["ml-functions"], "tracks": ["C", "D", "X"], "aliases": "FORECAST ANOMALY_DETECTION CLASSIFICATION TOP_INSIGHTS 時系列予測 異常検知", "featured": false, "related": ["snowflake-ml", "feature-store", "model-registry"]},
+  {"id": "container-runtime", "title": "Snowflake Container Runtime", "ja": "ML向けコンテナー実行環境", "meaning": "対応するノートブックやML処理をコンテナー上で実行し、CPU・GPUやMLライブラリを利用する環境。", "example": "大きなモデルの学習や実験を行う。", "note": "ウェアハウス実行環境とは資源・依存関係・費用が異なる。Notebooksの世代と合わせて確認する。", "sources": ["ml", "container"], "tracks": ["D", "X"], "aliases": "container runtime notebook CPU GPU", "featured": false, "related": ["container-services", "compute-pool"]}
+]}
+];
+const allTerms = groups.flatMap((group) => group.terms);
+const byId = Object.fromEntries(allTerms.map((term) => [term.id, term])) as Record<string, Term>;
+const trackLabels: Record<Track, string> = { C: 'Core', D: 'Data Engineer', A: 'Architect', X: '発展・横断' };
+const domainNav = [
+  { id:'architecture', label:'Architecture' }, { id:'data-engineering', label:'Data Engineering' },
+  { id:'storage-data', label:'Storage & Data' }, { id:'performance-cost', label:'Performance & Cost' },
+  { id:'security-governance', label:'Security & Governance' }, { id:'sharing-integration', label:'Sharing & Integration' },
+  { id:'apps-development', label:'Apps & Development' }, { id:'architect', label:'Advanced Architect' },
+];
+const guides: Record<string, {lead: string; focus: string[]; picks: string[]}> = {
+  architecture: {lead:'ストレージ、計算、制御を分けて理解する。構造を知ると、性能・費用・復旧の設計がつながる。', focus:['アカウントとウェアハウスを、何の境界で分けるか。','単一SQLの遅さと同時実行の混雑をどう切り分けるか。','復旧できる時点と、切り替えに必要な手順は何か。'], picks:['three-layers','virtual-warehouse','scale-up','scale-out','replication']},
+  'data-engineering': {lead:'取り込みから変換、差分反映、品質確認まで。データが届く経路と、失敗しても再開できる流れをつかむ。', focus:['ファイル、ストリーミング、外部連携をどう使い分けるか。','Stream・Task・Dynamic Tableの責務は何か。','重複、遅延、部分成功、再試行をどう扱うか。'], picks:['copy-into','snowpipe-streaming','stream','task','dynamic-table']},
+  'storage-data': {lead:'テーブルの種類、保存形式、履歴の守り方を整理する。似た名前を、目的と制約で選び分ける。', focus:['標準・Iceberg・Hybridをどんな要件で選ぶか。','永続・Transient・Temporaryで復旧の条件はどう違うか。','VARIANT、ビュー、クローンは何を保存するか。'], picks:['standard-table','iceberg-table','hybrid-table','time-travel','zero-copy-clone']},
+  'performance-cost': {lead:'遅い理由と高い理由を、数字から切り分ける。計算・走査・キャッシュ・待ち行列を別々に考える。', focus:['実行時間、待機時間、スピルのどこがボトルネックか。','最適化の効果が追加費用に見合うか。','監視できることと、費用を停止できることは同じか。'], picks:['query-profile','pruning','result-cache','resource-monitor','budget']},
+  'security-governance': {lead:'誰が、どこから、何を使えるか。ロール・認証・ポリシー・監査を組み合わせてデータを守る。', focus:['ロール階層とオブジェクト所有者をどう設計するか。','行の制限、列のマスキング、接続制御の違いは何か。','監査・リネージ・品質の観測範囲を把握しているか。'], picks:['rbac','managed-access','masking-policy','row-access-policy','horizon']},
+  'sharing-integration': {lead:'データを渡す、外から読む、別環境へ備える。共有・複製・カタログ・接続の違いから設計する。', focus:['共有することとコピーすることは、どこで違うか。','保存先とカタログの管理主体をどう分けるか。','リージョンをまたぐとき、権限と費用はどう変わるか。'], picks:['secure-sharing','listing','external-volume','open-catalog','failover-group']},
+  'apps-development': {lead:'SQL・Python・コンテナー・AIをつなぐ。使う機能だけでなく、実行資源と権限の持ち方を理解する。', focus:['UDF・Procedure・アプリの役割をどう分けるか。','ウェアハウスとCompute Poolをどう使い分けるか。','Cortexの生成・検索・分析・エージェントをどう組み合わせるか。'], picks:['snowpark','streamlit','container-services','cortex-analyst','cortex-agents']},
+  architect: {lead:'機能を覚えるだけでなく、要件から構成を選ぶ。性能・費用・セキュリティ・可用性を横断して設計判断を整理する。', focus:['業務要件を、配置・権限・計算資源の選択に落とせるか。','選ばなかった構成の利点と欠点を説明できるか。','障害・成長・運用変更の際に、どこが制約になるか。'], picks:['workload-isolation','edition','private-connectivity','failover-group','rpo-rto']},
+};
+const guide = guides[currentSection] || guides.architecture;
+const comparisons = [
+  { title:'Scale up ↔ Scale out', text:'一つの重い処理に必要な資源と、多数の処理を同時に受ける力を分ける。', ids:['scale-up','scale-out','multi-cluster'] },
+  { title:'Stream ↔ Task ↔ Dynamic Table', text:'変更の追跡、手続きの実行、宣言した結果の維持。責務が違う。', ids:['stream','task','dynamic-table'] },
+  { title:'View ↔ Materialized View', text:'SQL定義を参照するか、結果を保持するか。更新と保存の費用も変わる。', ids:['view','materialized-view','dynamic-table'] },
+  { title:'Time Travel ↔ Fail-safe ↔ Replication', text:'利用者の履歴操作、最後の復旧保護、別環境への複製は別の仕組み。', ids:['time-travel','fail-safe','replication'] },
+  { title:'Permanent ↔ Transient ↔ Temporary', text:'存続期間と復旧保護を、データの再作成可能性から選ぶ。', ids:['permanent-table','transient-table','temporary-table'] },
+  { title:'Resource Monitor ↔ Budget', text:'対象資源の監視・停止と、広い利用範囲の予算管理を混同しない。', ids:['resource-monitor','budget'] },
+  { title:'Standard ↔ Iceberg ↔ Hybrid', text:'分析、オープン形式、低遅延の読み書き。保存方式と制約から選ぶ。', ids:['standard-table','iceberg-table','hybrid-table'] },
+  { title:'Masking ↔ Row Access', text:'見える値を変えるか、見える行を制限するか。ロール設計と組み合わせる。', ids:['masking-policy','row-access-policy','rbac'] },
+  { title:'Snowpark ↔ Container Services', text:'APIでデータ処理を記述することと、コンテナーを稼働させることは別。', ids:['snowpark','container-services','compute-pool'] },
+  { title:'Search Optimization ↔ Cortex Search', text:'分析SQLの選択性の高い検索を速める機能と、AIアプリ向け検索サービスの違い。', ids:['search-optimization','cortex-search','cortex-analyst'] },
+];
+const searchIndex = (term: Term, group: Group) => [term.title, term.ja, term.aliases, term.meaning, term.example, term.note, group.title, group.en].join(' ');
 ---
 
-<BaseLayout title={`${title} | Snowflake | Seiji Tech Atlas`}>
-  <main class="page">
-    <a class="back" href={route('topics/snowflake/')}>← Back to Snowflake</a>
-
-    <section class="hero">
-      <div class="label">SNOWFLAKE / {eyebrow}</div>
-      <h1>{title}</h1>
-      <div class="meta">
-        {code && <code>{code}</code>}
-        <span>CONTENT GROWING</span>
-        {official && <a href={official} target="_blank" rel="noreferrer">公式 ↗</a>}
+<BaseLayout title={`${title} | Snowflake | Seiji Tech Atlas`} description={`Snowflakeの${allTerms.length}用語・機能を、意味・用途・注意点・公式資料で整理する学習辞典。`}>
+  <main class="sf-page">
+    <a class="sf-back" href={route('topics/snowflake/')}>← Back to Snowflake</a>
+    <header class="sf-hero">
+      <div class="sf-hero-copy">
+        <p class="sf-eyebrow">SNOWFLAKE / {eyebrow}</p>
+        <h1>{title}<span class="sf-dot">.</span></h1>
+        <p class="sf-lead">{guide.lead}</p>
+        <div class="sf-meta">
+          {code && <code>{code}</code>}
+          <span>SHARED KNOWLEDGE BASE</span>
+          {official && <a href={official} target="_blank" rel="noopener noreferrer">資格の公式情報 ↗</a>}
+        </div>
+        <a class="sf-primary" href="#snowflake-glossary">用語・機能を調べる <span aria-hidden="true">↓</span></a>
       </div>
+      <aside class="sf-hero-card" aria-label="辞典の収録情報">
+        <div class="sf-card-top"><span>SNOWFLAKE FIELD GUIDE</span><span aria-hidden="true">✳</span></div>
+        <div class="sf-big-number">{allTerms.length}<small>TERMS & CONCEPTS</small></div>
+        <div class="sf-stat-row"><span><b>{groups.length}</b> 分野</span><span><b>{allTerms.filter((t) => t.featured).length}</b> 重要語</span><span><b>{allTerms.filter((t) => t.sql).length}</b> SQL例</span></div>
+        <p>Learn once.<br /><strong>Connect the whole platform.</strong></p>
+        <small class="sf-reviewed">内容確認 · {reviewed}</small>
+      </aside>
+    </header>
+
+    <nav class="sf-domain-nav" aria-label="Snowflakeの学習分野">
+      {domainNav.map((item) => <a href={route(`topics/snowflake/${item.id}/`)} aria-current={currentSection === item.id ? 'page' : undefined}>{item.label}</a>)}
+    </nav>
+
+    <section class="sf-learning" aria-labelledby="sf-learning-title">
+      <div><p class="sf-eyebrow">ONE DICTIONARY, THREE LEARNING LENSES</p><h2 id="sf-learning-title">覚える。実装する。設計する。</h2><p>資格ごとに別の辞典を作らず、同じ機能を違う観点で読み直す。</p></div>
+      <div class="sf-lens-grid">
+        <a href="#snowflake-glossary" data-choose-track="C"><small>CORE</small><strong>仕組みをつかむ <span>↗</span></strong><span>基礎概念・違い・基本操作</span></a>
+        <a href="#snowflake-glossary" data-choose-track="D"><small>DATA ENGINEER</small><strong>動く流れをつくる <span>↗</span></strong><span>取り込み・変換・品質・運用</span></a>
+        <a href="#snowflake-glossary" data-choose-track="A"><small>ARCHITECT</small><strong>要件から選び取る <span>↗</span></strong><span>構成・性能・権限・可用性</span></a>
+      </div>
+      <p class="sf-fine">分類はこのサイトの学習用タグです。公式の試験範囲・出題保証ではありません。<a href="https://learn.snowflake.com/en/certifications/" target="_blank" rel="noopener noreferrer">受験する試験のガイドを確認 ↗</a></p>
+      <details class="sf-focus"><summary>この分野で説明できるようになりたいこと <span aria-hidden="true">＋</span></summary><ul>{guide.focus.map((item) => <li>{item}</li>)}</ul></details>
     </section>
 
-    <section class="grid">
-      <article><span>01</span><h2>Overview</h2><p>この領域の目的と全体像を整理します。</p></article>
-      <article><span>02</span><h2>Key concepts</h2><p>重要な概念、用語、設計上の判断ポイントを整理します。</p></article>
-      <article><span>03</span><h2>Practical notes</h2><p>実装・演習・実務で確認した内容を追加します。</p></article>
-      <article><span>04</span><h2>Review</h2><p>振り返り用のチェックリストと要点をまとめます。</p></article>
+    <atlas-snowflake-glossary data-section={currentSection} data-section-label={title}>
+      <details class="sf-dictionary" id="snowflake-glossary" open>
+        <summary class="sf-dictionary-heading"><span><small>SEARCH / CONNECT / REVIEW</small><strong>Snowflake 用語・機能辞典</strong><span>{allTerms.length}項目を、必要なところから。</span></span><span class="sf-dictionary-toggle" aria-hidden="true">−</span></summary>
+        <div class="sf-dictionary-content">
+          <p class="sf-dictionary-intro">用語を開くと「意味」「使う場面」「注意点」「公式資料」を読めます。関連語や比較カードをたどって、点の知識をつなげていきましょう。</p>
+          <div class="sf-controls" hidden>
+            <div class="sf-scope-row"><div class="sf-segment" role="group" aria-label="表示範囲"><button type="button" data-scope="section" aria-pressed="false">このページの分野</button><button type="button" data-scope="all" aria-pressed="false">全機能</button></div><span class="sf-scope-label" data-scope-label></span></div>
+            <label class="sf-search-label" for="sf-search">日本語・英語・略語で探す <kbd>/</kbd></label>
+            <div class="sf-search-wrap"><span aria-hidden="true">⌕</span><input id="sf-search" type="search" placeholder="例：タイムトラベル / warehouse / CDC / Cortex" autocomplete="off" spellcheck="false" aria-describedby="sf-search-help" /><button type="button" data-action="clear-search" aria-label="検索文字を消す">×</button></div>
+            <p id="sf-search-help" class="sf-fine">検索を始めると全機能へ切り替わります。スペース区切りで複数語を絞り込めます。</p>
+            <div class="sf-filter-row"><label class="sf-select-label" for="sf-group-select">分野<select id="sf-group-select"><option value="all">すべての分野</option>{groups.map((group) => <option value={group.id}>{group.title} · {group.terms.length}</option>)}</select></label><div class="sf-track-controls"><span>学習の観点</span><div class="sf-chips" role="group" aria-label="学習の観点"><button type="button" data-track="all" aria-pressed="true">すべて</button>{(['C','D','A','X'] as Track[]).map((track) => <button type="button" data-track={track} aria-pressed="false">{trackLabels[track]}</button>)}</div></div></div>
+            <div class="sf-tool-row"><label class="sf-featured-toggle"><input type="checkbox" data-featured />重要語だけ</label><div><button type="button" data-action="expand">用語をすべて開く</button><button type="button" data-action="collapse">用語を閉じる</button><button type="button" data-action="reset">全解除</button></div></div>
+          </div>
+          <noscript><p class="sf-noscript">JavaScriptが無効のため全項目を表示しています。各分野を開き、ブラウザーのページ内検索で探せます。</p></noscript>
+          <div class="sf-result-row"><p role="status" aria-live="polite" aria-atomic="true" data-results>{allTerms.length} / {allTerms.length} 項目 · {groups.length} 分野</p><span>展開して読む <span aria-hidden="true">↓</span></span></div>
+          <div class="sf-picks"><span>この分野の入口</span>{guide.picks.map((id) => <a href={`#term-${id}`}>{byId[id].title} ↗</a>)}</div>
+          <div class="sf-empty" hidden><strong>該当する用語がありません。</strong><p>別名・英語・略語でも試すか、分野や学習タグを解除してください。</p><button type="button" data-action="reset">全項目を表示する</button></div>
+          <div class="sf-groups">
+            {groups.map((group, index) => <details class="sf-group" id={`group-${group.id}`} data-group={group.id} data-sections={group.sections.join(' ')} open={index === 0}>
+              <summary class="sf-group-heading"><span class="sf-group-no">{String(index + 1).padStart(2, '0')}</span><span class="sf-group-title"><small>{group.en}</small><strong>{group.title}</strong></span><span class="sf-group-count" data-group-count>{group.terms.length}</span><span class="sf-chevron" aria-hidden="true">⌄</span></summary>
+              <div class="sf-group-body"><p class="sf-group-description">{group.description}</p><div class="sf-terms">
+                {group.terms.map((term) => <details class="sf-term" id={`term-${term.id}`} data-term={term.id} data-tracks={term.tracks.join('')} data-key={term.featured ? 'yes' : 'no'} data-index={searchIndex(term, group)}>
+                  <summary><span class="sf-term-heading"><span class="sf-term-en">{term.title}</span><span class="sf-term-ja">{term.ja}</span></span>{term.featured && <span class="sf-key-badge" title="この辞典の重要語">KEY</span>}<span class="sf-term-plus" aria-hidden="true">＋</span></summary>
+                  <div class="sf-term-content">
+                    <div class="sf-term-tags">{term.tracks.map((track) => <span>{trackLabels[track]}</span>)}</div>
+                    <dl><div><dt>意味・役割</dt><dd>{term.meaning}</dd></div><div class="sf-example"><dt>使う場面・例</dt><dd>{term.example}</dd></div><div class="sf-caution"><dt>混同しやすい点・注意</dt><dd>{term.note}</dd></div></dl>
+                    {term.sql && <details class="sf-code-example"><summary>SQLでイメージする <span aria-hidden="true">↗</span></summary><p>構文を理解するための例です。オブジェクト名・権限・環境を合わせてください。実行すると更新や作成を伴う例もあります。</p><pre><code>{term.sql}</code></pre></details>}
+                    <div class="sf-sources"><small>OFFICIAL DOCS</small>{term.sources.map((key) => <a href={sources[key].url} target="_blank" rel="noopener noreferrer">{sources[key].title} ↗</a>)}</div>
+                    <div class="sf-related"><small>関連・読み比べ</small><div>{term.related.map((id) => <a href={`#term-${id}`}>{byId[id].title}</a>)}</div></div>
+                    <div class="sf-term-bottom"><span>{term.id}</span><a href={`#term-${term.id}`} aria-label={`${term.title}の直接リンク`}>この用語へのリンク #</a></div>
+                  </div>
+                </details>)}
+              </div></div>
+            </details>)}
+          </div>
+          <p class="sf-bottom-hint">すべて覚えてから進む必要はありません。実装で使った用語を引き、似た機能を一つ読み比べるだけでも知識がつながります。</p>
+        </div>
+      </details>
+    </atlas-snowflake-glossary>
+
+    <section class="sf-comparisons" aria-labelledby="sf-comparisons-title">
+      <p class="sf-eyebrow">COMPARE / UNDERSTAND THE DIFFERENCE</p><h2 id="sf-comparisons-title">似ている機能を、並べて考える。</h2><p class="sf-section-lead">名前を覚えたら、「何のために使うか」「何を解決しないか」を比較する。</p>
+      <div class="sf-compare-grid">{comparisons.map((item) => <article><h3>{item.title}</h3><p>{item.text}</p><div>{item.ids.map((id) => <a href={`#term-${id}`}>{byId[id].title} ↗</a>)}</div></article>)}</div>
     </section>
+
+    <footer class="sf-footer">
+      <div><p class="sf-eyebrow">SCOPE & SOURCES</p><h2>辞典と、公式資料を行き来する。</h2></div>
+      <p>主要な機能・用語・設計概念を広く整理しています。全SQL関数、全引数、すべての制限値を列挙したリファレンスではありません。GA／Preview、エディション、クラウド、リージョン、権限、価格は機能ごとに変わるため、実装時は各項目の公式資料を確認してください。</p>
+      <p>内容確認日：{reviewed}。学習タグと例は本サイトの編集によるものです。Core・Data Engineerの既存教材や公式試験ガイドを置き換えるものではありません。SQL例はSnowflake実環境での実行検証をしていません。</p>
+      <div class="sf-footer-links"><a href="https://docs.snowflake.com/en/" target="_blank" rel="noopener noreferrer">Snowflake Docs ↗</a><a href="https://docs.snowflake.com/en/release-notes/overview" target="_blank" rel="noopener noreferrer">Release notes ↗</a><a href={route('topics/snowflake/core/')}>Core学習ページ ↗</a><a href={route('topics/snowflake/data-engineer/')}>Data Engineer学習ページ ↗</a><a href={route('topics/snowflake/')}>Snowflakeトップ ↗</a></div>
+    </footer>
   </main>
 </BaseLayout>
 
+<script>
+  // Native custom element: no framework/runtime dependency; survives Astro page navigation.
+  class AtlasSnowflakeGlossary extends HTMLElement {
+    private cleanup?: AbortController;
+    connectedCallback() {
+      if (this.cleanup) return;
+      this.cleanup = new AbortController();
+      const signal = this.cleanup.signal;
+      const section = this.dataset.section || 'architecture';
+      const isArchitect = section === 'architect';
+      const root = this.querySelector<HTMLDetailsElement>('.sf-dictionary');
+      const input = this.querySelector<HTMLInputElement>('#sf-search');
+      const select = this.querySelector<HTMLSelectElement>('#sf-group-select');
+      const featured = this.querySelector<HTMLInputElement>('[data-featured]');
+      const status = this.querySelector<HTMLElement>('[data-results]');
+      const scopeLabel = this.querySelector<HTMLElement>('[data-scope-label]');
+      const empty = this.querySelector<HTMLElement>('.sf-empty');
+      if (!root || !input || !select || !featured || !status || !scopeLabel || !empty) return;
+      const normalize = (value: string) => value.normalize('NFKC').toLowerCase()
+        .replace(/[\u30a1-\u30f6]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+        .replace(/[\s_\-\/]+/g, ' ').trim();
+      const domains = Array.from(this.querySelectorAll<HTMLDetailsElement>('[data-group]')).map((element) => ({
+        element, id: element.dataset.group || '', sections: (element.dataset.sections || '').split(' '),
+        count: element.querySelector<HTMLElement>('[data-group-count]'),
+        terms: Array.from(element.querySelectorAll<HTMLDetailsElement>('[data-term]')).map((term) => ({
+          element: term, text: normalize(term.dataset.index || ''), tracks: term.dataset.tracks || '', key: term.dataset.key === 'yes',
+        })),
+      }));
+      const total = domains.reduce((n, group) => n + group.terms.length, 0);
+      let scope = isArchitect ? 'all' : 'section';
+      let track = isArchitect ? 'A' : 'all';
+      let previousSearch = '';
+      let composing = false;
+      const apply = (openGroups = false) => {
+        const words = normalize(input.value).split(' ').filter(Boolean);
+        let count = 0;
+        let groupCount = 0;
+        let openedFirst = false;
+        domains.forEach((domain) => {
+          const inScope = scope === 'all' || isArchitect || domain.sections.includes(section);
+          let visible = 0;
+          domain.terms.forEach((term) => {
+            const matches = inScope && (select.value === 'all' || select.value === domain.id)
+              && (track === 'all' || term.tracks.includes(track)) && (!featured.checked || term.key)
+              && words.every((word) => term.text.includes(word) || term.text.replace(/ /g, '').includes(word));
+            term.element.hidden = !matches;
+            if (matches) visible++;
+          });
+          domain.element.hidden = visible === 0;
+          if (domain.count) domain.count.textContent = String(visible);
+          if (visible) {
+            groupCount++;
+            if (openGroups) domain.element.open = true;
+            if (!openedFirst && !this.hasAttribute('data-ready')) domain.element.open = true;
+            openedFirst = true;
+          }
+          count += visible;
+        });
+        status.textContent = `${count} / ${total} 項目 · ${groupCount} 分野`;
+        empty.hidden = count !== 0;
+        scopeLabel.textContent = scope === 'section' ? `${this.dataset.sectionLabel || section} の関連分野` : '全分野から表示';
+        this.querySelectorAll<HTMLButtonElement>('[data-scope]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.scope === scope)));
+        this.querySelectorAll<HTMLButtonElement>('[data-track]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.track === track)));
+      };
+      const reset = () => {
+        scope = 'all'; track = 'all'; select.value = 'all'; featured.checked = false;
+        input.value = ''; previousSearch = ''; apply(true);
+      };
+      const changeTrack = (value: string) => {
+        if (!['all', 'C', 'D', 'A', 'X'].includes(value)) return;
+        scope = 'all'; track = value; select.value = 'all'; apply(true);
+      };
+      const reveal = (hash: string, shouldScroll = true) => {
+        let id: string;
+        try { id = decodeURIComponent(hash.replace(/^#/, '')); } catch { return; }
+        const target = document.getElementById(id);
+        if (!target || !this.contains(target)) return;
+        root.open = true;
+        if (id.startsWith('term-') || id.startsWith('group-')) {
+          reset();
+          if (target instanceof HTMLDetailsElement) target.open = true;
+          let parent = target.parentElement;
+          while (parent && parent !== this) {
+            if (parent instanceof HTMLDetailsElement) parent.open = true;
+            parent = parent.parentElement;
+          }
+        }
+        if (shouldScroll) requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior:'auto', block:'start' });
+          if (target instanceof HTMLDetailsElement) target.querySelector<HTMLElement>('summary')?.focus({ preventScroll: true });
+        });
+      };
+      const search = () => {
+        const next = input.value.trim();
+        if (next && !previousSearch) {
+          scope = 'all'; track = 'all'; select.value = 'all'; featured.checked = false;
+        }
+        previousSearch = next;
+        apply(true);
+      };
+      input.addEventListener('compositionstart', () => { composing = true; }, {signal});
+      input.addEventListener('compositionend', () => { composing = false; search(); }, {signal});
+      input.addEventListener('input', () => { if (!composing) search(); }, {signal});
+      select.addEventListener('change', () => { scope = 'all'; apply(true); }, {signal});
+      featured.addEventListener('change', () => apply(true), {signal});
+      this.addEventListener('click', (event) => {
+        const button = (event.target as Element | null)?.closest<HTMLButtonElement>('button');
+        if (!button || !this.contains(button)) return;
+        if (button.dataset.scope) {
+          scope = button.dataset.scope; track = scope === 'section' && isArchitect ? 'A' : 'all';
+          select.value = 'all'; input.value = ''; previousSearch = ''; featured.checked = false; apply(true);
+        } else if (button.dataset.track) changeTrack(button.dataset.track);
+        else if (button.dataset.action === 'reset') reset();
+        else if (button.dataset.action === 'clear-search') { input.value = ''; previousSearch = ''; apply(true); input.focus(); }
+        else if (button.dataset.action === 'expand' || button.dataset.action === 'collapse') {
+          const open = button.dataset.action === 'expand';
+          domains.forEach((domain) => {
+            if (domain.element.hidden) return;
+            domain.element.open = true;
+            domain.terms.forEach((term) => { if (!term.element.hidden) term.element.open = open; });
+          });
+        }
+      }, {signal});
+      document.addEventListener('click', (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const anchor = (event.target as Element | null)?.closest<HTMLAnchorElement>('a');
+        if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+        const href = anchor.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        if (anchor.dataset.chooseTrack) {
+          event.preventDefault(); reset(); changeTrack(anchor.dataset.chooseTrack);
+          root.open = true; root.scrollIntoView({ behavior:'auto', block:'start' }); return;
+        }
+        let id: string;
+        try { id = decodeURIComponent(href.slice(1)); } catch { return; }
+        const target = document.getElementById(id);
+        if (!target || !this.contains(target)) return;
+        event.preventDefault();
+        if (location.hash !== href) history.pushState(null, '', href);
+        reveal(href);
+      }, {signal});
+      document.addEventListener('keydown', (event) => {
+        const element = event.target as HTMLElement | null;
+        const editing = element?.closest('input, textarea, select, [contenteditable="true"]');
+        if (event.key === '/' && !editing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          event.preventDefault(); root.open = true; input.focus();
+        }
+        if (event.key === 'Escape' && document.activeElement === input && !event.isComposing) {
+          input.value = ''; previousSearch = ''; apply(true);
+        }
+      }, {signal});
+      window.addEventListener('hashchange', () => reveal(location.hash), {signal});
+      apply();
+      this.setAttribute('data-ready', '');
+      this.querySelector<HTMLElement>('.sf-controls')?.removeAttribute('hidden');
+      if (location.hash) reveal(location.hash);
+    }
+    disconnectedCallback() { this.cleanup?.abort(); this.cleanup = undefined; }
+  }
+  if (!customElements.get('atlas-snowflake-glossary')) customElements.define('atlas-snowflake-glossary', AtlasSnowflakeGlossary);
+</script>
+
 <style>
-  :global(body){background:radial-gradient(circle at 72% 10%,rgba(104,212,248,.1),transparent 30%),#08111a}.page{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:42px 0 100px}.back{color:#8298a5;font-size:.82rem}.hero{padding:86px 0 60px;border-bottom:1px solid rgba(190,220,240,.16)}.label{color:#68d4f8;font:800 .68rem/1 ui-monospace,monospace;letter-spacing:.17em}h1{margin:14px 0 22px;color:#f2f7fa;font-size:clamp(3.2rem,8vw,6.3rem);line-height:.9;letter-spacing:-.065em}.meta{display:flex;flex-wrap:wrap;gap:8px}.meta>*{padding:7px 10px;border:1px solid rgba(190,220,240,.15);border-radius:999px;color:#9eb3bd;background:#0e1b25;font:700 .62rem/1 ui-monospace,monospace}.meta a{color:#68d4f8}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:58px}.grid article{min-height:190px;padding:24px;border:1px solid rgba(190,220,240,.17);border-radius:15px;background:linear-gradient(145deg,#11202c,#0c1721)}.grid span{color:#526d7c;font:700 .65rem/1 ui-monospace,monospace}.grid h2{margin:28px 0 9px;color:#ebf4f7}.grid p{margin:0;color:#8fa3ae;font-size:.78rem;line-height:1.65}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+  :global(body){background:radial-gradient(ellipse at 79% 2%,rgba(57,167,220,.12),transparent 34%),#08111a}
+  .sf-page{--sf-ink:#eff7fb;--sf-muted:#9aafbe;--sf-cyan:#78dcff;--sf-line:#253e50;--sf-panel:#10202d;box-sizing:border-box;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:38px 0 88px;color:var(--sf-ink);font-family:inherit;line-height:1.65}
+  .sf-page *{box-sizing:border-box}.sf-page :is(button,input,select){font:inherit}.sf-page [hidden]{display:none!important}.sf-page a{color:var(--sf-cyan);text-underline-offset:4px}.sf-page :is(a,button,input,select,summary):focus-visible{outline:3px solid #9be5ff;outline-offset:4px}.sf-page button{cursor:pointer}.sf-page summary{cursor:pointer;list-style:none}.sf-page summary::-webkit-details-marker{display:none}.sf-page :is(h1,h2,h3,p){overflow-wrap:anywhere}.sf-page :is(details,[id]){scroll-margin-top:28px}
+  .sf-back{display:inline-flex;align-items:center;min-height:40px;color:#9bafbc!important;font-size:.8rem;text-decoration:none}.sf-back:hover{color:var(--sf-cyan)!important}
+  .sf-eyebrow{margin:0;color:var(--sf-cyan);font:800 .65rem/1.6 ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em}.sf-hero{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:56px;align-items:center;padding:53px 0 52px}.sf-hero h1{max-width:790px;font-size:clamp(3rem,6.6vw,5.8rem);line-height:1.02;letter-spacing:-.065em;margin:17px 0 22px;font-weight:800}.sf-dot{color:var(--sf-cyan)}.sf-lead{max-width:720px;font-size:.94rem;color:#acbdc8;line-height:1.95}.sf-meta{display:flex;flex-wrap:wrap;gap:8px;margin:23px 0}.sf-meta>*{padding:6px 10px;border:1px solid var(--sf-line);border-radius:7px;color:#9fc1d2;background:#0d1e2a;font:700 .6rem/1.5 ui-monospace,monospace}.sf-meta a{color:var(--sf-cyan)}.sf-primary{display:inline-flex;gap:26px;align-items:center;padding:11px 17px;border:1px solid #427991;border-radius:9px;background:#13364a;font-size:.8rem;font-weight:700;text-decoration:none}.sf-primary:hover{background:#1b4b64}
+  .sf-hero-card{overflow:hidden;position:relative;border:1px solid #2c596f;background:radial-gradient(circle at 82% 25%,#1b4a6073,transparent 63%),linear-gradient(135deg,#132d3e,#101f2d);border-radius:22px;padding:24px}.sf-card-top{display:flex;justify-content:space-between;gap:15px;align-items:center;font:700 .56rem/1.5 ui-monospace,monospace;letter-spacing:.07em;color:#a1cce0}.sf-card-top>span:last-child{font-size:2.1rem;color:var(--sf-cyan)}.sf-big-number{margin:21px 0 23px;color:#d8f3ff;font-size:5.2rem;font-weight:800;letter-spacing:-.075em;line-height:1}.sf-big-number small{display:block;margin:14px 0;color:#7eb2ca;font:700 .6rem/1.3 ui-monospace,monospace;letter-spacing:.12em}.sf-stat-row{display:flex;justify-content:space-between;gap:6px;padding:15px 0;border-block:1px solid #315367;font-size:.63rem;color:#91adbf}.sf-stat-row b{font-size:.94rem;color:#deeff7;margin-right:3px}.sf-hero-card>p{margin:22px 0 17px;font-size:.85rem;color:#839daf;line-height:1.8}.sf-hero-card strong{font-weight:500;color:#b9d5e2}.sf-reviewed{font:600 .58rem/1.5 ui-monospace,monospace;color:#88aabd}
+  .sf-domain-nav{display:flex;flex-wrap:wrap;gap:8px;border-block:1px solid var(--sf-line);padding:21px 0}.sf-domain-nav a{display:inline-flex;align-items:center;min-height:36px;padding:7px 12px;border:1px solid transparent;border-radius:7px;color:#9eb2bf;font-size:.69rem;text-decoration:none}.sf-domain-nav a:hover{color:#e3f5ff;background:#172a37}.sf-domain-nav a[aria-current="page"]{color:#bcefff;border-color:#30677f;background:#122f41}
+  .sf-learning{margin:46px 0}.sf-learning h2,.sf-comparisons h2{font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.04em;margin:9px 0 10px;line-height:1.35}.sf-learning>div>p:last-child,.sf-section-lead{font-size:.84rem;color:var(--sf-muted);margin:9px 0 21px}.sf-lens-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.sf-lens-grid>a{display:flex;flex-direction:column;padding:20px;border:1px solid var(--sf-line);border-radius:12px;background:linear-gradient(135deg,#132734,#0e1b26);text-decoration:none;transition:border-color .15s,transform .15s}.sf-lens-grid>a:hover{border-color:#61b9dc;transform:translateY(-2px)}.sf-lens-grid small{font:700 .62rem/1.5 ui-monospace,monospace;letter-spacing:.1em;color:#82cae6}.sf-lens-grid strong{display:flex;justify-content:space-between;gap:10px;margin:14px 0 7px;font-size:1rem;line-height:1.5;color:#e5f0f5}.sf-lens-grid strong span{color:#62a2bf}.sf-lens-grid>a>span{font-size:.72rem;color:#93abba}.sf-fine{font-size:.68rem;color:#899eac;line-height:1.85}.sf-fine a{color:#aacddb}.sf-focus{margin-top:22px;border:1px solid var(--sf-line);border-radius:10px;background:#0d1b26}.sf-focus>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 18px;font-size:.78rem;color:#bbccd7}.sf-focus>summary span{color:var(--sf-cyan);font-size:1.1rem}.sf-focus[open]>summary{border-bottom:1px solid var(--sf-line)}.sf-focus ul{margin:16px 22px 20px;padding-left:19px;color:#a8bdca;font-size:.8rem}.sf-focus li{margin:7px 0}
+  atlas-snowflake-glossary{display:block}.sf-dictionary{border:1px solid #31586f;border-radius:19px;background:linear-gradient(155deg,#12293955,#0b1821);overflow:hidden}.sf-dictionary-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 30px;background:linear-gradient(110deg,#17374c,#102331)}.sf-dictionary-heading>span:first-child{display:flex;flex-direction:column;gap:8px}.sf-dictionary-heading small{color:#83d6f5;font:700 .61rem/1.5 ui-monospace,monospace;letter-spacing:.14em}.sf-dictionary-heading strong{font-size:clamp(1.4rem,3vw,2rem);line-height:1.4;letter-spacing:-.03em}.sf-dictionary-heading>span>span{color:#95b9cd;font-size:.79rem}.sf-dictionary-toggle{display:flex;align-items:center;justify-content:center;flex:0 0 38px;width:38px;height:38px;border-radius:50%;border:1px solid #3c647b;color:#a8e4fd;font-size:1.3rem}.sf-dictionary:not([open]) .sf-dictionary-toggle{font-size:0}.sf-dictionary:not([open]) .sf-dictionary-toggle::after{content:'＋';font-size:1.3rem}.sf-dictionary-content{padding:25px}.sf-dictionary-intro{color:#9fb4c2;font-size:.79rem;line-height:1.9;margin:0 0 20px}
+  .sf-controls{padding:21px;border:1px solid #2d4c5f;border-radius:13px;background:#0b1925}.sf-scope-row{display:flex;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:20px}.sf-segment{display:inline-flex;gap:3px;padding:3px;border:1px solid #294353;border-radius:8px;background:#08141e}.sf-segment button{border:0;border-radius:5px;padding:8px 12px;color:#9bb0be;background:transparent;min-height:36px;font-size:.72rem}.sf-segment button[aria-pressed="true"]{color:#c7f0ff;background:#204a60}.sf-scope-label{color:#7f9daf;font-size:.67rem}.sf-search-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;font-weight:700;color:#bed0da;font-size:.76rem}.sf-search-label kbd{border:1px solid #355369;border-radius:4px;min-width:21px;padding:1px 6px;font:500 .7rem/1.2 ui-monospace,monospace;color:#819daf}.sf-search-wrap{display:flex;align-items:center;gap:12px;padding:4px 8px 4px 15px;background:#0f2737;border:1px solid #4a8aa5;border-radius:9px;box-shadow:0 0 0 3px #23597722}.sf-search-wrap>span{font-size:1.6rem;color:#80cee9}.sf-search-wrap input{width:100%;min-width:0;background:transparent;border:0;padding:11px 0;color:#e7f6fd;outline-offset:1px!important;font-size:16px}.sf-search-wrap input::placeholder{color:#718fa1;font-size:.8rem}.sf-search-wrap input::-webkit-search-cancel-button{display:none}.sf-search-wrap button{border:0;background:transparent;color:#8badc0;font-size:1.5rem;min-width:40px;min-height:40px}.sf-controls>.sf-fine{margin:8px 0 18px}.sf-filter-row{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px}.sf-select-label,.sf-track-controls>span{display:flex;flex-direction:column;gap:7px;color:#8ea6b6;font-size:.68rem}.sf-select-label select{color:#c1d4df;background:#132a3b;border:1px solid #345368;border-radius:7px;min-height:42px;padding:9px;width:100%;min-width:0;font-size:.74rem}.sf-track-controls>span{margin-bottom:7px}.sf-chips{display:flex;flex-wrap:wrap;gap:6px}.sf-chips button{padding:8px 10px;min-height:40px;border-radius:7px;background:#102231;border:1px solid #2b485c;color:#a0b7c6;font-size:.69rem;white-space:nowrap}.sf-chips button[aria-pressed="true"]{color:#d0f2ff;border-color:#5598b7;background:#204459}.sf-tool-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:19px;padding-top:14px;border-top:1px solid #223e50}.sf-featured-toggle{display:flex;align-items:center;gap:8px;font-size:.71rem;color:#c2d4df;min-height:38px}.sf-featured-toggle input{accent-color:#7bd9fe;width:17px;height:17px}.sf-tool-row>div{display:flex;flex-wrap:wrap;gap:7px}.sf-tool-row button{padding:8px 9px;border:1px solid #28485d;border-radius:6px;color:#95bacf;background:#102435;font-size:.65rem;min-height:36px}.sf-tool-row button:hover,.sf-chips button:hover{border-color:#7bbfdd}
+  .sf-result-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:20px 0 12px}.sf-result-row p{font:700 .73rem/1.6 ui-monospace,monospace;margin:0;color:#acd6e9}.sf-result-row>span{font-size:.67rem;color:#6c8a9c}.sf-picks{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:22px}.sf-picks>span{color:#809bae;font-size:.65rem;margin-right:4px}.sf-picks a{font-size:.64rem;color:#94c8df;text-decoration:none;padding:5px 8px;border-radius:5px;border:1px solid #294a5f;background:#0e2331}.sf-empty{padding:34px 15px;text-align:center;border:1px dashed #395d73;border-radius:10px;color:#a8c3d3}.sf-empty strong{color:#d2e5ef;font-size:.94rem}.sf-empty p{font-size:.8rem}.sf-empty button{color:#c7eefe;background:#1b455a;border:1px solid #477a92;border-radius:8px;padding:10px 15px;font-size:.78rem}.sf-noscript{color:#b2d3e3;font-size:.82rem;padding:12px;border:1px solid #2e556c;border-radius:9px}
+  .sf-groups{display:grid;gap:12px}.sf-group{border:1px solid #294657;border-radius:12px;background:#0d1c27;overflow:hidden}.sf-group-heading{display:flex;align-items:center;gap:15px;padding:20px 21px;background:linear-gradient(120deg,#152c3b,#0f222f)}.sf-group-heading:hover{background:#173549}.sf-group-no{font:700 .7rem/1 ui-monospace,monospace;color:#6499b3;border-right:1px solid #315166;padding-right:14px;flex-shrink:0}.sf-group-title{display:flex;flex-direction:column;gap:5px;min-width:0}.sf-group-title small{font:600 .57rem/1.4 ui-monospace,monospace;letter-spacing:.1em;color:#779aac}.sf-group-title strong{color:#d4e8f2;font-size:1.02rem;line-height:1.5;overflow-wrap:anywhere}.sf-group-count{display:inline-flex;justify-content:center;align-items:center;min-width:31px;min-height:27px;margin-left:auto;border:1px solid #3a6076;border-radius:7px;font:600 .71rem/1.2 ui-monospace,monospace;color:#aad0e3}.sf-chevron{display:inline-block;color:#6993ab;font-size:1.2rem;transition:transform .15s}.sf-group[open]>.sf-group-heading .sf-chevron{transform:rotate(180deg)}.sf-group[open]>.sf-group-heading{border-bottom:1px solid #2c4a5f}.sf-group-body{padding:18px}.sf-group-description{color:#849eae;font-size:.75rem;margin:0 0 17px}.sf-terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}.sf-term{border:1px solid #294a5f;border-radius:10px;background:#102333;min-width:0}.sf-term>summary{display:flex;align-items:center;gap:10px;padding:17px 16px;min-height:88px}.sf-term>summary:hover{background:#163244;border-radius:9px}.sf-term-heading{display:flex;flex-direction:column;min-width:0;gap:5px;flex:1}.sf-term-en{font-size:.84rem;font-weight:700;color:#e3eff6;overflow-wrap:anywhere;line-height:1.5}.sf-term-ja{color:#8babbc;font-size:.72rem;line-height:1.6;overflow-wrap:anywhere}.sf-key-badge{border:1px solid #486778;border-radius:4px;background:#263e4a;color:#b9d6df;font:800 .5rem/1 ui-monospace,monospace;padding:4px 5px;flex-shrink:0}.sf-term-plus{color:#74adc8;font-size:.96rem;flex-shrink:0}.sf-term[open]>.sf-term-plus{transform:rotate(45deg)}.sf-term[open]>summary{border-bottom:1px solid #28495e;border-radius:9px 9px 0 0}.sf-term[open]>summary .sf-term-plus{font-size:0}.sf-term[open]>summary .sf-term-plus::after{content:'−';font-size:1.1rem}.sf-term-content{padding:17px;min-width:0}.sf-term-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px}.sf-term-tags span{font-size:.58rem;padding:3px 7px;border:1px solid #2e536c;background:#142e40;border-radius:4px;color:#87b3ca}.sf-term dl{margin:0}.sf-term dl>div{margin-bottom:17px}.sf-term dt{font-size:.63rem;color:#8ed3ee;font-weight:700;letter-spacing:.03em;margin:0 0 5px}.sf-term dd{margin:0;font-size:.79rem;line-height:1.95;color:#b5c7d2;overflow-wrap:anywhere}.sf-term .sf-example{padding:13px;border-radius:7px;background:#142f3d}.sf-term .sf-caution{padding:13px;border:1px solid #5c5b474d;border-left:3px solid #9d9160;background:#2b2b255e;border-radius:5px}.sf-term .sf-caution dt{color:#cdbf8d}.sf-term .sf-caution dd{color:#b8b9ac}
+  .sf-code-example{border:1px solid #2f5269;border-radius:7px;margin:17px 0;overflow:hidden}.sf-code-example summary{display:flex;justify-content:space-between;padding:10px 12px;font-size:.7rem;color:#94cae2;background:#102d3e}.sf-code-example>p{font-size:.63rem;color:#8ba7b8;margin:10px 12px}.sf-code-example pre{max-width:100%;overflow:auto;margin:0;padding:14px;background:#071520;color:#b5dfef;font:.66rem/1.85 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.sf-code-example code{font:inherit;white-space:pre}
+  .sf-sources{display:flex;flex-direction:column;gap:7px;border-top:1px solid #294658;padding-top:14px}.sf-sources small,.sf-related>small{color:#7194a9;font:700 .57rem/1.5 ui-monospace,monospace;letter-spacing:.07em}.sf-sources a{font-size:.68rem;line-height:1.7;color:#8fc9e3;overflow-wrap:anywhere}.sf-related{margin-top:18px}.sf-related>div{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.sf-related a{padding:5px 7px;border:1px solid #31516a;border-radius:5px;color:#9bbdcf;background:#152c3c;font-size:.59rem;line-height:1.6;text-decoration:none;overflow-wrap:anywhere}.sf-related a:hover{border-color:#70bbdb;color:#d9f2ff}.sf-term-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:9px;border-top:1px solid #254256;margin-top:17px;padding-top:10px;font:.57rem/1.7 ui-monospace,monospace}.sf-term-bottom>span{color:#628299}.sf-term-bottom a{color:#7fabbe}.sf-bottom-hint{font-size:.73rem;line-height:1.9;color:#7f9cad;padding:18px 3px 0;margin-bottom:0}
+  .sf-comparisons{margin-top:66px}.sf-compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}.sf-compare-grid article{border:1px solid var(--sf-line);border-radius:12px;padding:23px;background:#0f202d}.sf-compare-grid h3{font-size:.96rem;margin:0 0 12px;line-height:1.6;color:#c2e3f2}.sf-compare-grid p{font-size:.79rem;color:#92afbf;line-height:1.85;margin:0 0 17px}.sf-compare-grid article>div{display:flex;gap:8px 14px;flex-wrap:wrap}.sf-compare-grid a{font-size:.66rem;color:#7abbd7;text-decoration:none}.sf-compare-grid a:hover{text-decoration:underline}
+  .sf-footer{margin-top:65px;padding-top:32px;border-top:1px solid var(--sf-line)}.sf-footer h2{font-size:1.4rem;margin:10px 0 22px;letter-spacing:-.03em}.sf-footer>p{max-width:960px;font-size:.74rem;line-height:1.95;color:#859dac}.sf-footer-links{display:flex;flex-wrap:wrap;gap:12px 23px;margin-top:23px}.sf-footer-links a{font-size:.73rem;color:#93c6dc}
+  @media(min-width:1440px){.sf-page{width:min(1240px,calc(100% - 72px))}.sf-hero{grid-template-columns:minmax(0,1fr) 310px;gap:75px}}
+  @media(max-width:1000px){.sf-hero{grid-template-columns:minmax(0,1fr) 240px;gap:26px}.sf-hero-card{padding:20px}.sf-hero h1{font-size:clamp(2.7rem,6.3vw,4.4rem)}.sf-filter-row{grid-template-columns:1fr;gap:16px}.sf-lens-grid strong{font-size:.89rem}}
+  @media(max-width:760px){.sf-hero{grid-template-columns:1fr;padding:32px 0}.sf-hero-card{display:none}.sf-hero h1{font-size:clamp(2.9rem,9vw,4.3rem)}.sf-lens-grid{grid-template-columns:1fr;gap:8px}.sf-lens-grid>a{padding:15px 17px}.sf-lens-grid strong{margin:6px 0 2px;font-size:1rem}.sf-lens-grid>a>span{font-size:.73rem}.sf-learning{margin:33px 0}.sf-terms{grid-template-columns:1fr}.sf-dictionary-heading{padding:23px 20px}.sf-dictionary-content{padding:16px}.sf-controls{padding:16px}.sf-compare-grid{grid-template-columns:1fr}.sf-group-body{padding:12px}.sf-group-heading{padding:17px 14px;gap:11px}.sf-group-title strong{font-size:.92rem}.sf-group-title small{font-size:.52rem}.sf-group-no{padding-right:10px}.sf-search-label kbd{display:none}.sf-tool-row>div{gap:6px}.sf-domain-nav{gap:5px;padding:15px 0}.sf-domain-nav a{padding:7px 9px;font-size:.64rem}.sf-picks{gap:6px}}
+  @media(max-width:480px){.sf-page{width:calc(100% - 28px);padding:22px 0 65px}.sf-hero h1{font-size:clamp(2.55rem,10vw,3.5rem)}.sf-lead{font-size:.85rem}.sf-eyebrow{font-size:.57rem}.sf-meta{margin:18px 0}.sf-dictionary-heading{padding:20px 15px;gap:10px}.sf-dictionary-heading strong{font-size:1.24rem}.sf-dictionary-heading>span>span{font-size:.69rem}.sf-dictionary-toggle{flex-basis:30px;width:30px;height:30px}.sf-dictionary-content{padding:11px}.sf-dictionary-intro{padding:5px 3px;font-size:.73rem}.sf-controls{padding:13px}.sf-scope-row{gap:8px}.sf-scope-label{font-size:.59rem}.sf-segment{width:100%}.sf-segment button{flex:1;font-size:.66rem;min-height:38px}.sf-search-wrap{padding-left:10px;gap:7px}.sf-search-wrap input::placeholder{font-size:.68rem}.sf-search-wrap button{min-width:32px}.sf-select-label select{font-size:16px}.sf-chips button{font-size:.65rem;min-height:41px}.sf-tool-row>div{width:100%}.sf-tool-row button{flex:1;padding:8px 5px;font-size:.58rem;min-height:42px}.sf-result-row{padding:0 4px}.sf-result-row p{font-size:.64rem}.sf-result-row>span{font-size:.6rem}.sf-picks>span{flex-basis:100%;margin-top:3px}.sf-group-heading{gap:9px;padding:16px 10px}.sf-group-no{font-size:.62rem;padding-right:8px}.sf-group-title strong{font-size:.81rem}.sf-group-title small{font-size:.47rem;letter-spacing:.04em}.sf-group-count{min-width:25px;font-size:.62rem}.sf-group-body{padding:9px}.sf-term>summary{padding:15px 12px;gap:7px;min-height:82px}.sf-term-en{font-size:.78rem}.sf-term-ja{font-size:.67rem}.sf-term-content{padding:13px}.sf-term dd{font-size:.76rem}.sf-key-badge{font-size:.45rem;padding:3px 4px}.sf-comparisons{margin-top:43px}.sf-compare-grid article{padding:19px}.sf-footer h2{font-size:1.2rem}}
+  @media(prefers-reduced-motion:reduce){.sf-page *{transition:none!important;scroll-behavior:auto!important}}
 </style>

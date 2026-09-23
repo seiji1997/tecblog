@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const entries = [
+  { id: 'logic-and-people', no: '01', category: 'THINKING', title: '論理と、人間のあいだ', subtitle: '正しさを、動ける形にする' },
+  { id: 'inherited-stories', no: '02', category: 'PERSPECTIVE', title: '背負ってきたものの見方', subtitle: '過去を認め、未来を選ぶ' },
+  { id: 'contemporary-art', no: '03', category: 'ART', title: '作品の前で、答えを急がない', subtitle: '現代美術と他者の視点' },
+  { id: 'beauty-and-use', no: '04', category: 'AESTHETICS', title: '美しさは、どこで働くか', subtitle: '絵画から資料まで' },
+  { id: 'deep-work', no: '05', category: 'LEARNING', title: '没頭できる形をつくる', subtitle: '結果より、過程に火をつける' },
+];
+---
+
+<BaseLayout title="The First Beat | Thoughts in progress | Seiji Tech Atlas" description="論理と感情、芸術と学習。考えが動き出す最初の拍を、少しずつ言葉にしていく思考のノート。">
+  <main class="beat-page">
+    <a class="back" href={route('thoughts/')}>← Thoughts in progress</a>
+
+    <header class="hero">
+      <div class="eyebrow"><span>T.05</span> THE FIRST BEAT <span class="line"></span> A LIVING NOTE</div>
+      <h1>The First<br /><em>Beat<span class="period">.</span></em></h1>
+      <p class="dek">考えには、最初の拍がある。小さな違和感、誰かとの会話、絵の前で立ち止まる時間。そこから始まったことを、ここに置いていく。</p>
+      <div class="hero-foot"><span class="pulse" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>NOT A FINAL ANSWER. A PLACE TO THINK.</span><span>2026.09.23</span></div>
+    </header>
+
+    <div class="workspace">
+      {entries.map((entry, i) => <input class="tab-input" type="radio" name="first-beat-topic" id={`select-${entry.id}`} checked={i === 0} />)}
+      <aside class="index" aria-label="思考の一覧">
+        <div class="index-heading"><span>INDEX / {String(entries.length).padStart(2, '0')} NOTES</span><p>気になる話題を選んでください。右側に本文が開きます。</p></div>
+        <div class="tab-list" role="group" aria-label="思考のテーマ">
+          {entries.map((entry) => (
+            <label class="tab" for={`select-${entry.id}`} id={`tab-${entry.id}`}>
+              <span class="tab-top"><span>{entry.no} / {entry.category}</span><span aria-hidden="true">↗</span></span>
+              <strong>{entry.title}</strong><small>{entry.subtitle}</small>
+            </label>
+          ))}
+        </div>
+        <p class="index-note">考えは変わる。ここにある文章も、考えが変われば書き直す。</p>
+      </aside>
+
+      <div class="reading" id="reading-area">
+        <article class="panel" id="panel-logic-and-people" aria-labelledby="tab-logic-and-people">
+          <div class="panel-meta">01 / THINKING <span>THE FIRST BEAT</span></div>
+          <h2>論理と、人間のあいだ。</h2>
+          <p class="lead">正しい答えが見えていても、人はいつもその通りに動けるわけではない。だから私は、論理で整理したあとに、もう一度人を見るようにしている。</p>
+          <div class="callout"><span>THE QUESTION</span><strong>「正しい」は、「今できる」と同じだろうか。</strong></div>
+          <p>仕事で何かを設計するとき、問題を分ける。入力は何か。望む結果は何か。間に必要な手順は何か。そうすれば、選択肢と制約が見えてくる。ここまでは、論理の仕事だ。</p>
+          <p>でも、その手順を実行するのは人間だ。理解していても疲れている日がある。変化を怖がる人もいる。今はほかの仕事で手一杯かもしれない。「この方法が合理的だ」と伝えるだけでは、物事が動かないことがある。</p>
+          <p>そこで私は、理想の設計と、いま踏み出せる一歩を分けて考えたい。いきなり全部を変えるのではなく、まずは一件だけ試す。相手が不安に思う点を先に確かめる。失敗したときに戻れる道を用意する。<strong>論理を諦めるのではなく、現実に届くように翻訳する。</strong></p>
+          <p>人の判断は、持っている情報、その日の心身の状態、周りの環境によって変わる。同じ人でも、昨日と今日では違うかもしれない。人間を単純な0か1として扱わないこと。それも、仕事を前に進めるための技術だと思う。</p>
+          <div class="ending">良い答えには、筋道と、そこへ歩ける距離の両方がいる。</div>
+        </article>
+
+        <article class="panel" id="panel-inherited-stories" aria-labelledby="tab-inherited-stories">
+          <div class="panel-meta">02 / PERSPECTIVE <span>THE FIRST BEAT</span></div>
+          <h2>背負ってきたものの見方。</h2>
+          <p class="lead">過去は消せない。でも、過去にどんな意味を与え、これからどう動くかには、まだ選べる部分があると思う。</p>
+          <div class="callout"><span>THE QUESTION</span><strong>受け継いだ物語を、どう生き直すか。</strong></div>
+          <p>ヨーロッパの友人と話すと、家族の歴史や育った場所、受け継いだ価値観を大切にしている人に出会う。自分の「カルマ」と呼ぶ人もいる。そこに誇りを見いだす人もいれば、簡単にはほどけない重さを感じている人もいる。私は、その背景を本人の言葉で聞く時間が好きだ。</p>
+          <p>「気にしなければいい」と外から言うのは簡単だ。でも、相手にとって大切なものや、深く傷ついた経験を、私が勝手に軽くすることはできない。まずは、その人にとって何が起きているのかを知りたい。</p>
+          <p>同時に、過去の説明が未来の可能性をすべて決めてしまうのも惜しいと思う。自分にも引きずっている見方があるなら、それが役に立っているかを時々確かめたい。別の角度から見たら、次にできることは変わるだろうか。</p>
+          <p><strong>前向きでいることを義務にはしたくない。</strong>立ち止まる時間が必要なときもある。そのうえで、自分の物語を自分で少しずつ書き直せる余地は持っていたい。</p>
+          <div class="ending">背景を尊重することと、背景だけで人を決めないこと。</div>
+        </article>
+
+        <article class="panel" id="panel-contemporary-art" aria-labelledby="tab-contemporary-art">
+          <div class="panel-meta">03 / ART <span>THE FIRST BEAT</span></div>
+          <h2>作品の前で、答えを急がない。</h2>
+          <p class="lead">現代美術で面白いのは、作品について考える時間だけではない。一緒に見ている人が、同じ作品にまったく違うものを見る瞬間だ。</p>
+          <div class="callout"><span>THE QUESTION</span><strong>同じものを見て、なぜ違うことを感じるのか。</strong></div>
+          <p>たとえば、何も描かれていないように見える広い余白と、端に置かれた小さな赤い形があったとする。私は最初、距離や孤独を感じるかもしれない。隣の友人は自由さを感じるかもしれない。これは説明用の架空の作品だが、作品の前でこんなことはよく起こる。</p>
+          <p>一人の作家の作品を何点か続けて見ると、繰り返される形や、急に変わる色が目につく。「何を問いかけているのだろう」と自分なりに推測する。そのあとで友人に聞く。どこを最初に見た？　何を感じた？</p>
+          <p>返ってきた答えから、作品の意味だけでなく、その人が何を覚えていて、何に注意を向け、世界をどう受け取っているかが見えてくることがある。もちろん、感想からその人のすべてが分かるわけではない。だからこそ、決めつけずに聞くのが面白い。</p>
+          <p>作者の意図を調べることもある。でも、答え合わせだけで終わりたくはない。<strong>作品は、ときに人と人の見ている世界を交換するための入口になる。</strong></p>
+          <div class="ending">作品について話しているうちに、相手の世界を少し知る。</div>
+        </article>
+
+        <article class="panel" id="panel-beauty-and-use" aria-labelledby="tab-beauty-and-use">
+          <div class="panel-meta">04 / AESTHETICS <span>THE FIRST BEAT</span></div>
+          <h2>美しさは、どこで働くか。</h2>
+          <p class="lead">絵を見るとき、私はまず色と構図に引き寄せられる。なぜそこに目が止まるのか。その問いは、美術館の外でも役に立つ。</p>
+          <div class="callout"><span>THE QUESTION</span><strong>「きれい」の奥で、視線に何が起きているのか。</strong></div>
+          <p>モネやゴッホの絵を見るとき、私は制作当時の背景をいつも深く説明できるわけではない。まず見ているのは、色の重なり、光、視線の流れ、筆の動きだ。離れて見るとどう映るか。近づくと何が変わるか。なぜ足を止めたくなったのか。</p>
+          <p>作品の評価の理由を、一つに決めるつもりはない。時代も、見る人も、作品が置かれる場所も違う。ただ、自分が惹かれた理由を言葉にすると、次に何かを見せるときの手がかりになる。</p>
+          <p>ブログの画面も、仕事の資料も、誰かに届くまでにまず見てもらう必要がある。何を先に見せ、どこに余白を置き、どの色を使うか。見た目は内容を飾るだけでなく、内容に入る道を作る。</p>
+          <p>『ホワイトカラー』のニール・キャフリーという人物に惹かれるのも、知識と感性が同じ人物の中にあるからかもしれない。最近、自分でも絵を描いている。うまく描くことだけでなく、<strong>自分は何を美しいと感じるのか</strong>を探ってみたい。</p>
+          <div class="ending">美しさを見る練習は、何かを伝える練習にもなる。</div>
+        </article>
+
+        <article class="panel" id="panel-deep-work" aria-labelledby="tab-deep-work">
+          <div class="panel-meta">05 / LEARNING <span>THE FIRST BEAT</span></div>
+          <h2>没頭できる形をつくる。</h2>
+          <p class="lead">私は、何か一つを作っているときに一番力が出る。だから学ぶときも、「取る」より「作る」に近づけたい。</p>
+          <div class="callout"><span>THE QUESTION</span><strong>努力を続けられる形に、どう組み替えるか。</strong></div>
+          <p>試験勉強をしていても、資格を取るという結果だけでは長く熱が続かない。面白くなるのは、製品の仕組みが見えたとき。昨日説明できなかったことを、人に筋道立てて話せるようになったとき。別の問題にも使える考え方に気づいたときだ。</p>
+          <p>学習の履歴をスプレッドシートで整理するのも好きだ。解けた問題、まだ分からない問題、間違え方の癖を残す。数字を増やすためだけではない。自分の理解がどう変わってきたかを見られると、次に何をすればいいかが分かる。</p>
+          <p>ただ、集中すると視野が狭くなることもある。深く潜る時間と、いったん離れて人に説明する時間の両方を持ちたい。説明しようとして詰まるところに、まだ曖昧な理解が見つかる。</p>
+          <p><strong>学ぶ、作る、見直す。</strong>この往復の中に、私はいちばん面白さを感じる。資格はその途中にある一つの目印で、そこで終わりではない。</p>
+          <div class="ending">結果を目指すなら、そこへ向かう時間も自分のものにしたい。</div>
+        </article>
+      </div>
+    </div>
+
+    <footer class="article-footer"><a href={route('thoughts/')}>← All thoughts</a><span>THE FIRST BEAT / T.05</span></footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 77% 2%,rgba(246,161,100,.11),transparent 34%),radial-gradient(circle at 8% 23%,rgba(91,167,192,.08),transparent 29%),#0b131a}.beat-page{width:min(1350px,calc(100% - 48px));margin:auto;padding:38px 0 110px;color:#edf4f6}.back,.article-footer a{color:#96cbd7;font-size:.82rem;text-decoration:none}.back:hover,.article-footer a:hover{color:#b9ecf5}
+  .hero{padding:76px 0 46px;border-bottom:1px solid #384a52}.eyebrow{display:flex;align-items:center;flex-wrap:wrap;gap:13px;color:#efae83;font:700 .68rem ui-monospace,monospace;letter-spacing:.15em}.eyebrow span:first-child{font-size:.9rem}.eyebrow .line{width:30px;height:1px;background:#9c826f}h1{margin:20px 0 28px;font-size:clamp(4rem,8vw,8.3rem);line-height:.87;letter-spacing:-.075em}h1 em{font-style:normal;color:#efae83}.period{color:#88d0e3}.dek{max-width:770px;color:#b7c6ca;font-size:clamp(1.14rem,2vw,1.45rem);line-height:1.78}.hero-foot{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:36px;color:#8198a0;font:.68rem ui-monospace,monospace;letter-spacing:.1em}.pulse{height:22px;display:flex;align-items:center;gap:4px}.pulse i{display:block;width:3px;height:5px;border-radius:2px;background:#e89f75}.pulse i:nth-child(2),.pulse i:nth-child(6){height:11px}.pulse i:nth-child(3),.pulse i:nth-child(5){height:17px}.pulse i:nth-child(4){height:22px;background:#94d3e0}
+  .workspace{display:grid;grid-template-columns:minmax(270px,335px) minmax(0,1fr);gap:32px;align-items:start;margin-top:40px}.tab-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.index{position:sticky;top:20px}.index-heading{padding:0 8px 16px}.index-heading span{color:#efae83;font:700 .65rem ui-monospace,monospace;letter-spacing:.16em}.index-heading p,.index-note{color:#8ea3aa;font-size:.76rem;line-height:1.7}.tab-list{display:grid;gap:8px}.tab{display:block;width:100%;padding:17px 18px;border:1px solid #334853;border-radius:12px;background:#14222b;color:#d8e7ea;text-align:left;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.tab:hover{border-color:#688c9a;background:#1b303b}.tab-input:focus-visible ~ .index .tab{outline-offset:3px}.tab-input[id="select-logic-and-people"]:focus-visible ~ .index label[for="select-logic-and-people"],.tab-input[id="select-inherited-stories"]:focus-visible ~ .index label[for="select-inherited-stories"],.tab-input[id="select-contemporary-art"]:focus-visible ~ .index label[for="select-contemporary-art"],.tab-input[id="select-beauty-and-use"]:focus-visible ~ .index label[for="select-beauty-and-use"],.tab-input[id="select-deep-work"]:focus-visible ~ .index label[for="select-deep-work"]{outline:2px solid #f0ae85}.tab-input[id="select-logic-and-people"]:checked ~ .index label[for="select-logic-and-people"],.tab-input[id="select-inherited-stories"]:checked ~ .index label[for="select-inherited-stories"],.tab-input[id="select-contemporary-art"]:checked ~ .index label[for="select-contemporary-art"],.tab-input[id="select-beauty-and-use"]:checked ~ .index label[for="select-beauty-and-use"],.tab-input[id="select-deep-work"]:checked ~ .index label[for="select-deep-work"]{border-color:#e9aa82;background:linear-gradient(115deg,#342b29,#192b36);transform:translateX(4px)}.tab-top{display:flex;justify-content:space-between;color:#8abecb;font:700 .62rem ui-monospace,monospace;letter-spacing:.08em}.tab strong{display:block;margin:9px 0 5px;font-size:.97rem;line-height:1.5}.tab small{color:#93a8ad;font-size:.72rem}.index-note{padding:11px 8px}
+  .reading{height:min(76vh,920px);min-height:610px;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#53717b #17252e;border:1px solid #40515a;border-radius:19px;background:radial-gradient(circle at 87% 5%,rgba(236,164,112,.08),transparent 36%),#14212a}.panel{display:none;padding:clamp(26px,4.3vw,65px)}.tab-input[id="select-logic-and-people"]:checked ~ .reading #panel-logic-and-people,.tab-input[id="select-inherited-stories"]:checked ~ .reading #panel-inherited-stories,.tab-input[id="select-contemporary-art"]:checked ~ .reading #panel-contemporary-art,.tab-input[id="select-beauty-and-use"]:checked ~ .reading #panel-beauty-and-use,.tab-input[id="select-deep-work"]:checked ~ .reading #panel-deep-work{display:block}.panel-meta{display:flex;justify-content:space-between;gap:12px;color:#efae83;font:700 .68rem ui-monospace,monospace;letter-spacing:.13em}.panel-meta span{color:#678d9c}.panel h2{margin:27px 0 24px;color:#f2f7f7;font-size:clamp(2rem,3.8vw,3.35rem);line-height:1.23;letter-spacing:-.055em}.panel .lead{color:#e2e7e7;font-size:1.13rem;line-height:1.9}.panel p{margin:25px 0;color:#b9c8cd;font-size:.97rem;line-height:2.08}.panel strong{color:#f2eee9}.callout{display:grid;gap:10px;margin:34px 0;padding:23px 27px;border-left:3px solid #eca879;background:#273038}.callout span{color:#e5a97f;font:700 .65rem ui-monospace,monospace;letter-spacing:.13em}.callout strong{font-size:1.1rem;line-height:1.6}.ending{margin-top:46px;padding-top:23px;border-top:1px solid #49606a;color:#f0bb99;font-size:1.1rem;font-weight:700;line-height:1.8}
+  .article-footer{display:flex;justify-content:space-between;gap:18px;margin-top:75px;padding-top:25px;border-top:1px solid #344852}.article-footer span{color:#7495a0;font:.65rem ui-monospace,monospace;letter-spacing:.08em}
+  @media(max-width:830px){.workspace{grid-template-columns:1fr;gap:20px}.index{position:static}.tab-list{display:flex;overflow-x:auto;padding:4px 4px 12px;scroll-snap-type:x mandatory}.tab{flex:0 0 min(260px,75vw);scroll-snap-align:start}.index-note{display:none}.reading{height:auto;min-height:0;overflow:visible}.panel{min-height:430px}}
+  @media(max-width:600px){.beat-page{width:min(100% - 32px,1350px)}.hero{padding:55px 0 36px}h1{font-size:clamp(3.7rem,15vw,5.8rem)}.panel{padding:26px 20px}.panel-meta span{display:none}.panel .lead{font-size:1.04rem}.article-footer{flex-direction:column}}
+</style>

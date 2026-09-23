@@ -114,6 +114,7 @@ const career = [
         </div>
 
         <div class="hero-signature">Knowledge should compound.</div>
+        <a class="map-jump" href={route('map/')}>Explore the interactive map ↗</a>
       </section>
 
       <section class="section-block atlas-overview" id="knowledge">
@@ -207,6 +208,17 @@ const career = [
               <div class="thought-blog-foot">Open collection ↗</div>
             </a>
           ))}
+          <a class="thought-blog-card" href={route('thoughts/the-first-beat/')}>
+            <div class="thought-blog-meta">
+              <span>T.05</span>
+              <small>Thinking · Living note</small>
+            </div>
+
+            <h3>The First Beat</h3>
+            <p>論理と感情、芸術と学習。考えが動き始めた瞬間を、話題ごとに少しずつ言葉にしていく。</p>
+
+            <div class="thought-blog-foot">Open collection ↗</div>
+          </a>
         </div>
       </section>
 
@@ -284,6 +296,8 @@ const career = [
 </BaseLayout>
 
 <style>
+  .map-jump{position:relative;z-index:3;display:inline-block;margin-top:19px;padding:9px 13px;border:1px solid rgba(113,208,235,.45);border-radius:8px;color:#a5e6f6;font-size:.8rem;text-decoration:none}.map-jump:hover{background:rgba(113,208,235,.12)}
+  .hero-gridline{pointer-events:none}
   :global(body) {
     background:
       radial-gradient(circle at 72% 10%, rgba(76, 162, 255, .11), transparent 30%),

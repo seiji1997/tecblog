@@ -5,11 +5,12 @@ import '../../../styles/workCareer.css';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const pageUpdated = workCareerUpdated > '2026-09-23' ? workCareerUpdated : '2026-09-23';
 ---
 
 <BaseLayout
   title="Work & Career | Seiji Tech Atlas"
-  description="研究からAI・データへ進んだ経緯と、これからのキャリア。価値、品質、信頼、推進力を大切にする仕事への向き合い方を、EssayとNotesにまとめます。"
+  description="研究からAI・データへ進んだ経緯と、これからのキャリア。価値、品質、信頼、推進力を大切にする仕事への向き合い方、思想と実務、これからのキャリアの方向性を、Essay・Notes・Reflectionsにまとめます。"
 >
   <div class="work-career" id="work-career-top">
     <a class="wc-back" href={`${route('')}#thoughts`}>← Back to Thoughts</a>
@@ -19,12 +20,52 @@ const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
       <h1>Work & Career</h1>
       <p class="wc-hero-title">専門性を深め、人と向き合い、仕事を前に進める。</p>
       <p class="wc-intro">研究からAI・データの仕事へ。これまでの歩みと、これからの選択肢。そして、日々の仕事の中で大切にしたいことを、自分の言葉で残していきます。</p>
-      <div class="wc-meta"><span>Seiji Tanimoto</span><time datetime={workCareerUpdated}>2026.09.21</time></div>
+      <div class="wc-meta"><span>Seiji Tanimoto</span><time datetime={pageUpdated}>{pageUpdated.replaceAll('-', '.')}</time></div>
       <nav class="wc-tabs" aria-label="Work & Careerの目次">
+        <a href="#reflections">Reflections <span>03</span></a>
         <a href="#essays">Essay <span>02</span></a>
         <a href="#notes">Notes <span>04</span></a>
       </nav>
     </header>
+
+    <section class="wc-section wc-reflection-section" id="reflections" aria-labelledby="reflections-heading">
+      <div class="wc-section-heading">
+        <div><p class="wc-kicker">IDEAS &amp; MY PERSPECTIVE</p><h2 id="reflections-heading">Reflections</h2></div>
+        <p>思想・実務・キャリアの方向性から、自分の仕事と生き方を考える。</p>
+      </div>
+      <a class="wc-reflection-card" href={route('thoughts/work-career/yoichi-ochiai/')} aria-labelledby="ochiai-card-title" aria-describedby="ochiai-card-description">
+        <div class="wc-reflection-copy">
+          <div class="wc-reflection-meta"><span>REFLECTION 01 / 落合陽一の思想から考える</span><time datetime="2026-09-23">2026.09.23</time></div>
+          <h3 id="ochiai-card-title">AI時代に、何を学び、つくり、どう働くか。</h3>
+          <p id="ochiai-card-description">『魔法の世紀』からデジタルネイチャー、マタギドライヴへ。思想の変化をたどりながら、研究・AI・仕事に向き合う自分の考えを重ねる。</p>
+          <div class="wc-reflection-tags" aria-label="記事のテーマ"><span>思想の変遷</span><span>学びと制作</span><span>仕事への所感</span></div>
+          <span class="wc-reflection-read">この文章を読む <span aria-hidden="true">↗</span></span>
+        </div>
+        <div class="wc-reflection-mark" aria-hidden="true"><span>LEARN.</span><span>BUILD.</span><span>THINK.</span><small>NOT A FINAL ANSWER.<br />A QUESTION TO LIVE WITH.</small></div>
+      </a>
+
+      <a class="wc-reflection-card wc-consulting-card" href={route('thoughts/work-career/consulting-foundations/')} aria-labelledby="consulting-card-title" aria-describedby="consulting-card-description">
+        <div class="wc-reflection-copy">
+          <div class="wc-reflection-meta"><span>PRACTICE GUIDE / CONSULTING FOUNDATIONS</span><time datetime="2026-09-23">2026.09.23</time></div>
+          <h3 id="consulting-card-title">コンサルタントの思考・実行・信頼</h3>
+          <p id="consulting-card-description">問いを見極め、構造を捉え、意思決定と実行を前に進める。大切にしたい仕事への姿勢から、9つの能力、実務ケース、12領域・204語の用語ライブラリまで。</p>
+          <div class="wc-reflection-tags" aria-label="記事のテーマ"><span>仕事への姿勢</span><span>思考と実行</span><span>204語の用語集</span><span>実務テンプレート</span></div>
+          <span class="wc-reflection-read">本文・用語ライブラリへ <span aria-hidden="true">↗</span></span>
+        </div>
+        <div class="wc-reflection-mark" aria-hidden="true"><span>THINK.</span><span>ACT.</span><span>TRUST.</span><small>FROM A BETTER QUESTION<br />TO MEANINGFUL CHANGE.</small></div>
+      </a>
+
+      <a class="wc-reflection-card wc-fde-card" href={route('thoughts/work-career/fde-career-strategy/')} aria-labelledby="fde-card-title" aria-describedby="fde-card-description">
+        <div class="wc-reflection-copy">
+          <div class="wc-reflection-meta"><span>CAREER STRATEGY / FDE</span><time datetime="2026-09-23">2026.09.23</time></div>
+          <h3 id="fde-card-title">顧客課題を、本番で動くAI・データシステムに変える。</h3>
+          <p id="fde-card-description">FDEを、将来の選択肢の一つとして考える。いまの専門性を土台に、課題発見・実装・評価・導入・再利用までつなぐ働き方と、これから育てたい8つの能力を整理する。</p>
+          <div class="wc-reflection-tags" aria-label="記事のテーマ"><span>キャリアの方向性</span><span>8つの能力</span><span>本番実装と運用</span><span>経験の棚卸し</span></div>
+          <span class="wc-reflection-read">FDE Career Strategyを読む <span aria-hidden="true">↗</span></span>
+        </div>
+        <div class="wc-reflection-mark" aria-hidden="true"><span>BUILD.</span><span>DELIVER.</span><span>LEARN.</span><small>A DIRECTION TO GROW INTO.<br />NOT A FIXED DESTINATION.</small></div>
+      </a>
+    </section>
 
     <section class="wc-section" id="essays" aria-labelledby="essays-heading">
       <div class="wc-section-heading">
@@ -84,3 +125,41 @@ const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
     </footer>
   </div>
 </BaseLayout>
+
+<style>
+  .wc-reflection-card { display: grid; grid-template-columns: minmax(0, 1fr) 230px; overflow: hidden; color: inherit; text-decoration: none; border: 1px solid rgba(192,177,245,.35); border-radius: 18px !important; background: linear-gradient(125deg, rgba(38,36,62,.95), rgba(13,25,37,.96)); transition: border-color .18s ease, transform .18s ease; }
+  .wc-reflection-card:hover { border-color: #c0b1f5; transform: translateY(-2px); }
+  .wc-reflection-copy { min-width: 0; padding: 32px; }
+  .wc-reflection-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; color: #c7baf1; font: 600 .72rem/1.8 ui-monospace, monospace; letter-spacing: .055em; }
+  .wc-reflection-meta time { color: #aab7c9; }
+  .work-career .wc-reflection-card h3 { margin-top: 20px; max-width: 620px; color: #f0edf8; font-size: clamp(1.4rem, 2.65vw, 1.9rem); line-height: 1.65; letter-spacing: -.02em; }
+  .work-career .wc-reflection-card p { margin-top: 16px; color: #bdc7d4; font-size: .95rem; line-height: 1.95; }
+  .wc-reflection-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .wc-reflection-tags span { padding: 5px 10px; border: 1px solid rgba(192,177,245,.25); border-radius: 5px; color: #c7baf1; font-size: .73rem; line-height: 1.6; }
+  .wc-reflection-read { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 26px; color: #d5c7ff; font-size: .9rem; font-weight: 650; }
+  .wc-reflection-read > span { font-size: 1.25rem; }
+  .wc-reflection-mark { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 30px; border-left: 1px solid rgba(192,177,245,.17); background: radial-gradient(ellipse at top right, rgba(165,140,224,.16), transparent 80%); }
+  .wc-reflection-mark > span { color: #d8ccfa; font: 800 2.55rem/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: -.065em; }
+  .wc-reflection-mark > span:nth-child(2) { color: #a9bcec; }
+  .wc-reflection-mark > span:nth-child(3) { color: #9ccaca; }
+  .wc-reflection-mark small { margin-top: 24px; color: #b2a8c5; font: 500 .61rem/1.9 ui-monospace, monospace; letter-spacing: .04em; }
+  @media (max-width: 700px) { .wc-reflection-card { grid-template-columns: minmax(0,1fr); } .wc-reflection-copy { padding: 24px; } .wc-reflection-mark { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .wc-reflection-card { transition: none; } .wc-reflection-card:hover { transform: none; } }
+  .wc-reflection-card + .wc-reflection-card { margin-top: 20px; }
+  .wc-consulting-card { border-color: rgba(119,206,224,.35); background: linear-gradient(125deg, rgba(23,43,56,.96), rgba(13,25,37,.96)); }
+  .wc-consulting-card:hover { border-color: #8ed6e6; }
+  .wc-consulting-card .wc-reflection-meta, .wc-consulting-card .wc-reflection-tags span, .wc-consulting-card .wc-reflection-read { color: #a7deeb; }
+  .wc-consulting-card .wc-reflection-tags span { border-color: rgba(119,206,224,.3); }
+  .wc-consulting-card .wc-reflection-mark { border-left-color: rgba(119,206,224,.2); background: radial-gradient(ellipse at top right, rgba(88,171,206,.14), transparent 80%); }
+  .wc-consulting-card .wc-reflection-mark > span { color: #a9dfe9; }
+  .wc-consulting-card .wc-reflection-mark > span:nth-child(2) { color: #acc6e9; }
+  .wc-consulting-card .wc-reflection-mark > span:nth-child(3) { color: #b6d5c9; }
+  .wc-fde-card { border-color: rgba(147,214,187,.35); background: linear-gradient(125deg, rgba(23,44,39,.96), rgba(13,25,37,.96)); }
+  .wc-fde-card:hover { border-color: #a1dec7; }
+  .wc-fde-card .wc-reflection-meta, .wc-fde-card .wc-reflection-tags span, .wc-fde-card .wc-reflection-read { color: #a6dfc8; }
+  .wc-fde-card .wc-reflection-tags span { border-color: rgba(147,214,187,.28); }
+  .wc-fde-card .wc-reflection-mark { border-left-color: rgba(147,214,187,.2); background: radial-gradient(ellipse at top right, rgba(89,161,130,.16), transparent 80%); }
+  .wc-fde-card .wc-reflection-mark > span { color: #a6dfc8; font-size: 2.15rem; }
+  .wc-fde-card .wc-reflection-mark > span:nth-child(2) { color: #a6d8df; }
+  .wc-fde-card .wc-reflection-mark > span:nth-child(3) { color: #bdd0e8; }
+</style>

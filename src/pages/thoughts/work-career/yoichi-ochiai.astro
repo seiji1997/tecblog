@@ -1,0 +1,518 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+// Content basis: the research memo supplied on 2026-09-23, plus separately labelled reflections.
+// Source descriptions were not independently re-verified during this page edit.
+---
+
+<BaseLayout
+  title="AI時代に、何を学び、つくり、どう働くか。 | Work & Career | Seiji Tech Atlas"
+  description="落合陽一の思想を『魔法の世紀』からデジタルネイチャー、マタギドライヴへたどり、研究・AI・仕事への自分の考えを重ねる。公開情報の整理と個人の所感を分けた、思考の途中の記録。"
+>
+  <div class="wco-page" id="ochiai-top" data-wco-page>
+    <nav class="wco-breadcrumb" aria-label="パンくずリスト">
+      <a href={`${route('')}#thoughts`}>Thoughts in Progress</a><span aria-hidden="true">/</span><a href={route('thoughts/work-career/')}>Work &amp; Career</a><span aria-hidden="true">/</span><span aria-current="page">Reflection 01</span>
+    </nav>
+    <header class="wco-hero">
+      <div class="wco-hero-copy">
+        <p class="wco-eyebrow">WORK &amp; CAREER / REFLECTION 01</p>
+        <p class="wco-subject">落合陽一の思想から考える</p>
+        <h1>AI時代に、<br />何を学び、つくり、<br /><em>どう働くか。</em></h1>
+        <p class="wco-lead">人間・機械・自然の境界を問い直す思想をたどりながら、<br class="wco-desktop-break" />自分の研究、学び、仕事に向き合う姿勢を考える。</p>
+        <div class="wco-meta"><span>Seiji Tanimoto</span><time datetime="2026-09-23">2026.09.23</time><span>THOUGHTS IN PROGRESS</span></div>
+        <div class="wco-hero-links"><a href="#chronology">思想の流れを読む <span aria-hidden="true">↓</span></a><a href="#my-perspective">私の所感へ <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <aside class="wco-hero-question" aria-label="この記事の中心に置く問い">
+        <span class="wco-eyebrow">ONE QUESTION</span>
+        <p>人間・機械・自然を<br />別々にできなくなったとき、<br /><strong>何を美しいと感じ、<br />何をつくり、<br />どう生きるのか。</strong></p>
+        <div class="wco-three-views"><span>研究<small>技術として、つくる</small></span><span>アート<small>身体で、感じる</small></span><span>著作<small>言葉で、考える</small></span></div>
+        <p class="wco-interpretation">このページでの整理。本人の直接引用ではありません。</p>
+      </aside>
+    </header>
+
+    <div class="wco-orientation">
+      <span class="wco-orientation-label">この文章の読み方</span>
+      <p>前半は、公開資料の調査メモをもとにした思想・活動の整理。後半は、私自身の経験に引きつけた所感です。書籍全編を通読した書評ではなく、理解を深めるための途中の記録として残します。</p>
+      <a href="#source-note">資料の範囲を確認する ↗</a>
+    </div>
+
+    <div class="wco-reading-layout">
+      <aside class="wco-sidebar">
+        <details class="wco-toc" open>
+          <summary>CONTENTS <span>目次</span></summary>
+          <nav aria-label="記事の目次"><a href="#chronology" data-wco-toc><span>01</span>思想の変遷</a>
+<a href="#worldview" data-wco-toc><span>02</span>見えている世界</a>
+<a href="#thinking" data-wco-toc><span>03</span>観察・制作・言語化</a>
+<a href="#critical-reading" data-wco-toc><span>04</span>読むときの距離感</a>
+<a href="#reading-map" data-wco-toc><span>05</span>著作の読み分け</a>
+<a href="#my-perspective" data-wco-toc><span>06</span>私の仕事と学び</a>
+<a href="#questions" data-wco-toc><span>07</span>持ち続けたい問い</a>
+<a href="#source-note" data-wco-toc><span>08</span>資料・編集方針</a></nav>
+        </details>
+        <div class="wco-reading-status" hidden><span>READING</span><progress value="0" max="100" aria-label="記事の読書進捗"></progress></div>
+        <a class="wco-sidebar-back" href={route('thoughts/work-career/')}><span aria-hidden="true">←</span> Work &amp; Career</a>
+      </aside>
+      <article class="wco-article" aria-label="落合陽一の思想を手がかりに考える、仕事と学び">
+        <div class="wco-opening">
+          <p>落合陽一を、<strong>「AIで社会が変わると予測している人」だけで捉えると、大事な部分を見落としてしまう</strong>と思う。</p>
+          <p>中心にあるのは、人間・機械・自然を別々のものとして扱ってきた世界観が成り立たなくなるとき、私たちは何を美しいと感じ、何をつくり、どう生きるのか、という問いではないか。</p>
+          <p>研究ではその世界を技術的につくり、アートでは身体で体験できる形にし、著作では社会や生き方の問題として語る。調査メモで参照した公式の作家声明も、物質と映像の境界、計算機自然、東洋的な「物化」、民藝を一続きの問題として位置づけている。</p>
+          <p>まずは、そのつながりを時期ごとにたどってみたい。そのうえで、自分の仕事や学びにどんな問いを持ち帰れるのかを考える。</p>
+        </div>
+        <section class="wco-chapter" id="chronology" aria-labelledby="chronology-title"><header class="wco-chapter-heading"><span>01 / CHRONOLOGY</span><h2 id="chronology-title">思想は、どう変わってきたのか</h2></header><p>研究、アート、著作を並べてみると、異なるテーマがばらばらに現れるのではなく、一つの問いが場所を変えながら展開しているように見える。</p><p class="wco-fine">時期は重なり合っています。前の関心を捨てて次へ移った、という区分ではありません。各時期を開くと、著作・活動の背景と具体例を読めます。</p><div class="wco-expand-controls" hidden><button type="button" data-wco-expand>時期ごとの説明をすべて開く</button><button type="button" data-wco-collapse>すべて閉じる</button></div>
+        <details class="wco-period" id="period-2013" open>
+          <summary><span class="wco-period-date">01 / 2013–2015</span><span class="wco-period-title">コンピューターを「画面の外」に出す</span><span class="wco-period-deck">世界の絵を描くことから、世界の感じられ方をつくり変えることへ。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">中心となる著作：『魔法の世紀』（2015年）</p>
+            <p>初期の活動を理解するには、「未来について話していた」より先に、<strong>光・音・力・触覚を計算機で制御する研究をしていた</strong>ことが重要になる。本人が2014年の研究生活を振り返ったnoteには、超音波による浮揚、触覚、光の制御などが登場する。関心は、画面に美しい映像を表示するだけでなく、物理空間にある現象そのものを操作することに向いていた。</p>
+<p>その問題意識を言語化したのが『魔法の世紀』だ。同書の構図は、テレビや映画などの画面を通して現実を共有する「映像の世紀」から、計算機が環境に入り込み、画面の外の物体や知覚に作用する「魔法の世紀」への移行にある。</p>
+<p>例えば、映像の中で物が浮いているのを見ることと、目の前の物体が見えない力で実際に浮いていることは違う。後者では、何が現実で、何が装置の作用なのかを、鑑賞者が自分の感覚から問い直すことになる。</p>
+<p>ここでいう「魔法」は、単に高度な技術が不思議に見えるという意味だけではない。2020年のnoteでは、再魔術化という思想史的な問題、映像が物理空間に入り込むこと、現実の虚構性まで含めて使っていると説明されている。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>コンピューターで世界の絵を描くだけでなく、世界の感じられ方そのものをつくり変えられる。</p></div>
+          </div>
+        </details>
+
+        <details class="wco-period" id="period-2016" >
+          <summary><span class="wco-period-date">02 / 2016–2019</span><span class="wco-period-title">仕事・教育・社会の前提を問い直す</span><span class="wco-period-deck">新しい技術を、古い社会の前提のまま評価しない。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">主な著作：『これからの世界をつくる仲間たちへ』（2016年）／『超AI時代の生存戦略』（2017年）／『日本再興戦略』（2018年）／『2030年の世界地図帳』（2019年）</p>
+            <p>この時期には、技術と芸術の話を、個人の生き方や社会制度へ広げた著作が続く。私の整理では、共通する方向は、<strong>新しい技術を、古い社会の前提のまま評価しない</strong>ということだ。</p>
+<p>『日本再興戦略』では、再興を過去への単純な復帰ではなく、過去に機能したものと、時代に合わなくなったものを検証する「アップデート」と説明している。論点には、「欧米」を一つの理想像として扱うことへの疑問、人口減少・高齢化を機会として捉える議論、教育、働き方、共同体の再編がある。これらは著作の提案であって、実現や効果が確認された事実とは区別して読む必要がある。</p>
+<p>問いの立て方を私なりに言い換えると、「昔と同じ人数で、昔と同じ仕事を続けるにはどうするか」ではなく、<strong>人数も技術も変わるなら、仕事や組織の形を変える方が自然ではないか</strong>、となる。「既存の会社や学校に適応するにはどうするか」だけでなく、その仕組みが次の時代にも必要なのかを考える。</p>
+<p>『2030年の世界地図帳』では、米国、中国、欧州、インド・アフリカなどを、異なる技術・経済・制度の戦略を持つ地域として扱う。ここからは、未来を単一の「シリコンバレー的な正解」としてではなく、地域ごとに分かれるものとして見る姿勢を読み取れる。ただし、<strong>そこでの見通しは2019年当時の予測</strong>であり、そのまま現在の事実として扱うものではない。</p>
+<p>この社会論は、芸術活動と切り離されたものではない。技術が変われば、人間が当然と思っている分類や制度も変わり得る。その発想を社会に適用している、と捉えるとつながって見える。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>既存の仕組みの中でうまく働く方法だけでなく、その仕組み自体の前提を問う。</p></div>
+          </div>
+        </details>
+
+        <details class="wco-period" id="period-2018" >
+          <summary><span class="wco-period-date">03 / 2018–</span><span class="wco-period-title">「デジタルネイチャー」を体系化する</span><span class="wco-period-deck">自然と人工を分けるのではなく、関係の中に人間と機械を置く。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">中心となる著作：『デジタルネイチャー――生態系を為す汎神化した計算機による侘と寂』（2018年）</p>
+            <p>「デジタルネイチャー」は、自然の映像をコンピューターで再現することや、自然保護にITを使うことだけを意味しない。調査メモで参照した定義では、物理環境と情報環境が相互に浸透し、従来の「自然／人工」という境界そのものを捉え直す概念になっている。<strong>人間も、動植物も、機械も、その関係の中にあるものとして考える</strong>のだ。</p>
+<p>同書の公開紹介・目次には、標準化を多様性に置き換えること、人間と機械の中間領域、身体の拡張、自我・幸福・死の再検討などが並ぶ。便利な未来の紹介にとどまらず、近代社会が前提としてきた「人間」の形まで問い直す構想として読める。</p>
+<p>「標準化から多様性へ」は、具体例で考えるとわかりやすい。日本科学未来館の落合総合監修の展示には、不揃いな木の枝を計算機で読み取り、組み合わせを計算して構造物にする例がある。材料を同じ形にそろえるのではなく、<strong>ばらばらな形のまま使えるようにする</strong>。この違いが、多様性という言葉の一端を示している。</p>
+<p>私の言葉では、人間や自然を機械に都合のよい規格へ合わせるのではなく、計算機側が多様な存在に対応する世界をつくれないか、という方向になる。2018年の筑波大学の講義概要でも、人と機械、物質世界と仮想的な世界の間に、工業化社会より多様な未来を実装することが研究目的として示されている。</p>
+<p>また、近年になって突然、仏教や東洋思想へ関心が移ったわけではない。2018年の書名の副題にすでに「汎神化」「侘と寂」が入り、章立てにも東洋的なものが組み込まれている。技術と東洋思想の接続は、この段階から中心にある。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>人間や自然を規格に合わせるのではなく、計算機側が多様な存在に対応する。</p></div>
+          </div>
+        </details>
+
+        <details class="wco-period" id="period-2019" >
+          <summary><span class="wco-period-date">04 / 2019–2023</span><span class="wco-period-title">質量・風景・民藝・身体の手触りへ</span><span class="wco-period-deck">データになるほど、「なぜ、この素材、この場所なのか」が気になってくる。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">主な著作：『質量への憧憬』（2019年）／『半歩先を読む思考法』（2021年）／『忘れる読書』（2022年）／『晴れときどきライカ』（2023年）</p>
+            <p>未来の制度や技術だけでなく、<strong>実際に見たり、触れたり、つくったり、時間を過ごしたりすること</strong>への関心が、よりはっきりと見えてくる。</p>
+<p>象徴的なのが、2021年の日下部民藝館での「メディアと民藝」だ。デジタル写真を和紙や木に焼き付けるワークショップを通して、作品の保存、素材の寿命、制作と環境の関係を問う活動が行われている。本人も、メディアアートと禅・仏教・民藝の関連を継続的に探ってきたと説明している。</p>
+<p>ここからは、「全部データになれば、現物は不要になる」と考えているわけではないとわかる。むしろ、データと物質の間を行き来できるようになるほど、なぜこの紙、この光、この場所、この手触りなのかが問題になる。デジタルの未来を語ることと、古い建物や工芸に向き合うことは矛盾しない。</p>
+<p>『晴れときどきライカ』には、倒木、寂びた風景、注連縄とLED、植物、民藝、子ども、身体、生と死などをめぐる写真と散文が収録されている。社会論の本だけでなく、この種類の記録を見ることで、抽象概念がどのような景色から生まれるのかを考えられる。</p>
+<p>学びについても、『忘れる読書』では、読んだ内容を知識として保持するだけでなく、思考や感性の一部にしていく読書が提案されている。古典・哲学・経済・理工書・文学を横断し、「較べ読み」や、自分の関心の強さを見つけることが重視される。</p>
+<p>この時期は、「未来の仕組みを論じる」ことから、<strong>その未来を生きる感覚を、日々の制作や観察で育てる</strong>ことへ射程が広がっている、と私は読む。ただし、研究や社会論をやめたのではない。並行する活動のうち、身体や土地に根ざす側面が見えやすくなったということだ。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>未来を理解するために、現在の手触りや、具体的な場所を手放さない。</p></div>
+          </div>
+        </details>
+
+        <details class="wco-period" id="period-2023" >
+          <summary><span class="wco-period-date">05 / 2023–2025</span><span class="wco-period-title">生成AIと「ヌル」が、自己の境界を揺らす</span><span class="wco-period-deck">つくるのは誰か。自分とは、どこからどこまでなのか。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">主な活動：「ヌル即是計算機自然：符号化された永遠、オブジェクト指向本願」（2023年）／大阪・関西万博「null²」（2025年）</p>
+            <p>生成AIをめぐる状況の変化によって、従来の問いは、言語や創作にも強く及ぶようになる。2023年の展覧会「ヌル即是計算機自然：符号化された永遠、オブジェクト指向本願」では、生成AI、物質と非物質、民藝、密教的な世界記述などが結びつけられている。</p>
+<p>展覧会の公式説明では、「ヌル」は仏教の「空」を落合流の計算機表現に置き換えた、<strong>芸術的・哲学的な記号</strong>として扱われる。計算機科学におけるnullと仏教思想が、そのまま同一だという証明として読むものではない。</p>
+<p>私の読解では、問いは「AIで画像がつくれて面白い」という話だけではない。作品は、独立した一人の人間の内面からだけ生まれるのか。自分だと思っているものは、身体・記憶・言語・他者・機械の関係から成り立っているのではないか、という方向へ進んでいる。</p>
+<p>2025年の大阪・関西万博「null²」も、その延長として読むことができる。公式コンセプトは、来場者の身体をデジタル化し、自律的に動くデジタルの身体と対話する「鏡の再発明」だ。自分に似ているが、自分の意志どおりではない存在と向き合い、自己の輪郭を体験として問い直す構成になっている。</p>
+<p>さらに、2025年の本人インタビューでは、人間と超知能が一体化する未来だけでなく、多様なAIと緩やかにつながって暮らす未来も語られる。「八百万のAI」や、AIを囲む祭りというイメージが登場する。</p>
+<p>つまり、必ずしも「全員が、より高性能な頭脳になる世界」だけではない。高度な知能が周囲に存在することを前提に、人間が何を楽しみ、何に意味を感じ、どう共に暮らすか。<strong>技術の性能の話が、文化の話になっている</strong>と捉えられる。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>AIの能力だけでなく、AIと暮らす人間の文化や意味を考える。</p></div>
+          </div>
+        </details>
+
+        <details class="wco-period" id="period-2026" >
+          <summary><span class="wco-period-date">06 / 2026</span><span class="wco-period-title">「マタギドライヴ」――自動化の先で探索する</span><span class="wco-period-deck">生産の基盤を使いながら、まだ価値の定まっていない場所へ出ていく。</span><span class="wco-period-toggle" aria-hidden="true">+</span></summary>
+          <div class="wco-period-body">
+            <p class="wco-books-label">中心となる著作：『マタギドライヴ――計算機自然の辺縁における脱人間知性的文明論』</p>
+            <p>元の調査メモでは、同書の発売日は<strong>2026年9月23日</strong>と記載されている。ここでは、そのメモで扱われた公開巻頭、公式副読サイト、関連する本人の発言を基に整理する。書籍全編を通読したレビューではなく、発売情報を本稿で独立に再確認したものでもない。</p>
+<p>公式副読サイトの説明としてメモが示すのは、<strong>自動化された生産基盤を使いながら、まだ価値が定まっていない場所や文脈を探索し、見つけたものを持ち帰る</strong>、という構図だ。</p>
+<p>これが「マタギ」という比喩の中心になる。「AIに仕事を任せて、何もしない」という話ではない。既存の仕組みの外側へ出て、未知のものに出会い、発見を社会に戻す営みとして読むことができる。</p>
+<p>楽天大学の関連対話の説明でも、山と里、狩猟と農耕の双方に関わるマタギのあり方が、生き方の手がかりとして位置づけられている。全員に文字どおり狩猟生活を勧めるというより、異なる世界を行き来する人間像として捉える方が適切だ。</p>
+<p>元のメモでは、編集者の宇野常寛が、比喩を言葉遊びで終わらせないために、実際のマタギの暮らす地域へ行く必要を感じたと書いている点にも触れている。2024年の秋田への取材は、「具体的な世界に関わる」という主張を、制作過程でも実践しようとしたものとして整理されている。</p>
+<p>また、2026年8月30日の本人noteとして挙げられた振り返りでは、2015年には「使う人は仕組みを知らなくても、つくる側の誰かは説明できる」という前提で魔術化を論じていた一方、現在は、制作する側も完全には説明しきれない手順や、経験的な調整で動かしていると捉え直している。工房の実践と、説明・記録とのずれが主題になる。</p>
+<p>これは、単純に「理性を捨てよう」という話ではない。私の読みでは、<strong>説明できることと、実際にできることを同一視しない</strong>という修正だ。初期の「未来には魔法のような技術が現れる」という視線から、世界をつくり、直し、維持する営みには、もともと言葉に収まりきらないものがある、という視線が強くなっている。</p>
+<p>元のメモにある2026年の展覧会「天孫帰るってよ？」も、神話、地質、古代と未来、物質とデジタルを重ね、過去約10年の活動を総括する構成として紹介されている。未来を見るために、むしろ土地や非常に長い時間へ視線を向ける、という流れで読める。</p>
+            <div class="wco-takeaway"><span>この時期を、私の言葉で</span><p>自動化は探索の終わりではなく、未知のものを見つけ、持ち帰るための足場になる。</p></div>
+          </div>
+        </details></section>
+<section class="wco-chapter" id="worldview" aria-labelledby="worldview-title"><header class="wco-chapter-heading"><span>02 / A WAY OF SEEING</span><h2 id="worldview-title">彼には、どんな世界が見えているのか</h2></header>
+        <h3>「物」だけでなく、物が生まれ、変化する過程を見る</h3>
+        <p>例えば茶碗を見るとき、通常は「きれい」「使いやすい」「古い」と考える。そこに、土の性質、焼く工程、手の動き、光の反射、スキャンされた形状、複製可能性、長い時間の中での保存まで重ねてみる。</p>
+        <p>そうすると、茶碗は固定された一つの物というより、<strong>素材・技術・知覚・文化の関係が、一時的に形になったもの</strong>として見えてくる。</p>
+        <p>これは説明のために組み立てた例だが、未来館の展示には、樂茶碗のCTスキャンやデジタル複製を通して、形や質感、佇まいまで再現できるのかを問う内容もある。</p>
+        <p>「物化」は、この見方を理解する補助線になる。公式声明では、万物が変化し、一定の形にとどまらず循環するという意味で説明される。完成した物体だけでなく、何かが別の何かへ移っていく境界に関心がある、と考えると、映像・彫刻・写真・AI・民藝がつながる。</p>
+        <h3>人間の見え方を、世界の唯一の基準にしない</h3>
+        <p>2018年のインタビューでは、人間が自分たちの感覚器に合わせて環境を変えてきた、と本人は説明している。私たちにとって自然に見える環境も、すでに人間の視覚・聴覚・身体に合わせてつくられているという見方だ。</p>
+        <p>ここから私が読み取るのは、<strong>人間が認識しやすい世界と、世界のあり方そのものは同じではない</strong>、という姿勢である。人間にわかりやすい言葉にならないものや、人間とは異なる知覚・知能を、すぐに無価値とはしない。その姿勢が、人と機械の関係にも、芸術制作にも作用していると考えられる。</p>
+        <h3>最先端技術と、昔からある生活文化は対立しない</h3>
+        <p>最新の計算機と、和紙、古い家、工芸、祭りが隣り合う。これは、未来的な作品に和風の飾りをつけるというだけではない。2021年の民藝展は、過去と未来の結節点として民藝を扱い、環境に寄り添う制作や作品の保存を問題にするものとして整理されている。</p>
+        <p>私には、技術が高度化しても、土地ごとの違いや、人が暮らしてきた厚みが消えない未来を探っているように見える。調査メモが取り上げる『マタギドライヴ』の公式解説にある「デジタル発酵」「テクノ民藝」も、共通の技術基盤から、それぞれの場所に異なる文化が育つ可能性を扱っている。</p>
+        <div class="wco-line-note">「すべてが効率化され、どこも同じになる未来」として読むと、この関心を取り逃がしてしまう。</div>
+</section>
+<section class="wco-chapter" id="thinking" aria-labelledby="thinking-title"><header class="wco-chapter-heading"><span>03 / HOW IDEAS GROW</span><h2 id="thinking-title">観察・制作・言語化を往復する</h2></header>
+        <p>書籍がある程度まとめられた構想だとすると、noteには、その構想が日常のどこから生まれるかが見える。元の調査メモで扱われた三つの記事を並べると、思考の動きが捉えやすい。</p>
+        <div class="wco-table-scroll" role="region" aria-label="noteに表れる思考の特徴" tabindex="0">
+          <table><caption>調査メモに挙がっているnoteと、その読みどころ</caption><thead><tr><th scope="col">時期・内容</th><th scope="col">読み取れること</th></tr></thead><tbody>
+            <tr><th scope="row">2019.01.08<br /><span>2014年の研究生活の回想</span></th><td>大きな世界観の出発点に、装置を動かし、撮影し、実験する具体的な制作経験がある。</td></tr>
+            <tr><th scope="row">2020.06.11<br /><span>『魔法の世紀』『デジタルネイチャー』の誤読について</span></th><td>「魔法」「自然」を日常語とは異なる意味で使うため、語感だけで読むと主張を取り違えやすい。</td></tr>
+            <tr><th scope="row">2026.08.30<br /><span>三部作を振り返る記事</span></th><td>実機の修正とリポジトリの不一致という保守の話から、説明・記録・制作の関係を考える。</td></tr>
+          </tbody></table>
+        </div>
+        <div class="wco-process" aria-label="このページで読み取った思考の流れ"><span>具体的な出来事に引っかかる</span><span>工学や哲学の概念を重ねる</span><span>別の時代・領域とつなぐ</span><span>作品や文章にする</span></div>
+        <p>最初に完成された理論があり、現実をすべてそこに当てはめている、というだけではない。制作の失敗や、何気ない風景から、理論の側を変えることもある。</p>
+        <p>『半歩先を読む思考法』には、誰かに理解されるより先に次の行動に移すことや、日常の写真、言葉との距離をめぐる文章が組み込まれている。「未来予測の結論」だけではなく、<strong>観察・制作・言語化を往復する人</strong>として理解する方が、活動全体に近いのではないか。</p>
+        <p>一方で、わかりにくさの原因もここにある。同じ文章の中で、技術の説明、哲学的な主張、芸術的な比喩が切り替わる。本人も、既存の単語を再定義する癖が伝わりにくさにつながっていると書いている。</p>
+        <div class="wco-takeaway"><span>読み手として意識したいこと</span><p>「難しいから全部深い」とも、「わかりにくいから全部無意味」とも決めない。いま、どの種類の話をしているのかを分ける。</p></div>
+</section>
+<section class="wco-chapter" id="critical-reading" aria-labelledby="critical-reading-title"><header class="wco-chapter-heading"><span>04 / READ WITH DISTANCE</span><h2 id="critical-reading-title">共感と、判断を分けておく</h2></header>
+        <p>構想を理解することと、そのまま賛成することは別だ。ここからは、元の調査メモにあった批判的な読み方を引き継ぎ、私自身が読み進めるうえでも留意したい点を整理する。</p>
+        <h3>技術・予測・価値観・芸術表現を、同じ基準で読まない</h3>
+        <div class="wco-lenses">
+          <article><span>RESEARCH</span><h4>技術的な研究</h4><p>実験や実装で、どこまで実現しているのか。</p></article>
+          <article><span>FORECAST</span><h4>未来の予測</h4><p>どんな条件が必要で、何が不確実なのか。</p></article>
+          <article><span>PROPOSAL</span><h4>社会への提案</h4><p>誰に利益があり、誰に負担があるのか。</p></article>
+          <article><span>EXPRESSION</span><h4>芸術・哲学の表現</h4><p>世界を見るための、どんな視点を開くのか。</p></article>
+        </div>
+        <p>「ヌル」と「空」の接続は、本人の芸術的・哲学的な表現として読むことができる。しかし、それだけで仏教思想と計算機科学の同一性が証明されるわけではない。展覧会説明でも、「空」の落合的な計算機表現とされている。</p>
+        <p>同じように、自動化された基盤の周辺で人々が自由に探索するという未来像は、一つの構想であって、その実現や万人への利益が保証された事実ではない。</p>
+        <h3>技術を「自然」と見ても、所有や責任の問題は残る</h3>
+        <p>計算機やAIを、新しい自然の一部として理解することと、そのAIや計算基盤を誰が所有し、誰が利用条件を決め、誰が停止できるのかは、別の問題として考えたい。</p>
+        <p><strong>環境の一部として当たり前になることと、公平で望ましいものになることは同じではない。</strong>人間中心主義を問い直す構想でも、人間の権利や生活条件をどう守るかは残る。これは思想への反証というより、思想を社会に移す際に検討すべき追加の問いだ。</p>
+        <h3>「東洋／西洋」「伝統／近代」の対比を広げすぎない</h3>
+        <p>日本や東洋の思想は、別の未来を考える資源として扱われる。ただ、「東洋は自然と調和し、西洋は自然を支配する」と一枚岩にしてしまうと、理解が粗くなる。</p>
+        <p>調査メモで参照した公式用語解説の図も「近代西洋の一系譜」「東アジア思想の一部」と限定して比較している点が指摘されている。文明全体の本質というより、<strong>比較のために取り出された思想の型</strong>として扱う方がよい。</p>
+        <p>また、社会制度についての提案と、芸術における多様性の追求は、個別に検討する必要がある。一方への共感だけで、もう一方まで判断し終えたことにしない。この距離感を保って読みたい。</p>
+</section>
+<section class="wco-chapter" id="reading-map" aria-labelledby="reading-map-title"><header class="wco-chapter-heading"><span>05 / READING MAP</span><h2 id="reading-map-title">何を知りたいかで、著作を読み分ける</h2></header>
+        <p>著作を、どれも同じ未来予測の本として扱わない。何を知りたいかで入口を変えると、活動のつながりが見えやすくなる。</p>
+        <div class="wco-reading-list">
+          <article><span>01 / BACKBONE</span><h3>思想の骨格と変化</h3><p class="wco-book-titles">『魔法の世紀』<br />『デジタルネイチャー』<br />『マタギドライヴ』</p><p>調査メモでは、本人もこの三冊を一続きのものとして振り返っている。世界観の変化と、本人による修正をたどる軸にする。</p></article>
+          <article><span>02 / LANDSCAPE</span><h3>本人が見ている風景</h3><p class="wco-book-titles">『晴れときどきライカ』<br />写真・作品・日々のnote</p><p>概念が、具体的な景色や身体の感覚とどうつながるかを見る。社会論だけでは捉えきれない側面への入口。</p></article>
+          <article><span>03 / SOCIETY</span><h3>社会への応用</h3><p class="wco-book-titles">『日本再興戦略』<br />『2030年の世界地図帳』</p><p>世界観を、制度・地域・仕事へ展開した側面を読む。執筆時点の予測と、現在の事実は分けて扱う。</p></article>
+          <article><span>04 / LEARNING</span><h3>思考のつくり方・学び方</h3><p class="wco-book-titles">『忘れる読書』<br />『半歩先を読む思考法』</p><p>結論だけでなく、読書・観察・行動から思考を組み立てる過程を見る。自分の学びへ持ち帰る視点として読む。</p></article>
+        </div>
+        <p>主張を知るなら思想の骨格を、<strong>何が見えているのかを知るなら写真・散文・作品も</strong>見る。この二つを往復すると、言葉だけでは見えなかった接点が出てくるのではないか。</p>
+</section>
+<section class="wco-chapter wco-personal-chapter" id="my-perspective" aria-labelledby="my-perspective-title"><header class="wco-chapter-heading"><span>06 / MY PERSPECTIVE</span><h2 id="my-perspective-title">私の仕事と学びに引きつける</h2></header>
+        <div class="wco-personal-intro"><span>MY PERSPECTIVE / 私自身の経験と、ここから考えたいこと</span><p>ここからは、落合氏の主張の要約ではない。これまでの自分の経験に引きつけて、この整理から何を受け取りたいかを考えてみる。</p></div>
+        <h3>理解することと、つくることの間にある面白さ</h3>
+        <p>私にとって、物事を見る姿勢が大きく変わったのは、大学の研究室と大学院で過ごした時間だった。物事を小さな単位に分け、それぞれの性質を理解し、まだわからないことを追いかける。そして、理解したことを使って、新しいものを考え、つくり上げる。その過程に、面白さだけでなく、美しさを感じるようになった。</p>
+        <p>だから、落合氏の活動を、研究・アート・著作がつながったものとして整理する視点には、関心を持つ。知識を持っていることと、何かをつくれることと、つくったものから世界の見方が変わること。その三つを、別々の活動にしないという読み方だ。</p>
+        <p>自分の学びでも、用語を覚えたところで終わりにしたくない。実際に手を動かして、理解できていなかった部分に気づく。そこで生まれた疑問を、もう一度学びに戻す。そういう往復を大切にしたい。</p>
+        <h3>知識を増やすだけでなく、誰かの価値に変える</h3>
+        <p>エンジニアとして技術を学び、資格や経験を積み重ねることには意味がある。ただ、それだけで自分が十分に満たされるわけではない、とも感じてきた。得た知識を、社会や、誰かの仕事や、実際の生活に価値として返すところまで考えたい。</p>
+        <p>研究からAI・データの仕事へ進んだ自分にとって、理解する対象は技術だけではなくなった。相手が何に困っているのか。なぜその仕組みが必要なのか。どこが変われば、仕事が前に進むのか。そうした背景を理解して、使える形にすることも仕事になる。</p>
+        <p>「新しい技術があるから使う」ではなく、<strong>技術を使って、何を変え、誰に何を返すのか</strong>。落合氏の思想を自分の仕事へ引きつけるなら、まずこの問いから考えたい。</p>
+        <h3>AIに任せることと、責任を手放すことは違う</h3>
+        <p>生成AIを使うと、考えを文章やコード、試作品へ変える入口が、自分の中では以前より軽くなっている。一方で、成果物が出てくることと、それが相手の役に立ち、安心して使えることは別だと思う。</p>
+        <p>仕事として引き受けた以上は、何を確かめる必要があるかを考え、品質を担保し、責任を持ってやり通したい。相手の求めるものを理解し、必要なことを伝え、信頼を積み重ねる。その部分を、生成の速さと取り替えるつもりはない。</p>
+        <p>「説明できることと、実際にできることは同じではない」という論点も、仕事では慎重に受け取りたい。言葉にしきれない実践があるとしても、だから検証や記録が不要になるわけではない。<strong>わからない部分を認めながら、何を確認でき、どこに不確実さが残るのかを明らかにする</strong>。その姿勢を保ちたい。</p>
+        <h3>探索したことを、持ち帰れる形にする</h3>
+        <p>「マタギ」という比喩を、自分の今の生活へそのまま当てはめる必要はないと思う。ただ、いつもの仕事や専門の外側にも出てみて、気になったものを観察し、学び、持ち帰るという読み方は、自分の活動にも接続できそうだ。</p>
+        <p>このサイトで学んだことや、つくったもの、考えたことを残しているのも、その往復のためだ。知識を整理しただけでは、まだ途中にいる。使ってみて、誰かに伝えて、うまく伝わらなかった部分を直す。そうして初めて、自分の理解も更新されていくのだと思う。</p>
+        <div class="wco-personal-statement"><span>いま、自分の軸として置きたいこと</span><p>深く理解する。<br />小さくても、つくってみる。<br />人に向き合い、価値として返す。</p></div>
+        <p>落合氏の思想を、自分のキャリアの答えとして採用するわけではない。自分が何を面白いと感じ、どんな価値をつくりたいのかを問い直すための、ひとつの手がかりとして読み続けたい。</p>
+</section>
+<section class="wco-chapter" id="questions" aria-labelledby="questions-title"><header class="wco-chapter-heading"><span>07 / STILL IN PROGRESS</span><h2 id="questions-title">答えよりも、持ち続けたい問い</h2></header>
+        <p>ここまでを一本の流れにすると、計算機で現実の感じ方を変えることから、人間・自然・機械を分けてきた世界観を問い直し、その世界で身体を持つ人間が何をつくり、何を楽しみ、どう暮らすかを探る、という動きになる。</p>
+        <p>初期の技術的な驚き、社会制度への提案、東洋思想、写真、民藝、生成AI、マタギ。無関係な関心が次々に増えたというより、同じ問題を異なる場所から掘り下げたものとして読める。ただし、本人による振り返りにも修正があり、最初から完成していた一枚の思想ではない。</p>
+        <div class="wco-final-question"><span>A QUESTION TO RETURN TO</span><p>「AIより優れた人間であり続けるには」だけでなく、<br /><strong>人間だけが知性の中心ではなくなっても、<br class="wco-desktop-break" />世界に関わり、何かを見つけ、<br class="wco-desktop-break" />つくり、喜ぶ営みをどう続けるか。</strong></p></div>
+        <p>この問いとして読むと、本と作品が一本につながって見える。そして私自身も、未来について語るだけでなく、いま目の前にある仕事や学びの中で、何をつくり、どう関わるかを考えていきたい。</p>
+        <div class="wco-questions">
+          <article><span>LEARN</span><h3>いま、自分は何を本当に理解したいのか。</h3><p>知識の数だけでなく、問いの深さにも目を向ける。</p></article>
+          <article><span>BUILD</span><h3>その理解を、どんな形にできるのか。</h3><p>文章でも、コードでも、試作品でも、手を動かして確かめる。</p></article>
+          <article><span>THINK</span><h3>それは、誰のどんな価値になるのか。</h3><p>相手の背景と、自分が引き受ける責任を考える。</p></article>
+        </div>
+</section>
+<section class="wco-chapter" id="source-note" aria-labelledby="source-note-title"><header class="wco-chapter-heading"><span>08 / SOURCE & EDITORIAL NOTE</span><h2 id="source-note-title">資料の範囲と、編集について</h2></header>
+        <p>このページは、2026年9月23日に整理した調査メモを土台に、時期・世界観・思考法・批判的な視点の順に再構成し、私の経験に引きつけた所感を加えたものです。</p>
+        <details class="wco-source-details">
+          <summary>資料の範囲と、この記事で行っていないこと</summary>
+          <div>
+            <p>元の調査メモの対象は、主要著作の公開紹介・目次・抜粋、本人のnoteの公開部分、研究・作品の公式説明、本人インタビューです。有料記事の非公開部分や、書籍の全本文を通読したものではありません。</p>
+            <p>本ページへの編集では、外部サイトや原典の再照合は行っていません。以下は<strong>元のメモに挙がっている資料名の一覧</strong>であり、このページで個別に内容確認した原典リンク集ではありません。元のメモにURLがなかった資料について、URLを推測して補ってはいません。</p>
+            <p>刊行年・記事日付・作品情報は元のメモに従っています。特に2026年の発売日や展示情報は、メモの記載として扱っています。2019年など過去の未来予測は、現在の事実と区別しています。</p>
+            <p>本文の強調文や「私の言葉で」のまとめは、説明のための要約・解釈です。本人の逐語的な発言を引用したものではありません。「私の仕事と学びに引きつける」以降は、著作の主張とは分けた、このサイトの書き手の所感です。</p>
+          </div>
+        </details>
+        <div class="wco-source-groups">
+          <section><h3>思想・社会・生き方をめぐる著作</h3><p>『魔法の世紀』（2015）／『これからの世界をつくる仲間たちへ』（2016）／『超AI時代の生存戦略』（2017）／『日本再興戦略』（2018）／『デジタルネイチャー』（2018）／『2030年の世界地図帳』（2019）／『マタギドライヴ』（2026・元のメモによる）</p></section>
+          <section><h3>写真・観察・学びをめぐる著作</h3><p>『質量への憧憬』（2019）／『半歩先を読む思考法』（2021）／『忘れる読書』（2022）／『晴れときどきライカ』（2023）</p></section>
+          <section><h3>研究・展覧会・作品の説明</h3><p>公式作家声明／2018年の筑波大学講義概要／日本科学未来館の関連展示／日下部民藝館「メディアと民藝」（2021）／「ヌル即是計算機自然」（2023）／「null²」（2025）／「天孫帰るってよ？」（2026・元のメモによる）</p></section>
+          <section><h3>note・対話・編集の記録</h3><p>2019年1月8日・2020年6月11日・2026年8月30日の本人note／2018年・2025年の本人インタビュー／『マタギドライヴ』公開巻頭・公式副読サイト／楽天大学の関連対話／宇野常寛による編集・取材の記録</p></section>
+        </div>
+</section>
+        <footer class="wco-article-footer"><p>この文章は、2026年9月時点の考えです。読書と実践を重ねながら、少しずつ書き足していきます。</p><div><a href={route('thoughts/work-career/')}>← Work &amp; Careerに戻る</a><a href="#ochiai-top">ページの先頭へ ↑</a></div></footer>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .wco-page { --wco-text: #c5cdd8; --wco-strong: #edf1f8; --wco-muted: #9eafc0; --wco-accent: #c5b5f5; --wco-line: rgba(180,198,218,.19); --wco-mint: #9ad6ce; width: min(1160px, calc(100% - 48px)); margin-inline: auto; padding: 34px 0 90px; color: var(--wco-text); font-size: 1rem; overflow-wrap: anywhere; }
+  .wco-page :is(h1,h2,h3,h4,p) { margin: 0; }
+  .wco-page :is(section[id],details[id],div[id]), .wco-page[id] { scroll-margin-top: 170px; }
+  .wco-page a { color: var(--wco-accent); text-decoration: none; text-underline-offset: 5px; }
+  .wco-page a:hover { color: #e5dbff; text-decoration: underline; }
+  .wco-page :is(a,button,summary,[tabindex]):focus-visible { outline: 3px solid #91e0e2; outline-offset: 5px; border-radius: 4px; }
+  .wco-page button { font: inherit; cursor: pointer; }
+  .wco-page [hidden] { display: none !important; }
+  .wco-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 14px; color: var(--wco-muted); font-size: .77rem; line-height: 1.75; }
+  .wco-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; color: #abb9c9; }
+  .wco-breadcrumb > span[aria-hidden] { color: #718093; }
+  .wco-breadcrumb [aria-current] { color: var(--wco-accent); }
+  .wco-hero { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,.85fr); align-items: center; gap: 46px; padding: 60px 0 54px; }
+  .wco-eyebrow { color: var(--wco-accent); font: 700 .7rem/1.6 ui-monospace, monospace; letter-spacing: .1em; }
+  .wco-page .wco-subject { margin: 26px 0 12px; color: #d5c6f3; font-size: .88rem; letter-spacing: .035em; }
+  .wco-page h1 { color: #f1f1f9; font-size: clamp(2.4rem, 4.3vw, 3.8rem); line-height: 1.44; letter-spacing: -.052em; font-weight: 750; }
+  .wco-page h1 em { color: #cdbcf9; font-style: normal; }
+  .wco-page .wco-lead { margin-top: 24px; max-width: 620px; color: #b4c1d0; font-size: 1rem; line-height: 1.95; }
+  .wco-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; color: #a6b3c4; font-size: .74rem; line-height: 1.8; }
+  .wco-meta > span:last-child { color: #ac9fcc; font: 600 .63rem/2.1 ui-monospace, monospace; letter-spacing: .065em; }
+  .wco-hero-links { display: flex; flex-wrap: wrap; gap: 14px 24px; margin-top: 28px; }
+  .wco-hero-links a { display: inline-flex; align-items: center; gap: 18px; min-height: 46px; padding: 9px 16px; border: 1px solid rgba(197,181,245,.3); border-radius: 8px; color: #d8cafc; background: rgba(153,126,217,.06); font-size: .84rem; }
+  .wco-hero-links a:hover { background: rgba(153,126,217,.14); text-decoration: none; }
+  .wco-hero-question { padding: 32px 30px 25px; border: 1px solid rgba(189,169,236,.32); border-radius: 18px; background: radial-gradient(ellipse at top right, rgba(147,117,192,.19), transparent 76%), linear-gradient(145deg, #19202f, #101d29); }
+  .wco-hero-question > p:not(.wco-interpretation) { margin-top: 24px; color: #c0bfd5; font-size: clamp(1rem,1.4vw,1.13rem); line-height: 2; letter-spacing: .015em; }
+  .wco-hero-question strong { display: block; margin-top: 14px; color: #eee6ff; font-size: clamp(1.24rem,1.9vw,1.5rem); line-height: 1.85; font-weight: 650; }
+  .wco-three-views { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(189,169,236,.2); }
+  .wco-three-views > span { color: #d7c5f4; font-size: .79rem; font-weight: 650; }
+  .wco-three-views small { display: block; margin-top: 7px; color: #a6adc2; font-size: .65rem; font-weight: 400; line-height: 1.7; }
+  .wco-page .wco-interpretation { margin-top: 22px; color: #9da5ba; font-size: .66rem; line-height: 1.8; }
+  .wco-orientation { display: grid; grid-template-columns: 148px minmax(0,1fr); gap: 10px 22px; padding: 23px 26px; border-block: 1px solid var(--wco-line); background: rgba(128,145,177,.045); }
+  .wco-orientation-label { padding-top: 3px; color: #c7baf0; font-size: .78rem; font-weight: 650; line-height: 1.9; }
+  .wco-orientation p { color: #b2bece; font-size: .86rem; line-height: 1.9; }
+  .wco-orientation > a { grid-column: 2; justify-self: start; font-size: .75rem; line-height: 1.8; }
+  .wco-reading-layout { display: grid; grid-template-columns: 205px minmax(0,1fr); gap: 60px; margin-top: 58px; align-items: start; }
+  .wco-sidebar { position: sticky; top: 160px; min-width: 0; }
+  .wco-toc { border-top: 2px solid rgba(197,181,245,.6); }
+  .wco-toc summary { display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 54px; color: #c7bbdf; font: 700 .68rem/1.6 ui-monospace,monospace; letter-spacing: .11em; cursor: pointer; list-style: none; }
+  .wco-toc summary::-webkit-details-marker { display:none; }
+  .wco-toc summary > span { color: #9faabe; font: 400 .72rem/1.6 system-ui,sans-serif; letter-spacing: .03em; }
+  .wco-toc summary::after { content: '+'; color: #bfacd9; font-size: 1.05rem; }
+  .wco-toc[open] summary::after { content: '−'; }
+  .wco-toc nav { display: grid; gap: 3px; }
+  .wco-toc nav a { display: grid; grid-template-columns: 25px minmax(0,1fr); align-items: baseline; gap: 9px; min-height: 42px; padding: 10px 9px; border-left: 2px solid transparent; color: #a9b6c8; font-size: .76rem; line-height: 1.7; }
+  .wco-toc nav a > span { color: #9e8ebc; font: 600 .64rem/2 ui-monospace,monospace; }
+  .wco-toc nav a[aria-current="location"] { color: #e0d3ff; border-left-color: #c5b5f5; background: rgba(176,152,230,.075); }
+  .wco-toc nav a[href="#my-perspective"] { color: #b6d8d5; }
+  .wco-reading-status { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--wco-line); }
+  .wco-reading-status > span { color: #9cacca; font: 600 .62rem/1.6 ui-monospace, monospace; letter-spacing: .1em; }
+  .wco-reading-status progress { display: block; width: 100%; height: 4px; margin-top: 12px; border: 0; border-radius: 4px; appearance: none; background: #263045; color: #bda9ec; accent-color: #bda9ec; }
+  .wco-reading-status progress::-webkit-progress-bar { background: #263045; border-radius: 4px; }
+  .wco-reading-status progress::-webkit-progress-value { background: #bda9ec; border-radius: 4px; }
+  .wco-reading-status progress::-moz-progress-bar { background: #bda9ec; border-radius: 4px; }
+  .wco-sidebar-back { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; margin-top: 18px; font-size: .77rem; }
+  .wco-article { min-width: 0; max-width: 830px; }
+  .wco-article p { color: var(--wco-text); font-size: 1rem; line-height: 2.05; letter-spacing: .015em; }
+  .wco-article p + p { margin-top: 20px; }
+  .wco-article strong { color: var(--wco-strong); font-weight: 650; }
+  .wco-opening { padding: 0 0 10px; }
+  .wco-opening > p:first-child { color: #d0d7e4; font-size: 1.12rem; line-height: 2; }
+  .wco-chapter { margin-top: 62px; padding-top: 32px; border-top: 1px solid var(--wco-line); }
+  .wco-chapter-heading { margin-bottom: 28px; }
+  .wco-chapter-heading > span { color: #bca8ec; font: 700 .67rem/1.75 ui-monospace,monospace; letter-spacing: .09em; }
+  .wco-chapter-heading h2 { margin-top: 13px; color: var(--wco-strong); font-size: clamp(1.45rem,2.25vw,1.9rem); line-height: 1.65; letter-spacing: -.025em; font-weight: 650; }
+  .wco-article h3 { margin: 35px 0 17px; padding-left: 14px; border-left: 2px solid #9b87c6; color: #e1e5f1; font-size: 1.1rem; font-weight: 650; line-height: 1.8; }
+  .wco-article .wco-fine { margin-top: 18px; color: #a5b1c3; font-size: .82rem; line-height: 1.9; }
+  .wco-expand-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 16px; }
+  .wco-expand-controls button { min-height: 44px; padding: 8px 14px; border: 1px solid rgba(197,181,245,.28); border-radius: 7px; background: rgba(153,126,217,.07); color: #d1c5ee; font-size: .74rem; line-height: 1.7; }
+  .wco-expand-controls button:hover { background: rgba(153,126,217,.17); border-color: #b9a6e2; }
+  .wco-period { margin-top: 14px; border: 1px solid rgba(179,188,215,.23); border-radius: 13px; background: linear-gradient(125deg, rgba(27,34,51,.82), rgba(15,26,38,.92)); }
+  .wco-period:first-of-type { margin-top: 22px; }
+  .wco-period > summary { position: relative; display: grid; gap: 9px; padding: 23px 56px 23px 25px; cursor: pointer; list-style: none; border-radius: 12px; }
+  .wco-period > summary::-webkit-details-marker { display: none; }
+  .wco-period > summary:hover { background: rgba(185,168,225,.055); }
+  .wco-period-date { color: #bda8e9; font: 700 .69rem/1.6 ui-monospace,monospace; letter-spacing: .065em; }
+  .wco-period-title { color: #e8e5f2; font-size: 1.05rem; line-height: 1.8; font-weight: 650; letter-spacing: .005em; }
+  .wco-period-deck { color: #a6b3c6; font-size: .81rem; line-height: 1.9; }
+  .wco-period-toggle { position: absolute; right: 22px; top: 28px; color: #c6b3ef; font: 300 1.35rem/1 ui-monospace,monospace; transition: transform .15s ease; }
+  .wco-period[open] .wco-period-toggle { transform: rotate(45deg); }
+  .wco-period-body { padding: 0 25px 27px; }
+  .wco-period-body > p { font-size: .94rem; line-height: 2.02; }
+  .wco-article .wco-books-label { margin: 0 0 22px; padding: 16px 0; border-block: 1px solid rgba(179,188,215,.17); color: #c5b4e8; font-size: .79rem; line-height: 1.95; }
+  .wco-takeaway { margin-top: 26px; padding: 21px 23px; border-left: 2px solid #c5b5f5; background: rgba(157,133,211,.085); }
+  .wco-takeaway > span { color: #c4b3e9; font-size: .72rem; letter-spacing: .025em; }
+  .wco-takeaway > p { margin-top: 10px; color: #e0d9ef; font-size: .97rem; line-height: 1.95; }
+  .wco-line-note { margin-top: 26px; padding: 20px 22px; border: 1px solid rgba(188,168,224,.25); border-radius: 8px; color: #d2c5ec; font-size: .93rem; line-height: 1.9; }
+  .wco-table-scroll { max-width: 100%; margin: 28px 0; overflow-x: auto; border: 1px solid var(--wco-line); border-radius: 10px; }
+  .wco-table-scroll table { width: 100%; min-width: 500px; border-collapse: collapse; color: #c1ccdb; font-size: .85rem; line-height: 1.85; }
+  .wco-table-scroll caption { padding: 16px 19px; background: rgba(154,128,206,.07); color: #b7a6d7; font-size: .73rem; text-align: left; }
+  .wco-table-scroll th, .wco-table-scroll td { padding: 17px 20px; border-bottom: 1px solid var(--wco-line); text-align: left; vertical-align: top; }
+  .wco-table-scroll thead th { color: #d6c8eb; background: rgba(148,137,190,.06); font-size: .76rem; font-weight: 650; }
+  .wco-table-scroll tbody th { width: 44%; color: #c7b3ea; font-weight: 500; }
+  .wco-table-scroll th > span { display: inline-block; margin-top: 6px; color: #b3bfd1; }
+  .wco-table-scroll tbody tr:last-child > * { border-bottom: 0; }
+  .wco-process { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 26px 0; counter-reset: flow; }
+  .wco-process > span { padding: 17px; border: 1px solid rgba(183,170,219,.24); border-radius: 8px; background: rgba(154,128,206,.05); color: #cfc5e6; font-size: .85rem; line-height: 1.85; counter-increment: flow; }
+  .wco-process > span::before { content: '0' counter(flow) ' / '; display: block; margin-bottom: 7px; color: #b29fd6; font: 700 .65rem/1.7 ui-monospace,monospace; }
+  .wco-lenses { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 24px 0; }
+  .wco-lenses > article { padding: 20px; border: 1px solid rgba(183,170,219,.24); border-radius: 10px; background: rgba(142,130,171,.045); }
+  .wco-lenses span, .wco-reading-list article > span { color: #b7a5d7; font: 600 .65rem/1.7 ui-monospace,monospace; letter-spacing: .06em; }
+  .wco-lenses h4 { margin-top: 12px; color: #e1dcef; font-size: .98rem; line-height: 1.8; font-weight: 600; }
+  .wco-lenses p { margin-top: 8px; color: #b1bed0; font-size: .83rem; line-height: 1.85; }
+  .wco-reading-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin: 27px 0; }
+  .wco-reading-list > article { padding: 23px; border: 1px solid var(--wco-line); border-radius: 12px; background: linear-gradient(135deg,rgba(29,35,54,.72),rgba(15,25,37,.72)); }
+  .wco-reading-list article h3 { margin: 14px 0 18px; padding: 0; border: 0; font-size: 1.01rem; color: #e0daef; }
+  .wco-reading-list article p { color: #adbccf; font-size: .84rem; line-height: 1.95; }
+  .wco-reading-list article .wco-book-titles { min-height: 79px; color: #d4c4f0; font-size: .91rem; line-height: 1.9; }
+  .wco-personal-chapter { border-top: 2px solid rgba(154,214,206,.55); }
+  .wco-personal-chapter .wco-chapter-heading > span { color: #a0d5d0; }
+  .wco-personal-chapter h3 { border-left-color: #9ad6ce; }
+  .wco-personal-intro { padding: 24px; border: 1px solid rgba(154,214,206,.27); border-radius: 10px; background: rgba(99,183,175,.055); }
+  .wco-personal-intro > span { color: #a8d5d0; font-size: .72rem; line-height: 1.9; letter-spacing: .01em; }
+  .wco-personal-intro > p { margin-top: 10px; color: #b5ccce; font-size: .9rem; line-height: 1.95; }
+  .wco-personal-statement { margin: 30px 0; padding: 28px; border-left: 2px solid #9ad6ce; background: linear-gradient(120deg,rgba(77,160,151,.12),rgba(58,107,110,.03)); }
+  .wco-personal-statement > span { color: #a7d3ce; font-size: .76rem; line-height: 1.8; }
+  .wco-personal-statement > p { margin-top: 16px; color: #d6eeea; font-size: 1.4rem; font-weight: 550; line-height: 1.95; letter-spacing: -.015em; }
+  .wco-final-question { margin: 30px 0; padding: 31px 28px; border: 1px solid rgba(197,181,245,.28); border-radius: 12px; background: radial-gradient(ellipse at bottom right,rgba(147,117,192,.13),transparent 90%),#131e2c; }
+  .wco-final-question > span { color: #bda9e7; font: 700 .66rem/1.8 ui-monospace,monospace; letter-spacing: .09em; }
+  .wco-final-question > p { margin-top: 16px; color: #bdc0d4; font-size: .93rem; line-height: 2; }
+  .wco-final-question strong { display: inline-block; margin-top: 14px; color: #e6dbf9; font-size: 1.3rem; line-height: 2; font-weight: 600; letter-spacing: -.015em; }
+  .wco-questions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 32px; }
+  .wco-questions > article { min-width: 0; padding: 21px 18px; border-top: 1px solid rgba(197,181,245,.45); background: rgba(158,139,195,.045); }
+  .wco-questions span { color: #baabd9; font: 700 .67rem/1.8 ui-monospace,monospace; letter-spacing: .08em; }
+  .wco-questions article h3 { margin: 13px 0 10px; padding: 0; border: 0; color: #e0d9ef; font-size: .94rem; line-height: 1.85; }
+  .wco-questions article p { color: #aebbce; font-size: .8rem; line-height: 1.9; }
+  .wco-source-details { margin-top: 24px; border: 1px solid var(--wco-line); border-radius: 9px; }
+  .wco-source-details > summary { padding: 17px 20px; color: #c4b3e3; font-size: .84rem; line-height: 1.9; cursor: pointer; }
+  .wco-source-details > div { padding: 0 22px 23px; }
+  .wco-source-details p { color: #aebbce; font-size: .82rem; line-height: 1.95; }
+  .wco-source-groups { margin-top: 29px; }
+  .wco-source-groups section { padding-bottom: 20px; border-bottom: 1px solid var(--wco-line); }
+  .wco-source-groups section h3 { margin: 24px 0 12px; padding: 0; border: 0; color: #c9c3da; font-size: .92rem; }
+  .wco-source-groups section p { color: #a7b4c6; font-size: .8rem; line-height: 2; }
+  .wco-article-footer { margin-top: 45px; padding: 25px 0 0; border-top: 1px solid var(--wco-line); }
+  .wco-article-footer > p { color: #a2aec0; font-size: .78rem; line-height: 1.9; }
+  .wco-article-footer > div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 25px; margin-top: 20px; }
+  .wco-article-footer a { display: inline-flex; align-items: center; min-height: 44px; font-size: .8rem; }
+  @media (max-width: 1020px) { .wco-hero { gap: 30px; } .wco-hero-question { padding-inline: 25px; } .wco-reading-layout { grid-template-columns: 182px minmax(0,1fr); gap: 35px; } .wco-questions { grid-template-columns: minmax(0,1fr); } .wco-questions > article { padding: 20px; } .wco-desktop-break { display: none; } }
+  @media (max-width: 820px) { .wco-hero { grid-template-columns: minmax(0,1fr); padding-top: 38px; } .wco-hero-question { max-width: none; } .wco-hero-question > p:not(.wco-interpretation) { font-size: 1rem; } .wco-hero-question strong { font-size: 1.33rem; } .wco-reading-layout { grid-template-columns: minmax(0,1fr); gap: 30px; margin-top: 36px; } .wco-sidebar { position: static; } .wco-toc nav { grid-template-columns: repeat(2,minmax(0,1fr)); } .wco-reading-status,.wco-sidebar-back { display: none; } .wco-orientation { grid-template-columns: minmax(0,1fr); } .wco-orientation > a { grid-column: auto; } .wco-article { max-width: none; } }
+  @media (max-width: 540px) { .wco-page { width: calc(100% - 36px); padding-top: 20px; padding-bottom: 60px; } .wco-breadcrumb { gap: 0 9px; font-size: .68rem; } .wco-hero { gap: 32px; padding: 34px 0 34px; } .wco-page h1 { font-size: clamp(1.95rem,7.8vw,2.7rem); line-height: 1.52; letter-spacing: -.055em; } .wco-page .wco-subject { margin-top: 20px; font-size: .8rem; } .wco-page .wco-lead { font-size: .91rem; } .wco-meta { gap: 7px 18px; font-size: .7rem; } .wco-hero-links { gap: 10px; } .wco-hero-links a { gap: 9px; padding: 9px 12px; font-size: .77rem; } .wco-hero-question { padding: 26px 23px 22px; } .wco-hero-question > p:not(.wco-interpretation) { margin-top: 17px; } .wco-three-views { margin-top: 22px; padding-top: 18px; } .wco-three-views small { font-size: .64rem; } .wco-orientation { padding: 20px; } .wco-orientation p { font-size: .8rem; } .wco-toc nav a { padding-inline: 5px; gap: 5px; grid-template-columns: 20px minmax(0,1fr); font-size: .72rem; } .wco-article p { font-size: .94rem; line-height: 2.06; } .wco-opening > p:first-child { font-size: 1.01rem; } .wco-chapter { margin-top: 46px; padding-top: 26px; } .wco-chapter-heading h2 { font-size: 1.4rem; } .wco-article h3 { font-size: 1.04rem; } .wco-period > summary { padding: 21px 45px 21px 19px; } .wco-period-toggle { right: 17px; top: 26px; } .wco-period-title { font-size: .98rem; } .wco-period-deck { font-size: .77rem; } .wco-period-body { padding: 0 19px 23px; } .wco-period-body > p { font-size: .9rem; } .wco-takeaway { padding: 17px 18px; } .wco-takeaway > p { font-size: .9rem; } .wco-lenses,.wco-reading-list { grid-template-columns: minmax(0,1fr); } .wco-reading-list article .wco-book-titles { min-height: 0; } .wco-reading-list article p,.wco-lenses p { font-size: .85rem; } .wco-personal-intro { padding: 20px; } .wco-personal-intro > p { font-size: .88rem; } .wco-personal-statement { padding: 23px 20px; } .wco-personal-statement > p { font-size: 1.2rem; } .wco-final-question { padding: 24px 21px; } .wco-final-question > p { font-size: .88rem; } .wco-final-question strong { font-size: 1.12rem; } .wco-source-details > summary { padding: 17px; } .wco-source-details > div { padding: 0 18px 20px; } .wco-source-details p,.wco-source-groups section p { font-size: .79rem; } }
+  @media (prefers-reduced-motion: reduce) { .wco-period-toggle { transition: none; } }
+  @media print { .wco-page { width: 100%; padding: 0; color: #222; --wco-text: #222; --wco-strong: #111; --wco-muted: #555; --wco-line: #bbb; --wco-accent: #333; } .wco-sidebar,.wco-breadcrumb,.wco-hero-links,.wco-expand-controls,.wco-article-footer > div { display: none !important; } .wco-reading-layout,.wco-hero { display: block; } .wco-article { max-width: none; } .wco-hero { padding: 0 0 25px; } .wco-page h1 { color: #111; font-size: 26pt; } .wco-page * { background: transparent !important; box-shadow: none !important; color: inherit !important; } .wco-hero-question { margin-top: 25px; } .wco-orientation { display: block; margin-top: 20px; } .wco-chapter { break-before: auto; } .wco-page :is(h2,h3,summary) { break-after: avoid; } .wco-period > summary { border-bottom: 1px solid #ddd; } .wco-page details > div { display: block !important; } .wco-page details::details-content { content-visibility: visible !important; display: block !important; } .wco-period-toggle { display: none; } .wco-table-scroll { overflow: visible; } .wco-table-scroll table { min-width: 0; } .wco-article p { font-size: 10pt; line-height: 1.85; } .wco-hero-question > p { font-size: 12pt; } .wco-chapter-heading h2 { font-size: 17pt; } }
+</style>
+
+
+<script>
+  // Native <details> and normal anchors remain usable without JavaScript.
+  // Reinitialise on Astro navigation without accumulating event listeners.
+  let disposeReading = () => {};
+
+  function initializeReading() {
+    disposeReading();
+    const foundPage = document.querySelector('[data-wco-page]');
+    if (!(foundPage instanceof HTMLElement)) return;
+    const page = foundPage;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const periods = Array.from(page.querySelectorAll('.wco-period'))
+      .filter((item) => item instanceof HTMLDetailsElement);
+    const chapters = Array.from(page.querySelectorAll('.wco-chapter'))
+      .filter((item) => item instanceof HTMLElement);
+    const tocLinks = Array.from(page.querySelectorAll('[data-wco-toc]'))
+      .filter((item) => item instanceof HTMLAnchorElement);
+    const article = page.querySelector('.wco-article');
+    const progress = page.querySelector('progress');
+    let frame = 0;
+    let cancelled = false;
+    let printing = false;
+    const printState = new Map();
+
+    function updateReading() {
+      frame = 0;
+      if (cancelled || printing || !page.isConnected) return;
+      let active = chapters[0];
+      for (const chapter of chapters) {
+        if (chapter.getBoundingClientRect().top <= 210) active = chapter;
+      }
+      for (const link of tocLinks) {
+        if (active && link.hash === `#${active.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      }
+      if (article instanceof HTMLElement && progress instanceof HTMLProgressElement) {
+        const rect = article.getBoundingClientRect();
+        const total = Math.max(1, rect.height - window.innerHeight + 180);
+        progress.value = Math.max(0, Math.min(100, ((180 - rect.top) / total) * 100));
+      }
+    }
+
+    function scheduleUpdate() {
+      if (!cancelled && !frame) frame = window.requestAnimationFrame(updateReading);
+    }
+
+    function revealHash() {
+      if (!window.location.hash) return;
+      let id;
+      try { id = decodeURIComponent(window.location.hash.slice(1)); }
+      catch { return; }
+      const target = document.getElementById(id);
+      if (!target || !page.contains(target)) return;
+      if (target instanceof HTMLDetailsElement) target.open = true;
+      let ancestor = target.parentElement;
+      while (ancestor && ancestor !== page) {
+        if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
+        ancestor = ancestor.parentElement;
+      }
+      window.requestAnimationFrame(() => {
+        if (cancelled || !target.isConnected) return;
+        target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        scheduleUpdate();
+      });
+    }
+
+    page.querySelector('[data-wco-expand]')?.addEventListener('click', () => {
+      periods.forEach((item) => { item.open = true; });
+      scheduleUpdate();
+    }, { signal });
+    page.querySelector('[data-wco-collapse]')?.addEventListener('click', () => {
+      periods.forEach((item) => { item.open = false; });
+      scheduleUpdate();
+    }, { signal });
+    periods.forEach((item) => item.addEventListener('toggle', scheduleUpdate, { signal }));
+    page.querySelector('.wco-source-details')?.addEventListener('toggle', scheduleUpdate, { signal });
+    window.addEventListener('scroll', scheduleUpdate, { passive: true, signal });
+    window.addEventListener('resize', scheduleUpdate, { passive: true, signal });
+    window.addEventListener('hashchange', revealHash, { signal });
+
+    window.addEventListener('beforeprint', () => {
+      printing = true;
+      printState.clear();
+      page.querySelectorAll('details').forEach((item) => {
+        printState.set(item, item.open);
+        item.open = true;
+      });
+    }, { signal });
+    window.addEventListener('afterprint', () => {
+      printState.forEach((open, item) => { item.open = open; });
+      printState.clear();
+      printing = false;
+      scheduleUpdate();
+    }, { signal });
+
+    page.querySelector('.wco-expand-controls')?.removeAttribute('hidden');
+    page.querySelector('.wco-reading-status')?.removeAttribute('hidden');
+    revealHash();
+    scheduleUpdate();
+
+    disposeReading = () => {
+      cancelled = true;
+      controller.abort();
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }
+
+  initializeReading();
+  document.addEventListener('astro:page-load', initializeReading);
+  document.addEventListener('astro:before-swap', () => disposeReading());
+</script>
+

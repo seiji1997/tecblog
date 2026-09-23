@@ -1,0 +1,1464 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+// Body and references: fde_career_strategy_full.md / sources.json / capabilities.json.
+// The public research manuscript is retained; no private career or client data is added.
+// Forms are ephemeral. No API calls, analytics, database, localStorage or external libraries.
+---
+
+<BaseLayout title="FDE Career Strategy | Work & Career | Seiji Tech Atlas" description="顧客課題を、本番で動くAI・データシステムに変える。FDEを将来の選択肢として、8つの能力、段階別の経験づくり、架空ケース、6つの実務テンプレートから考えます。">
+<div class="fde-page" id="fde-top" data-fde-root>
+<nav class="fde-breadcrumb" aria-label="パンくずリスト"><a href={`${route('')}#thoughts`}>Thoughts in Progress</a><span aria-hidden="true">/</span><a href={route('thoughts/work-career/')}>Work &amp; Career</a><span aria-hidden="true">/</span><span aria-current="page">FDE Career Strategy</span></nav>
+<header class="fde-hero"><div class="fde-hero-copy"><p class="fde-eyebrow">WORK &amp; CAREER / CAREER STRATEGY</p><h1>FDE Career<br /><em>Strategy.</em></h1><p class="fde-subtitle">顧客課題を、本番で動く<br />AI・データシステムに変える。</p><p class="fde-lead">いまの専門性を、実装の前後へつなげる。<br />肩書きより、これから担いたい仕事を考える。</p><div class="fde-meta"><span>Seiji Tanimoto</span><time datetime="2026-09-23">2026.09.23</time><span class="fde-status">検討中のキャリア仮説</span></div><nav class="fde-hero-links" aria-label="記事内の近道"><a href="#my-direction">今の考えを読む ↓</a><a href="#capabilities">8つの能力を見る ↗</a><a href="#roadmap">進み方を考える ↗</a></nav></div>
+<aside class="fde-hero-note" aria-label="このページの軸"><p class="fde-eyebrow">A DIRECTION TO GROW INTO</p><p class="fde-hero-message">顧客の課題から、<br /><strong>動く仕組みへ。</strong><br />動く仕組みから、<br /><strong>使われる価値へ。</strong></p><div class="fde-note-words"><span>DISCOVER<small>問いを定める</small></span><span>BUILD<small>自らつくる</small></span><span>DELIVER<small>利用につなぐ</small></span></div><p class="fde-note-caption">FDEは将来の選択肢の一つ。<br />特定の肩書きや転職時期を確定するものではありません。</p></aside></header>
+<div class="fde-stats" aria-label="収録内容"><div><strong>08</strong><span>能力の視点</span></div><div><strong>03</strong><span>キャリアルート</span></div><div><strong>06</strong><span>実務テンプレート</span></div><div><strong>13</strong><span>出典の記録</span></div></div>
+<nav class="fde-cycle" aria-label="FDE型の仕事のつながり：本稿の整理"><a href="#definition"><small>01</small><span>顧客課題</span></a><span aria-hidden="true">→</span><a href="#consulting-model"><small>02</small><span>設計・実装</span></a><span aria-hidden="true">→</span><a href="#case-study"><small>03</small><span>評価・導入</span></a><span aria-hidden="true">→</span><a href="#portfolio"><small>04</small><span>利用・結果</span></a><span aria-hidden="true">→</span><a href="#cap-c08"><small>05</small><span>再利用・還元</span></a></nav><p class="fde-cycle-caption">本稿の整理。最後の発見を、次の課題や設計へ戻す。</p>
+<div class="fde-scope"><span>読み分ける</span><p><strong>公式資料の記録</strong> ／ <strong>本稿の解釈・提案</strong> ／ <strong>架空の実装ケース</strong><br />原稿の調査基準日：2026年9月23日。求人条件・地域・発表された計画の範囲は、それぞれの出典に残しています。</p><a href="#sources">出典へ ↗</a></div>
+<div class="fde-reading-layout"><aside class="fde-sidebar"><details class="fde-toc" open><summary>CONTENTS <span>読む・振り返る</span></summary><nav aria-label="記事の目次"><a href="#my-direction" data-fde-toc><span>00</span>現時点の方向性</a><a href="#definition" data-fde-toc><span>01</span>FDEの捉え方</a><a href="#official-snapshot" data-fde-toc><span>02</span>公式資料の記録</a><a href="#ai-practice" data-fde-toc><span>03</span>AI時代の実務</a><a href="#adjacent-roles" data-fde-toc><span>04</span>隣接する職種</a><a href="#consulting-model" data-fde-toc><span>05</span>コンサルとの接続</a><a href="#capabilities" data-fde-toc><span>06</span>8つの能力</a><a href="#learning" data-fde-toc><span>07</span>学習の優先順位</a><a href="#career-routes" data-fde-toc><span>08</span>3つの進み方</a><a href="#roadmap" data-fde-toc><span>09</span>経験を積む順序</a><a href="#case-study" data-fde-toc><span>10</span>架空の実装ケース</a><a href="#portfolio" data-fde-toc><span>11</span>実績の示し方</a><a href="#role-questions" data-fde-toc><span>12</span>求人・配属の質問</a><a href="#conclusion" data-fde-toc><span>13</span>キャリアの軸</a><a href="#reading" data-fde-toc><span>14</span>読む資料と関連ページ</a><a href="#inventory" data-fde-toc><span>15</span>経験の棚卸し</a><a href="#templates" data-fde-toc><span>16</span>実務テンプレート</a><a href="#sources" data-fde-toc><span>17</span>出典・確認範囲</a></nav></details><a class="fde-sidebar-back" href={route('thoughts/work-career/consulting-foundations/')}>← Consulting Foundations</a></aside><div class="fde-content"><section class="fde-position" id="my-direction" aria-labelledby="my-direction-title"><p class="fde-eyebrow">MY DIRECTION / 現時点での考え</p><h2 id="my-direction-title">5年後の肩書きを決めるより、<br />これから育てたい力を決める。</h2><p>FDEが5年後の自分の肩書きになるかは、まだ決めていない。ただ、顧客の課題を理解するところから、自ら実装し、使われる状態へつなぐ力は、これから伸ばしていきたい。</p><p>いまの専門性やコンサルティングの経験を捨てるのではなく、その前後にある仕事へ、少しずつ責任の範囲を広げていく。FDEは、その方向を考えるための一つの軸として置いておきたい。</p><p class="fde-position-note">以下は、その方向を考えるための調査と学習の整理です。確定した転職計画や、採用・配属の見通しを示すものではありません。</p></section><section class="fde-introduction fde-prose" aria-label="FDEをどう捉えるか"><p>「顧客の話が分かるエンジニア」「コードが書けるコンサルタント」。FDEは、そのように説明されることがある。しかし、キャリアを考えるには、それだけでは足りない。</p>
+<p>本記事では、FDEを次のように捉える。</p>
+<blockquote>
+<p><strong>顧客の業務に深く入り、曖昧な課題を技術的な解決策に変え、自ら実装し、本番で使われる状態まで導くエンジニア。そこで得た学びを、製品や再利用可能な仕組みに戻す。</strong></p>
+</blockquote>
+<p>これは単一企業の定義の引用ではなく、公式求人・実務記事を比較した、本記事の作業上の定義である。実装範囲、担当期間、製品への関与、必要経験は企業によって異なる。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a> <a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a> <a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a></p>
+<p><strong>結論は、肩書きを先に取りにいくより、「顧客課題→実装→本番利用→学習」をつなぐ仕事の経験をつくる方が、キャリアの軸としてぶれにくい、ということだ。</strong></p>
+<h3 id="introduction-part-1">このページの読み方</h3>
+<p>企業の求人や発表については出典を付けて事実として記す。能力マップ、ロードマップ、案件の選び方は、それらを踏まえた編集上の提案である。ケーススタディは架空であり、実在する顧客案件や検証済みの成果ではない。</p>
+<p>採用情報は調査日時点のスナップショットで、掲載開始日や募集継続を保証しない。企業発表は、その企業が示した方針・計画であり、実現済みの成果の証明ではない。グローバルの発表と日本法人の制度は区別する。</p>
+</section><section class="fde-chapter" id="definition" aria-labelledby="definition-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">01 / 本稿の整理・出典あり</p><h2 id="definition-title">FDEとは何か——肩書き、働き方、能力を分ける</h2></header><div class="fde-prose"><p>正式な英語表記は <strong>Forward Deployed Engineer</strong>。Palantirの求人では <strong>Forward Deployed Software Engineer（FDSE）</strong>という表記も使われる。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a></p>
+<p>理解する際には、次の三つを分けておく。</p>
+<div aria-label="definitionの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">definition：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">見方</th>
+<th scope="col">何を指すか</th>
+<th scope="col">キャリア上の注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">職名としてのFDE</th>
+<td>企業が求人・組織で採用している名称</td>
+<td>条件は個別求人で確認する。</td>
+</tr>
+<tr>
+<th scope="row">働き方としてのFDE</th>
+<td>顧客に密着し、課題と実装の間を短い周期で往復する仕事の進め方</td>
+<td>別の肩書きでも一部を実践できる。</td>
+</tr>
+<tr>
+<th scope="row">能力としてのFDE</th>
+<td>顧客理解、設計、コーディング、評価、導入、再利用をつなぐ力</td>
+<td>全部を一人で専門家として抱えることとは異なる。</td>
+</tr>
+</tbody>
+</table></div>
+<p>この区分は本記事の整理であり、業界共通の正式分類ではない。</p>
+<h3 id="definition-part-1">1-1．「顧客の前に出る」だけではない</h3>
+<p>顧客に説明する、デモをする、要望を持ち帰る。いずれも大事だが、それだけでFDEの中心的な実装責任を満たすとは限らない。</p>
+<p>Palantirの公式求人には、初回の顧客対話から、実際の業務を変えるソフトウェアを届けるところまで、小さなチームで担当する姿が示される。設計、データ処理、アプリ実装、関係者との協働が一緒に置かれている。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a></p>
+<p>つまり、解決策を説明するだけではなく、<strong>自分も技術上の判断と実装に参加し、その結果を顧客と確かめる</strong>ことが重要になる。</p>
+<h3 id="definition-part-2">1-2．「客先常駐」と同義ではない</h3>
+<p>顧客に密着することと、毎日同じオフィスに常駐することは同じではない。東京のOpenAI求人はハイブリッド勤務と主に国内の出張を記載する一方、Palantirのロンドン求人には、チーム・勤務地による25〜50％の出張目安がある。働く場所や出張量は個別条件として確認する必要がある。<a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a> <a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a></p>
+<h3 id="definition-part-3">1-3．一人で全部を抱える職業ではない</h3>
+<p>End-to-endとは、仕事のつながりを見失わないことだと捉えたい。セキュリティ、業務判断、運用、基盤、契約などを、すべて一人で決めてよいという意味ではない。</p>
+<p>本記事で勧めるのは、<strong>自分の担当する一連の機能に責任を持ち、必要な専門家・承認者を巻き込むこと</strong>である。責任範囲と権限を明確にしたうえで、手戻りや判断の停滞を減らす。</p>
+<p>また、導入後に何年も同じシステムの保守を続けるかは契約・体制次第だ。「本番を考える」と「永続的な保守担当になる」も区別する。</p>
+</div></section><section class="fde-chapter" id="official-snapshot" aria-labelledby="official-snapshot-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">02 / 調査時点の記録</p><h2 id="official-snapshot-title">2026年9月23日時点の公式資料から見えること</h2></header><div class="fde-prose"><div aria-label="official-snapshotの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">official-snapshot：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">企業・資料</th>
+<th scope="col">確認できた内容</th>
+<th scope="col">一般化してはいけないこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Palantir・英国FDSE求人</th>
+<td>顧客の現場で、設計・データ・アプリ実装・関係者対応を結び付ける。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a></td>
+<td>その出張条件や要件が、すべてのFDEに共通するとは限らない。</td>
+</tr>
+<tr>
+<th scope="row">Palantir・米国New Grad求人</th>
+<td>新卒向けの商用領域FDE枠がある。対象卒業時期も指定される。<a aria-label="出典 S02" class="fde-cite" href="#source-s02">S02</a></td>
+<td>FDEは必ずシニア職、という理解は適切でない。日本の新卒枠の根拠にもならない。</td>
+</tr>
+<tr>
+<th scope="row">OpenAI・東京FDE求人</th>
+<td>5年以上の関連経験、顧客対応、LLMを使ったシステム、日英両言語などを記載する。<a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a></td>
+<td>年数や英語条件を、全社共通のFDE資格要件にしない。</td>
+</tr>
+<tr>
+<th scope="row">Anthropic・米国FDE求人</th>
+<td>4年以上の顧客対応を伴う技術経験、LLM本番経験、評価、Pythonなどを重視する。<a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a></td>
+<td>米国求人を、日本の募集条件や報酬相場として扱わない。</td>
+</tr>
+<tr>
+<th scope="row">Deloitte・2026年9月2日発表</th>
+<td>Open Model Engineeringを新設し、FY2027を通じてFDEを採用・育成・認定する計画を示す。<a aria-label="出典 S06" class="fde-cite" href="#source-s06">S06</a></td>
+<td>日本法人の求人・職階・配属制度や、計画の実現済み人数は別途確認が必要。</td>
+</tr>
+<tr>
+<th scope="row">McKinsey・QuantumBlackの記事</th>
+<td>実装と業界知識を組み合わせ、共通ツールと現場の利用・価値を重視する。<a aria-label="出典 S07" class="fde-cite" href="#source-s07">S07</a></td>
+<td>この記事だけで、全員の正式職名がFDEだとは言えない。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="official-snapshot-part-1">この比較からの読み取り</h3>
+<p>FDEには、顧客との接点だけでなく、実装して届ける力が求められている。一方で、同じ名称でも新卒枠と経験者枠があり、採用難易度や責任範囲は異なる。</p>
+<p>したがって、「FDEになるには経験が必ず何年必要か」という一つの答えではなく、<strong>狙う求人の要求と、自分が説明できる実績の差</strong>を見るべきだ。</p>
+<p>なお、本調査は主要な公式公開資料による比較であり、全企業・全求人の網羅調査ではない。求人増加率や米国の高額報酬を使って、将来の雇用や日本の給与を断定することもしない。</p>
+</div></section><section class="fde-chapter" id="ai-practice" aria-labelledby="ai-practice-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">03 / 本稿の整理・設計原則</p><h2 id="ai-practice-title">AI時代のFDEを、どう理解するか</h2></header><div class="fde-prose"><p>AnthropicのFDE求人は、本番環境へのAI実装とともに、安全性、信頼性、評価、繰り返し使える導入パターンを挙げる。単にモデルを呼び出せるだけでは、期待する役割の全体を満たさない。<a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a></p>
+<p>この点を実務に引き寄せると、AIの性能と企業での利用の間には、少なくとも次のような問いがある。</p>
+<p>「必要なデータは存在するか」「誰に見せてよいか」「例外処理はどうするか」「間違えたとき何が起きるか」「既存の作業とどう接続するか」「本当に使われるか」。</p>
+<p>以下は、その問いを整理するための本記事独自の分類だ。</p>
+<div aria-label="ai-practiceの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">ai-practice：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">隔たり</th>
+<th scope="col">よくある状態</th>
+<th scope="col">橋渡しする仕事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">課題と要望の隔たり</th>
+<td>「AIを入れたい」が先にある</td>
+<td>変えたい判断・行動と、現状の問題を明確にする。</td>
+</tr>
+<tr>
+<th scope="row">デモと業務の隔たり</th>
+<td>きれいな入力では動くが、実際の例外に対応しない</td>
+<td>データのばらつき、権限、失敗ケースを扱う。</td>
+</tr>
+<tr>
+<th scope="row">技術と運用の隔たり</th>
+<td>動くが、監視・費用・更新・責任者が未定</td>
+<td>リリース後に維持できる仕組みを設計する。</td>
+</tr>
+<tr>
+<th scope="row">導入と成果の隔たり</th>
+<td>ツールはあるが、利用者の仕事が変わらない</td>
+<td>利用手順、教育、受入条件、効果測定を整える。</td>
+</tr>
+<tr>
+<th scope="row">個別対応と製品の隔たり</th>
+<td>毎回ゼロから顧客専用に開発する</td>
+<td>共通化できる課題を見つけ、部品・製品・手順に戻す。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ai-practice-part-1">「AIを使わない」と判断する力も含まれる</h3>
+<p>すべてをエージェントにすればよいわけではない。Anthropicの設計記事も、必要な複雑さだけを採用することを勧め、固定された処理経路のワークフローと、モデルが進め方を選ぶエージェントを区別している。<a aria-label="出典 S10" class="fde-cite" href="#source-s10">S10</a></p>
+<p>本記事では、ルールやSQLで確実に判断できる項目は、それらで処理する設計を基本候補にする。LLMは、曖昧な文書の整理、候補の提示、説明の補助など、必要性を確かめた範囲に使う。</p>
+<p><strong>モデルを使うことは手段であり、目的は業務を改善すること。</strong> この順番を守ることが、キャリア上の技術判断力にもつながる。</p>
+</div></section><section class="fde-chapter" id="adjacent-roles" aria-labelledby="adjacent-roles-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">04 / 比較のための整理</p><h2 id="adjacent-roles-title">既存の職種とは何が違うのか</h2></header><div class="fde-prose"><p>下表は、比較を助けるための重心の整理である。職種間に明確な境界や上下関係があるという意味ではない。組織によっては一人が複数の役割を担い、別の職名でFDEに近い働き方をしていることもある。</p>
+<div aria-label="adjacent-rolesの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">adjacent-roles：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">役割の重心</th>
+<th scope="col">主に向き合う問い</th>
+<th scope="col">FDEを考える際の確認点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">プロダクト開発</th>
+<td>多くの利用者に共通する製品をどう良くするか</td>
+<td>個別顧客の現場にどこまで入り、そこから共通製品へどう戻すか。</td>
+</tr>
+<tr>
+<th scope="row">データ／MLエンジニアリング</th>
+<td>データ処理やモデルをどう設計・維持するか</td>
+<td>利用者の判断、アプリ、採用・定着まで担当範囲をつなげるか。</td>
+</tr>
+<tr>
+<th scope="row">ソリューション提案・プリセールス</th>
+<td>技術の適合性を示し、導入判断をどう支援するか</td>
+<td>試作の後、自ら本番実装まで関与するか。</td>
+</tr>
+<tr>
+<th scope="row">IT／技術コンサルティング</th>
+<td>顧客にとって必要な変革と設計をどう導くか</td>
+<td>自分で書く・レビューするコードと、リリースへの責任はどこにあるか。</td>
+</tr>
+<tr>
+<th scope="row">プロフェッショナルサービス／SI</th>
+<td>合意したシステムをどう実装・導入するか</td>
+<td>課題探索の裁量と、共通製品・資産への還元がどの程度あるか。</td>
+</tr>
+<tr>
+<th scope="row">PMO／技術デリバリー</th>
+<td>意思決定、依存関係、品質、進行をどう整えるか</td>
+<td>実装主体なのか、複数実装チームを束ねる役割なのか。</td>
+</tr>
+</tbody>
+</table></div>
+<p>「コンサルタントは資料しか作らない」「SIは仕様どおりしか作らない」「プリセールスはコードを書かない」といった単純な対比はしない。FDEの特徴は、既存の仕事を否定することではなく、<strong>顧客課題と実装、製品への学習を強く接続する責任の置き方</strong>として捉える。</p>
+<p>実際、OpenAIにはFDEチーム内の別職種として、東京のTechnical Deployment Lead求人がある。技術的な実行計画、依存関係、導入定着などを担う役割であり、FDEと隣接するが同一ではない。<a aria-label="出典 S05" class="fde-cite" href="#source-s05">S05</a></p>
+<p>このため、顧客と技術の橋渡しが好きでも、コーディングを継続したいか、複数チームのデリバリーを主に担いたいかによって、適した役割は変わる。</p>
+</div></section><section class="fde-chapter" id="consulting-model" aria-labelledby="consulting-model-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">05 / 公式発表と本稿の解釈</p><h2 id="consulting-model-title">コンサルティング会社におけるFDEの位置づけ</h2></header><div class="fde-prose"><h3 id="consulting-model-part-1">5-1．「上流から下流へ」だけでなく、短い往復をつくる</h3>
+<p>本記事で想定するFDE型の働き方は、構想を決めて資料を渡した後に実装と離れるのではなく、仮説を小さな実装で確かめ、現場の反応を設計に戻す進め方である。</p>
+<pre aria-label="原稿の処理のつながり。概念整理であり本番設計ではありません。" tabindex="0"><code class="language-text">顧客の目的・業務上の問題
+        ↓
+業務担当者・コンサルタントとの課題設定
+        ↕
+FDE型の技術担当：設計・実装・評価・導入
+        ↕
+データ／基盤／セキュリティ／製品開発の専門家
+        ↓
+利用者の業務・運用担当者
+        ↺ 利用結果と発見を、課題・設計・製品へ戻す
+</code></pre>
+<p>これは組織図ではなく、仕事のつながりの概念整理だ。どこか一部門だけに成果責任を押し付けるのではなく、業務側の決定者、技術側の責任者、運用側の担当者を明確にする。</p>
+<h3 id="consulting-model-part-2">5-2．Deloitteでは、正式な人材計画にも登場している</h3>
+<p>Deloitteは2026年9月2日、Open Model Engineeringの立ち上げを発表した。オープンモデルと独自モデルを組み合わせた企業向けAIの設計・実装・展開・運用を支援し、FDEをFY2027を通じて採用・育成・認定する計画を示している。<a aria-label="出典 S06" class="fde-cite" href="#source-s06">S06</a></p>
+<p>これをキャリア上どう読むか。本記事の解釈では、<strong>業務の制約を理解しながら、モデルや基盤の選択と実装まで担う技術者を、コンサルティングの提供体制に組み込む方向</strong>が読み取れる。</p>
+<p>ただし、この発表から、日本法人のFDE募集枠、職階対応、異動条件、個人の認定制度を断定することはできない。「certify」という表現も、市場共通のFDE資格が新設されたことを示すものとしては扱わない。</p>
+<h3 id="consulting-model-part-3">5-3．McKinseyでは、職名だけでなく実務モデルを見る</h3>
+<p>QuantumBlackの公式記事では、業界知識と実装、共通ツール、利用者による採用、事業価値が結び付けられている。また、実務者の記事には、顧客と業務を設計し、出力を一緒に検証し、支援が終わっても継続できる能力を残すことが書かれている。<a aria-label="出典 S07" class="fde-cite" href="#source-s07">S07</a> <a aria-label="出典 S08" class="fde-cite" href="#source-s08">S08</a></p>
+<p>本記事ではこれを、FDE型のキャリアと重なる仕事のあり方として読む。ただし、参照した記事そのものは、特定のFDE職名や日本のFDE採用枠を確認する資料ではない。</p>
+<h3 id="consulting-model-part-4">5-4．職階と専門性を混同しない</h3>
+<p>コンサルタント、シニアコンサルタント、マネジャーといった職階の軸と、FDEとして何を担うかという役割の軸は、分けて考えるのがよい。各社の職階への対応は別途確認が必要である。</p>
+<p>自分のキャリアの問いは、たとえば次のように変わる。</p>
+<p>「昇格したら実装を離れるのか」ではなく、<strong>「責任が大きくなっても、技術判断・実装レビュー・導入成果を担う道を選べるか」</strong>。</p>
+<p>「FDEという名刺が手に入るか」ではなく、<strong>「顧客に近い場で、コードと設計に責任を持てる配置か」</strong>。</p>
+<h3 id="consulting-model-part-5">5-5．個別案件を、次の案件に生かす</h3>
+<p>コンサルティングでのFDE型キャリアを強くするには、納品に加えて、再利用可能な評価セット、連携部品、導入手順、設計上の判断基準を残したい。Cognitionの当事者講演も、顧客の課題を製品能力に結び付け、顧客側の発見を製品へ戻す循環を説明している。<a aria-label="出典 S09" class="fde-cite" href="#source-s09">S09</a></p>
+<p>ただし、再利用するのは権利・契約・社内承認の範囲内に限る。別顧客のコードやデータを流用することと、一般化した設計原則を再利用することは違う。</p>
+</div></section><section class="fde-chapter" id="capabilities" aria-labelledby="capabilities-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">06 / 独自の能力マップ</p><h2 id="capabilities-title">伸ばすべき8つの能力</h2></header><div class="fde-prose"><p>以下は、公開資料を参考にした本記事独自の能力マップであり、企業の公式採点表ではない。</p>
+<div aria-label="8つの能力と、実務で残す証拠" class="fde-cap-grid"><details class="fde-cap" data-fde-cap="" id="cap-c01"><summary><span class="fde-cap-head"><span class="fde-small-number">C01 / CAPABILITY</span><strong aria-level="3" role="heading">課題発見・業務理解</strong><span class="fde-cap-question">何をつくる前に、誰のどの判断・行動を変える必要があるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>業務の流れ、例外、決定者、現状の所要時間を確かめ、対象と対象外を決める。</dd><dt>証拠として残すもの</dt><dd><ul><li>課題の1枚説明</li><li>現状・目標・測定方法</li><li>利用者との確認記録</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s01">[S01]</a><a class="fde-cite" href="#source-s04">[S04]</a></p><a class="fde-inline-link" href="#inventory-c01">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c02"><summary><span class="fde-cap-head"><span class="fde-small-number">C02 / CAPABILITY</span><strong aria-level="3" role="heading">ソフトウェア実装・デバッグ</strong><span class="fde-cap-question">生成されたコードを含め、どこで壊れるか説明し、直せるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>Pythonなど一つの主要言語で、入力・処理・永続化・表示をつなぎ、テストとレビューを行う。</dd><dt>証拠として残すもの</dt><dd><ul><li>再現可能なコード</li><li>自動テスト</li><li>修正理由が分かる変更履歴</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s03">[S03]</a><a class="fde-cite" href="#source-s04">[S04]</a></p><a class="fde-inline-link" href="#inventory-c02">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c03"><summary><span class="fde-cap-head"><span class="fde-small-number">C03 / CAPABILITY</span><strong aria-level="3" role="heading">データと企業システムの接続</strong><span class="fde-cap-question">意味・品質・権限が異なるデータを、業務に使える形でつなげるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>ID、参照整合、更新方式、欠損、鮮度、アクセス境界を設計する。</dd><dt>証拠として残すもの</dt><dd><ul><li>データフロー</li><li>データ品質チェック</li><li>アクセス権限の設計</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s01">[S01]</a><a class="fde-cite" href="#source-s06">[S06]</a></p><a class="fde-inline-link" href="#inventory-c03">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c04"><summary><span class="fde-cap-head"><span class="fde-small-number">C04 / CAPABILITY</span><strong aria-level="3" role="heading">設計と技術判断</strong><span class="fde-cap-question">なぜその技術を使い、他を使わなかったか説明できるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>既存機能、通常のコード、ルール、機械学習、LLMの選択肢を比べる。</dd><dt>証拠として残すもの</dt><dd><ul><li>設計判断の記録</li><li>不採用案と理由</li><li>障害時の縮退方法</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s06">[S06]</a><a class="fde-cite" href="#source-s10">[S10]</a></p><a class="fde-inline-link" href="#inventory-c04">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c05"><summary><span class="fde-cap-head"><span class="fde-small-number">C05 / CAPABILITY</span><strong aria-level="3" role="heading">AI実装・評価</strong><span class="fde-cap-question">成功したデモではなく、失敗する条件と許容範囲を示せるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>業務別の評価例、回答根拠、ツールの正しさ、回答保留、人の確認、変更時の再評価を用意する。</dd><dt>証拠として残すもの</dt><dd><ul><li>評価データと基準</li><li>誤りの分類</li><li>変更前後の比較</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s04">[S04]</a><a class="fde-cite" href="#source-s11">[S11]</a></p><a class="fde-inline-link" href="#inventory-c05">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c06"><summary><span class="fde-cap-head"><span class="fde-small-number">C06 / CAPABILITY</span><strong aria-level="3" role="heading">本番運用・安全性</strong><span class="fde-cap-question">認証・監視・停止・復旧・引継ぎを含めて使い続けられるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>権限、秘密情報、監視、費用上限、リリースと切戻し、運用責任者を定める。</dd><dt>証拠として残すもの</dt><dd><ul><li>リリース確認表</li><li>運用手順書</li><li>障害・切戻しの練習記録</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s12">[S12]</a><a class="fde-cite" href="#source-s06">[S06]</a></p><a class="fde-inline-link" href="#inventory-c06">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c07"><summary><span class="fde-cap-head"><span class="fde-small-number">C07 / CAPABILITY</span><strong aria-level="3" role="heading">顧客協働・デリバリー</strong><span class="fde-cap-question">不確実性を共有しながら、合意した範囲を前に進められるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>短い確認サイクル、期待値調整、依存関係の管理、受入条件、早期エスカレーションを行う。</dd><dt>証拠として残すもの</dt><dd><ul><li>合意した受入条件</li><li>判断・変更の記録</li><li>利用者からのフィードバック</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s05">[S05]</a><a class="fde-cite" href="#source-s08">[S08]</a></p><a class="fde-inline-link" href="#inventory-c07">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details><details class="fde-cap" data-fde-cap="" id="cap-c08"><summary><span class="fde-cap-head"><span class="fde-small-number">C08 / CAPABILITY</span><strong aria-level="3" role="heading">再利用・プロダクトへの還元</strong><span class="fde-cap-question">一案件の学びを、次の顧客や共通製品に生かせるか。</span></span><span aria-hidden="true" class="fde-plus">+</span></summary><div class="fde-cap-body"><dl><dt>実務で取り組むこと</dt><dd>設定と処理を分離し、繰り返す課題を共通化して、製品改善や導入手順に還元する。</dd><dt>証拠として残すもの</dt><dd><ul><li>再利用可能な部品</li><li>次の案件での再現</li><li>共通機能への改善提案</li></ul></dd></dl><p class="fde-reference-label">関連資料 <a class="fde-cite" href="#source-s07">[S07]</a><a class="fde-cite" href="#source-s09">[S09]</a><a class="fde-cite" href="#source-s13">[S13]</a></p><a class="fde-inline-link" href="#inventory-c08">この能力の経験を整理する <span aria-hidden="true">↗</span></a></div></details></div><details class="fde-comparison"><summary>原稿の8領域を、一覧で比較する</summary><div aria-label="capabilitiesの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">capabilities：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">能力</th>
+<th scope="col">実務でできるようにすること</th>
+<th scope="col">証拠として残すもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">① 課題発見・業務理解</th>
+<td>現場の手順と例外を理解し、解く問題と測定方法を決める。</td>
+<td>課題の1枚説明、利用者との確認、現状指標。</td>
+</tr>
+<tr>
+<th scope="row">② ソフトウェア実装・デバッグ</th>
+<td>一連の機能を自分で実装・検証し、壊れた理由を追う。</td>
+<td>動くコード、テスト、レビュー、修正履歴。</td>
+</tr>
+<tr>
+<th scope="row">③ データと企業システムの接続</th>
+<td>データの意味・品質・鮮度・権限を扱う。</td>
+<td>データフロー、検証処理、権限の設計。</td>
+</tr>
+<tr>
+<th scope="row">④ 設計と技術判断</th>
+<td>既存機能、コード、モデルなどの選択肢を比較する。</td>
+<td>採用理由、不採用理由、前提、制約。</td>
+</tr>
+<tr>
+<th scope="row">⑤ AI実装・評価</th>
+<td>失敗する条件も含めて、業務上使えるかを検証する。</td>
+<td>評価例、判定基準、誤りの分類、変更時の比較。</td>
+</tr>
+<tr>
+<th scope="row">⑥ 本番運用・安全性</th>
+<td>リリース、監視、費用、停止、復旧、引継ぎを設計する。</td>
+<td>運用手順、切戻し手順、責任分担。</td>
+</tr>
+<tr>
+<th scope="row">⑦ 顧客協働・デリバリー</th>
+<td>期待値を合わせ、変更・依存関係・受入条件を管理する。</td>
+<td>意思決定記録、受入条件、利用者の反応。</td>
+</tr>
+<tr>
+<th scope="row">⑧ 再利用・製品への還元</th>
+<td>個別対応から共通の部品・知識・改善を取り出す。</td>
+<td>再利用部品、共通機能への提案、次の導入での再現。</td>
+</tr>
+</tbody>
+</table></div></details>
+<p>この整理の基礎として、実装・顧客対応の求人、設計・評価の公式資料、導入後の顧客能力を扱う実務記事を参照した。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a> <a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a> <a aria-label="出典 S08" class="fde-cite" href="#source-s08">S08</a> <a aria-label="出典 S10" class="fde-cite" href="#source-s10">S10</a> <a aria-label="出典 S11" class="fde-cite" href="#source-s11">S11</a> <a aria-label="出典 S12" class="fde-cite" href="#source-s12">S12</a></p>
+<h3 id="capabilities-part-1">特に差が出るのは「判断の理由」を説明する力</h3>
+<p>同じ動くアプリがあっても、次の問いに答えられるかで、示せる経験は変わる。</p>
+<p>「なぜその課題を優先したのか」「なぜLLMを使ったのか」「どこは通常のコードに残したのか」「どこまでの誤りを許容するのか」「何が起きたら止めるのか」「別の利用者にも使えるのか」。</p>
+<p>ここで前提になるのは、論点設定、構造化、仮説検証、事実と推測の区別といったコンサルティングの基礎だ。ただし、説明だけで完結させず、コード・利用結果・運用記録で検証するところまでつなげる。</p>
+<h3 id="capabilities-part-2">AIでコードを書くことと、エンジニアリングを担うこと</h3>
+<p>AIの支援を使って実装すること自体を、能力が低いことと見なす必要はない。本記事で重視するのは、出力されたコードの挙動を説明し、必要な検証を行い、問題があれば直せることだ。</p>
+<p>採用上の証拠としては、「AIで作りました」だけでなく、自分が設計した境界、見つけた欠陥、修正理由、テスト、運用上の判断を示したい。これは本記事の準備方針であり、特定企業の面接方式を示すものではない。</p>
+</div></section><section class="fde-chapter" id="learning" aria-labelledby="learning-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">07 / 学習の提案</p><h2 id="learning-title">何を学び、何を後回しにするか</h2></header><div class="fde-prose"><h3 id="learning-part-1">7-1．深い軸を一つ持ち、周辺をつなげる</h3>
+<p>データ基盤が強い人なら、データを軸に顧客の業務アプリまでつなぐ。Web開発が強い人なら、アプリを軸に業務と企業データを理解する。MLが強い人なら、評価・モデル運用を軸に利用者の仕事へつなぐ。</p>
+<p>本記事では、全分野を均等に学ぶより、<strong>深い専門領域を一つ持ち、その上で一連の機能をつなげる幅を増やす</strong>アプローチを勧める。</p>
+<p>データ・ML出身者の学習順序の例は、次のとおりだ。</p>
+<div aria-label="learningの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">learning：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">優先</th>
+<th scope="col">学ぶ／経験すること</th>
+<th scope="col">到達の目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">最初</th>
+<td>現在の言語・SQLでのテスト、例外処理、APIや画面との接続</td>
+<td>入力から結果表示まで、処理を追って修正できる。</td>
+</tr>
+<tr>
+<th scope="row">次</th>
+<td>認証・権限、設定管理、リリース、監視、切戻し</td>
+<td>自分以外の人が安全に使える状態を説明できる。</td>
+</tr>
+<tr>
+<th scope="row">並行</th>
+<td>業務理解、技術の選択理由、受入条件、利用者への説明</td>
+<td>実装と事業上の目的を結び付けられる。</td>
+</tr>
+<tr>
+<th scope="row">その後</th>
+<td>LLMの評価、根拠提示、権限に沿った検索、限定的なツール実行</td>
+<td>成功例と失敗例を比較し、危険な処理を止められる。</td>
+</tr>
+<tr>
+<th scope="row">積み上げ</th>
+<td>共通化、複数案件での再現、製品改善への還元</td>
+<td>一案件の経験を、次の仕事に使える形で残せる。</td>
+</tr>
+</tbody>
+</table></div>
+<p>ここでいうAPIや画面は学習対象の例で、すべての案件に別のWeb基盤を増設すべきという意味ではない。既存プラットフォームが必要な認証や実行環境を満たしているなら、それを使う選択もある。</p>
+<h3 id="learning-part-2">7-2．資格は土台の補強。実装経験の代わりではない</h3>
+<p>少なくとも今回確認したFDE求人では、共通の「FDE資格」より、顧客に関わる技術経験や本番実装が具体的に記載されている。<a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a> <a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a></p>
+<p>資格を否定する必要はない。たとえばデータ基盤を専門にするなら、その製品やクラウドの学習は仕事の基礎を補強できる。ただし、合格証だけでは、顧客との課題設定、本番での不具合対応、利用者の定着を示せない。</p>
+<p>本記事の推奨は、<strong>現在の専門に関係する資格学習を進めつつ、同じ領域で一つの実装を深くすること</strong>だ。新しいクラウド、フレームワーク、エージェント製品を同時に増やしすぎない。</p>
+<h3 id="learning-part-3">7-3．英語は「全FDEの共通条件」ではなく、応募先の条件</h3>
+<p>海外企業の日本求人でも、日本語だけでよいとは限らない。東京のOpenAI求人は、英日双方の流暢さ、英語の応募書類、両言語での面接を明記している。<a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a></p>
+<p>外資系FDEを目指す場合、英語は読むだけでなく、顧客の問題、設計上の比較、不具合、判断依頼を短く説明できるかで練習したい。</p>
+<p>一方、資格や現在の仕事の評価が近い場合、すべてを同時に最優先にする必要はない。順番は調整できる。ただし、目標求人の言語要件そのものが消えるわけではない。</p>
+</div></section><section class="fde-chapter" id="career-routes" aria-labelledby="career-routes-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">08 / キャリアの選択肢</p><h2 id="career-routes-title">FDEを目指す三つのルート</h2></header><div class="fde-prose"><p>以下はキャリアを比較するための提案であり、各社の採用可能性を予測するものではない。</p>
+<div aria-label="career-routesの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">career-routes：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">ルート</th>
+<th scope="col">つくりやすい経験</th>
+<th scope="col">確認すべき条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">現職でFDE型の担当範囲をつくる</th>
+<td>顧客課題を理解した状態で、小さな実装から導入まで担当する</td>
+<td>コーディング時間、技術レビュー、運用までの関与、成果記録へのアクセス。</td>
+</tr>
+<tr>
+<th scope="row">製品・AI企業の正式FDEに応募する</th>
+<td>顧客の問題を、特定の製品やモデルの活用・改善につなぐ</td>
+<td>本番実装、言語、出張、担当顧客数、製品チームとの関係、個別の採用条件。</td>
+</tr>
+<tr>
+<th scope="row">隣接職種を通じて幅を広げる</th>
+<td>顧客技術支援、ソリューション開発、プロフェッショナルサービス、技術デリバリーなど</td>
+<td>その職種が実際にどこまでコード・導入・定着を担うか。</td>
+</tr>
+</tbody>
+</table></div>
+<p>特に現職でのルートは、転職を先に決めなくても始められる。相談するときは「FDEになりたい」だけでなく、次のように担当範囲を提案する。</p>
+<blockquote>
+<p>顧客課題を一つに絞り、要件確認から試作、評価、導入まで担当したい。技術レビューと運用担当者との確認を組み込み、利用結果も記録したい。</p>
+</blockquote>
+<p>これは役割拡大の相談文例であり、勤務先の承認や配属を保証するものではない。</p>
+</div></section><section class="fde-chapter" id="roadmap" aria-labelledby="roadmap-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">09 / 学習計画の例</p><h2 id="roadmap-title">ロードマップ——期間より、得られた証拠で進む</h2></header><div class="fde-prose"><p>以下の期間は学習計画の例であり、その期間で採用水準に届くことを保証しない。仕事の負荷や既存経験に応じて調整し、各段階の完了条件を優先する。</p>
+<ol class="fde-roadmap"><li><span class="fde-step-number">01</span><div><p class="fde-step-period">0〜4週 <span>／ 計画例</span></p><h3>志望する仕事の要件を読み、一つの業務課題と対象範囲を決める</h3><p><strong>次に進む証拠</strong>課題、利用者、現状、制約、成功条件を1枚で説明できる。</p></div></li><li><span class="fde-step-number">02</span><div><p class="fde-step-period">5〜8週 <span>／ 計画例</span></p><h3>入力から出力までつながる最小機能をつくる</h3><p><strong>次に進む証拠</strong>コード、基本テスト、実演、設計理由がそろう。</p></div></li><li><span class="fde-step-number">03</span><div><p class="fde-step-period">9〜12週 <span>／ 計画例</span></p><h3>評価、権限、監視、費用、停止・復旧、利用者確認を加える</h3><p><strong>次に進む証拠</strong>失敗例とその対応、利用者の反応、運用上の課題が記録されている。</p></div></li><li><span class="fde-step-number">04</span><div><p class="fde-step-period">3〜6か月 <span>／ 計画例</span></p><h3>許可された業務環境での導入に関わり、実際の使われ方を観察する</h3><p><strong>次に進む証拠</strong>自分の責任範囲、利用状況、制約を含む結果の説明。導入機会がなければ「未経験」と残す。</p></div></li><li><span class="fde-step-number">05</span><div><p class="fde-step-period">6〜12か月 <span>／ 計画例</span></p><h3>別のユースケースでも再現し、部品・手順を共通化する</h3><p><strong>次に進む証拠</strong>一度の成功例だけでない説明と、次の導入を楽にした証拠。</p></div></li></ol><details class="fde-comparison"><summary>期間と完了条件を一覧で読む</summary><div aria-label="roadmapの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">roadmap：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">フェーズ</th>
+<th scope="col">取り組むこと</th>
+<th scope="col">次に進むための証拠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">0〜4週</th>
+<td>志望する仕事の要件を読み、一つの業務課題と対象範囲を決める</td>
+<td>課題、利用者、現状、制約、成功条件を1枚で説明できる。</td>
+</tr>
+<tr>
+<th scope="row">5〜8週</th>
+<td>入力から出力までつながる最小機能をつくる</td>
+<td>コード、基本テスト、実演、設計理由がそろう。</td>
+</tr>
+<tr>
+<th scope="row">9〜12週</th>
+<td>評価、権限、監視、費用、停止・復旧、利用者確認を加える</td>
+<td>失敗例とその対応、利用者の反応、運用上の課題が記録されている。</td>
+</tr>
+<tr>
+<th scope="row">3〜6か月</th>
+<td>許可された業務環境での導入に関わり、実際の使われ方を観察する</td>
+<td>自分の責任範囲、利用状況、制約を含む結果の説明。導入機会がなければ「未経験」と残す。</td>
+</tr>
+<tr>
+<th scope="row">6〜12か月</th>
+<td>別のユースケースでも再現し、部品・手順を共通化する</td>
+<td>一度の成功例だけでない説明と、次の導入を楽にした証拠。</td>
+</tr>
+</tbody>
+</table></div></details>
+<p><strong>「学習デモを公開した」と「企業の本番運用を担当した」は別の実績として扱う。</strong> デモは設計や実装を示せるが、本番の関係者調整、運用制約、利用継続まで証明するものではない。</p>
+<h3 id="roadmap-part-1">自分の現在地を調べる方法</h3>
+<p>能力ごとに、理解した／作った／他者が使った／本番で担当した／別の場面で再現した、という経験の違いを書き出す。これは合否を決めるスコアではない。</p>
+<p>「できるつもり」と「実際の証拠がある」を分け、不足している証拠を次の仕事や学習でつくるために使う。</p>
+</div></section><section class="fde-chapter" id="case-study" aria-labelledby="case-study-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">10 / 架空ケース・設計案</p><h2 id="case-study-title">データ・ML出身者向けの実装テーマ</h2></header><div class="fde-prose"><aside class="fde-caution"><strong>FICTIONAL CASE / 架空の設計案</strong><p>学習用の合成データを前提としています。本人の顧客実績・本番運用実績・達成済みの効果ではありません。</p></aside><h3 id="case-study-part-1">架空ケース：データ品質オペレーション支援</h3>
+<p>企業のマスターデータの申請に、不備や重複があり、担当者が確認・差戻しに時間を使っているとする。AIで登録全体を自動化するのではなく、まずは<strong>不備の特定と、担当者が修正すべき内容の理解</strong>を支援する。</p>
+<p>以下は学習用の設計案で、特定の顧客案件から再現したものではない。商品・取引先などの合成データを、新たに設計して使う。</p>
+<div aria-label="case-studyの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">case-study：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">機能</th>
+<th scope="col">設計案</th>
+<th scope="col">その設計を選ぶ理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">入力検証</th>
+<td>Python／SQLで必須、型、桁、重複、参照関係を確認</td>
+<td>決められたルールを、生成モデルの推測に任せない。</td>
+</tr>
+<tr>
+<th scope="row">ルールの参照</th>
+<td>許可されたルール文書だけを取得する</td>
+<td>利用者が参照できない文書を回答に混ぜない。</td>
+</tr>
+<tr>
+<th scope="row">不備の説明</th>
+<td>検証結果とルールの根拠を使って説明案を作る</td>
+<td>自由に正解を作らせず、説明対象を限定する。</td>
+</tr>
+<tr>
+<th scope="row">修正候補</th>
+<td>元の値と候補の差分を画面に表示する</td>
+<td>利用者が変更内容を確認できるようにする。</td>
+</tr>
+<tr>
+<th scope="row">承認・反映</th>
+<td>初期版は提案まで。反映する版では人の承認と限定した操作を設ける</td>
+<td>自律的な本番書込みを最初から目標にしない。</td>
+</tr>
+<tr>
+<th scope="row">運用</th>
+<td>権限、監査記録、利用制限、エラー通知、切戻しを設ける</td>
+<td>継続利用と事故対応を、機能の外に放置しない。</td>
+</tr>
+</tbody>
+</table></div>
+<p>必要な構成の一例は、次のようになる。</p>
+<pre aria-label="原稿の処理のつながり。概念整理であり本番設計ではありません。" tabindex="0"><code class="language-text">申請入力
+  → 認証・利用権限の確認
+  → 決定的なデータ検証
+  → 許可されたルールの参照
+  → LLMによる説明案（不要なら通常のテンプレート）
+  → 根拠・差分の表示
+  → 人の確認
+  → 承認された処理／記録
+
+周囲に置くもの：テスト、AI評価、監査、監視、費用制限、停止・復旧手順
+</code></pre>
+<p>これは学習範囲の概念図であり、そのまま本番投入できるセキュリティ設計ではない。利用するプラットフォーム、データの性質、責任分界に合わせたレビューが必要になる。</p>
+<h3 id="case-study-part-2">AI評価では何を見るか</h3>
+<p>OpenAIの評価ガイドは、業務に即した評価例、継続的な評価、人による確認との整合を重視している。本記事では、この考え方を次のチェックに落とす。<a aria-label="出典 S11" class="fde-cite" href="#source-s11">S11</a></p>
+<div aria-label="case-studyの表 2。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">case-study：原稿の比較・整理 2</caption>
+<thead>
+<tr>
+<th scope="col">観点</th>
+<th scope="col">学習ケースで試すこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">検証結果との整合</th>
+<td>正しい入力に、存在しないエラーを追加しないか。</td>
+</tr>
+<tr>
+<th scope="row">根拠</th>
+<td>実在するルールを示し、誤った条項を作らないか。</td>
+</tr>
+<tr>
+<th scope="row">権限</th>
+<td>閲覧権限のないデータや文書を出さないか。</td>
+</tr>
+<tr>
+<th scope="row">保留</th>
+<td>情報不足のとき、決めつけず確認を促せるか。</td>
+</tr>
+<tr>
+<th scope="row">操作</th>
+<td>承認していない変更を実行しないか。</td>
+</tr>
+<tr>
+<th scope="row">異常系</th>
+<td>タイムアウト、空の検索結果、形式不正、矛盾した文書を扱えるか。</td>
+</tr>
+<tr>
+<th scope="row">攻撃的な入力</th>
+<td>文書や入力に含まれる不正な指示に従わないか。</td>
+</tr>
+<tr>
+<th scope="row">費用・速度</th>
+<td>業務上許容できる応答時間と実行費用か。</td>
+</tr>
+</tbody>
+</table></div>
+<p>評価は一度の合格で終わらせず、コード、モデル、プロンプト、参照文書、権限設定が変わったときに見直す。評価専用データと開発時に調整した例を区別し、自動採点だけで判断しない。</p>
+<p>また、AIリスク管理はモデルの回答だけに限らない。NISTの枠組みは、設計・開発・利用・評価に信頼性を組み込む参考資料として位置づける。個別の安全性や法令対応が自動的に保証されるわけではない。<a aria-label="出典 S12" class="fde-cite" href="#source-s12">S12</a></p>
+<h3 id="case-study-part-3">効果をどう記録するか</h3>
+<p>この学習ケースでは、「処理時間」「担当者が確認する時間」「差戻し率」「誤った説明の件数」「承認されなかった提案」「継続利用」などを測定候補にする。</p>
+<p>ただし、実測していない削減率や売上効果は書かない。対象件数、対象期間、入力の難しさ、業務ルール変更の有無を合わせて記録する。</p>
+<p>合成データで速く動いたことは、実業務全体の生産性が上がった証拠にはならない。人の確認が増えた場合も含めて、差し引きの効果を見る。</p>
+</div></section><section class="fde-chapter" id="portfolio" aria-labelledby="portfolio-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">11 / 準備の提案</p><h2 id="portfolio-title">実績・ポートフォリオ・面接で示すもの</h2></header><div class="fde-prose"><p>本記事では、作品数を増やすより、次の六つがつながった一つの事例を勧める。</p>
+<div aria-label="portfolioの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">portfolio：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">成果物</th>
+<th scope="col">説明する内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">課題の1枚説明</th>
+<td>利用者、困りごと、対象範囲、成功条件。</td>
+</tr>
+<tr>
+<th scope="row">設計と判断</th>
+<td>構成、採用理由、不採用案、データ・権限の境界。</td>
+</tr>
+<tr>
+<th scope="row">実装</th>
+<td>動くコード、主要な処理、テスト、変更履歴。</td>
+</tr>
+<tr>
+<th scope="row">評価</th>
+<td>通常・例外・失敗の例、判定基準、改善前後。</td>
+</tr>
+<tr>
+<th scope="row">導入・運用</th>
+<td>リリース、監視、費用、切戻し、引継ぎ。</td>
+</tr>
+<tr>
+<th scope="row">結果と再利用</th>
+<td>誰が使ったか、何が変わったか、残る課題、次に使えるもの。</td>
+</tr>
+</tbody>
+</table></div>
+<p>実績を説明するときは、チーム全体の成果と自分の担当範囲を分ける。「この案件にいました」ではなく、<strong>何を判断し、何を書き、どの合意や障害を解決したか</strong>を具体化する。</p>
+<p>面接準備では、コーディング、設計、曖昧な業務課題の分解、顧客への説明、失敗からの改善を練習対象にするとよい。ただし、実際の選考形式は応募企業の最新案内で確認する。上の練習項目は、確認済みの面接問題ではない。</p>
+<h3 id="portfolio-part-1">公開物と、社内で証明する実績は分ける</h3>
+<p>公開用には、合成データや適切に利用できる公開データを使う。企業や顧客のデータ、コード、画面、設計、ログは、名前を消しただけで公開可能になるわけではない。</p>
+<p>社内の評価に使う記録と、公開ポートフォリオは別管理にする。公開版は架空の業務・スキーマから新しく作り直し、所属先や顧客の資産を使用する場合は必要な許可を確認する。これは本記事の安全な制作方針であり、個別契約の法的判断ではない。</p>
+</div></section><section class="fde-chapter" id="role-questions" aria-labelledby="role-questions-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">12 / 確認のための質問例</p><h2 id="role-questions-title">求人や配属を見極めるための質問</h2></header><div class="fde-prose"><p>FDEという名前があることより、実際の仕事を確認する。以下は応募・配属面談で使う質問例であり、企業の評価ランキングではない。</p>
+<div aria-label="role-questionsの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">role-questions：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">確認したいこと</th>
+<th scope="col">質問例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">課題探索</th>
+<td>仕様が固まる前から、顧客の問題設定に関われるか。</td>
+</tr>
+<tr>
+<th scope="row">実装責任</th>
+<td>自分がコードを書く・レビューする範囲はどこか。</td>
+</tr>
+<tr>
+<th scope="row">本番への関与</th>
+<td>デモの後、リリース・受入・運用のどこまで担当するか。</td>
+</tr>
+<tr>
+<th scope="row">成果の見方</th>
+<td>利用状況や業務上の変化は、どのように確認するか。</td>
+</tr>
+<tr>
+<th scope="row">製品への還元</th>
+<td>現場の発見を共通製品・資産に戻す仕組みはあるか。</td>
+</tr>
+<tr>
+<th scope="row">技術的な支援</th>
+<td>設計・コード・セキュリティのレビューを誰が行うか。</td>
+</tr>
+<tr>
+<th scope="row">働き方</th>
+<td>同時に何顧客を担当し、出張・時間外対応・引継ぎはどうなるか。</td>
+</tr>
+<tr>
+<th scope="row">キャリア</th>
+<td>実装を継続する専門職としての評価・成長経路はあるか。</td>
+</tr>
+</tbody>
+</table></div>
+<p>注意したいのは、本人の裁量や支援がないのに結果だけを背負わせる配置、試作を繰り返して本番に関与できない配置、個別対応だけが蓄積して共通化の機会がない配置だ。</p>
+<p>また、FDEはすべての人に対する上位互換ではない。長期にわたり共通基盤を深めたい、純粋に研究をしたい、組織運営を主軸にしたい、といった志向もある。ここでは、<strong>顧客との対話と実装を往復し、曖昧さを引き受ける仕事を続けたいか</strong>を、選択の基準にしたい。</p>
+</div></section><section class="fde-chapter" id="conclusion" aria-labelledby="conclusion-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">13 / 本稿の提案</p><h2 id="conclusion-title">キャリア戦略としてのまとめ</h2></header><div class="fde-prose"><p>データ・ML・技術コンサルティングの経験からFDEを目指すなら、過去の専門を捨てて別人になる必要はない。</p>
+<p>本記事で勧める軸は、次のとおりだ。</p>
+<blockquote>
+<p><strong>データとAIを専門に、顧客の課題を自ら実装し、本番で使われる状態へつなぎ、その学びを次の顧客や製品に生かす。</strong></p>
+</blockquote>
+<p>論点設定と構造化だけでも、コーディングだけでも、技術説明だけでも、これを完結させることはできない。専門性を持ったうえで、その前後にある仕事へ責任を広げていく。</p>
+<p>そのための次の一歩は、FDEという名札を待つことではない。<strong>顧客の問題を一つ選び、どこまで担当するかを合意し、実装・検証・利用・引継ぎまでつながる経験を一つつくること</strong>だ。</p>
+</div></section><section class="fde-chapter" id="reading" aria-labelledby="reading-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">14 / 参考資料の読み分け</p><h2 id="reading-title">読む順序と、関連ページ</h2></header><div class="fde-prose"><p>最初に、自分が興味を持つFDE求人を読み、必要な能力を抽出する。次に、実務記事から仕事の進め方を知り、評価・設計の資料を使って実装を深める。</p>
+<div aria-label="readingの表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">reading：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">読む目的</th>
+<th scope="col">資料</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">職務と要求を知る</th>
+<td>Palantir、OpenAI、Anthropicの公式求人。<a aria-label="出典 S01" class="fde-cite" href="#source-s01">S01</a> <a aria-label="出典 S03" class="fde-cite" href="#source-s03">S03</a> <a aria-label="出典 S04" class="fde-cite" href="#source-s04">S04</a></td>
+</tr>
+<tr>
+<th scope="row">コンサルティングとの接続を知る</th>
+<td>Deloitteの公式発表、QuantumBlackの実務記事。<a aria-label="出典 S06" class="fde-cite" href="#source-s06">S06</a> <a aria-label="出典 S07" class="fde-cite" href="#source-s07">S07</a> <a aria-label="出典 S08" class="fde-cite" href="#source-s08">S08</a></td>
+</tr>
+<tr>
+<th scope="row">現場と製品の往復を理解する</th>
+<td>Cognitionの当事者講演。<a aria-label="出典 S09" class="fde-cite" href="#source-s09">S09</a></td>
+</tr>
+<tr>
+<th scope="row">AIの設計・評価を深める</th>
+<td>Building effective agents、Evaluation best practices。<a aria-label="出典 S10" class="fde-cite" href="#source-s10">S10</a> <a aria-label="出典 S11" class="fde-cite" href="#source-s11">S11</a></td>
+</tr>
+<tr>
+<th scope="row">技術とプロダクトの判断を結び付ける</th>
+<td>The Product-Minded Software Engineer。仕様の理由や利用者の結果を考えるための、著者本人の実務論として読む。<a aria-label="出典 S13" class="fde-cite" href="#source-s13">S13</a></td>
+</tr>
+<tr>
+<th scope="row">リスク管理を補強する</th>
+<td>NIST AI Risk Management Framework。<a aria-label="出典 S12" class="fde-cite" href="#source-s12">S12</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>サイト内では、<strong>Consulting Foundations</strong>を論点・構造化・合意形成の基礎、<strong>Engineering &amp; Data Stack</strong>を技術の地図、Snowflakeなどの学習ページを専門領域の補強として関連付ける。リンク先は実在するページを確認してから設定する。</p>
+<nav class="fde-related-cards" aria-label="関連する学習ページ"><a href={route('thoughts/work-career/consulting-foundations/')}><small>THINK / PRACTICE</small><strong>Consulting Foundations</strong><span>問い・構造化・合意形成の基礎に戻る ↗</span></a><a href={route('topics/engineering/')}><small>LEARN / BUILD</small><strong>Engineering &amp; Data Stack</strong><span>実装を支える技術の地図へ ↗</span></a><a href={route('topics/snowflake/')}><small>LEARN / SPECIALTY</small><strong>Snowflake</strong><span>データ基盤の専門性を深める ↗</span></a></nav></div></section><section class="fde-chapter" id="inventory" aria-labelledby="inventory-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">WORKSHEET / 経験の棚卸し</p><h2 id="inventory-title">点数ではなく、示せる証拠を整理する。</h2><p>原稿の経験棚卸しを、記入できる形にしました。経験の種類は独立して確認し、合否や採用可能性のスコアには変換しません。</p></header><div class="fde-privacy"><strong>記入内容は、このページ内だけで扱います。</strong><p>この記入機能からサーバーへ送信せず、ブラウザーへの自動保存もしません。再読み込み・ページ移動で消えます。残す場合は「Markdownを書き出す」を使ってください。顧客名・機密情報は記入しないでください。</p></div><form class="fde-inventory" id="fde-inventory-form" autocomplete="off" aria-label="FDE能力ごとの経験棚卸し"><details class="fde-inventory-row" id="inventory-c01" data-fde-inventory data-capability="課題発見・業務理解"><summary><span><span class="fde-small-number">C01</span> <strong>課題発見・業務理解</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c01-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c01-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c01-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c01-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c01-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c01-evidence">示せる証拠・自分が担当したこと<textarea id="c01-evidence" name="c01-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c01-next">次につくる証拠<textarea id="c01-next" name="c01-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c02" data-fde-inventory data-capability="ソフトウェア実装・デバッグ"><summary><span><span class="fde-small-number">C02</span> <strong>ソフトウェア実装・デバッグ</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c02-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c02-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c02-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c02-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c02-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c02-evidence">示せる証拠・自分が担当したこと<textarea id="c02-evidence" name="c02-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c02-next">次につくる証拠<textarea id="c02-next" name="c02-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c03" data-fde-inventory data-capability="データと企業システムの接続"><summary><span><span class="fde-small-number">C03</span> <strong>データと企業システムの接続</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c03-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c03-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c03-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c03-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c03-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c03-evidence">示せる証拠・自分が担当したこと<textarea id="c03-evidence" name="c03-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c03-next">次につくる証拠<textarea id="c03-next" name="c03-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c04" data-fde-inventory data-capability="設計と技術判断"><summary><span><span class="fde-small-number">C04</span> <strong>設計と技術判断</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c04-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c04-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c04-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c04-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c04-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c04-evidence">示せる証拠・自分が担当したこと<textarea id="c04-evidence" name="c04-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c04-next">次につくる証拠<textarea id="c04-next" name="c04-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c05" data-fde-inventory data-capability="AI実装・評価"><summary><span><span class="fde-small-number">C05</span> <strong>AI実装・評価</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c05-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c05-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c05-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c05-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c05-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c05-evidence">示せる証拠・自分が担当したこと<textarea id="c05-evidence" name="c05-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c05-next">次につくる証拠<textarea id="c05-next" name="c05-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c06" data-fde-inventory data-capability="本番運用・安全性"><summary><span><span class="fde-small-number">C06</span> <strong>本番運用・安全性</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c06-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c06-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c06-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c06-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c06-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c06-evidence">示せる証拠・自分が担当したこと<textarea id="c06-evidence" name="c06-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c06-next">次につくる証拠<textarea id="c06-next" name="c06-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c07" data-fde-inventory data-capability="顧客協働・デリバリー"><summary><span><span class="fde-small-number">C07</span> <strong>顧客協働・デリバリー</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c07-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c07-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c07-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c07-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c07-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c07-evidence">示せる証拠・自分が担当したこと<textarea id="c07-evidence" name="c07-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c07-next">次につくる証拠<textarea id="c07-next" name="c07-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><details class="fde-inventory-row" id="inventory-c08" data-fde-inventory data-capability="再利用・プロダクトへの還元"><summary><span><span class="fde-small-number">C08</span> <strong>再利用・プロダクトへの還元</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-inventory-body"><fieldset><legend>経験があり、説明できるものを選ぶ（複数選択・採点なし）</legend><label><input type="checkbox" name="c08-experience" value="説明できる" /><span>説明できる</span></label><label><input type="checkbox" name="c08-experience" value="自分で作った" /><span>自分で作った</span></label><label><input type="checkbox" name="c08-experience" value="他者が試した" /><span>他者が試した</span></label><label><input type="checkbox" name="c08-experience" value="許可された本番で担当した" /><span>許可された本番で担当した</span></label><label><input type="checkbox" name="c08-experience" value="別の場面で再現した" /><span>別の場面で再現した</span></label></fieldset><label class="fde-field" for="c08-evidence">示せる証拠・自分が担当したこと<textarea id="c08-evidence" name="c08-evidence" rows="2" maxlength="1600" data-fde-evidence placeholder="例：合成データのデモで異常系テストを作成。本番導入は未経験。"></textarea></label><label class="fde-field" for="c08-next">次につくる証拠<textarea id="c08-next" name="c08-next" rows="2" maxlength="1000" data-fde-next placeholder="例：停止・切戻しの手順を学習環境で試し、結果を記録する。"></textarea></label></div></details><div class="fde-actions" data-fde-js hidden><button type="button" class="fde-button fde-button-primary" data-fde-export>Markdownを書き出す <span aria-hidden="true">↓</span></button><button type="button" class="fde-button" data-fde-reset>記入内容をリセット</button></div><p class="fde-form-note">これは学習・振り返りの補助です。実務記録の保管や、企業の評価システムを置き換えるものではありません。</p></form></section><section class="fde-chapter" id="templates" aria-labelledby="templates-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">TOOLKIT / 6つの実務テンプレート</p><h2 id="templates-title">考え方を、次の仕事に持ち込む。</h2><p>原稿付属の帳票例です。社内標準・責任分界・承認手続きに合わせて使います。企業公式の必須帳票・認定条件ではありません。</p></header><div class="fde-templates"><details class="fde-template" id="template-1"><summary><span><span class="fde-small-number">T01</span><strong role="heading" aria-level="3">課題の1枚説明</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-1" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><div aria-label="template-1の表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">template-1：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">項目</th>
+<th scope="col">記入欄</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">誰が、いつ困るか</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">現在の業務・判断</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">何を変えたいか</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">現状の測定値と測定方法</th>
+<td>未測定なら「未測定」と記す。</td>
+</tr>
+<tr>
+<th scope="row">今回の対象／対象外</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">非AI・既存機能による代替案</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">成功・失敗・中止の条件</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">業務上の決定者</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">技術責任者／レビュー担当者</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">運用責任者</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">データの利用条件・権限</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">最大の不確実性</th>
+<td></td>
+</tr>
+<tr>
+<th scope="row">次に確かめること</th>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</div><textarea id="template-md-1" data-fde-template-source hidden readonly>## 1．課題の1枚説明
+
+| 項目 | 記入欄 |
+|---|---|
+| 誰が、いつ困るか | |
+| 現在の業務・判断 | |
+| 何を変えたいか | |
+| 現状の測定値と測定方法 | 未測定なら「未測定」と記す。 |
+| 今回の対象／対象外 | |
+| 非AI・既存機能による代替案 | |
+| 成功・失敗・中止の条件 | |
+| 業務上の決定者 | |
+| 技術責任者／レビュー担当者 | |
+| 運用責任者 | |
+| データの利用条件・権限 | |
+| 最大の不確実性 | |
+| 次に確かめること | |</textarea></div></details><details class="fde-template" id="template-2"><summary><span><span class="fde-small-number">T02</span><strong role="heading" aria-level="3">設計判断の記録</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-2" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><p><strong>今回決めること：</strong></p>
+<p><strong>前提・制約：</strong></p>
+<div aria-label="template-2の表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">template-2：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">候補</th>
+<th scope="col">業務への適合</th>
+<th scope="col">品質・安全性</th>
+<th scope="col">実装・運用負荷</th>
+<th scope="col">費用と不確実性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">既存機能／通常のコード</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">提案するAI活用</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">その他の選択肢</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>採用案と理由：</strong></p>
+<p><strong>不採用案と理由：</strong></p>
+<p><strong>判断を見直す条件：</strong></p>
+<p><strong>承認・確認した人と日付：</strong></p>
+</div><textarea id="template-md-2" data-fde-template-source hidden readonly>## 2．設計判断の記録
+
+**今回決めること：**
+
+**前提・制約：**
+
+| 候補 | 業務への適合 | 品質・安全性 | 実装・運用負荷 | 費用と不確実性 |
+|---|---|---|---|---|
+| 既存機能／通常のコード | | | | |
+| 提案するAI活用 | | | | |
+| その他の選択肢 | | | | |
+
+**採用案と理由：**
+
+**不採用案と理由：**
+
+**判断を見直す条件：**
+
+**承認・確認した人と日付：**</textarea></div></details><details class="fde-template" id="template-3"><summary><span><span class="fde-small-number">T03</span><strong role="heading" aria-level="3">AI評価表</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-3" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><div aria-label="template-3の表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">template-3：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">ケースID</th>
+<th scope="col">業務場面</th>
+<th scope="col">入力区分</th>
+<th scope="col">期待する動作</th>
+<th scope="col">禁止する動作</th>
+<th scope="col">判断根拠</th>
+<th scope="col">結果</th>
+<th scope="col">要対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">E001</th>
+<td></td>
+<td>通常</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">E002</th>
+<td></td>
+<td>境界・欠損</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">E003</th>
+<td></td>
+<td>権限外</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">E004</th>
+<td></td>
+<td>矛盾した情報</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">E005</th>
+<td></td>
+<td>不正な指示</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">E006</th>
+<td></td>
+<td>依存先の障害</td>
+<td></td>
+<td></td>
+<td></td>
+<td>未実施</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>調整に使った例と最終評価の例を区別します。データの由来、モデル・コード・プロンプト・参照文書・権限の版を記録します。自動採点と人の確認が食い違った場合は理由を調べます。</p>
+</div><textarea id="template-md-3" data-fde-template-source hidden readonly>## 3．AI評価表
+
+| ケースID | 業務場面 | 入力区分 | 期待する動作 | 禁止する動作 | 判断根拠 | 結果 | 要対応 |
+|---|---|---|---|---|---|---|---|
+| E001 | | 通常 | | | | 未実施 | |
+| E002 | | 境界・欠損 | | | | 未実施 | |
+| E003 | | 権限外 | | | | 未実施 | |
+| E004 | | 矛盾した情報 | | | | 未実施 | |
+| E005 | | 不正な指示 | | | | 未実施 | |
+| E006 | | 依存先の障害 | | | | 未実施 | |
+
+調整に使った例と最終評価の例を区別します。データの由来、モデル・コード・プロンプト・参照文書・権限の版を記録します。自動採点と人の確認が食い違った場合は理由を調べます。</textarea></div></details><details class="fde-template" id="template-4"><summary><span><span class="fde-small-number">T04</span><strong role="heading" aria-level="3">リリース前に確認すること</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-4" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><ul>
+<li>利用者と受入条件を確認したか。</li>
+<li>通常系と異常系のテストがあるか。</li>
+<li>AI部分の評価を実施し、残る問題を記録したか。</li>
+<li>認証・データ権限・秘密情報の扱いを確認したか。</li>
+<li>書込みや外部送信の権限と、人の承認の位置は適切か。</li>
+<li>監査・運用ログに、不要な機密情報を残さない設計か。</li>
+<li>応答時間と費用の上限を、測定・監視できるか。</li>
+<li>タイムアウト、重複実行、途中失敗を扱えるか。</li>
+<li>止め方、切戻し、代替手順を試したか。</li>
+<li>問い合わせ・障害の窓口と運用責任者が決まっているか。</li>
+<li>既知の限界を利用者と共有したか。</li>
+<li>公開してよいものと内部に残すものを分けたか。</li>
+</ul>
+<p>これは網羅的なセキュリティ・法令適合チェックではありません。関係部門による必要な審査を置き換えません。</p>
+</div><textarea id="template-md-4" data-fde-template-source hidden readonly>## 4．リリース前に確認すること
+
+- 利用者と受入条件を確認したか。
+- 通常系と異常系のテストがあるか。
+- AI部分の評価を実施し、残る問題を記録したか。
+- 認証・データ権限・秘密情報の扱いを確認したか。
+- 書込みや外部送信の権限と、人の承認の位置は適切か。
+- 監査・運用ログに、不要な機密情報を残さない設計か。
+- 応答時間と費用の上限を、測定・監視できるか。
+- タイムアウト、重複実行、途中失敗を扱えるか。
+- 止め方、切戻し、代替手順を試したか。
+- 問い合わせ・障害の窓口と運用責任者が決まっているか。
+- 既知の限界を利用者と共有したか。
+- 公開してよいものと内部に残すものを分けたか。
+
+これは網羅的なセキュリティ・法令適合チェックではありません。関係部門による必要な審査を置き換えません。</textarea></div></details><details class="fde-template" id="template-5"><summary><span><span class="fde-small-number">T05</span><strong role="heading" aria-level="3">結果・学び・再利用の記録</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-5" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><p><strong>期間／対象利用者／件数：</strong></p>
+<p><strong>導入前の値と、その根拠：</strong></p>
+<p><strong>導入後の値と、その根拠：</strong></p>
+<p><strong>条件の変化・比較の限界：</strong></p>
+<p><strong>自分が担当した判断・実装・調整：</strong></p>
+<p><strong>チーム・顧客が担当したこと：</strong></p>
+<p><strong>うまくいかなかった点：</strong></p>
+<p><strong>次回に再利用できる部品・判断基準・手順：</strong></p>
+<p><strong>再利用の権利・許可：</strong></p>
+<p><strong>公開可能な内容／社内限定の内容：</strong></p>
+</div><textarea id="template-md-5" data-fde-template-source hidden readonly>## 5．結果・学び・再利用の記録
+
+**期間／対象利用者／件数：**
+
+**導入前の値と、その根拠：**
+
+**導入後の値と、その根拠：**
+
+**条件の変化・比較の限界：**
+
+**自分が担当した判断・実装・調整：**
+
+**チーム・顧客が担当したこと：**
+
+**うまくいかなかった点：**
+
+**次回に再利用できる部品・判断基準・手順：**
+
+**再利用の権利・許可：**
+
+**公開可能な内容／社内限定の内容：**</textarea></div></details><details class="fde-template" id="template-6"><summary><span><span class="fde-small-number">T06</span><strong role="heading" aria-level="3">経験の棚卸し</strong></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-template-body"><button type="button" class="fde-button" data-fde-copy="template-md-6" data-fde-js hidden>Markdownをコピー</button><div class="fde-prose"><p>点数で採用可能性を決めず、「何を示せるか」を確認します。</p>
+<div aria-label="template-6の表 1。狭い画面では横にスクロールできます。" class="fde-table" role="region" tabindex="0"><table><caption class="fde-sr">template-6：原稿の比較・整理 1</caption>
+<thead>
+<tr>
+<th scope="col">能力</th>
+<th scope="col">説明できる</th>
+<th scope="col">自分で作った</th>
+<th scope="col">他者が試した</th>
+<th scope="col">許可された本番で担当した</th>
+<th scope="col">別の場面で再現した</th>
+<th scope="col">次につくる証拠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">課題発見</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">実装</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">データ接続</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">設計判断</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">AI評価</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">運用・安全性</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">顧客協働</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th scope="row">再利用</th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</div><textarea id="template-md-6" data-fde-template-source hidden readonly>## 6．経験の棚卸し
+
+点数で採用可能性を決めず、「何を示せるか」を確認します。
+
+| 能力 | 説明できる | 自分で作った | 他者が試した | 許可された本番で担当した | 別の場面で再現した | 次につくる証拠 |
+|---|---|---|---|---|---|---|
+| 課題発見 | | | | | | |
+| 実装 | | | | | | |
+| データ接続 | | | | | | |
+| 設計判断 | | | | | | |
+| AI評価 | | | | | | |
+| 運用・安全性 | | | | | | |
+| 顧客協働 | | | | | | |
+| 再利用 | | | | | | |</textarea></div></details></div></section><section class="fde-chapter" id="sources" aria-labelledby="sources-title"><header class="fde-chapter-heading"><p class="fde-eyebrow">SOURCES / 調査記録</p><h2 id="sources-title">出典と、読み取れる範囲。</h2><p>13件の資料と参照範囲は、2026年9月23日付の調査原稿を引き継いでいます。このページの制作に伴う原典の再調査は行っていません。求人は調査時点の記録であり、現在の募集継続を保証しません。</p></header><div class="fde-prose"><p>企業の発表は、その企業の計画・方針です。日本法人の制度や実現済みの成果へ読み替えません。確認日を掲載日に置き換えず、未確認の掲載日はそのまま示します。</p><p>本記事は公開資料の要約と独自の整理であり、掲載企業の採用保証、認定、公式見解の代弁を意図しません。未確認なのは、各企業の非公開選考基準、日本法人の個別配属制度、求人の将来の継続などです。</p></div><div class="fde-sources"><details class="fde-source" id="source-s01"><summary><span class="fde-source-heading"><span class="fde-small-number">S01 / Palantir Technologies</span><strong role="heading" aria-level="3">Forward Deployed Software Engineer — London</strong><span class="fde-source-kind">調査時点の掲載</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式求人（公式採用システム）</dd><dt>対象地域・範囲</dt><dd>英国・ロンドン</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>顧客に密着した実装、初回対話から運用を変えるソフトウェアまでの担当、設計・データ・アプリ・関係者対応。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">個別求人。全FDE共通の要件ではない。出張条件はチーム・勤務地で異なる。</dd></dl><a class="fde-source-link" href="https://jobs.lever.co/palantir/5168e8fd-fec1-4fea-b7a1-81bdaea65850" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://jobs.lever.co/palantir/5168e8fd-fec1-4fea-b7a1-81bdaea65850</p></div></details><details class="fde-source" id="source-s02"><summary><span class="fde-source-heading"><span class="fde-small-number">S02 / Palantir Technologies</span><strong role="heading" aria-level="3">Forward Deployed Software Engineer, New Grad — Commercial</strong><span class="fde-source-kind">調査時点の掲載</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式求人（公式採用システム）</dd><dt>対象地域・範囲</dt><dd>米国・ニューヨーク</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>新卒向けのFDE求人が存在すること。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">対象卒業時期は2026年12月または2027年春。日本の新卒採用や中途応募条件の根拠にはしない。</dd></dl><a class="fde-source-link" href="https://jobs.lever.co/palantir/2e6b0ac8-83e9-4be5-a3aa-cf319f751728" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://jobs.lever.co/palantir/2e6b0ac8-83e9-4be5-a3aa-cf319f751728</p></div></details><details class="fde-source" id="source-s03"><summary><span class="fde-source-heading"><span class="fde-small-number">S03 / OpenAI</span><strong role="heading" aria-level="3">Forward Deployed Engineer — Tokyo</strong><span class="fde-source-kind">調査時点の掲載</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式求人</dd><dt>対象地域・範囲</dt><dd>日本・東京</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>課題発見・技術的な範囲決め・設計・実装・本番展開、顧客利用と業務効果、再利用と製品への還元。5年以上の関連経験、LLM実装、日英の条件。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">この求人の記載。全FDEの年数・英語・技術要件ではない。求人は更新・終了され得る。</dd></dl><a class="fde-source-link" href="https://openai.com/careers/forward-deployed-engineer-tokyo-tokyo-japan/" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://openai.com/careers/forward-deployed-engineer-tokyo-tokyo-japan/</p></div></details><details class="fde-source" id="source-s04"><summary><span class="fde-source-heading"><span class="fde-small-number">S04 / Anthropic</span><strong role="heading" aria-level="3">Forward Deployed Engineer</strong><span class="fde-source-kind">調査時点の掲載</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式求人（公式採用システム）</dd><dt>対象地域・範囲</dt><dd>米国・ニューヨーク／サンフランシスコ／シアトル</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>顧客環境での本番AI実装、評価、再利用可能なパターン、顧客対応を伴う4年以上の技術経験。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">米国の個別求人。日本のFDE採用枠や日本の給与水準を示さない。</dd></dl><a class="fde-source-link" href="https://job-boards.greenhouse.io/anthropic/jobs/5302966008" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://job-boards.greenhouse.io/anthropic/jobs/5302966008</p></div></details><details class="fde-source" id="source-s05"><summary><span class="fde-source-heading"><span class="fde-small-number">S05 / OpenAI</span><strong role="heading" aria-level="3">Technical Deployment Lead — Tokyo</strong><span class="fde-source-kind">調査時点の掲載</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式求人</dd><dt>対象地域・範囲</dt><dd>日本・東京</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>FDEチーム内でも、技術的な実行計画・依存関係・導入定着を担う隣接役割が分けられている例。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">FDEと同一職種ではない。単なる進捗管理や人事管理職と同一視しない。</dd></dl><a class="fde-source-link" href="https://openai.com/careers/technical-deployment-lead-tokyo-tokyo-japan/" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://openai.com/careers/technical-deployment-lead-tokyo-tokyo-japan/</p></div></details><details class="fde-source" id="source-s06"><summary><span class="fde-source-heading"><span class="fde-small-number">S06 / Deloitte Global</span><strong role="heading" aria-level="3">Deloitte launches Open Model Engineering practice</strong><span class="fde-source-kind">企業公式発表</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式発表</dd><dt>対象地域・範囲</dt><dd>グローバル（当初は北米・欧州・アジア太平洋）</dd><dt>掲載日</dt><dd>2026-09-02</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>Open Model Engineeringの新設と、FY2027を通じたFDEの採用・育成・認定計画。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">発表された計画であり、実現済みの人数・成果ではない。日本法人の採用枠、職階、配属、共通FDE資格の成立は確認できない。</dd></dl><a class="fde-source-link" href="https://www.deloitte.com/global/en/about/press-room/deloitte-launches-open-model-engineering-practice.html" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://www.deloitte.com/global/en/about/press-room/deloitte-launches-open-model-engineering-practice.html</p></div></details><details class="fde-source" id="source-s07"><summary><span class="fde-source-heading"><span class="fde-small-number">S07 / McKinsey &amp; Company / QuantumBlack</span><strong role="heading" aria-level="3">A decade of innovation: Celebrating ten years of QuantumBlack, AI by McKinsey</strong><span class="fde-source-kind">企業公式記事</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式記事</dd><dt>対象地域・範囲</dt><dd>グローバル</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>実装、業界知識、製品開発、共通ツール・パターン、現実の統合・利用・事業価値を組み合わせる仕事。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">企業による自社紹介。この記事だけで特定のFDE職名や日本の求人の存在を証明しない。</dd></dl><a class="fde-source-link" href="https://www.mckinsey.com/about-us/new-at-mckinsey-blog/a-decade-of-innovation-celebrating-ten-years-of-quantumblack-ai-by-mckinsey" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://www.mckinsey.com/about-us/new-at-mckinsey-blog/a-decade-of-innovation-celebrating-ten-years-of-quantumblack-ai-by-mckinsey</p></div></details><details class="fde-source" id="source-s08"><summary><span class="fde-source-heading"><span class="fde-small-number">S08 / McKinsey &amp; Company / QuantumBlack</span><strong role="heading" aria-level="3">AI Agents at Scale: A data scientist’s journey to transform clients with tech</strong><span class="fde-source-kind">企業公式の実務者記事</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式の実務者記事</dd><dt>対象地域・範囲</dt><dd>個別実務事例</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>顧客と業務を設計し、出力を一緒に検証し、導入後も顧客が継続できる能力を残す。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">本人・企業の事例説明であり、全案件に共通する成果や成功率ではない。</dd></dl><a class="fde-source-link" href="https://www.mckinsey.com/about-us/new-at-mckinsey-blog/ai-agents-at-scale-a-data-scientists-journey-to-transform-clients-with-tech" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://www.mckinsey.com/about-us/new-at-mckinsey-blog/ai-agents-at-scale-a-data-scientists-journey-to-transform-clients-with-tech</p></div></details><details class="fde-source" id="source-s09"><summary><span class="fde-source-heading"><span class="fde-small-number">S09 / AI Engineer（Cognition実務者の登壇）</span><strong role="heading" aria-level="3">How Forward Deployed Engineering is done at Cognition</strong><span class="fde-source-kind">当事者の公開講演・文字起こし</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>当事者の公開講演・文字起こし</dd><dt>対象地域・範囲</dt><dd>Cognitionの実務例</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>顧客の問題を製品能力に結び付け、その問題を再び製品側に還元する循環。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">一社の実務説明。自動文字起こしを厳密な逐語引用として使わない。</dd></dl><a class="fde-source-link" href="https://ai.engineer/talks/RVxym6mmIns-forward-deployed-engineering-is-done-at-cognition" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://ai.engineer/talks/RVxym6mmIns-forward-deployed-engineering-is-done-at-cognition</p></div></details><details class="fde-source" id="source-s10"><summary><span class="fde-source-heading"><span class="fde-small-number">S10 / Anthropic</span><strong role="heading" aria-level="3">Building effective agents</strong><span class="fde-source-kind">企業公式の技術解説</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>企業公式の技術解説</dd><dt>対象地域・範囲</dt><dd>技術設計の原則</dd><dt>掲載日</dt><dd>2024-12-19</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>単純な解法から始めること、固定的なワークフローとモデルが進め方を決めるエージェントの区別。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">元記事は2024年。現ページにもツール環境の変化の注意がある。設計原則を参照し、古い実装・製品選定を推奨しない。</dd></dl><a class="fde-source-link" href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://www.anthropic.com/engineering/building-effective-agents</p></div></details><details class="fde-source" id="source-s11"><summary><span class="fde-source-heading"><span class="fde-small-number">S11 / OpenAI</span><strong role="heading" aria-level="3">Evaluation best practices</strong><span class="fde-source-kind">公式開発ドキュメント</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>公式開発ドキュメント</dd><dt>対象地域・範囲</dt><dd>LLMアプリ評価の原則</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>実タスクに即した評価、継続的評価、人による評価との整合、通常・境界・攻撃的ケース。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">評価という方法論を参照。特定のEvals製品やAPIの採用を推奨する資料ではない。公開ページにはプラットフォーム移行・終了に関する注意もあるため、採用時には最新仕様を再確認する。</dd></dl><a class="fde-source-link" href="https://developers.openai.com/api/docs/guides/evaluation-best-practices" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://developers.openai.com/api/docs/guides/evaluation-best-practices</p></div></details><details class="fde-source" id="source-s12"><summary><span class="fde-source-heading"><span class="fde-small-number">S12 / NIST</span><strong role="heading" aria-level="3">AI Risk Management Framework</strong><span class="fde-source-kind">公的機関の公式解説</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>公的機関の公式解説</dd><dt>対象地域・範囲</dt><dd>AIリスク管理の参考枠組み</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>AIの設計・開発・利用・評価に信頼性とリスク管理を組み込む必要性。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">任意利用の枠組み。日本の個別法令への適合や、特定システムの安全性を保証するものではない。</dd></dl><a class="fde-source-link" href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://www.nist.gov/itl/ai-risk-management-framework</p></div></details><details class="fde-source" id="source-s13"><summary><span class="fde-source-heading"><span class="fde-small-number">S13 / Gergely Orosz / The Pragmatic Engineer</span><strong role="heading" aria-level="3">The Product-Minded Software Engineer</strong><span class="fde-source-kind">著者本人の実務論</span></span><span class="fde-plus" aria-hidden="true">+</span></summary><div class="fde-source-body"><dl><dt>資料区分</dt><dd>著者本人の実務論</dd><dt>対象地域・範囲</dt><dd>プロダクト開発の実務観</dd><dt>掲載日</dt><dd>掲載日未確認</dd><dt>原稿の確認日</dt><dd><time datetime="2026-09-23">2026-09-23</time> / 公開本文を確認（原稿の記録）</dd><dt>参照内容</dt><dd>仕様の理由、利用者、事業、トレードオフ、リリース後の結果を考えるエンジニア像。</dd><dt>読み取りの限界</dt><dd class="fde-source-limits">著者の実務観であり、FDEの公式定義や普遍的な採用基準ではない。</dd></dl><a class="fde-source-link" href="https://blog.pragmaticengineer.com/the-product-minded-engineer/" target="_blank" rel="noopener noreferrer">原典を開く <span aria-hidden="true">↗</span><span class="fde-sr">（新しいタブ）</span></a><p class="fde-source-url">https://blog.pragmaticengineer.com/the-product-minded-engineer/</p></div></details></div></section></div></div><footer class="fde-footer"><p>目指す肩書きより、次につくる経験を。<br />学びと仕事を照らし合わせながら、少しずつ更新していく記録です。</p><nav aria-label="記事の関連ページ"><a href={route('thoughts/work-career/')}>← Work &amp; Career</a><a href={route('thoughts/work-career/consulting-foundations/')}>Consulting Foundations ↗</a><a href="#fde-top">先頭へ ↑</a></nav></footer><div class="fde-toast" id="fde-status" role="status" aria-live="polite" aria-atomic="true"></div></div>
+</BaseLayout>
+
+<style is:global>
+/* Page-local styles only. Shared site layout and design tokens are not replaced. */
+.fde-page { --fde-accent:#a6dfc8; --fde-line:rgba(174,211,211,.20); --fde-ink:#eaf2f6; --fde-muted:#b2c2cb; width:min(1160px,calc(100% - 40px)); margin-inline:auto; padding:34px 0 84px; color:var(--fde-ink); overflow-wrap:anywhere; }
+.fde-page *, .fde-page *::before, .fde-page *::after { box-sizing:border-box; }
+.fde-page [hidden] { display:none !important; }
+.fde-page :is(h1,h2,h3,h4,p,dl,dd,figure) { margin:0; }
+.fde-page :is(a,button,input,textarea,summary,[tabindex]):focus-visible { outline:3px solid #a6dfc8; outline-offset:5px; }
+.fde-page a { color:var(--fde-accent); text-underline-offset:4px; border-radius:3px; }
+.fde-page a:hover { text-decoration:underline; }
+.fde-page :is(button,input,textarea) { font:inherit; }
+.fde-page button, .fde-page summary { cursor:pointer; }
+.fde-page summary { list-style:none; }
+.fde-page summary::-webkit-details-marker { display:none; }
+.fde-page summary::marker { content:''; }
+.fde-page :is(section[id],details[id],h3[id],h4[id]), .fde-page[id] { scroll-margin-top:155px; }
+.fde-page .fde-sr { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.fde-page .fde-breadcrumb { display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; color:#a4b8c3; font-size:.78rem; line-height:1.8; }
+.fde-page .fde-breadcrumb a { display:inline-flex; align-items:center; min-height:36px; color:#b9cbd3; }
+.fde-page .fde-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:46px; align-items:center; padding:62px 0 45px; }
+.fde-page .fde-eyebrow { color:var(--fde-accent); font:700 .72rem/1.8 ui-monospace,monospace; letter-spacing:.09em; }
+.fde-page h1 { font-size:clamp(3.3rem,6.8vw,5.5rem); font-weight:800; line-height:1.01; letter-spacing:-.065em; margin:23px 0 27px; color:#f2f7fa; }
+.fde-page h1 em { color:var(--fde-accent); font-style:normal; -webkit-text-stroke:0; }
+.fde-page .fde-subtitle { color:#e1edf2; font-size:clamp(1.12rem,2.1vw,1.55rem); line-height:1.85; font-weight:650; }
+.fde-page .fde-lead { color:#b7c8d1; font-size:1rem; line-height:1.95; margin-top:18px; }
+.fde-page .fde-meta { display:flex; flex-wrap:wrap; gap:9px 17px; align-items:center; margin-top:23px; color:#aabdc8; font-size:.73rem; line-height:1.8; }
+.fde-page .fde-status { padding:3px 10px; border:1px solid rgba(186,207,164,.3); border-radius:5px; color:#c5d9b9; background:rgba(187,207,164,.05); }
+.fde-page .fde-hero-links { display:flex; flex-wrap:wrap; gap:4px 20px; margin-top:24px; }
+.fde-page .fde-hero-links a { display:inline-flex; min-height:44px; align-items:center; font-size:.86rem; font-weight:650; }
+.fde-page .fde-hero-note { padding:31px; border:1px solid rgba(158,217,191,.32); border-radius:18px; background:radial-gradient(ellipse at top right,rgba(114,198,154,.15),transparent 70%),linear-gradient(140deg,#152b2c,#101c29); }
+.fde-page .fde-hero-message { margin-top:22px; color:#bacdd0; font-size:1.02rem; line-height:2; }
+.fde-page .fde-hero-message strong { color:#e0f2ed; font-size:clamp(1.35rem,2.5vw,1.85rem); font-weight:650; line-height:1.8; letter-spacing:.015em; }
+.fde-page .fde-note-words { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; border-top:1px solid var(--fde-line); margin-top:25px; padding-top:22px; }
+.fde-page .fde-note-words>span { color:#b4e4d0; font:700 .84rem/1.7 ui-monospace,monospace; }
+.fde-page .fde-note-words small { display:block; margin-top:4px; font:400 .74rem/1.8 system-ui,sans-serif; color:#bbced0; }
+.fde-page .fde-note-caption { margin-top:20px; color:#a7bfc5; font-size:.71rem; line-height:1.95; }
+.fde-page .fde-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:21px 0; border-block:1px solid var(--fde-line); }
+.fde-page .fde-stats>div { display:flex; align-items:baseline; gap:13px; padding:4px 22px; border-left:1px solid var(--fde-line); }
+.fde-page .fde-stats>div:first-child { border:0; padding-left:0; }
+.fde-page .fde-stats strong { color:#e1efe9; font:500 2rem/1.3 ui-monospace,monospace; letter-spacing:-.05em; }
+.fde-page .fde-stats span { color:#b1c6cd; font-size:.79rem; line-height:1.8; }
+.fde-page .fde-cycle { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:27px; padding:0 6px; }
+.fde-page .fde-cycle a { display:flex; align-items:center; gap:11px; min-height:45px; font-size:.84rem; }
+.fde-page .fde-cycle small { font:600 .67rem/1.5 ui-monospace,monospace; color:#86a49e; }
+.fde-page .fde-cycle>span { color:#839eaa; }
+.fde-page .fde-cycle-caption { color:#92aeb7; font-size:.72rem; line-height:1.9; margin-top:7px; }
+.fde-page .fde-scope { display:flex; align-items:center; gap:20px; padding:19px 23px; margin-top:24px; border:1px solid var(--fde-line); border-radius:10px; background:rgba(114,144,166,.045); }
+.fde-page .fde-scope>span { flex-shrink:0; color:#a8daca; font-size:.75rem; }
+.fde-page .fde-scope p { color:#aebfca; font-size:.81rem; line-height:1.95; }
+.fde-page .fde-scope strong { color:#d7e5e7; font-weight:550; }
+.fde-page .fde-scope a { flex-shrink:0; font-size:.76rem; min-height:40px; display:flex; align-items:center; margin-left:auto; }
+.fde-page .fde-reading-layout { display:grid; grid-template-columns:212px minmax(0,1fr); gap:45px; align-items:start; margin-top:55px; }
+.fde-page .fde-sidebar { position:sticky; top:145px; min-width:0; }
+.fde-page .fde-toc { border:1px solid var(--fde-line); border-radius:12px; background:#101e28; }
+.fde-page .fde-toc>summary { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:15px; font:700 .70rem/1.8 ui-monospace,monospace; color:#d5e4e6; letter-spacing:.04em; }
+.fde-page .fde-toc>summary span { color:#a4b9c1; font:400 .68rem/1.6 system-ui,sans-serif; }
+.fde-page .fde-toc nav { max-height:calc(100vh - 280px); overflow-y:auto; padding:0 8px 13px; scrollbar-width:thin; }
+.fde-page .fde-toc nav a { display:flex; align-items:center; gap:10px; min-height:37px; padding:6px 8px; color:#b2c4cc; font-size:.75rem; line-height:1.6; text-decoration:none; border-radius:5px; }
+.fde-page .fde-toc nav a>span { color:#8aa9ac; font:.66rem/1.5 ui-monospace,monospace; }
+.fde-page .fde-toc nav a:hover, .fde-page .fde-toc nav a[aria-current="location"] { color:#dff4ec; background:rgba(146,211,182,.09); }
+.fde-page .fde-sidebar-back { display:inline-flex; align-items:center; min-height:44px; font-size:.76rem; margin-top:10px; }
+.fde-page .fde-content { min-width:0; }
+.fde-page .fde-position { border:1px solid rgba(166,223,200,.3); border-radius:14px; padding:30px; background:linear-gradient(140deg,rgba(27,51,45,.75),rgba(18,30,40,.8)); }
+.fde-page .fde-position h2 { margin:16px 0 19px; color:#e3f0eb; font-size:clamp(1.32rem,2.45vw,1.85rem); line-height:1.8; letter-spacing:-.02em; }
+.fde-page .fde-position>p:not(.fde-eyebrow) { color:#bdcecF; font-size:.97rem; line-height:2.06; }
+.fde-page .fde-position>p+p { margin-top:18px; }
+.fde-page .fde-position .fde-position-note { padding-top:18px; border-top:1px solid var(--fde-line); font-size:.81rem !important; color:#a8c2c5 !important; }
+.fde-page .fde-introduction { margin-top:35px; }
+.fde-page .fde-chapter { margin-top:57px; padding-top:31px; border-top:1px solid var(--fde-line); min-width:0; }
+.fde-page .fde-chapter-heading { margin-bottom:25px; }
+.fde-page .fde-chapter-heading h2 { margin-top:12px; color:#e6f0f3; font-size:clamp(1.4rem,2.5vw,1.84rem); line-height:1.75; letter-spacing:-.02em; }
+.fde-page .fde-chapter-heading>p:not(.fde-eyebrow) { margin-top:16px; color:#b5c7d0; font-size:.92rem; line-height:1.95; }
+.fde-page .fde-prose { color:#c0cfd6; font-size:1rem; line-height:2.05; letter-spacing:.01em; }
+.fde-page .fde-prose p+p, .fde-page .fde-prose div+p, .fde-page .fde-prose details+p { margin-top:19px; }
+.fde-page .fde-prose strong { color:#e1ecee; font-weight:650; }
+.fde-page .fde-prose h3 { margin:35px 0 17px; padding-left:14px; border-left:2px solid var(--fde-accent); color:#e0ecf1; font-size:1.12rem; line-height:1.85; font-weight:650; }
+.fde-page .fde-prose h3:first-child { margin-top:0; }
+.fde-page .fde-prose h4 { margin:25px 0 14px; font-size:1rem; color:#deecef; }
+.fde-page .fde-prose blockquote { margin:23px 0; padding:18px 23px; border-left:2px solid var(--fde-accent); background:rgba(146,209,178,.06); border-radius:0 8px 8px 0; }
+.fde-page .fde-prose ul, .fde-page .fde-prose ol { padding-left:1.4em; }
+.fde-page .fde-prose li { padding-block:4px; }
+.fde-page .fde-prose code { padding:2px 5px; border-radius:3px; background:rgba(153,190,198,.08); font-size:.85em; }
+.fde-page .fde-prose pre { border:1px solid var(--fde-line); border-radius:10px; background:#0c1921; padding:20px; overflow:auto; color:#c3dad8; font-size:.87rem; line-height:1.95; white-space:pre-wrap; overflow-wrap:anywhere; }
+.fde-page .fde-prose pre code { background:transparent; padding:0; font-size:inherit; }
+.fde-page .fde-prose hr { border:0; border-top:1px solid var(--fde-line); margin-block:30px; }
+.fde-page .fde-cite { font-size:.75rem; white-space:nowrap; margin-inline:2px; letter-spacing:0; }
+.fde-page .fde-table { max-width:100%; overflow-x:auto; margin:22px 0; border:1px solid var(--fde-line); border-radius:10px; scrollbar-width:thin; background:#0e1d27; }
+.fde-page .fde-table table { width:100%; min-width:610px; border-collapse:collapse; text-align:left; margin:0; }
+.fde-page .fde-table th, .fde-page .fde-table td { padding:14px 16px; border-bottom:1px solid var(--fde-line); font-size:.85rem; line-height:1.95; font-weight:400; vertical-align:top; color:#bdcfd7; }
+.fde-page .fde-table thead th { font-size:.78rem; font-weight:650; background:rgba(140,210,179,.075); color:#d9eae6; }
+.fde-page .fde-table tbody th { color:#dae7e7; font-weight:600; min-width:135px; background:rgba(149,191,173,.02); }
+.fde-page .fde-table th:first-child { width:24%; }
+.fde-page .fde-table tr:last-child>* { border-bottom:0; }
+.fde-page .fde-comparison { margin:23px 0; border:1px solid var(--fde-line); border-radius:10px; padding:0 16px; background:rgba(103,156,166,.025); }
+.fde-page .fde-comparison>summary { color:#c1ded7; font-size:.86rem; min-height:54px; padding:14px 0; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.fde-page .fde-comparison>summary::after { content:'＋'; }
+.fde-page .fde-comparison[open]>summary::after { content:'−'; }
+.fde-page .fde-comparison .fde-table { margin-top:0; }
+.fde-page .fde-cap-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; align-items:start; margin:26px 0; }
+.fde-page .fde-cap { border:1px solid var(--fde-line); border-radius:12px; overflow:hidden; background:linear-gradient(145deg,#14282a,#101f2b); }
+.fde-page .fde-cap[open] { border-color:rgba(146,211,182,.5); }
+.fde-page .fde-cap>summary { display:flex; justify-content:space-between; gap:14px; padding:22px; }
+.fde-page .fde-cap-head { display:block; min-width:0; }
+.fde-page .fde-small-number { color:var(--fde-accent); font:650 .7rem/1.8 ui-monospace,monospace; letter-spacing:.055em; }
+.fde-page .fde-cap-head strong { display:block; font-size:1rem; line-height:1.8; margin-top:13px; color:#e0ecec; }
+.fde-page .fde-cap-question { display:block; margin-top:12px; color:#b4c9ce; font-size:.84rem; line-height:1.95; }
+.fde-page .fde-plus { flex:0 0 18px; color:var(--fde-accent); font:400 1.25rem/1.4 ui-monospace,monospace; align-self:flex-start; }
+.fde-page details[open]>summary>.fde-plus { transform:rotate(45deg); }
+.fde-page .fde-cap-body { padding:0 22px 21px; color:#b9cdd0; font-size:.87rem; line-height:1.9; }
+.fde-page .fde-cap-body dl { padding-top:17px; border-top:1px solid var(--fde-line); }
+.fde-page .fde-cap-body dt { color:#a4dbc5; font-size:.73rem; margin-bottom:7px; }
+.fde-page .fde-cap-body dt:not(:first-child) { margin-top:16px; }
+.fde-page .fde-cap-body ul { margin:4px 0; padding-left:1.2em; }
+.fde-page .fde-cap-body li { padding:0; }
+.fde-page .fde-reference-label { color:#a1b9be; font-size:.73rem; margin-top:17px; }
+.fde-page .fde-inline-link { display:inline-flex; min-height:40px; align-items:center; gap:12px; margin-top:10px; font-size:.79rem; }
+.fde-page .fde-roadmap { list-style:none; padding:0 !important; margin:25px 0; }
+.fde-page .fde-roadmap>li { display:grid; grid-template-columns:39px minmax(0,1fr); gap:18px; position:relative; padding:0 0 25px; }
+.fde-page .fde-roadmap>li:not(:last-child)::before { content:''; position:absolute; left:18px; top:37px; bottom:0; border-left:1px solid rgba(150,214,185,.3); }
+.fde-page .fde-step-number { display:grid; place-items:center; border:1px solid rgba(150,214,185,.4); border-radius:50%; height:38px; color:#b3e3cf; background:#132728; font:600 .73rem ui-monospace,monospace; }
+.fde-page .fde-step-period { padding-top:2px; color:#afe1c9; font:.84rem/1.8 ui-monospace,monospace; }
+.fde-page .fde-step-period span { font:400 .71rem/1.8 system-ui,sans-serif; color:#9aafb9; }
+.fde-page .fde-roadmap h3 { margin:12px 0 11px !important; padding:0; border:0; font-size:1rem; line-height:1.9; }
+.fde-page .fde-roadmap li>div>p:last-child { color:#b4c7cf; font-size:.88rem; line-height:1.95; }
+.fde-page .fde-roadmap li>div>p:last-child strong { display:block; color:#a4cbc2; font-size:.73rem; font-weight:500; margin-bottom:4px; }
+.fde-page .fde-caution { padding:19px 23px; border-left:2px solid #d4bd8c; background:rgba(210,181,121,.055); border-radius:0 8px 8px 0; margin:0 0 27px; }
+.fde-page .fde-caution>strong { color:#dccb9f; font:600 .74rem/1.8 ui-monospace,monospace; }
+.fde-page .fde-caution>p { margin-top:9px; color:#c7c8bb; font-size:.88rem; line-height:1.95; }
+.fde-page .fde-related-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:27px; }
+.fde-page .fde-related-cards a { display:flex; flex-direction:column; padding:19px; gap:12px; border:1px solid var(--fde-line); border-radius:12px; background:rgba(108,176,165,.04); text-decoration:none; }
+.fde-page .fde-related-cards a:hover { border-color:#94cab7; }
+.fde-page .fde-related-cards small { font:600 .62rem/1.7 ui-monospace,monospace; letter-spacing:.05em; }
+.fde-page .fde-related-cards strong { font-size:.99rem; line-height:1.7; color:#d8e9e8; }
+.fde-page .fde-related-cards span { font-size:.79rem; color:#adbec9; line-height:1.85; margin-top:auto; }
+.fde-page .fde-privacy { padding:19px 22px; background:rgba(139,175,206,.05); border:1px solid rgba(153,191,214,.25); border-radius:10px; margin-bottom:22px; }
+.fde-page .fde-privacy strong { color:#bfd9e3; font-size:.88rem; line-height:1.8; }
+.fde-page .fde-privacy p { margin-top:9px; color:#adbfcc; font-size:.82rem; line-height:1.95; }
+.fde-page .fde-inventory { margin:0; }
+.fde-page .fde-inventory-row { border-bottom:1px solid var(--fde-line); }
+.fde-page .fde-inventory-row>summary { display:flex; justify-content:space-between; gap:14px; min-height:68px; padding:18px 12px; align-items:center; }
+.fde-page .fde-inventory-row>summary>span:first-child { display:flex; align-items:baseline; gap:17px; }
+.fde-page .fde-inventory-row summary strong { color:#dce9ec; font-size:.94rem; line-height:1.8; font-weight:600; }
+.fde-page .fde-inventory-row .fde-plus { align-self:center; }
+.fde-page .fde-inventory-body { padding:0 13px 24px; }
+.fde-page .fde-inventory fieldset { display:flex; flex-wrap:wrap; gap:8px; min-width:0; margin:0 0 20px; border:0; padding:0; }
+.fde-page .fde-inventory legend { color:#aac4c7; font-size:.8rem; margin-bottom:12px; line-height:1.85; }
+.fde-page .fde-inventory fieldset label { display:flex; align-items:center; gap:8px; min-height:44px; border:1px solid var(--fde-line); border-radius:7px; padding:8px 11px; font-size:.78rem; color:#c5d6da; cursor:pointer; }
+.fde-page .fde-inventory label:has(input:checked) { border-color:#83bca7; background:rgba(146,211,182,.075); }
+.fde-page .fde-inventory input[type=checkbox] { accent-color:#a6dfc8; width:17px; height:17px; margin:0; flex-shrink:0; }
+.fde-page .fde-field { display:block; font-size:.83rem; color:#c3d9d7; line-height:1.8; margin-top:17px; }
+.fde-page .fde-field textarea { display:block; width:100%; max-width:100%; min-height:85px; margin-top:8px; padding:12px 13px; border:1px solid var(--fde-line); background:#0b1924; border-radius:8px; color:#e0efed; font-size:.9rem; line-height:1.85; resize:vertical; }
+.fde-page .fde-field textarea::placeholder { color:#889ea9; }
+.fde-page .fde-actions { display:flex; flex-wrap:wrap; gap:11px; margin-top:25px; }
+.fde-page .fde-button { display:inline-flex; align-items:center; gap:14px; justify-content:center; padding:10px 15px; min-height:44px; border:1px solid rgba(167,211,192,.34); border-radius:8px; background:#102329; color:#b7e4d0; font-size:.81rem; line-height:1.6; }
+.fde-page .fde-button:hover { border-color:#a6dfc8; background:#183232; }
+.fde-page .fde-button-primary { background:#a6dfc8; border-color:#a6dfc8; color:#09201c; font-weight:650; }
+.fde-page .fde-button-primary:hover { background:#b8ead6; }
+.fde-page .fde-form-note { margin-top:15px; font-size:.77rem; line-height:1.9; color:#9cb8bf; }
+.fde-page .fde-templates { display:grid; gap:13px; }
+.fde-page .fde-template { border:1px solid var(--fde-line); border-radius:12px; background:linear-gradient(145deg,#14272c,#10202b); overflow:hidden; }
+.fde-page .fde-template>summary { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:20px 23px; }
+.fde-page .fde-template>summary>span:first-child { display:flex; align-items:baseline; gap:17px; }
+.fde-page .fde-template summary strong { font-size:.97rem; color:#dceae9; line-height:1.8; }
+.fde-page .fde-template-body { padding:0 23px 22px; }
+.fde-page .fde-template-body>.fde-button { margin-bottom:18px; }
+.fde-page .fde-template-body .fde-prose { font-size:.93rem; }
+.fde-page .fde-template-body .fde-table table { min-width:610px; }
+.fde-page .fde-template-body .fde-table th { white-space:normal; }
+.fde-page .fde-sources { display:grid; gap:12px; margin-top:28px; }
+.fde-page .fde-source { border:1px solid var(--fde-line); border-radius:10px; background:#101f2a; }
+.fde-page .fde-source>summary { display:flex; justify-content:space-between; gap:16px; padding:21px 23px; }
+.fde-page .fde-source-heading { min-width:0; }
+.fde-page .fde-source-heading strong { display:block; color:#d6e8e8; font-size:.95rem; line-height:1.75; margin-top:10px; font-weight:550; }
+.fde-page .fde-source-kind { display:inline-block; margin-top:11px; color:#a7bfc8; font-size:.73rem; line-height:1.8; }
+.fde-page .fde-source-body { padding:0 23px 22px; }
+.fde-page .fde-source-body dl { display:grid; grid-template-columns:125px minmax(0,1fr); gap:12px 15px; border-top:1px solid var(--fde-line); padding-top:19px; font-size:.84rem; line-height:1.95; }
+.fde-page .fde-source-body dt { color:#9fc7bc; font-size:.76rem; }
+.fde-page .fde-source-body dd { color:#b9cdd4; }
+.fde-page .fde-source-body .fde-source-limits { color:#d1c8b2; }
+.fde-page .fde-source-link { display:inline-flex; align-items:center; gap:15px; min-height:44px; margin-top:17px; font-size:.84rem; }
+.fde-page .fde-source-url { color:#93b0bb; font:.7rem/1.95 ui-monospace,monospace; overflow-wrap:anywhere; }
+.fde-page .fde-footer { margin-top:61px; padding-top:29px; border-top:1px solid var(--fde-line); }
+.fde-page .fde-footer>p { color:#b3c6cf; font-size:.88rem; line-height:1.95; }
+.fde-page .fde-footer nav { display:flex; flex-wrap:wrap; gap:8px 24px; margin-top:22px; }
+.fde-page .fde-footer a { display:flex; min-height:44px; align-items:center; font-size:.83rem; }
+.fde-page .fde-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100vw - 40px); z-index:90; padding:13px 20px; border:1px solid rgba(159,221,194,.55); border-radius:10px; background:#19352f; color:#e6f7f0; font-size:.84rem; line-height:1.85; box-shadow:0 12px 30px #0006; }
+.fde-page .fde-toast:empty { display:none; }
+@media (max-width:1000px) {
+  .fde-page .fde-hero { gap:29px; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); }
+  .fde-page .fde-hero-note { padding:24px; }
+  .fde-page .fde-reading-layout { gap:27px; grid-template-columns:190px minmax(0,1fr); }
+  .fde-page .fde-stats>div { padding-inline:15px; gap:10px; }
+  .fde-page .fde-cycle { gap:7px; }
+  .fde-page .fde-cycle a { gap:6px; font-size:.77rem; }
+  .fde-page .fde-cap-grid { grid-template-columns:minmax(0,1fr); }
+  .fde-page .fde-related-cards { grid-template-columns:minmax(0,1fr); }
+}
+@media (max-width:800px) {
+  .fde-page .fde-hero { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:39px; }
+  .fde-page .fde-hero-note { max-width:none; }
+  .fde-page .fde-reading-layout { grid-template-columns:minmax(0,1fr); margin-top:35px; gap:30px; }
+  .fde-page .fde-sidebar { position:static; }
+  .fde-page .fde-toc nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); max-height:none; padding-bottom:15px; }
+  .fde-page .fde-sidebar-back { display:none; }
+  .fde-page .fde-cap-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .fde-page .fde-scope { flex-wrap:wrap; gap:9px 15px; }
+  .fde-page .fde-scope p { flex-basis:100%; order:3; }
+  .fde-page .fde-stats { grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:18px; }
+  .fde-page .fde-stats>div:nth-child(3) { border:0; padding-left:0; }
+}
+@media (max-width:520px) {
+  .fde-page { width:calc(100% - 32px); padding-top:23px; }
+  .fde-page h1 { font-size:clamp(3.1rem,13.8vw,4.4rem); }
+  .fde-page .fde-breadcrumb { font-size:.72rem; gap:3px 8px; }
+  .fde-page .fde-eyebrow { font-size:.67rem; }
+  .fde-page .fde-hero { padding:34px 0; }
+  .fde-page .fde-hero-note { padding:24px; }
+  .fde-page .fde-cycle { display:grid; grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr); gap:1px 10px; padding:0; }
+  .fde-page .fde-cycle>span:nth-child(4), .fde-page .fde-cycle>span:nth-child(8) { display:none; }
+  .fde-page .fde-cycle a { font-size:.80rem; }
+  .fde-page .fde-cycle a:last-child { grid-column:1 / -1; }
+  .fde-page .fde-scope { padding:16px 18px; }
+  .fde-page .fde-toc nav { gap:1px 0; }
+  .fde-page .fde-toc nav a { font-size:.72rem; gap:7px; min-height:40px; }
+  .fde-page .fde-position { padding:22px; }
+  .fde-page .fde-position h2 br { display:none; }
+  .fde-page .fde-position>p:not(.fde-eyebrow) { font-size:.95rem; }
+  .fde-page .fde-cap-grid { grid-template-columns:minmax(0,1fr); }
+  .fde-page .fde-chapter { margin-top:45px; padding-top:27px; }
+  .fde-page .fde-prose { font-size:.96rem; line-height:2.05; }
+  .fde-page .fde-prose h3 { font-size:1.05rem; }
+  .fde-page .fde-prose pre { padding:14px; font-size:.80rem; }
+  .fde-page .fde-table th, .fde-page .fde-table td { font-size:.85rem; padding:12px 14px; }
+  .fde-page .fde-template>summary { padding:18px; }
+  .fde-page .fde-template>summary>span:first-child { gap:13px; }
+  .fde-page .fde-template-body { padding:0 17px 20px; }
+  .fde-page .fde-template summary strong { font-size:.93rem; }
+  .fde-page .fde-source>summary { padding:19px; }
+  .fde-page .fde-source-body { padding:0 19px 20px; }
+  .fde-page .fde-source-body dl { grid-template-columns:minmax(0,1fr); gap:4px; }
+  .fde-page .fde-source-body dt:not(:first-child) { margin-top:12px; }
+  .fde-page .fde-field textarea { font-size:1rem; }
+  .fde-page .fde-inventory-row>summary { padding-inline:5px; }
+  .fde-page .fde-inventory-row>summary>span:first-child { gap:11px; }
+  .fde-page .fde-inventory-row summary strong { font-size:.90rem; }
+  .fde-page .fde-inventory-body { padding-inline:5px; }
+  .fde-page .fde-inventory fieldset label { width:100%; }
+  .fde-page .fde-stats span { font-size:.75rem; }
+  .fde-page .fde-stats strong { font-size:1.85rem; }
+  .fde-page .fde-stats>div { gap:12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html:has(.fde-page) { scroll-behavior:auto; }
+  .fde-page *, .fde-page *::before, .fde-page *::after { transition:none !important; animation:none !important; }
+}
+@media print {
+  .fde-page { width:100%; color:#111; padding:0; }
+  .fde-page :is(.fde-sidebar,.fde-hero-links,.fde-cycle,.fde-scope>a,.fde-button,.fde-toast,.fde-footer nav) { display:none !important; }
+  .fde-page .fde-reading-layout { display:block; }
+  .fde-page .fde-hero { grid-template-columns:1fr; padding:15px 0; }
+  .fde-page .fde-hero-note { display:none; }
+  .fde-page :is(.fde-position,.fde-table,.fde-cap,.fde-template,.fde-source,.fde-caution,.fde-privacy,.fde-comparison) { background:white; border-color:#aaa; }
+  .fde-page :is(h1,h2,h3,p,strong,span,small,dt,dd,a,th,td,li,code) { color:#111 !important; }
+  .fde-page .fde-table { overflow:visible; }
+  .fde-page .fde-table table { min-width:0; }
+  .fde-page .fde-chapter { margin-top:25px; }
+  .fde-page .fde-cap-grid { display:block; }
+  .fde-page .fde-cap { margin-bottom:12px; break-inside:avoid; }
+}
+
+</style>
+
+<script is:inline>
+(() => {
+  const initialize = () => {
+    const root = document.querySelector('[data-fde-root]');
+    if (!root || root.dataset.fdeInitialized === 'true') return;
+    root.dataset.fdeInitialized = 'true';
+    const abort = new AbortController();
+    const signal = abort.signal;
+    const form = root.querySelector('#fde-inventory-form');
+    const status = root.querySelector('#fde-status');
+    let timer = 0;
+    let frame = 0;
+    let printState = [];
+    const say = (message) => {
+      clearTimeout(timer);
+      status.textContent = message;
+      timer = window.setTimeout(() => { status.textContent = ''; }, 5500);
+    };
+    const copy = async (text) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); return true; } catch { /* Try selection fallback. */ }
+      }
+      const area = document.createElement('textarea');
+      area.value = text; area.readOnly = true;
+      area.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+      document.body.append(area);
+      const active = document.activeElement;
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch { ok = false; }
+      area.remove();
+      if (active instanceof HTMLElement) active.focus({ preventScroll:true });
+      return ok;
+    };
+    const revealHash = (focus = false) => {
+      let id;
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (!target || !root.contains(target)) return;
+      let el = target;
+      while (el && root.contains(el)) {
+        if (el instanceof HTMLDetailsElement) el.open = true;
+        el = el.parentElement;
+      }
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ block:'start', behavior:'instant' });
+        if (focus) {
+          const destination = target instanceof HTMLDetailsElement ? target.querySelector('summary') : target;
+          if (destination instanceof HTMLElement) {
+            if (!destination.matches('a,button,input,textarea,summary')) destination.setAttribute('tabindex', '-1');
+            destination.focus({ preventScroll:true });
+          }
+        }
+        updateToc();
+      });
+    };
+    const makeInventory = () => {
+      const lines = [
+        '# FDE型の経験の棚卸し', '',
+        `記入日：${new Date().toLocaleDateString('sv-SE')}`, '',
+        '学習用の自己記録。企業の合否基準・採用可能性の評価ではありません。',
+        '未選択は未確認を含みます。本番実績と学習デモは分けて記載してください。', ''
+      ];
+      root.querySelectorAll('[data-fde-inventory]').forEach((row) => {
+        lines.push(`## ${row.dataset.capability}`, '');
+        row.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+          lines.push(`- [${input.checked ? 'x' : ' '}] ${input.value}`);
+        });
+        lines.push('', '### 示せる証拠・自分の担当', '', row.querySelector('[data-fde-evidence]').value.trim() || '未記入', '',
+          '### 次につくる証拠', '', row.querySelector('[data-fde-next]').value.trim() || '未記入', '');
+      });
+      return lines.join('\n');
+    };
+    const exportInventory = () => {
+      const blob = new Blob([makeInventory()], { type:'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = 'fde-experience-inventory.md';
+      document.body.append(link); link.click(); link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      say('経験の棚卸しをMarkdownファイルに書き出しました。');
+    };
+    const tocLinks = [...root.querySelectorAll('[data-fde-toc]')];
+    const tocTargets = tocLinks.map((a) => document.getElementById(a.hash.slice(1)));
+    const updateToc = () => {
+      let chosen = -1;
+      tocTargets.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= 205) chosen = i; });
+      tocLinks.forEach((a, i) => {
+        if (i === chosen) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      });
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; updateToc(); });
+    };
+    root.querySelectorAll('[data-fde-js]').forEach((el) => { el.hidden = false; });
+    form.addEventListener('submit', (event) => event.preventDefault(), { signal });
+    root.addEventListener('click', async (event) => {
+      const clicked = event.target instanceof Element ? event.target : null;
+      if (!clicked) return;
+      const button = clicked.closest('button');
+      if (button && root.contains(button)) {
+        if (button.dataset.fdeCopy) {
+          const text = document.getElementById(button.dataset.fdeCopy);
+          if (!text) return;
+          const success = await copy(text.value || text.textContent || '');
+          say(success ? 'テンプレートのMarkdownをコピーしました。' : 'コピーできませんでした。表示された本文を選択してコピーしてください。');
+          return;
+        }
+        if (button.hasAttribute('data-fde-export')) { exportInventory(); return; }
+        if (button.hasAttribute('data-fde-reset')) {
+          const populated = [...form.querySelectorAll('input')].some((el) => el.checked) || [...form.querySelectorAll('textarea')].some((el) => el.value.trim());
+          if (!populated) { say('リセットする記入内容はありません。'); return; }
+          if (window.confirm('記入内容を消去します。必要な内容を先に書き出しましたか？')) { form.reset(); say('記入内容をリセットしました。'); }
+          return;
+        }
+      }
+      const link = clicked.closest('a[href^="#"]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      let id;
+      try { id = decodeURIComponent(href.slice(1)); } catch { return; }
+      const target = document.getElementById(id);
+      if (!target || !root.contains(target)) return;
+      event.preventDefault();
+      if (location.hash !== href) history.pushState(null, '', href);
+      revealHash(true);
+    }, { signal });
+    window.addEventListener('hashchange', () => revealHash(), { signal });
+    window.addEventListener('popstate', () => { if (location.hash) revealHash(); }, { signal });
+    window.addEventListener('scroll', onScroll, { passive:true, signal });
+    window.addEventListener('resize', onScroll, { passive:true, signal });
+    window.addEventListener('beforeprint', () => {
+      printState = [...root.querySelectorAll('details:not(.fde-toc)')].map((el) => [el, el.open]);
+      printState.forEach(([el]) => { el.open = true; });
+    }, { signal });
+    window.addEventListener('afterprint', () => {
+      printState.forEach(([el, open]) => { el.open = open; }); printState = [];
+    }, { signal });
+    updateToc();
+    if (location.hash) revealHash();
+    document.addEventListener('astro:before-swap', () => {
+      abort.abort(); clearTimeout(timer); cancelAnimationFrame(frame);
+      delete root.dataset.fdeInitialized;
+    }, { once:true });
+  };
+  // Idempotent on both full page loads and Astro ClientRouter navigations.
+  if (!window.__seijiFdeInitRegistered) {
+    document.addEventListener('astro:page-load', initialize);
+    window.__seijiFdeInitRegistered = true;
+  }
+  initialize();
+})();
+
+</script>

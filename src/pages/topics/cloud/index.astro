@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { cloudCategories } from '../../../data/googleCloudProducts';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+const entries = cloudCategories.reduce((sum, category) => sum + category.products.length, 0);
+const unique = new Set(cloudCategories.flatMap((category) => category.products.map((product) => product.name))).size;
+
+const paths = [
+  { label: 'APPLICATION', title: 'Webアプリを動かす', products: 'Cloud Run → Cloud SQL → Cloud Load Balancing', description: '実行基盤・DB・通信経路を組み合わせる。' },
+  { label: 'DATA', title: 'データを届ける', products: 'Pub/Sub → Dataflow → BigQuery → Looker', description: 'イベント取り込みから加工、分析、可視化へ。' },
+  { label: 'AI', title: 'AIを業務に組み込む', products: 'Gemini Enterprise Agent Platform → Agent Studio → Agent Runtime', description: 'モデルやエージェントの開発から実行まで。' },
+];
+
+const legacy = [
+  { name: 'Pub/Sub Lite', state: '終了予定', detail: '2027年1月31日に提供終了予定。Pub/Sub または Managed Service for Apache Kafka への移行が案内されています。', href: 'https://docs.cloud.google.com/pubsub/lite/docs' },
+  { name: 'Memorystore for Memcached', state: '非推奨', detail: '2026年1月20日から非推奨。2029年1月31日の終了予定が案内されています。', href: 'https://docs.cloud.google.com/memorystore/docs/memcached/deprecation' },
+  { name: 'Cloud Source Repositories', state: '新規提供終了', detail: '新規顧客向けの提供は終了。既存利用者向けには移行案内があります。', href: 'https://docs.cloud.google.com/source-repositories/docs/migration-guides' },
+];
+---
+
+<BaseLayout title="Google Cloud | Seiji Tech Atlas" description="Google Cloudの製品と関連機能を12カテゴリで探せるマップ。">
+  <main class="cloud-page">
+    <a class="back" href={route('')}>← Back to Atlas</a>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">LEARN / GOOGLE CLOUD</p>
+        <h1>Google<br /><em>Cloud.</em></h1>
+        <p class="lead">Google Cloudのサービスを「何ができるか」から探すための地図。計算・保存・データ・AI・セキュリティまで、12の領域でつながりを整理します。</p>
+        <a class="hero-link" href="#product-map">Explore product map ↗</a>
+      </div>
+      <div class="hero-mark" aria-hidden="true"><small>CLOUD PLATFORM / 03</small><strong>GC</strong><span>Build · Connect · Operate</span></div>
+    </header>
+
+    <section class="section" aria-labelledby="overview-title">
+      <div class="heading"><span>01 / ARCHITECTURE VIEW</span><h2 id="overview-title">Start with a use case</h2><p>ひとつのサービスだけで完結することは少なく、目的に応じて組み合わせます。以下は代表的な構成例です。</p></div>
+      <div class="path-grid">{paths.map((path) => <article class="path"><small>{path.label}</small><h3>{path.title}</h3><p class="path-products">{path.products}</p><p>{path.description}</p></article>)}</div>
+      <div class="cross-links"><a href={route('learn/data-engineering/')}>Data Engineering の概念を見る ↗</a><a href={route('learn/ai-ml/')}>AI / Machine Learning の概念を見る ↗</a></div>
+    </section>
+
+    <section class="section" id="product-map" aria-labelledby="map-title">
+      <div class="heading"><span>02 / PRODUCT MAP</span><h2 id="map-title">Explore by capability</h2><p>{cloudCategories.length}カテゴリ・{unique}項目を掲載。同じ機能を複数領域に掲載しているため、カテゴリ内の表示数の合計は{entries}件です。製品・機能・ソリューションを含む学習用の整理です。</p></div>
+      <div class="category-nav" aria-label="製品カテゴリ">{cloudCategories.map((category) => <a href={`#category-${category.slug}`}><span>{category.id}</span>{category.title}</a>)}</div>
+      <div class="search-box"><label for="cloud-search">製品・機能を検索</label><input id="cloud-search" type="search" placeholder="例: BigQuery / Dataproc / IAM" autocomplete="off" /><p id="search-status" role="status" aria-live="polite">カテゴリを開くと、各項目の役割を確認できます。</p></div>
+
+      <div class="category-list">
+        {cloudCategories.map((category) => (
+          <details class="category" id={`category-${category.slug}`} data-category>
+            <summary><span class="category-number">{category.id}</span><div class="category-text"><small>{category.label}</small><h3>{category.title}</h3><p>{category.summary}</p></div><span class="category-count">{category.products.length} items</span><span class="chevron" aria-hidden="true">⌄</span></summary>
+            <div class="product-grid">{category.products.map((product) => <article class:list={['product', { featured: product.featured }]} data-product data-search={`${product.name} ${product.formerly ?? ''} ${product.description}`.toLocaleLowerCase()}><div class="product-top"><h4>{product.name}</h4>{product.featured && <span>CORE</span>}</div><p>{product.description}</p>{product.formerly && <small>formerly {product.formerly}</small>}</article>)}</div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="renames-title">
+      <div class="heading"><span>03 / NAME CHANGES</span><h2 id="renames-title">Old names you may encounter</h2><p>以前の教材やコードに出てくる名称です。製品カードでは現行名称を主に表示しています。</p></div>
+      <div class="rename-grid"><div><strong>Vertex AI Platform</strong><span>→ Gemini Enterprise Agent Platform</span></div><div><strong>BigLake</strong><span>→ Lakehouse</span></div><div><strong>Dataplex Universal Catalog</strong><span>→ Knowledge Catalog</span></div><div><strong>Dataproc</strong><span>→ Managed Service for Apache Spark</span></div><div><strong>Cloud Composer</strong><span>→ Managed Service for Apache Airflow</span></div><div><strong>Looker Studio</strong><span>→ Data Studio</span></div></div>
+    </section>
+
+    <section class="section" aria-labelledby="legacy-title">
+      <div class="heading"><span>04 / LEGACY & TRANSITION</span><h2 id="legacy-title">Check before starting new work</h2><p>提供状況の変化が明確なサービスを、現行サービスの一覧から分けて掲載します。</p></div>
+      <div class="legacy-grid">{legacy.map((item) => <article><small>{item.state}</small><h3>{item.name}</h3><p>{item.detail}</p><a href={item.href} target="_blank" rel="noopener noreferrer">公式案内 ↗</a></article>)}</div>
+    </section>
+
+    <footer class="sources"><span>OFFICIAL REFERENCES / CHECKED 2026-09-23</span><div><a href="https://docs.cloud.google.com/docs/product-list" target="_blank" rel="noopener noreferrer">Google Cloud products at a glance ↗</a><a href="https://cloud.google.com/products" target="_blank" rel="noopener noreferrer">Products & Services ↗</a><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes" target="_blank" rel="noopener noreferrer">Agent Platform name changes ↗</a></div><p>このマップは公式カタログから学習用途で再構成したものです。提供地域・料金・プレビュー状態などは採用前に各製品の公式資料で確認してください。</p></footer>
+  </main>
+</BaseLayout>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('#cloud-search');
+  const status = document.querySelector<HTMLElement>('#search-status');
+  const categories = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-category]'));
+  const openHashCategory = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const section = categories.find((category) => category.id === id);
+    if (section) section.open = true;
+  };
+  openHashCategory();
+  window.addEventListener('hashchange', openHashCategory);
+  input?.addEventListener('input', () => {
+    const query = input.value.trim().toLocaleLowerCase();
+    let count = 0;
+    for (const category of categories) {
+      let visible = 0;
+      const title = category.querySelector('h3')?.textContent?.toLocaleLowerCase() ?? '';
+      for (const product of category.querySelectorAll<HTMLElement>('[data-product]')) {
+        const match = !query || title.includes(query) || (product.dataset.search ?? '').includes(query);
+        product.hidden = !match;
+        if (match) visible++;
+      }
+      category.hidden = visible === 0;
+      if (query && visible) category.open = true;
+      count += visible;
+    }
+    if (status) status.textContent = query ? `${count}件の掲載項目が見つかりました。` : 'カテゴリを開くと、各項目の役割を確認できます。';
+  });
+</script>
+
+<style>
+  :global(body){background:radial-gradient(circle at 76% 7%,rgba(251,191,36,.12),transparent 30%),#0a1119}.cloud-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 100px;color:#eef6f9}.back{color:#90a4b0;font-size:.82rem;text-decoration:none}.back:hover,.sources a:hover{color:#fbbf24}
+  .eyebrow,.heading>span,.sources>span{color:#f4c66a;font:800 .66rem/1.4 ui-monospace,monospace;letter-spacing:.16em}.hero{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:48px;min-height:470px;padding:50px 0 65px;border-bottom:1px solid rgba(190,220,240,.18)}h1{margin:20px 0 24px;font-size:clamp(3.5rem,8vw,7rem);letter-spacing:-.07em;line-height:.91}h1 em{color:#fbd984;font-style:normal}.lead{max-width:650px;color:#a7b8c2;line-height:1.8}.hero-link{display:inline-block;margin-top:24px;color:#f4c66a;font-weight:700;text-decoration:none}.hero-mark{display:flex;min-height:275px;flex-direction:column;justify-content:center;padding:30px;border:1px solid rgba(251,191,36,.33);border-radius:24px;background:radial-gradient(circle at 55% 40%,rgba(251,191,36,.19),transparent 55%),linear-gradient(140deg,#202631,#0c1926)}.hero-mark small{color:#f4d387;font:700 .62rem ui-monospace,monospace;letter-spacing:.14em}.hero-mark strong{margin:15px 0;color:#fbbf24;font-size:7rem;line-height:1;letter-spacing:-.1em}.hero-mark span{color:#ada89a;font-size:.8rem}
+  .section{margin-top:82px;scroll-margin-top:35px}.heading{margin-bottom:27px}.heading h2{margin:12px 0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.05em}.heading p{max-width:790px;margin:0;color:#9eadb7;line-height:1.75}.path-grid,.legacy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.path,.legacy-grid article,.rename-grid div{padding:24px;border:1px solid rgba(190,220,240,.18);border-radius:16px;background:linear-gradient(145deg,rgba(22,33,45,.96),rgba(12,22,32,.96))}.path small,.legacy-grid small{color:#f3c769;font:700 .66rem ui-monospace,monospace;letter-spacing:.08em}.path h3{margin:18px 0 12px}.path p,.legacy-grid p{color:#9db0b9;font-size:.84rem;line-height:1.7}.path .path-products{color:#f0d089;font-weight:700}.cross-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:17px}.cross-links a{padding:11px 14px;border:1px solid #504934;border-radius:9px;color:#ebc576;background:#231f1a;font-size:.78rem;text-decoration:none}
+  .category-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.category-nav a{padding:12px 14px;border:1px solid #35414b;border-radius:10px;color:#cbd8dc;background:#111e2a;text-decoration:none;font-size:.78rem}.category-nav a:hover{border-color:#d4ab5a}.category-nav span{margin-right:10px;color:#d4ab5a;font-family:ui-monospace,monospace}.search-box{margin:30px 0 18px}.search-box label{display:block;margin-bottom:8px;color:#d2dadd;font-size:.78rem;font-weight:700}.search-box input{width:100%;padding:14px 16px;border:1px solid #4d5a60;border-radius:10px;background:#111d28;color:#f2f7f8;font:inherit}.search-box input:focus{outline:2px solid #e0b85e;outline-offset:2px}.search-box p{min-height:1.4em;margin:8px 0 0;color:#889daa;font-size:.76rem}
+  .category-list{display:grid;gap:12px}.category{border:1px solid rgba(190,220,240,.2);border-radius:16px;background:linear-gradient(135deg,#172431,#101d29);scroll-margin-top:26px}.category[hidden],.product[hidden]{display:none}.category summary{display:flex;align-items:center;gap:20px;padding:22px 25px;cursor:pointer;list-style:none}.category summary::-webkit-details-marker{display:none}.category summary:focus-visible{outline:2px solid #fbbf24;outline-offset:3px}.category-number{color:#e9ba55;font:700 .79rem ui-monospace,monospace}.category-text{flex:1}.category-text small{color:#e7bd68;font:700 .62rem ui-monospace,monospace;letter-spacing:.13em}.category-text h3{margin:6px 0;color:#f1f5f8;font-size:1.28rem}.category-text p{margin:0;color:#99aeb8;font-size:.8rem;line-height:1.5}.category-count{color:#91a4ad;white-space:nowrap;font:.7rem ui-monospace,monospace}.chevron{color:#f1c976;font-size:1.35rem;transition:transform .18s}.category[open] .chevron{transform:rotate(180deg)}.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:4px 22px 23px}.product{min-width:0;padding:16px;border:1px solid #33414b;border-radius:10px;background:#0e1b27}.product.featured{border-color:#685739;background:#19232a}.product-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.product h4{margin:0;color:#f1f5f6;font-size:.9rem;overflow-wrap:anywhere}.product-top span{color:#e5ba5d;font:.58rem ui-monospace,monospace}.product p{margin:10px 0 0;color:#a8b8bd;font-size:.78rem;line-height:1.6}.product>small{display:block;margin-top:11px;color:#e3be73;font-size:.7rem}
+  .rename-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.rename-grid div{padding:17px 20px}.rename-grid strong,.rename-grid span{display:block;font-size:.82rem}.rename-grid strong{color:#9aaeb8}.rename-grid span{margin-top:7px;color:#f2d181;line-height:1.5}.legacy-grid article h3{margin:15px 0 8px;font-size:1rem}.legacy-grid article a{color:#f1ca78;font-size:.78rem}.sources{margin-top:90px;padding-top:28px;border-top:1px solid #384652}.sources div{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}.sources a{color:#e8c277;font-size:.8rem;text-decoration:underline;text-underline-offset:3px}.sources p{color:#8597a4;font-size:.76rem;line-height:1.7}
+  @media(max-width:800px){.hero{grid-template-columns:1fr;gap:25px;min-height:0}.hero-mark{min-height:180px}.hero-mark strong{font-size:5rem}.path-grid,.legacy-grid,.category-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:600px){.cloud-page{width:min(100% - 32px,1120px)}.hero{padding:40px 0 50px}h1{font-size:clamp(3.3rem,13vw,5rem)}.path-grid,.legacy-grid,.category-nav,.product-grid,.rename-grid{grid-template-columns:1fr}.category summary{gap:10px;padding:18px}.category-text h3{font-size:1.05rem}.category-count{font-size:.62rem}.product-grid{padding:0 14px 17px}.section{margin-top:65px}}
+</style>

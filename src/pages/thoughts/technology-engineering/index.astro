@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const questions = [
+  { number: '01', title: 'For whom?', text: '使う人と運用する人は誰か。どんな状況で、何に困っているのか。' },
+  { number: '02', title: 'What goes in / out?', text: '入力は何で、利用者に届く結果は何か。成功と失敗をどう見分けるか。' },
+  { number: '03', title: 'What must endure?', text: '機能を更新するときも守るべき約束は何か。誰が直し、どう復旧するか。' },
+];
+---
+
+<BaseLayout title="Build for Change | Technology & Engineering | Seiji Tech Atlas" description="入力と出力から問題を分解し、使う人・運用する人・変化を受け止める設計まで考える。私のエンジニアリング観。">
+  <main class="thought-page">
+    <a class="back" href={route('thoughts/')}>← Thoughts in progress</a>
+
+    <header class="hero">
+      <div class="eyebrow"><span>T.01</span> TECHNOLOGY & ENGINEERING <span class="line"></span> AN OPEN THOUGHT</div>
+      <h1>Build for<br /><em>change.</em></h1>
+      <p class="dek">良い仕組みは、正しく動くだけでなく、使われ、直され、変わりながら続いていく。</p>
+      <div class="meta"><span>ENGINEERING PHILOSOPHY</span><span>2026.09.23</span><span>SEIJI TECH ATLAS</span></div>
+    </header>
+
+    <div class="article-shell">
+      <aside class="toc" aria-label="記事の目次"><span>IN THIS THOUGHT</span><a href="#ship">The Ship</a><a href="#boundary">The Boundary</a><a href="#decomposition">Decomposition</a><a href="#connection">Interfaces</a><a href="#people">People & Operations</a><a href="#choice">The Choice</a></aside>
+
+      <article class="prose">
+        <p class="opening">新しい仕組みを作るとき、最初に問いたいことがある。何が入り、何が出るのか。誰にとってうまく動けば成功なのか。そして、作ったあとに誰が使い、直し、育てていくのか。</p>
+        <p>私にとってEngineeringは、複雑なものを小さく分けて終わる作業ではない。<strong>目的を決め、分けたものをつなぎ、変化しても役に立ち続ける形にすること</strong>だ。</p>
+
+        <section id="ship">
+          <div class="section-label">01 / THE SHIP OF THESEUS</div>
+          <h2>部品を替え続けた船は、同じ船か。</h2>
+          <p>テセウスの船という話がある。保存されていた船の古い木材を、傷むたびに新しいものへ替えていく。やがて元の部品がなくなったとして、それは同じ船なのか。哲学では、ものの同一性を問う話として語られる。<a class="inline-ref" href="https://www.theoi.com/Text/PlutarchTheseus.html" target="_blank" rel="noopener noreferrer">プルタルコス『テセウス伝』23 ↗</a></p>
+          <p>私はこれを、運用中のシステムにも重ねて考える。コードが変わる。データベースを替える。担当者も入れ替わる。それでも利用者は、昨日と同じように仕事ができることを期待する。</p>
+          <p>この比喩が哲学上の答えを出すわけではない。ただ、設計の問いは生む。<strong>部品が変わっても守りたいものは何か。逆に、変えられるようにしておくべきものは何か。</strong></p>
+        </section>
+
+        <section id="boundary">
+          <div class="section-label">02 / DEFINE THE PROMISE</div>
+          <h2>最初に、何を守るかを決める。</h2>
+          <p>出発点は、利用者の目的と入出力だ。誰が何を入力し、どんな結果を、いつ、どの状態で受け取れれば役に立つのか。結果だけでなく、待ち時間、分かりやすさ、誤操作したときの戻し方まで含めて考える。</p>
+          <div class="questions">{questions.map((item) => <div><small>{item.number}</small><h3>{item.title}</h3><p>{item.text}</p></div>)}</div>
+          <p>ここで決めるのは画面やAPIの形だけではない。正確性、使いやすさ、必要な信頼性、権限、費用、復旧まで、目的に照らして優先順位をつける。「すべて最高」では判断ができないからだ。</p>
+          <p class="research-note">NASAのシステム設計プロセスは、利害関係者の期待から技術要件を定め、機能を分解し、設計解につなげている。運用や保守に関わる人もシステムの一部として扱う。<a href="https://www.nasa.gov/wp-content/uploads/2018/09/nasa_systems_engineering_handbook_0.pdf" target="_blank" rel="noopener noreferrer">NASA Systems Engineering Handbook ↗</a></p>
+        </section>
+
+        <section id="decomposition">
+          <div class="section-label">03 / DECOMPOSE WITH A PURPOSE</div>
+          <h2>小さく分ける理由を、忘れない。</h2>
+          <p>「AIシステムを作る」は、まだ仕事の単位として大きい。利用者の入力を受ける。形式を検証する。資料を探す。モデルに渡す。返答を確かめる。結果を返す。そう分けると、それぞれの入力、出力、失敗のしかたが見えてくる。</p>
+          <div class="example" aria-label="AIシステムの分解例"><div><small>INPUT</small><strong>質問を受け取る</strong></div><span>→</span><div><small>PROCESS</small><strong>検証・検索・生成・評価</strong></div><span>→</span><div><small>OUTPUT</small><strong>根拠と回答を返す</strong></div></div>
+          <p>ここでさらに聞く。資料が見つからないときはどうするか。モデルが確信のない回答を返したら誰に知らせるか。履歴を残す必要はあるか。「最小単位」は行数で決まらない。<strong>責任を説明でき、結果を確かめられ、必要なら交換できる単位</strong>まで分けたい。</p>
+          <p>ただし、分けるたびに接続と運用の負担は増える。機能を小さく切ること自体が目的ではない。一緒に変わるものはまとめ、別々に変えたいところで境界を作る。</p>
+        </section>
+
+        <section id="connection">
+          <div class="section-label">04 / MAKE THE JOINTS VISIBLE</div>
+          <h2>境界には、約束が必要だ。</h2>
+          <p>データはどんな形で次へ渡されるのか。失敗したとき、誰が再実行するのか。値が存在しなかったら、空欄なのか、エラーなのか。部品がそれぞれ正しくても、約束が違えば全体は動かない。</p>
+          <p>だから分解したあとは、境界ごとに約束を作る。データの意味、受け渡しの時刻、変更時の互換性、異常時の知らせ方、再実行の責任。利用者に見えない接続ほど、言葉にしておきたい。</p>
+          <blockquote><p>Good engineering is decomposition plus connection.</p><cite>小さく分ける。そして、境界を曖昧にしない。</cite></blockquote>
+        </section>
+
+        <section id="people">
+          <div class="section-label">05 / DESIGN FOR THE WHOLE LIFE</div>
+          <h2>使う人と、直す人の時間を考える。</h2>
+          <p>システムが正しい結果を返しても、入力画面が分かりにくければ人は迷う。エラーが「失敗しました」だけなら、次に何をすべきか分からない。設計では、ユーザーが目的を達成できるかを見たい。アクセシビリティも、あとから付け足す飾りではなく、その人が実際に使えるかという問いの一部だ。<a class="inline-ref" href="https://www.w3.org/WAI/fundamentals/accessibility-usability-inclusion/" target="_blank" rel="noopener noreferrer">W3C WAI ↗</a></p>
+          <p>運用する人にも同じことが言える。処理が止まったとき、何を見れば原因が分かるか。再試行して安全か。誰に連絡し、どこまで戻せるか。監視、ログ、復旧手順は、公開してから初めて考えるものではない。</p>
+          <p>信頼性も、数字だけを上げればよいわけではない。利用者が困る失敗は何かを決め、その経験に近い指標を選ぶ。GoogleのSREの資料も、サービスの信頼性を利用者の経験に照らして考え、目標と変更のトレードオフを扱っている。<a class="inline-ref" href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener noreferrer">Google SRE ↗</a></p>
+          <p>使いやすく、問題を見つけやすく、修正しやすいこと。これは完成後の付加価値ではなく、続けて使うための設計だと思う。</p>
+        </section>
+
+        <section id="choice">
+          <div class="section-label">06 / CHOOSE AND REVISIT</div>
+          <h2>技術を選び、使いながら選び直す。</h2>
+          <p>PythonかJavaか。SnowflakeかBigQueryか。既存のモデルを使うか、自分で学習するか。選択肢は一つではない。境界と要求が見えたら、速度、費用、保守性、安全性、チームの経験を比べて選べる。</p>
+          <p>「最後に選ぶ」は、技術を軽く見るという意味ではない。技術上の制約を知るための試作は、早い段階で必要になる。試して分かったことを要求や設計に戻し、もう一度選び直す。順序は一本道ではなく、行き来するものだ。</p>
+          <p>大きく作ってから確かめるより、小さく作って確かめる。Googleのコードレビュー指針も、一つの自己完結した変更を小さく保つことを勧めている。ただし、これはコード変更の指針であって、システム全体を無限に細切れにする指示ではない。<a class="inline-ref" href="https://google.github.io/eng-practices/review/developer/small-cls.html" target="_blank" rel="noopener noreferrer">Google Engineering Practices ↗</a></p>
+          <p>設計時には変更する日のことも考える。機能を足したら何を確かめるか。古いデータをどう移すか。利用者が困ったらどう戻すか。テセウスの船のように部品を替えていくなら、どの板を替えても航海を続けられるようにしたい。</p>
+        </section>
+
+        <div class="closing">
+          <small>MY VIEW</small>
+          <p>Technologyは、作れるものを増やす。Engineeringは、誰かの目的に合わせて、その可能性を使える形にする仕事だと思う。</p>
+          <p>何が入り、何を返すか。誰が使い、誰が直すか。守るべき約束は何か。そこから機能を分け、接続を設計し、道具を選ぶ。実際に使われたら、見えた問題をもとにまた考え直す。</p>
+          <p class="last-line">Build it so someone can use it. Build it so someone can change it.</p>
+        </div>
+      </article>
+    </div>
+
+    <footer class="article-footer"><a href={route('thoughts/')}>← All thoughts</a><span>BUILD FOR CHANGE / T.01</span></footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 72% 4%,rgba(95,186,226,.12),transparent 34%),#0b131a}.thought-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 110px;color:#eef5f9}.back,.article-footer a{color:#91b9c9;font-size:.82rem;text-decoration:none}.back:hover,.article-footer a:hover{color:#8ad9ff}
+  .hero{padding:85px 0 50px;border-bottom:1px solid #334451}.eyebrow,.section-label,.toc>span,.closing small{color:#8bd8f5;font:700 .67rem ui-monospace,monospace;letter-spacing:.17em}.eyebrow{display:flex;align-items:center;gap:13px}.eyebrow span:first-child{font-size:.9rem}.eyebrow .line{width:30px;height:1px;background:#53778a}h1{margin:24px 0 25px;font-size:clamp(3.6rem,8vw,7.6rem);line-height:.94;letter-spacing:-.072em}h1 em{font-style:normal;color:#8bd8f5}.dek{max-width:760px;color:#b2c3cb;font-size:clamp(1.2rem,2.1vw,1.55rem);line-height:1.6}.meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:45px;color:#708998;font:.69rem ui-monospace,monospace;letter-spacing:.07em}
+  .article-shell{display:grid;grid-template-columns:190px minmax(0,1fr);gap:70px;margin-top:70px}.toc{position:sticky;top:38px;align-self:start;display:grid;gap:17px}.toc>span{margin-bottom:11px;font-size:.57rem}.toc a{color:#849ba7;font-size:.8rem;text-decoration:none}.toc a:hover{color:#8bd8f5}.prose{max-width:760px}.prose>p,.prose section>p{color:#b9c9cf;font-size:1rem;line-height:2.05}.prose .opening{margin-top:0;color:#edf5f7;font-size:1.2rem;line-height:1.9}.prose strong{color:#eff9fc}.prose section{margin-top:86px;scroll-margin-top:35px}.section-label{font-size:.62rem}.prose h2{margin:15px 0 26px;color:#f3f8fb;font-size:clamp(1.9rem,3.3vw,2.65rem);letter-spacing:-.04em;line-height:1.3}.prose a{color:#95dbf3;text-underline-offset:3px}.research-note{padding:19px 23px;border-left:2px solid #5baacb;background:#14232c;font-size:.84rem!important;line-height:1.85!important}
+  .questions{display:grid;gap:9px;margin:30px 0}.questions div{display:grid;grid-template-columns:42px 1fr;gap:5px 14px;padding:17px 20px;border:1px solid #344853;border-radius:12px;background:#13222c}.questions small{grid-row:span 2;color:#81cbeb;font:.78rem ui-monospace,monospace}.questions h3{margin:0;color:#e6f2f6;font-size:1rem}.questions p{margin:0;color:#95acb6;font-size:.81rem;line-height:1.7}.example{display:flex;align-items:stretch;gap:8px;margin:30px 0}.example div{flex:1;min-width:0;padding:15px;border:1px solid #3b5661;border-radius:10px;background:#152833}.example small{display:block;margin-bottom:11px;color:#82d4f6;font:.64rem ui-monospace,monospace}.example strong{font-size:.78rem;line-height:1.5}.example>span{align-self:center;color:#87d7f3}
+  blockquote{margin:38px 0;padding:25px 30px;border-left:3px solid #87d5f2;background:#152631}blockquote p{margin:0;color:#effaff;font-size:1.24rem;font-weight:700;line-height:1.5}blockquote cite{display:block;margin-top:12px;color:#8ba9b6;font-size:.78rem;font-style:normal}.inline-ref{font-size:.86rem}
+  .closing{margin-top:92px;padding:36px;border:1px solid #41687a;border-radius:20px;background:radial-gradient(circle at 10% 0%,rgba(103,196,235,.15),transparent 58%),#142632}.closing p{color:#c4d8df;font-size:1.02rem;line-height:1.95}.closing .last-line{margin-bottom:0;color:#91def8;font-size:1.18rem;font-weight:700}.article-footer{display:flex;justify-content:space-between;gap:18px;margin-top:90px;padding-top:25px;border-top:1px solid #324550}.article-footer span{color:#698694;font:.64rem ui-monospace,monospace;letter-spacing:.1em}
+  @media(max-width:850px){.article-shell{grid-template-columns:1fr;gap:0}.toc{position:static;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}.toc>span{width:100%;margin:0}.toc a{padding:7px 9px;border:1px solid #344a58;border-radius:7px}}
+  @media(max-width:600px){.thought-page{width:min(100% - 32px,1120px)}.hero{padding:60px 0 40px}h1{font-size:clamp(3.2rem,13vw,5.2rem)}.article-shell{margin-top:45px}.prose section{margin-top:65px}.example{flex-direction:column}.example>span{transform:rotate(90deg)}.closing{padding:25px}.article-footer{flex-direction:column}}
+</style>

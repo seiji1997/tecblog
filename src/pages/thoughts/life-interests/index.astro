@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const chapters = [
+  { number: '01', age: 'TEENS', title: '人の心が動くのを見ていた', image: '話す・笑う・身体を動かす' },
+  { number: '02', age: 'EARLY TWENTIES', title: '一つの問いを深く掘った', image: '研究・仮説・発見' },
+  { number: '03', age: 'NOW', title: 'つくったものを外へ返したい', image: '仕事・表現・社会との接点' },
+];
+---
+
+<BaseLayout title="What Still Moves Me | Life & Interests | Seiji Tech Atlas" description="人と話すこと、研究すること、ものを作ること。29歳の今、何に心が動くのかを考える。">
+  <main class="thought-page">
+    <a class="back" href={route('thoughts/')}>← Thoughts in progress</a>
+
+    <header class="hero">
+      <div class="eyebrow"><span>T.04</span> LIFE & INTERESTS <span class="line"></span> AN OPEN THOUGHT</div>
+      <h1>What still<br /><em>moves me.</em></h1>
+      <p class="dek">花火のような刺激を追っていた頃から、長く灯していたい火を考える今へ。</p>
+      <div class="meta"><span>A PERSONAL NOTE</span><span>2026.09.23</span><span>SEIJI TECH ATLAS</span></div>
+    </header>
+
+    <div class="article-shell">
+      <aside class="toc" aria-label="記事の目次"><span>IN THIS THOUGHT</span><a href="#people">人の心</a><a href="#research">研究の時間</a><a href="#beyond-metrics">数字の向こう</a><a href="#fire">花火から、火へ</a><a href="#website">この場所を作る理由</a><a href="#thirty">30歳を前に</a></aside>
+
+      <article class="prose">
+        <p class="opening">10代の頃、机に向かって一つのことを深く学ぶのは、あまり得意ではなかった。身体を動かす方が楽しかったし、友達と話す時間が好きだった。</p>
+        <p>それから研究室に入り、夢中になるものが変わった。今は、何かを理解し、自分の手で形にして、誰かの役に立てることに一番心が動く。変わったようで、同じものを追いかけてきたのかもしれない。</p>
+
+        <div class="life-map" aria-label="興味の変化">{chapters.map((chapter) => <div><small>{chapter.number} / {chapter.age}</small><strong>{chapter.title}</strong><span>{chapter.image}</span></div>)}</div>
+
+        <section id="people">
+          <div class="section-label">01 / THE FIRST SPARK</div>
+          <h2>最初に面白かったのは、人だった。</h2>
+          <p>どう話せば伝わるのか。どんな言葉なら笑ってもらえるのか。話した後に相手の表情が変わる。その瞬間を見るのが好きだった。たぶん当時の私は、勉強という名前をつけずに、人を観察していたのだと思う。</p>
+          <p>運動も好きだった。頭で長く考えるより、身体を動かし、誰かと過ごす。そういう日々にも、自分なりの好奇心があった。</p>
+        </section>
+
+        <section id="research">
+          <div class="section-label">02 / LEARNING TO SIT STILL</div>
+          <h2>研究室で、座って考える楽しさを知った。</h2>
+          <p>20代に入り、大学の研究室に入ってから、興味の向きが変わった。一つの現象を長い時間追いかけることが、急に面白くなった。</p>
+          <p>反応の結果が違うなら、どこに原因があるのか。条件を分ける。仮説を立てる。試して、観察して、また考える。複雑に見えたものの輪郭が少しずつ見えてくる。その過程には、説明しにくい美しさがある。</p>
+          <p>大学を出たあと、対象は分子からデータやシステムへ変わった。それでも、問いを分け、試し、結果から考え直すという感覚は残っている。<strong>研究室を離れても、研究するように仕事をしている。</strong></p>
+        </section>
+
+        <section id="beyond-metrics">
+          <div class="section-label">03 / BEYOND THE DASHBOARD</div>
+          <h2>人生を数字だけで眺めると、<br />ダッシュボードになる。</h2>
+          <p>社会人になってからは、技術を学び、経験を積み、資格も取った。以前は暇があれば筋トレに行き、食事もかなり管理していた。できることが増えるのも、積み上がりが見えるのも楽しい。</p>
+          <p>ただ、資格の数も、扱える技術も、身体の数字も、その人の人生を全部は説明してくれない。成長の指標は役に立つ。でも、何を面白がり、何を美しいと思うかまで、目盛りにはできない。</p>
+          <div class="pull-quote"><span>A LIFE MADE ONLY OF METRICS<br />BECOMES A DASHBOARD.</span><p>測れるものを育てながら、測れないものにも時間を使いたい。</p></div>
+          <p>だから最近は、人の考え方にも強く惹かれる。哲学や宗教には、人が何を信じてきたかが表れる。美術館では、作品が生まれた背景を考えることもあれば、ただ色や光の美しさを見ていたい日もある。</p>
+          <p>「なぜこれを作ったのか」と考えるのが好きだ。同時に、理由が分からないまま立ち止まる時間も好きだ。人間そのものが、今の自分には尽きないテーマになっている。</p>
+        </section>
+
+        <section id="fire">
+          <div class="section-label">04 / FROM FIREWORKS TO FIRE</div>
+          <h2>花火よりも、火を。</h2>
+          <p>20代後半になって、昔ほど簡単には強く感動しなくなったと感じる。映画を見ても、新しい場所に行っても、楽しさはある。でも、以前のように心が大きく跳ねることは少ない。</p>
+          <p>それが年齢のせいなのか、経験のせいなのかは分からない。ただ今の自分は、一瞬で空を照らす花火より、長く燃えて何かに使える火に惹かれている。</p>
+          <div class="fire-card" aria-label="花火と火の比喩"><div><small>FIREWORKS</small><strong>一瞬の驚き</strong><span>見る・出会う・興奮する</span></div><span class="arrow" aria-hidden="true">→</span><div><small>FIRE</small><strong>長く続く熱</strong><span>考える・作る・人に渡す</span></div></div>
+          <p>ギリシャ神話のプロメテウスが人に火をもたらした話を思う。火を得る場面は劇的だけれど、その先には別の問いがある。どう守り、何に使い、誰に渡すのか。今は、新しい刺激を探すことと同じくらい、手元にある火の使い道を考えたい。</p>
+          <p>やる気がある日も、ない日もある。それでも仕事をし、生活を整え、必要なことを進めるようになった。これは心が動かなくなったという話ではない。<strong>気分に任せず続けながら、それでも心が動くものを探している。</strong></p>
+        </section>
+
+        <section id="website">
+          <div class="section-label">05 / WHY THIS PLACE EXISTS</div>
+          <h2>考えたことに、置き場所をつくる。</h2>
+          <p>一人で考えたり、何かを作ったりしている時間が好きだ。でも、その考えを会う人全員に最初から説明するには時間がかかる。だから、ここに書く。</p>
+          <p>技術を学んだことも、仕事で考えたことも、美術館で感じたことも、まずは言葉にして置いておく。あとで読み直して、間違いを直し、新しい経験を足す。考えの変化そのものが残る場所にしたい。</p>
+          <p>一度土台を作れば、次は変わった部分から始められる。小さな更新を何年も続けた先に、自分なりの専門性や、ものを見る目が育つのだと思う。</p>
+        </section>
+
+        <section id="thirty">
+          <div class="section-label">06 / APPROACHING THIRTY</div>
+          <h2>これから、何を長く考えたいか。</h2>
+          <p>今は29歳で、もうすぐ30歳になる。数字が変わったから突然別人になるわけではない。それでも、どこに時間を使いたいか考えるには、いい節目だと思う。</p>
+          <p>仕事は責任を持って続けたい。同時に、学んだことを使って何を作れるのか、誰の役に立てるのかも考えたい。昔は人の感情が動く瞬間が好きだった。今は、自分が作ったものを通して、もう一度その瞬間に出会いたいのかもしれない。</p>
+        </section>
+
+        <div class="closing"><small>MY VIEW</small><p>全部に胸を躍らせなくてもいい。人を理解すること。知らない構造を見つけること。考えを形にすること。そして、できたものを誰かに渡すこと。</p><p>このいくつかを、長く大切にしてみたい。</p><p class="last-line">I don't need everything to excite me.<br />I need a few things worth thinking about for years.</p></div>
+      </article>
+    </div>
+
+    <footer class="article-footer"><a href={route('thoughts/')}>← All thoughts</a><a href={route('thoughts/learning-growth/')}>Learning & Growth ↗</a></footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 80% 4%,rgba(219,151,94,.12),transparent 34%),#0b131a}.thought-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 110px;color:#eef5f9}.back,.article-footer a{color:#e7aa77;font-size:.82rem;text-decoration:none}.back:hover,.article-footer a:hover{color:#ffd3a8}
+  .hero{padding:85px 0 50px;border-bottom:1px solid #53483f}.eyebrow,.section-label,.toc>span,.closing small{color:#e7aa77;font:700 .67rem ui-monospace,monospace;letter-spacing:.17em}.eyebrow{display:flex;align-items:center;gap:13px;flex-wrap:wrap}.eyebrow span:first-child{font-size:.9rem}.eyebrow .line{width:30px;height:1px;background:#9c7156}h1{margin:24px 0 25px;font-size:clamp(3.4rem,7.5vw,7.2rem);line-height:.95;letter-spacing:-.07em}h1 em{font-style:normal;color:#e7aa77}.dek{max-width:800px;color:#c9b7a7;font-size:clamp(1.2rem,2.1vw,1.55rem);line-height:1.6}.meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:45px;color:#a18a79;font:.69rem ui-monospace,monospace;letter-spacing:.07em}
+  .article-shell{display:grid;grid-template-columns:190px minmax(0,1fr);gap:70px;margin-top:70px}.toc{position:sticky;top:38px;align-self:start;display:grid;gap:17px}.toc>span{margin-bottom:11px;font-size:.57rem}.toc a{color:#b4a294;font-size:.8rem;text-decoration:none}.toc a:hover{color:#ffc89b}.prose{max-width:760px}.prose>p,.prose section>p{color:#c9c9cb;font-size:1rem;line-height:2.05}.prose .opening{margin-top:0;color:#f6eee7;font-size:1.2rem;line-height:1.9}.prose strong{color:#ffe1c4}.prose section{margin-top:86px;scroll-margin-top:35px}.section-label{font-size:.62rem}.prose h2{margin:15px 0 26px;color:#f5eee8;font-size:clamp(1.9rem,3.3vw,2.65rem);letter-spacing:-.04em;line-height:1.3}
+  .life-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:40px 0 20px}.life-map div{display:flex;flex-direction:column;gap:13px;padding:23px 18px;border:1px solid #6b5548;border-radius:13px;background:linear-gradient(145deg,#29231f,#171c23)}.life-map small,.fire-card small{color:#e7aa77;font:.62rem ui-monospace,monospace;letter-spacing:.08em}.life-map strong{color:#f4e7d9;line-height:1.5}.life-map span,.fire-card div>span{color:#bda99c;font-size:.75rem;line-height:1.5}
+  .pull-quote{margin:35px 0;padding:30px;border:1px solid #a97550;border-radius:17px;background:radial-gradient(circle at 90% 0%,rgba(236,143,80,.16),transparent 65%),#281f1c}.pull-quote span{color:#f4c396;font-size:clamp(1.12rem,2.5vw,1.65rem);font-weight:800;letter-spacing:.015em;line-height:1.4}.pull-quote p{margin:15px 0 0;color:#cbb5a3;font-size:.85rem}.fire-card{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin:34px 0;padding:24px;border:1px solid #70503f;border-radius:15px;background:#221e20}.fire-card div{display:flex;flex-direction:column;gap:9px;min-width:0}.fire-card strong{color:#f3dbc7;font-size:1.22rem}.fire-card .arrow{color:#e7aa77;font-size:1.5rem}
+  .closing{margin-top:92px;padding:36px;border:1px solid #936647;border-radius:20px;background:radial-gradient(circle at 10% 0%,rgba(225,143,78,.18),transparent 58%),#261f1e}.closing p{color:#e0cfc0;font-size:1.02rem;line-height:1.95}.closing .last-line{margin-bottom:0;color:#f4be8f;font-size:1.15rem;font-weight:700}.article-footer{display:flex;justify-content:space-between;gap:18px;margin-top:90px;padding-top:25px;border-top:1px solid #57463a}
+  @media(max-width:850px){.article-shell{grid-template-columns:1fr;gap:0}.toc{position:static;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}.toc>span{width:100%;margin:0}.toc a{padding:7px 9px;border:1px solid #755742;border-radius:7px}}
+  @media(max-width:600px){.thought-page{width:min(100% - 32px,1120px)}.hero{padding:60px 0 40px}h1{font-size:clamp(3.1rem,12vw,5rem)}.article-shell{margin-top:45px}.prose section{margin-top:65px}.life-map{grid-template-columns:1fr}.fire-card{gap:9px;padding:17px}.fire-card strong{font-size:1rem}.fire-card div>span{font-size:.65rem}.closing{padding:25px}.article-footer{flex-direction:column}}
+</style>

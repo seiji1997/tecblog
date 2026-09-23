@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const islands = [
+  { name: 'Engineering', lens: '問題を分解する' },
+  { name: 'AI & Data', lens: '情報から判断する' },
+  { name: 'Business', lens: '価値と制約を見る' },
+  { name: 'Design', lens: '使う人から考える' },
+  { name: 'Language', lens: '伝え方を変える' },
+  { name: 'Philosophy', lens: '問いそのものを疑う' },
+];
+
+const steps = [
+  { number: '01', title: 'Learn', description: '何が分かり、何がまだ分からないかを言葉にする。' },
+  { number: '02', title: 'Explain', description: '自分の言葉、図、例を使って人に伝えられる形にする。' },
+  { number: '03', title: 'Use', description: '現実の問題で使い、結果を見て考えを更新する。' },
+];
+---
+
+<BaseLayout title="Build Bridges, Not Just Towers | Learning & Growth | Seiji Tech Atlas" description="知識の島々に橋を架け、学んだことを必要なときに使える力へ変える。私の学習観。">
+  <main class="thought-page">
+    <a class="back" href={route('thoughts/')}>← Thoughts in progress</a>
+
+    <header class="hero">
+      <div class="eyebrow"><span>T.03</span> LEARNING & GROWTH <span class="line"></span> AN OPEN THOUGHT</div>
+      <h1>Build bridges,<br /><em>not just towers.</em></h1>
+      <p class="dek">知識を増やすだけでなく、必要なときに取り出し、別の場所へ運び、行動に変える。</p>
+      <div class="meta"><span>LEARNING PHILOSOPHY</span><span>2026.09.23</span><span>SEIJI TECH ATLAS</span></div>
+    </header>
+
+    <div class="article-shell">
+      <aside class="toc" aria-label="記事の目次"><span>IN THIS THOUGHT</span><a href="#islands">The Archipelago</a><a href="#reflex">Turn Knowledge into Reflex</a><a href="#scaffolding">Certifications</a><a href="#loop">Learn → Explain → Use</a><a href="#curiosity">Curiosity</a></aside>
+
+      <article class="prose">
+        <p class="opening">以前は、知識は山のようなものだと思っていた。一つの分野を深く掘り、そこを頂点に周辺へ広げていく。その形は今でも大切だ。深く理解した場所があるからこそ、次に学ぶものを見渡せる。</p>
+        <p>でも最近は、別の地形も見えるようになった。離れた山を高くするだけでなく、<strong>山と山の間に橋を架けることにも価値がある。</strong></p>
+
+        <section id="islands">
+          <div class="section-label">01 / THE ARCHIPELAGO MODEL</div>
+          <h2>知識は、島々でもある。</h2>
+          <p>Engineering、AI、Business、Design、Language。それぞれ別の島に見えても、学び続けると、思いがけない場所に橋が架かる。</p>
+          <div class="island-map" aria-label="分野ごとに得られる視点の例">{islands.map((island) => <div><strong>{island.name}</strong><span>{island.lens}</span></div>)}</div>
+          <p>たとえば、ソフトウェアで学んだ「関心事を分ける」という考え方を、仕事の役割分担に持ち込む。データモデルを考えるときの「何が一つの対象なのか」という問いを、組織の業務整理に使う。ある場所で覚えた概念が、別の場所を見るレンズになる。</p>
+          <p>もちろん、つながりそうという直感だけで、二つの分野が同じだと決めつけたくはない。似た構造を発見したら、違いも確かめる。橋は、両岸をよく見てから架けるものだ。</p>
+          <blockquote><p>What new lens would be interesting to acquire?</p><cite>次の専門を決めるだけでなく、次に得たい視点を考える。</cite></blockquote>
+        </section>
+
+        <section id="reflex">
+          <div class="section-label">02 / REDUCE STARTUP TIME</div>
+          <h2>知識を、立ち上がりの速さに変える。</h2>
+          <p>仕事では、毎回ゼロから考える時間はない。SQLを書く。設計の論点を並べる。メールで確認事項を伝える。小さな仕事ほど、始め方を思い出している時間が惜しい。</p>
+          <p>速く動ける人は、いつも即興で答えを発明しているわけではないと思う。使い慣れた問い、パターン、テンプレート、コードの断片がある。問題を見たときに「入力と出力は何か」「どこで失敗するか」と、考え始める場所がすでに決まっている。</p>
+          <div class="toolbox"><small>PERSONAL TOOLBOX</small><div><span>Questions</span><span>Patterns</span><span>Templates</span><span>Checklists</span><span>Examples</span></div><p>一度考えたことを、次に使える形で残す。</p></div>
+          <p>これは、考えることをやめるという意味ではない。慣れた動きで最初の一歩を速くし、その問題ならではの違いに時間を使う。<strong>反射で始め、判断は手放さない。</strong></p>
+        </section>
+
+        <section id="scaffolding">
+          <div class="section-label">03 / CERTIFICATIONS AS SCAFFOLDING</div>
+          <h2>資格は、地図を描くための足場。</h2>
+          <p>自分の興味だけで学んでいると、好きなところに偏りやすい。資格の学習範囲は、知らない領域にも一度足を運ばせてくれる。まず全体を一周し、概念同士の位置関係を知るには役に立つ。</p>
+          <p>私にとって資格は、勉強の終点というより足場だ。試験範囲を使って地図を描き、知らなかった概念を見つけ、必要なところを実際に試して深く掘る。合格したあとにも使えるのは、その地図の方だと思う。</p>
+          <p>そして地図は、現場に出ると書き直される。覚えた説明と、目の前のシステムで起きていることが違えば、そこで初めて理解が一段深くなる。</p>
+        </section>
+
+        <section id="loop">
+          <div class="section-label">04 / A LEARNING LOOP</div>
+          <h2>学ぶ。説明する。使う。</h2>
+          <p>「知っている」だけでは、まだ仕事とつながっていない。自分の言葉で説明し、現実の問題に当ててみる。その往復で知識は動くものになる。</p>
+          <div class="steps">{steps.map((step) => <div><small>{step.number}</small><h3>{step.title}</h3><p>{step.description}</p></div>)}</div>
+          <p>たとえばSnowflakeのマイクロパーティションを学んだなら、定義を説明するだけで終えない。クエリが遅いときに、プルーニングが効いているかを確認するという行動につなげたい。</p>
+          <p>書く。図にする。人に話す。試す。うまくいかなかったら、また学ぶ。<strong>Learn → Explain → Use</strong> は一度きりの階段ではなく、何度でも回るループだ。</p>
+        </section>
+
+        <section id="curiosity">
+          <div class="section-label">05 / FOLLOW CURIOSITY</div>
+          <h2>遠くの島にも、寄ってみる。</h2>
+          <p>仕事に直結する学びは大切だ。でも、次の評価や資格だけを基準にすると、まだ名前のない可能性を見落とす気がする。</p>
+          <p>量子力学を読む。金融を学ぶ。歴史を調べる。デザインに触る。その時点で仕事に役立つか分からなくても、面白いから始めていい。遠くで得た視点が、数年後に別の問題とつながるかもしれない。</p>
+          <p>だから深く掘ることと、横に広がることを選択肢の二つに分けなくていい。今必要な深さを持ちながら、興味のある方向へ橋を伸ばす。</p>
+        </section>
+
+        <div class="closing"><small>MY VIEW</small><p>学ぶ目的は、頭の中に情報を積み上げることだけではない。問題に出会ってから、有効な行動を取るまでの距離を短くしたい。</p><p>深く学ぶ。遠くの分野から考え方を持ち帰る。資格で全体を見渡す。繰り返す仕事をパターンにする。そして、説明し、試し、修正する。</p><p class="last-line">Build a bigger map. Then learn to move through it.</p></div>
+      </article>
+    </div>
+
+    <footer class="article-footer"><a href={route('thoughts/')}>← All thoughts</a><a href={route('thoughts/technology-engineering/')}>Technology & Engineering ↗</a></footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 75% 4%,rgba(178,146,247,.13),transparent 34%),#0b131a}.thought-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 110px;color:#eef5f9}.back,.article-footer a{color:#bea8e4;font-size:.82rem;text-decoration:none}.back:hover,.article-footer a:hover{color:#d9c5ff}
+  .hero{padding:85px 0 50px;border-bottom:1px solid #3b3d51}.eyebrow,.section-label,.toc>span,.closing small{color:#c4a7f5;font:700 .67rem ui-monospace,monospace;letter-spacing:.17em}.eyebrow{display:flex;align-items:center;gap:13px}.eyebrow span:first-child{font-size:.9rem}.eyebrow .line{width:30px;height:1px;background:#806e99}h1{margin:24px 0 25px;font-size:clamp(3.4rem,7.5vw,7.2rem);line-height:.95;letter-spacing:-.07em}h1 em{font-style:normal;color:#c4a7f5}.dek{max-width:800px;color:#b9b9c9;font-size:clamp(1.2rem,2.1vw,1.55rem);line-height:1.6}.meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:45px;color:#837d98;font:.69rem ui-monospace,monospace;letter-spacing:.07em}
+  .article-shell{display:grid;grid-template-columns:190px minmax(0,1fr);gap:70px;margin-top:70px}.toc{position:sticky;top:38px;align-self:start;display:grid;gap:17px}.toc>span{margin-bottom:11px;font-size:.57rem}.toc a{color:#9994ad;font-size:.8rem;text-decoration:none}.toc a:hover{color:#d2b9ff}.prose{max-width:760px}.prose>p,.prose section>p{color:#c4c7d2;font-size:1rem;line-height:2.05}.prose .opening{margin-top:0;color:#f0eff8;font-size:1.2rem;line-height:1.9}.prose strong{color:#f3edff}.prose section{margin-top:86px;scroll-margin-top:35px}.section-label{font-size:.62rem}.prose h2{margin:15px 0 26px;color:#f4f2fa;font-size:clamp(1.9rem,3.3vw,2.65rem);letter-spacing:-.04em;line-height:1.3}
+  .island-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:30px 0;padding:25px;border:1px solid #514a69;border-radius:18px;background:radial-gradient(circle at 50% 40%,rgba(177,146,243,.12),transparent 70%),#161b2c}.island-map div{min-height:105px;padding:18px;border:1px solid #5a5372;border-radius:45% 55% 49% 51% / 54% 43% 57% 46%;background:#252239;text-align:center;display:flex;flex-direction:column;justify-content:center}.island-map strong{color:#e4d1ff;font-size:.86rem}.island-map span{margin-top:7px;color:#a7a3b9;font-size:.68rem}.island-map div:nth-child(2n){transform:translateY(8px)}blockquote{margin:38px 0;padding:25px 30px;border-left:3px solid #c4a7f5;background:#242238}blockquote p{margin:0;color:#f3edff;font-size:1.24rem;font-weight:700;line-height:1.5}blockquote cite{display:block;margin-top:12px;color:#b1a9c4;font-size:.78rem;font-style:normal}
+  .toolbox{margin:30px 0;padding:26px;border:1px solid #574b75;border-radius:16px;background:#201e33}.toolbox small{color:#c4a7f5;font:.65rem ui-monospace,monospace;letter-spacing:.12em}.toolbox div{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.toolbox div span{padding:8px 11px;border:1px solid #6d5b90;border-radius:8px;color:#dfcfff;background:#2c2947;font-size:.75rem}.toolbox p{margin:18px 0 0;color:#aaa5c0;font-size:.8rem}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:30px 0}.steps div{padding:21px;border:1px solid #5a4f72;border-radius:12px;background:#211f35}.steps small{color:#b99ae9;font:.72rem ui-monospace,monospace}.steps h3{margin:16px 0 9px;color:#eee6fc;font-size:1.15rem}.steps p{margin:0;color:#b2aec2;font-size:.78rem;line-height:1.7}
+  .closing{margin-top:92px;padding:36px;border:1px solid #685686;border-radius:20px;background:radial-gradient(circle at 10% 0%,rgba(177,146,245,.18),transparent 58%),#211f34}.closing p{color:#d0cadd;font-size:1.02rem;line-height:1.95}.closing .last-line{margin-bottom:0;color:#d5baff;font-size:1.18rem;font-weight:700}.article-footer{display:flex;justify-content:space-between;gap:18px;margin-top:90px;padding-top:25px;border-top:1px solid #49435b}
+  @media(max-width:850px){.article-shell{grid-template-columns:1fr;gap:0}.toc{position:static;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}.toc>span{width:100%;margin:0}.toc a{padding:7px 9px;border:1px solid #514764;border-radius:7px}}
+  @media(max-width:600px){.thought-page{width:min(100% - 32px,1120px)}.hero{padding:60px 0 40px}h1{font-size:clamp(3.1rem,12vw,5rem)}.article-shell{margin-top:45px}.prose section{margin-top:65px}.island-map{grid-template-columns:repeat(2,1fr);padding:14px}.island-map div{min-height:95px}.steps{grid-template-columns:1fr}.closing{padding:25px}.article-footer{flex-direction:column}}
+</style>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const route = (path = '') => `${BASE}/${path.replace(/^\/+/, '')}`;
+
+const pillars = [
+  { id: 'modern-ai', number: '01', title: 'Modern AI', description: '基盤モデル・生成AI・LLMを、入力から出力までの仕組みで捉える。', tags: ['Foundation Models', 'Transformer', 'Multimodal'] },
+  { id: 'ai-systems', number: '02', title: 'AI Systems', description: 'モデルに検索やツールを接続し、実際の仕事に使えるシステムにする。', tags: ['RAG', 'Tool Use', 'Agents'] },
+  { id: 'classical-ml', number: '03', title: 'Machine Learning', description: '問題設定から前処理、モデル選択、検証までを再現可能な形にする。', tags: ['Regression', 'Classification', 'Clustering'] },
+  { id: 'evaluation', number: '04', title: 'Evaluation & Operations', description: '精度だけでなく、誤り・安全性・遅延・コストを測り続ける。', tags: ['Metrics', 'Evals', 'Monitoring'] },
+];
+
+const modernConcepts = [
+  { key: '01', title: 'Foundation model', description: '大量のデータで事前学習され、多様な下流タスクへ適応できるモデルの総称。LLMはそのうち言語を中心に扱うもの。', example: '文章生成、要約、コード、画像理解' },
+  { key: '02', title: 'Tokens & prediction', description: 'テキストはトークン列として扱われ、生成時は文脈に続くトークンの分布から出力を選ぶ。学習や推論の詳細はモデルごとに異なる。', example: '入力文脈 → トークン列 → 応答' },
+  { key: '03', title: 'Transformer & attention', description: 'Transformerはattentionを中心に構成されたモデル群。各トークンが文脈中のどの情報を使うかを計算する。', example: '文脈に応じた表現の計算' },
+  { key: '04', title: 'Multimodal AI', description: 'テキストに加え、画像・音声・動画などを入出力に扱う。対応する形式と推論能力はモデルによって異なる。', example: '画像を読んで説明、音声で対話' },
+];
+
+const systems = [
+  { title: 'Prompt & context', summary: '指示、制約、例、参照情報を渡す。', caution: '長い入力でも重要な情報が必ず使われるとは限らない。' },
+  { title: 'RAG', summary: '関連資料を検索して、取得した情報を生成時の文脈に加える。', caution: '検索漏れや誤った資料は回答品質に直結する。' },
+  { title: 'Tool use & agents', summary: 'モデルがツール呼び出しを提案し、アプリ側で実行・結果を返す。複数段階の処理を組み立てられる。', caution: '権限、実行条件、承認、失敗時の停止を設計する。' },
+  { title: 'Adaptation', summary: 'プロンプト、検索、ファインチューニングを目的に応じて選ぶ。', caution: '知識更新だけなら検索で足りる場合がある。' },
+];
+
+const mlAreas = [
+  { number: '00', title: '前処理', aim: '欠損、カテゴリ変数、スケーリング、分割を整える。', methods: 'Imputer / Encoder / Scaling / Pipeline', note: '学習データだけで前処理を学習し、検証データへの漏洩を防ぐ。' },
+  { number: '01', title: '回帰', aim: '売上や需要など、連続した数値を予測する。', methods: '線形回帰 / Ridge / Random Forest / LightGBM', note: 'MAE・RMSEなどを目的と誤差の許容範囲で選ぶ。' },
+  { number: '02', title: '分類', aim: '離反、異常、カテゴリなどのラベルを予測する。', methods: 'ロジスティック回帰 / SVM / 決定木 / LightGBM', note: '不均衡データではaccuracyだけで判断しない。' },
+  { number: '03', title: 'クラスタリング', aim: '正解ラベルのないデータから似た集団を見つける。', methods: 'k-means / DBSCAN / 階層クラスタリング', note: '距離尺度と、クラスタが業務上意味を持つかを確認する。' },
+  { number: '04', title: '自然言語処理', aim: 'テキストを分類、検索、抽出、生成に使う。', methods: 'TF-IDF / 埋め込み / Transformer', note: '従来の特徴量ベースと現代の基盤モデルを目的別に選ぶ。' },
+  { number: '05', title: '深層学習', aim: '多層のニューラルネットワークで表現を学習する。', methods: 'MLP / CNN / Transformer', note: 'データ量、計算資源、過学習、推論コストを考慮する。' },
+  { number: '06', title: '次元削減', aim: '変数を圧縮し、可視化やノイズ低減に使う。', methods: 'PCA / UMAP / t-SNE', note: '可視化上の距離を元データの距離として過信しない。' },
+  { number: '07', title: 'アンサンブル学習', aim: '複数モデルを組み合わせて予測を改善する。', methods: 'Bagging / Boosting / Stacking', note: 'スタッキングの学習ではout-of-fold予測を使い、漏洩を避ける。' },
+];
+
+const learningFlow = [
+  { step: 'DEFINE', title: '問題を決める', detail: '予測対象、利用時点、成功指標を定義' },
+  { step: 'PREPARE', title: 'データを整える', detail: '分割、欠損、特徴量、リーク確認' },
+  { step: 'MODEL', title: '基準と比較する', detail: '単純なベースラインから改善' },
+  { step: 'EVALUATE', title: '失敗を調べる', detail: '指標、セグメント、誤分類を確認' },
+  { step: 'OPERATE', title: '運用で測る', detail: '品質、変化、費用を監視' },
+];
+---
+
+<BaseLayout title="AI / Machine Learning | Seiji Tech Atlas" description="古典的な機械学習から基盤モデル、RAG、AIエージェントまでをつなぐ学習マップ。">
+  <main class="ai-page">
+    <a class="back" href={route('')}>← Back to Atlas</a>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">LEARN / AI & MACHINE LEARNING</p>
+        <h1>AI / Machine<br /><em>Learning.</em></h1>
+        <p class="lead">古典的な機械学習から、基盤モデルを使ったAIシステムまで。何を予測・生成し、どこで失敗し、どう評価するかを一つの地図にまとめる。</p>
+        <nav class="hero-links" aria-label="ページ内ナビゲーション"><a href="#modern-ai">Modern AI ↗</a><a href="#classical-ml">Machine Learning ↗</a></nav>
+      </div>
+      <div class="hero-mark" aria-hidden="true"><small>RESEARCH & EXPERIMENTS / 01</small><strong>AI</strong><span>Learn · Generate · Evaluate</span></div>
+    </header>
+
+    <section class="section" aria-labelledby="map-title">
+      <div class="heading"><span>01 / KNOWLEDGE MAP</span><h2 id="map-title">Two foundations, one field</h2><p>「AI」は広い概念です。機械学習で予測モデルを作る視点と、基盤モデルを組み込む視点を行き来します。</p></div>
+      <div class="pillar-grid">{pillars.map((pillar) => <a class="pillar" href={`#${pillar.id}`}><small>{pillar.number}</small><h3>{pillar.title} <span aria-hidden="true">↗</span></h3><p>{pillar.description}</p><div class="tags">{pillar.tags.map((tag) => <span>{tag}</span>)}</div></a>)}</div>
+    </section>
+
+    <section class="section" id="modern-ai" aria-labelledby="modern-title">
+      <div class="heading"><span>02 / MODERN AI</span><h2 id="modern-title">How today's AI works</h2><p>生成AIを、モデル・入力・外部情報・実行環境に分けて理解する。</p></div>
+      <div class="concept-grid">{modernConcepts.map((concept) => <article class="concept"><small>{concept.key} / CONCEPT</small><h3>{concept.title}</h3><p>{concept.description}</p><div>{concept.example}</div></article>)}</div>
+      <div class="callout"><strong>LLMは学習済みモデル。ChatGPTのような製品は、モデルにUI、指示、検索、ツール、運用機能などを組み合わせたシステムです。</strong><p>モデル名や順位は変わります。ここでは変化しても使える仕組みと設計判断を中心に置きます。</p></div>
+    </section>
+
+    <section class="section" id="ai-systems" aria-labelledby="systems-title">
+      <div class="heading"><span>03 / AI SYSTEMS</span><h2 id="systems-title">From model to useful system</h2><p>モデル単体で解決しない課題を、データやツールとの接続で扱う。</p></div>
+      <ol class="system-flow" aria-label="AIシステムの処理例"><li><small>INPUT</small><strong>利用者の依頼</strong></li><li><small>RETRIEVE</small><strong>必要な資料を探す</strong></li><li><small>MODEL</small><strong>回答や操作を組み立てる</strong></li><li><small>TOOL</small><strong>許可された処理を実行</strong></li><li><small>CHECK</small><strong>結果を検証する</strong></li></ol>
+      <p class="flow-note">これは構成例です。検索やツール実行を伴わない用途では、その段階は不要です。</p>
+      <div class="system-grid">{systems.map((item) => <article><h3>{item.title}</h3><p>{item.summary}</p><small>DESIGN CHECK</small><p>{item.caution}</p></article>)}</div>
+    </section>
+
+    <section class="section" id="classical-ml" aria-labelledby="ml-title">
+      <div class="heading"><span>04 / MACHINE LEARNING</span><h2 id="ml-title">Classical ML, properly organized</h2><p>前処理からアンサンブル学習までの8領域。手法を「何に使い、どう確かめるか」で並べています。</p></div>
+      <div class="ml-grid">{mlAreas.map((area) => <article class="ml-card"><div class="ml-top"><span>{area.number}</span><h3>{area.title}</h3></div><p>{area.aim}</p><div class="methods">{area.methods}</div><p class="ml-note">{area.note}</p></article>)}</div>
+    </section>
+
+    <section class="section" id="evaluation" aria-labelledby="eval-title">
+      <div class="heading"><span>05 / EVALUATION & OPERATIONS</span><h2 id="eval-title">A model is only one step</h2><p>オフラインの指標と、実際の利用時の品質を分けて見る。</p></div>
+      <div class="eval-columns"><article><h3>Machine Learning</h3><ul><li>時系列や利用単位に合わせた訓練・検証分割</li><li>回帰はMAE / RMSE、分類はprecision / recallなど</li><li>ベースライン、誤差分析、データ漏洩の確認</li><li>運用後のデータ変化、性能低下、再学習条件</li></ul></article><article><h3>Generative AI</h3><ul><li>実際の質問を使った評価セットと期待する振る舞い</li><li>事実性、出典、指示遵守、失敗時の対応</li><li>RAGの検索品質と最終回答を別々に評価</li><li>ツール権限、人的確認、遅延、利用コスト</li></ul></article></div>
+      <ol class="learning-flow">{learningFlow.map((item) => <li><small>{item.step}</small><strong>{item.title}</strong><span>{item.detail}</span></li>)}</ol>
+    </section>
+
+    <footer class="sources"><span>STARTING POINTS / PRIMARY SOURCES</span><div><a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener noreferrer">scikit-learn User Guide ↗</a><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Transformer paper ↗</a><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">RAG paper ↗</a><a href="https://hai.stanford.edu/ai-index/2026-ai-index-report" target="_blank" rel="noopener noreferrer">Stanford AI Index 2026 ↗</a></div><p>構成・用語の確認日: 2026-09-23。製品やモデルの機能は更新されるため、実装時は利用するサービスの公式資料を確認してください。</p></footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body){background:radial-gradient(circle at 76% 8%,rgba(167,139,250,.14),transparent 30%),#0a1119}
+  .ai-page{width:min(1120px,calc(100% - 40px));margin:auto;padding:38px 0 100px;color:#eef6f9}.back{color:#90a4b0;font-size:.82rem;text-decoration:none}.back:hover,.sources a:hover{color:#c7b5ff}
+  .eyebrow,.heading>span,.sources>span{color:#b59cff;font:800 .66rem/1.4 ui-monospace,monospace;letter-spacing:.16em}
+  .hero{display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:45px;min-height:480px;padding:50px 0 65px;border-bottom:1px solid rgba(190,220,240,.18)}h1{margin:20px 0 24px;font-size:clamp(3.3rem,7.5vw,6.5rem);letter-spacing:-.07em;line-height:.95}h1 em{font-style:normal;color:#bba7fa}.lead{max-width:650px;color:#a8b9c2;line-height:1.85}.hero-links{display:flex;flex-wrap:wrap;gap:20px;margin-top:26px}.hero-links a{color:#cbb6ff;font-weight:700;text-decoration:none;font-size:.88rem}
+  .hero-mark{display:flex;min-height:290px;flex-direction:column;justify-content:center;padding:30px;border:1px solid rgba(180,150,245,.34);border-radius:24px;background:radial-gradient(circle at 55% 40%,rgba(167,139,250,.22),transparent 56%),linear-gradient(140deg,#1b2038,#0d1827)}.hero-mark small{color:#cab7ff;font:700 .62rem ui-monospace,monospace;letter-spacing:.13em}.hero-mark strong{margin:13px 0;color:#bba7fa;font-size:7rem;line-height:1;letter-spacing:-.1em}.hero-mark span{color:#a7a1bb;font-size:.8rem}
+  .section{margin-top:80px;scroll-margin-top:35px}.heading{margin-bottom:28px}.heading h2{margin:12px 0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.05em}.heading p{max-width:780px;margin:0;color:#9cabb6;line-height:1.75}
+  .pillar-grid,.concept-grid,.system-grid,.ml-grid,.eval-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pillar,.concept,.system-grid article,.ml-card,.eval-columns article,.callout{border:1px solid rgba(190,220,240,.18);border-radius:17px;background:linear-gradient(145deg,rgba(22,31,47,.96),rgba(12,21,32,.96))}.pillar{display:block;min-height:220px;padding:25px;color:inherit;text-decoration:none;transition:transform .18s,border-color .18s}.pillar:hover{transform:translateY(-2px);border-color:#a78bfa}.pillar small{color:#b59cff;font:700 .72rem ui-monospace,monospace}.pillar h3{display:flex;justify-content:space-between;gap:10px;margin:26px 0 9px;font-size:1.25rem}.pillar h3 span{color:#9276d4}.pillar p,.concept p,.system-grid p,.ml-card p,.eval-columns li{color:#9dafba;font-size:.86rem;line-height:1.75}.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:19px}.tags span{padding:6px 9px;border:1px solid #474166;border-radius:7px;color:#c9bafa;background:#22223b;font-size:.69rem}
+  .concept{padding:25px}.concept small,.system-grid small{color:#ae97ed;font:700 .65rem ui-monospace,monospace;letter-spacing:.08em}.concept h3{margin:20px 0 10px;font-size:1.22rem}.concept div{margin-top:20px;padding-top:15px;border-top:1px solid #394254;color:#c9b8f7;font-size:.76rem}.callout{margin-top:15px;padding:25px;border-color:#574a80}.callout strong{line-height:1.7}.callout p{margin:9px 0 0;color:#a8a8be;font-size:.83rem}
+  .system-flow,.learning-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:0}.system-flow li,.learning-flow li{position:relative;padding:17px;border:1px solid #47435d;border-radius:11px;background:#1a2033}.system-flow li:not(:last-child)::after{content:'→';position:absolute;z-index:1;right:-13px;top:43%;color:#bea7fa;font-size:1.2rem}.system-flow small,.learning-flow small{display:block;color:#bb9ff8;font:.65rem ui-monospace,monospace}.system-flow strong{display:block;margin-top:14px;font-size:.82rem;line-height:1.5}.flow-note{color:#8496a5;font-size:.77rem}.system-grid{margin-top:18px}.system-grid article{padding:24px}.system-grid h3{margin:0 0 10px}.system-grid small{display:block;margin-top:20px}.system-grid p:last-child{margin-bottom:0}
+  .ml-card{padding:23px}.ml-top{display:flex;align-items:baseline;gap:14px}.ml-top span{color:#ba9cff;font:700 .75rem ui-monospace,monospace}.ml-top h3{margin:0;font-size:1.17rem}.ml-card>p{margin:14px 0}.methods{padding:10px 12px;border-radius:8px;color:#c9b8f8;background:#25243e;font-size:.76rem;line-height:1.6}.ml-card .ml-note{margin-bottom:0;font-size:.78rem;color:#8fa2ad}
+  .eval-columns article{padding:26px}.eval-columns h3{margin:0 0 16px;color:#c9b6ff}.eval-columns ul{margin:0;padding-left:20px}.eval-columns li{padding:5px 0}.learning-flow{margin-top:18px}.learning-flow li strong,.learning-flow li span{display:block}.learning-flow li strong{margin:13px 0 8px;font-size:.85rem}.learning-flow li span{color:#92a4af;font-size:.73rem;line-height:1.5}
+  .sources{margin-top:86px;padding-top:27px;border-top:1px solid #3a4454}.sources div{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}.sources a{color:#b9a7ec;font-size:.82rem;text-decoration:underline;text-underline-offset:3px}.sources p{margin-top:20px;color:#8295a2;font-size:.75rem;line-height:1.7}
+  @media(max-width:800px){.hero{grid-template-columns:1fr;gap:26px;min-height:0}.hero-mark{min-height:180px}.hero-mark strong{font-size:5rem}.system-flow,.learning-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.system-flow li::after{display:none}}
+  @media(max-width:600px){.ai-page{width:min(100% - 32px,1120px)}.hero{padding:40px 0 50px}h1{font-size:clamp(3.1rem,12vw,5rem)}.pillar-grid,.concept-grid,.system-grid,.ml-grid,.eval-columns{grid-template-columns:1fr}.system-flow,.learning-flow{grid-template-columns:1fr}.section{margin-top:65px}}
+</style>
